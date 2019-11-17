@@ -32,24 +32,28 @@ public class CaseADayApplication implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-
+//        saving a new case into the repository aslongside a new diagnosis named "blodd"
+//   -------------------------------------------------------------------------------
 //        caseRepository.save(new ExaminationCase("cat", "10 y/o", new Diagnosis("blodd")));
+
+//        quering all cases and diagnoses from the database
+//        diagnosis doesn't show the cases as it would create a stack-overflow error
+//   -------------------------------------------------------------------------------
 //        List<ExaminationCase> cases = caseRepository.findAll();
 //        List<Diagnosis> diagnoses = dianoisisRepository.findAll();
-//
-//
-//
-//
-//
+
 //        System.out.println(cases.toString());
 //        System.out.println(diagnoses.toString());
 //        System.out.println("=======================================");
-////        for (Diagnosis item: diagnoses
-////             ) {
-////            System.out.println("Diagnosis id: " + item.getId());
-////            item.getCases().forEach(i -> System.out.println("Case: " + i));
-////
-////        }
+//        for (Diagnosis item: diagnoses
+//             ) {
+//            System.out.println("Diagnosis id: " + item.getId());
+//            item.getCases().forEach(i -> System.out.println("Case: " + i));
+//
+//        }
+
+//        adding a new case with a diagnosis that already exists with a new diagnosis
+//   -------------------------------------------------------------------------------
 //        Diagnosis diagnosis1  = new Diagnosis("drops");
 //        ExaminationCase case1 = new ExaminationCase("things to test our", "25 y/o male");
 //
@@ -65,7 +69,9 @@ public class CaseADayApplication implements CommandLineRunner {
 
 //        caseRepository.save(case1);
 
-
+//        deletion of a diagnosis which deletes the case ids associated with the diagnosis
+//        without deleting cases that are in other diagnoses
+//   -------------------------------------------------------------------------------
 //        caseRepository.deleteById(5L);
         System.out.println("performing a deletion of the diagnosis id 2");
         dianoisisRepository.deleteById(2L);
