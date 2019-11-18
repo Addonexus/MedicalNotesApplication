@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Create New Case</title>
 </head>
 <body>
+
+<main>
+    <form method="post" th:object="${caseKey}">
+        <div>
+            <label th:for="name">Name</label>
+
+            <input aria-describedBy="Enter your name"
+                   th:field="*{name}"
+                   type="text"/>
+
+            <div th:errors="*{name}"
+                 th:if="${#fields.hasErrors('name')}">
+                Name Error
+            </div>
+        </div>
+
+        <div>
+            <label th:for="demographics">demographics</label>
+
+            <input aria-describedBy="Enter the demographics"
+                   th:field="*{demographics}"
+                   type="text"/>
+
+            <div th:errors="*{demographics}"
+                 th:if="${#fields.hasErrors('demographics')}">
+                Demographic Error
+            </div>
+        </div>
+    </form>
+</main>
 
 </body>
 </html>
