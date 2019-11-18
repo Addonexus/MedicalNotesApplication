@@ -35,14 +35,14 @@
         </div>
 
         <div>
-            <label th:for="diagnoses">Diagnoses</label>
+            <label th:for="diagnosesList">Diagnoses</label>
 
             <input aria-describedBy="Enter the diagnoses"
-                   th:field="*{diagnoses}"
+                   th:field="*{diagnosesList}"
                    type="text"/>
 
-            <div th:errors="*{diagnoses}"
-                 th:if="${#fields.hasErrors('diagnoses')}">
+            <div th:errors="*{diagnosesList}"
+                 th:if="${#fields.hasErrors('diagnosesList')}">
                 Diagnoses Error
             </div>
         </div>
