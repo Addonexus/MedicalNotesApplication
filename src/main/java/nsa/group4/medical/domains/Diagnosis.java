@@ -1,0 +1,49 @@
+package nsa.group4.medical.domains;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name= "diagnoses")
+@ToString(exclude = "cases")
+public class Diagnosis {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name="name")
+    private String name;
+
+    @Column(name="category_id")
+    private Long categoryId;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST})
+    @JoinTable(
+            name = "cases_diagnoses_link",
+            joinColumns = {@JoinColumn(name="diagnosis_id")},
+            inverseJoinColumns = {@JoinColumn(name = "case_id")})
+    private List<CaseModel> cases;
+
+    public Diagnosis(String name){
+        this.name = name;
+    }
+
+    // you need this when trying to stream through the list of cases from the diagnosis to print or manipulate
+    public List<CaseModel> getCases() {
+        if(cases == null){
+            return new ArrayList<>();
+        }
+        return cases;
+    }
+}
