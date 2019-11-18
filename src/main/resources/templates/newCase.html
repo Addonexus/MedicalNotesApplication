@@ -22,7 +22,7 @@
         </div>
 
         <div>
-            <label th:for="demographics">demographics</label>
+            <label th:for="demographics">Demographics</label>
 
             <input aria-describedBy="Enter the demographics"
                    th:field="*{demographics}"
@@ -31,6 +31,19 @@
             <div th:errors="*{demographics}"
                  th:if="${#fields.hasErrors('demographics')}">
                 Demographic Error
+            </div>
+        </div>
+
+        <div>
+            <label th:for="diagnoses">Diagnoses</label>
+
+            <input aria-describedBy="Enter the diagnoses"
+                   th:field="*{diagnoses}"
+                   type="text"/>
+
+            <div th:errors="*{diagnoses}"
+                 th:if="${#fields.hasErrors('diagnoses')}">
+                Diagnoses Error
             </div>
         </div>
     </form>
