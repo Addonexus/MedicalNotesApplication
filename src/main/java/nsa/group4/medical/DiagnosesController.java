@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/Category", method= RequestMethod.GET)
 public class DiagnosesController {
 
     private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
