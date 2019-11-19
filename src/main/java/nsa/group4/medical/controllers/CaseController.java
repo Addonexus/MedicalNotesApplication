@@ -17,6 +17,8 @@ import javax.validation.Valid;
 @Controller
 public class CaseController {
 
+
+
     static final Logger LOG = LoggerFactory.getLogger(CaseController.class);
 
     @RequestMapping(path="/createNewCase", method = RequestMethod.GET)
