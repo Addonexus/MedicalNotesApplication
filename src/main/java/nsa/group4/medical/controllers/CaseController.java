@@ -2,6 +2,7 @@ package nsa.group4.medical.controllers;
 
 
 import nsa.group4.medical.domains.CaseModel;
+import nsa.group4.medical.web.CaseForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,16 +22,16 @@ public class CaseController {
     @RequestMapping(path="/createNewCase", method = RequestMethod.GET)
     public String createNewCase(Model model){
 
-        model.addAttribute("caseKey", new CaseModel());
+        model.addAttribute("caseKey", new CaseForm());
         return "newCase";
     }
 
     @RequestMapping(path="/caseDetails", method = RequestMethod.POST)
-    public String caseAdded(@ModelAttribute("caseKey") @Valid CaseModel caseModel,
+    public String caseAdded(@ModelAttribute("caseKey") @Valid CaseForm caseForm,
                             BindingResult bindingResult,
                             Model model){
 
-        LOG.debug(caseModel.toString());
+        LOG.debug(caseForm.toString());
 
         if (bindingResult.hasErrors()){
             LOG.debug(bindingResult.toString());
@@ -39,6 +40,6 @@ public class CaseController {
 
 
 
-        return "index";
+        return "newCase";
     }
 }
