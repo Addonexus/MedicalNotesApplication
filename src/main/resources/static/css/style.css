@@ -1,0 +1,10 @@
+.nav-wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.no-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 50px;
+}
