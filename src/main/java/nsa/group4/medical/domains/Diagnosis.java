@@ -22,9 +22,6 @@ public class Diagnosis {
     @Column(name="name")
     private String name;
 
-    @Column(name="category_id")
-    private Long categoryId =1L;// hard-coding a category value until feature is implemented
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH,
@@ -36,7 +33,7 @@ public class Diagnosis {
     private List<CaseModel> cases;
 
     @ManyToOne
-    @JoinColumn(name="cart_id", nullable=false)
+    @JoinColumn(name="category_id")
     private Categories categories;
 
     public Diagnosis(String name){
