@@ -23,7 +23,7 @@ public class Diagnosis {
     private String name;
 
     @Column(name="category_id")
-    private Long categoryId;
+    private Long categoryId =1L;// hard-coding a category value until feature is implemented
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
             CascadeType.MERGE,

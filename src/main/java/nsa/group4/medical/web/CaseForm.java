@@ -16,9 +16,11 @@ public class CaseForm {
     @NotNull
     @Size(min=2, max=30, message = "Invalid Name")
     private String name;
-
+    @NotNull
+    @Size(min=3, message = "Invalid Demographics Name(s) provided")
     private String demographics;
 
     @NotNull
+    @Size(min=2, message = "Invalid Diagnosis Name(s) provided")
     private String diagnosesList;
 }

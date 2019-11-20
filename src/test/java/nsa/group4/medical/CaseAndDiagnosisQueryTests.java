@@ -5,6 +5,7 @@ import nsa.group4.medical.data.CaseRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Diagnosis;
+import nsa.group4.medical.service.CaseRepositoryInterface;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +26,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 @Transactional
 public class CaseAndDiagnosisQueryTests {
     @Autowired
-    private CaseRepositoryJPA caseRepository;
+    private CaseRepositoryInterface caseRepository;
 
     @Autowired
     private DiagnosisRepositoryJPA diagnosisRepository;
