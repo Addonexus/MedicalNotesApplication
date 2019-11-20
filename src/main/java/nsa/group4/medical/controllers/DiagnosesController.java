@@ -4,6 +4,7 @@ import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
+import nsa.group4.medical.service.DiagnosisRepositoryInterface;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,13 @@ import java.util.Optional;
 @Controller
 public class DiagnosesController {
 
-    private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
+    private DiagnosisRepositoryInterface diagnosisRepository;
     private CategoriesRepositoryJPA categoriesRepositoryJPA;
 
     @Autowired
-    public DiagnosesController(DiagnosisRepositoryJPA diagnosisRepositoryJPA,
+    public DiagnosesController(DiagnosisRepositoryInterface diagnosisRepository,
                                CategoriesRepositoryJPA categoriesRepositoryJPA) {
-        this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
+        this.diagnosisRepository = diagnosisRepository;
         this.categoriesRepositoryJPA = categoriesRepositoryJPA;
     }
 
@@ -33,7 +34,7 @@ public class DiagnosesController {
                                @PathVariable final Long index) {
         Optional<Categories> categoriesOptional = categoriesRepositoryJPA.findById(index);
 
-        List<Diagnosis> diagnoses = diagnosisRepositoryJPA.findByCategories(categoriesOptional.get());
+        List<Diagnosis> diagnoses = diagnosisRepository.findByCategories(categoriesOptional.get());
         model.addAttribute("diagnosisKey", new Diagnosis());
         model.addAttribute("diagnoses", diagnoses);
         return "home";
@@ -45,8 +46,8 @@ public class DiagnosesController {
                                Model model) {
         Categories categories = categoriesRepositoryJPA.findById(index).get();
         diagnosis.setCategories(categories);
-        diagnosisRepositoryJPA.save(diagnosis);
-        List<Diagnosis> diagnoses = diagnosisRepositoryJPA.findByCategories(categories);
+        diagnosisRepository.save(diagnosis);
+        List<Diagnosis> diagnoses = diagnosisRepository.findByCategories(categories);
         model.addAttribute("diagnosisKey", new Diagnosis());
         model.addAttribute("diagnoses", diagnoses);
         return "home";

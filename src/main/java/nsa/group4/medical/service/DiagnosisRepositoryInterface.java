@@ -1,5 +1,7 @@
 package nsa.group4.medical.service;
 
+import nsa.group4.medical.domains.CaseModel;
+import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 
 import java.util.Collection;
@@ -12,7 +14,9 @@ public interface DiagnosisRepositoryInterface {
 
     Optional<Diagnosis> findById(Long index);
 
-    List<Diagnosis> findByCategoryId(Long index);
+//    List<Diagnosis> findByCategoryId(Long index);
+    List<Diagnosis> findByCategories(Categories categories);
+    Diagnosis save(Diagnosis diagnosis);
 
 
 

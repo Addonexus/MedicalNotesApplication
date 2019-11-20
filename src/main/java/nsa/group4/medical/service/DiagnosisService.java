@@ -1,6 +1,7 @@
 package nsa.group4.medical.service;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +29,23 @@ public class DiagnosisService implements DiagnosisServiceInterface {
         return diagnosisRepository.findByNameIn(names);
     }
 
-    @Override
-    public List<Diagnosis> getByCategoryId(Long index) {
-        return diagnosisRepository.findByCategoryId(index);
-    }
+//    @Override
+//    public List<Diagnosis> getByCategoryId(Long index) {
+//        return diagnosisRepository.findByCategoryId(index);
+//    }
 
     @Override
     public Optional<Diagnosis> getByDiagnosisId(Long index) {
         return diagnosisRepository.findById(index);
+    }
+
+    @Override
+    public List<Diagnosis> findByCategories(Categories categories) {
+        return diagnosisRepository.findByCategories(categories);
+    }
+
+    @Override
+    public Diagnosis createDiagnosis(Diagnosis diagnosis) {
+        return diagnosisRepository.save(diagnosis);
     }
 }
