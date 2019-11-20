@@ -34,7 +34,7 @@ public class CaseController {
     public String caseAdded(@ModelAttribute("caseKey") @Valid CaseForm caseForm,
                             BindingResult bindingResult,
                             Model model){
-        
+
         LOG.debug(caseForm.toString());
 
         if (bindingResult.hasErrors()){
