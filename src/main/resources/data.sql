@@ -7,6 +7,10 @@ insert into cases (id, name, demographics, notes) values (1,'things that went wr
 insert into cases (id, name, demographics, notes) values (2,'things from kid', '6 y/o kid', 'the kid was nice');
 insert into cases (id, name, demographics, notes) values (3,'dog title', '8 y/o dog', null);
 
+insert into categories (id, name) values (1, 'amina');
+insert into categories (id, name) values (2, 'example');
+insert into categories (id, name) values (3, 'hello');
+
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,2);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,3);

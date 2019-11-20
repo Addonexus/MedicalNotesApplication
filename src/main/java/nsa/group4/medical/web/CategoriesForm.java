@@ -15,7 +15,4 @@ public class CategoriesForm {
     @NotNull
     @Size(min=2, max=30, message = "Invalid Name")
     private String name;
-
-    @NotNull
-    private String diagnosisList;
 }

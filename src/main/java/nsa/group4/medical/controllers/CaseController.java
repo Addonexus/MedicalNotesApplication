@@ -40,8 +40,6 @@ public class CaseController {
             return "newCase";
         }
 
-
-
         return "newCase";
     }
 }
