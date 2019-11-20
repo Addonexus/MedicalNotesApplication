@@ -51,4 +51,10 @@ public class CaseModel {
         return diagnosesList;
     }
 
+    public String formatDiagnosisList(){
+        String diagnoses = diagnosesList.stream().map(x -> x.getName()).collect( Collectors.joining( "," ) );;
+//        StringBuilder returnedString = list.stream().map(e -> e.toString());
+        return diagnoses;
+    }
+
 }
