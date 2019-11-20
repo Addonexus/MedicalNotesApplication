@@ -7,7 +7,6 @@ SET IGNORECASE=TRUE;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `parent` INT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- -----------------------------------------------------
@@ -16,8 +15,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `diagnoses` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `category_id` INT NULL,
-  PRIMARY KEY (`id`))
+  `category_id` UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)),
+  FOREIGN KEY (`category_id`) REFERENCES `Categories` (`id`)
 ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cases`
