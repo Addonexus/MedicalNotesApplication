@@ -14,4 +14,6 @@ public interface DiagnosisRepositoryJPA extends JpaRepository<Diagnosis, Long> {
 
     Optional<Diagnosis>findByName(String name);
     List<Diagnosis> findByNameIn(Collection<String> names);
+
+    List<Diagnosis> findByCategoryId(Long index);
 }
