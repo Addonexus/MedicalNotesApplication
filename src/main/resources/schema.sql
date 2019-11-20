@@ -7,6 +7,7 @@ SET IGNORECASE=TRUE;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
+  `parent` INT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- -----------------------------------------------------
