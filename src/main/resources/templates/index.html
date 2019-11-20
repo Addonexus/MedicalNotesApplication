@@ -14,7 +14,8 @@
     <button>Create New Category</button>
     </a>
     <div>
-        <li th:each="categories: ${categories}">
+        <li th:each="category: ${categories}">
+            <span th:text="${category.name}"></span>
         </li>
     </div>
 </main>
