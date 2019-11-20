@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,7 +21,10 @@ public class Categories {
     private Long id;
     @Column(name="name")
     private String name;
-    @Column(name="parent")
-    private int parent;
+
+
+    @OneToMany(mappedBy="categories")
+    private List<Diagnosis> diagnosisList;
+
 
 }

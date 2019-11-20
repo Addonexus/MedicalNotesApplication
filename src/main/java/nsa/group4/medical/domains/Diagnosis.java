@@ -35,6 +35,10 @@ public class Diagnosis {
             inverseJoinColumns = {@JoinColumn(name = "case_id")})
     private List<CaseModel> cases;
 
+    @ManyToOne
+    @JoinColumn(name="cart_id", nullable=false)
+    private Categories categories;
+
     public Diagnosis(String name){
         this.name = name;
     }
