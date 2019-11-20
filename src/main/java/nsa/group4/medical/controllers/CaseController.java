@@ -91,4 +91,16 @@ public class CaseController {
         }
         return "404";
     }
+
+    @GetMapping(path ="/cases/{diagnosisIndex}")
+    public String getCases(@PathVariable(name="diagnosisIndex") Long index, Model model){
+        List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(index);
+        if(returnedCases.isEmpty()){
+        return "404";
+        }
+        else{
+        model.addAttribute("cases", returnedCases);
+        return "cases";
+        }
+    }
 }
