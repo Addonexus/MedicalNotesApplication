@@ -1,4 +1,4 @@
-package nsa.group4.medical;
+package nsa.group4.medical.controllers;
 
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.Diagnosis;
