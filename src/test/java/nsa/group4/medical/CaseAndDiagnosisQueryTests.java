@@ -33,7 +33,7 @@ public class CaseAndDiagnosisQueryTests {
     private DiagnosisRepositoryInterface diagnosisRepository;
 
     @Autowired
-    EntityManager em;
+    EntityManager entityManager;
 
     private CaseModel testCase;
     private CaseModel testCase2;

@@ -2,6 +2,7 @@ package nsa.group4.medical;
 
 import nsa.group4.medical.controllers.CaseController;
 import nsa.group4.medical.web.CaseForm;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
