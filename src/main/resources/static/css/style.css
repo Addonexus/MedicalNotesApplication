@@ -35,6 +35,11 @@ nav {
   height: 100%;
   grid-template-columns: 300px auto;
   grid-template-areas: "left right";
+  overflow: scroll;
+}
+
+.section-main::-webkit-scrollbar {
+  display: none;
 }
 
 .section-side-cases {
