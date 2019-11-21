@@ -36,6 +36,11 @@ public class CaseService implements CaseServiceInterface {
     }
 
     @Override
+    public List<CaseModel> findAll() {
+        return caseRepository.findAll();
+    }
+
+    @Override
     public List<CaseModel> findCasesByDiagnosisId(Long index) {
         Optional<Diagnosis> returnedDiagnosis = diagnosisRepository.findById(index);
         if (returnedDiagnosis.isPresent()){

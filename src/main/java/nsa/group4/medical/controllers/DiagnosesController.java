@@ -29,16 +29,18 @@ public class DiagnosesController {
     }
 
 
-    @GetMapping("dia/{index}")
-    public String getDiagnoses(Model model,
-                               @PathVariable final Long index) {
-        Optional<Categories> categoriesOptional = categoriesRepositoryJPA.findById(index);
+//    @GetMapping("dia/{index}")
+//    public String getDiagnoses(Model model,
+//                               @PathVariable final Long index) {
+//        Optional<Categories> categoriesOptional = categoriesRepositoryJPA.findById(index);
+//
+//        List<Diagnosis> diagnoses = diagnosisRepository.findByCategories(categoriesOptional.get());
+//        model.addAttribute("diagnosisKey", new Diagnosis());
+//        model.addAttribute("diagnoses", diagnoses);
+//        return "home";
+//    }
 
-        List<Diagnosis> diagnoses = diagnosisRepository.findByCategories(categoriesOptional.get());
-        model.addAttribute("diagnosisKey", new Diagnosis());
-        model.addAttribute("diagnoses", diagnoses);
-        return "home";
-    }
+
 
     @PostMapping("dia/{index}")
     public String newDiagnosis(@PathVariable final Long index,
@@ -48,9 +50,14 @@ public class DiagnosesController {
         diagnosis.setCategories(categories);
         diagnosisRepository.save(diagnosis);
         List<Diagnosis> diagnoses = diagnosisRepository.findByCategories(categories);
-        model.addAttribute("diagnosisKey", new Diagnosis());
-        model.addAttribute("diagnoses", diagnoses);
-        return "home";
 
+        if(diagnoses.isEmpty()){
+            return "404";
+        }
+        else{
+            model.addAttribute("diagnosisKey", new Diagnosis());
+            model.addAttribute("diagnoses", diagnoses);
+            return "home";
+        }
     }
 }

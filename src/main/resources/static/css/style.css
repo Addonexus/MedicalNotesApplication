@@ -13,7 +13,7 @@ nav {
   width: 100vw;
   height: 100vh;
   grid-template-columns: 100%;
-  grid-template-rows: 8% 92%;
+  grid-template-rows: 64px auto;
   grid-template-areas:
     "nav"
     "main";
@@ -46,7 +46,6 @@ nav {
   display: none;
 }
 
-
 .section-right {
   grid-area: right;
   overflow: scroll;
@@ -76,10 +75,25 @@ nav {
 }
 
 .content-item {
-  background-color: #8ca0ff;
+  background-color: white;
+  color: black;
   padding: 5px;
   margin: 5px;
   width: 230px;
-  height: 100px;
+  height: 150px;
   font-size: 30px;
+}
+
+.go-away {
+  position: absolute;
+  left: -9999px;
+}
+
+input[type="text"]:not(.browser-default) {
+  color: black;
+  height: 50px;
+}
+
+input {
+  height: 50px;
 }

@@ -1,6 +1,8 @@
 package nsa.group4.medical.service;
 
 import nsa.group4.medical.domains.CaseModel;
+
+import java.util.List;
 import java.util.Optional;
 
 public interface CaseRepositoryInterface {
@@ -12,6 +14,8 @@ public interface CaseRepositoryInterface {
     CaseModel save(CaseModel caseModel);
 
     void deleteById(Long id);
+
+    List<CaseModel> findAll();
 
 
 
