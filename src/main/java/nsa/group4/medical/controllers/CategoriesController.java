@@ -73,14 +73,19 @@ public class CategoriesController {
         List<CaseModel> cases = caseService.findAll();
 
         Optional<Categories> thisCategory = categoriesRepositoryJPA.findById(index);
-        List<Diagnosis> diagnoses = diagnosisService.findByCategories(thisCategory.get());
-        Diagnosis diagnosisArg = new Diagnosis();
-        diagnosisArg.setCategories(thisCategory.get());
+        if(thisCategory.isPresent()){
 
-        model.addAttribute("diagnosisKey", diagnosisArg);
-        model.addAttribute("diagnoses", diagnoses);
-        model.addAttribute("cases", cases);
-        return "home";
+            List<Diagnosis> diagnoses = diagnosisService.findByCategories(thisCategory.get());
+            Diagnosis diagnosisArg = new Diagnosis();
+            diagnosisArg.setCategories(thisCategory.get());
+            model.addAttribute("diagnosisKey", diagnosisArg);
+            model.addAttribute("diagnoses", diagnoses);
+            model.addAttribute("cases", cases);
+            model.addAttribute("category", thisCategory.get());
+            return "home";
+        }
+
+        return "404";
     }
 
     @PostMapping("category/{index}")
@@ -103,6 +108,7 @@ public class CategoriesController {
 
         model.addAttribute("diagnoses", diagnoses);
         model.addAttribute("cases", cases);
+        model.addAttribute("category", thisCategory.get());
         return "home";
 
     }

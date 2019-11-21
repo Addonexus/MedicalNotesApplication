@@ -4,6 +4,9 @@ package nsa.group4.medical.web;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nsa.group4.medical.domains.Categories;
+import nsa.group4.medical.domains.Diagnosis;
+
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

@@ -7,7 +7,7 @@
 <body>
 
 <main>
-    <form method="post" th:action="@{/caseDetails}" th:object="${caseKey}">
+    <form method="post" th:action="@{/caseDetails/{id}(id=${categoryIndex})}" th:object="${caseKey}">
         <div>
             <label th:for="name">Name</label>
 

@@ -48,6 +48,7 @@ public class DiagnosesController {
                                Model model) {
         Categories categories = categoriesRepositoryJPA.findById(index).get();
         diagnosis.setCategories(categories);
+
         diagnosisRepository.save(diagnosis);
         List<Diagnosis> diagnoses = diagnosisRepository.findByCategories(categories);
 

@@ -31,12 +31,17 @@
     <div class="hide-on-small-only desktop-grid">
       <div th:replace="fragments/nav :: navbar"></div>
       <div class="section-main">
-        <div class="section-side-cases blue darken-1">
-          <a th:href="@{/createNewCase}">
-            <div class="btn white black-text">
-              New case
-            </div>
-          </a>
+        <div class="section-side-cases blue darken-1 z-depth-1" >
+          <div th:if="${#ctx.containsVariable('category')}">
+            <a th:href="@{/category/{id}/createNewCase(id=${category.id})}">
+              <div class="btn white black-text">
+                New case
+              </div>
+            </a>
+          </div>
+          <div th:unless="${#ctx.containsVariable('category')}" style="padding: 15px; color: white;">
+            <b>To create a new case, please enter a category or diagnosis</b>
+          </div>
           <!-- FIX THIS LATER -->
           <!--<form th:action="@{/dia/1}" method="post" th:object="${diagnosisKey}">-->
           <!--<div class="input-field">-->
@@ -72,7 +77,7 @@
                 th:field="*{name}"
                 type="text"
               />
-              <button class="go-away" id="submit" type="submit">
+              <button class="go-away" type="submit">
                 New Diagnosis
               </button>
             </form>
@@ -90,7 +95,7 @@
                 type="text"
               />
               <button class="go-away" id="submit" type="submit">
-                New Diagnosis
+                New Category
               </button>
             </form>
 
@@ -104,7 +109,7 @@
               th:if="${diagnoses !=null}"
               th:each="diagnosis : ${diagnoses}"
             >
-              <a th:href="@{/dia/{id}(id=${diagnosis.id})}">
+              <a th:href="@{/category/{categoryIndex}/diagnosis/{diagnosisIndex}(diagnosisIndex=${diagnosis.id}, categoryIndex=${category.Id})}">
                 <b th:text="${diagnosis.name}"></b>
               </a>
             </button>
@@ -113,7 +118,9 @@
               th:if="${returnedCases !=null}"
               th:each="case : ${returnedCases}"
             >
-              <b th:text="${case.name}"></b>
+              <a th:href="@{/case/{caseId}(caseId=${case.id})}">
+                <b th:text="${case.name}"></b>
+              </a>
             </div>
           </div>
         </div>

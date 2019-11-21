@@ -75,7 +75,7 @@ public class CaseAndDiagnosisQueryTests {
 
     @Test
     public void addingAnExistingDiagnosisObjectToACase(){
-        Diagnosis returnedDiagnosis = diagnosisRepository.findByName("heart").get();
+        Diagnosis returnedDiagnosis = diagnosisRepository.findByName("heart ache").get();
         assertNotNull(returnedDiagnosis);
 
         testCase.getDiagnosesList().add(returnedDiagnosis);
@@ -88,7 +88,7 @@ public class CaseAndDiagnosisQueryTests {
 
     @Test
     public void addingAnExistingDiagnosisAndANewDiagnosisObjectsToACase(){
-        Diagnosis returnedDiagnosis = diagnosisRepository.findByName("heart").get();
+        Diagnosis returnedDiagnosis = diagnosisRepository.findByName("heart ache").get();
         assertNotNull(returnedDiagnosis);
 
         testCase2.getDiagnosesList().add(returnedDiagnosis);

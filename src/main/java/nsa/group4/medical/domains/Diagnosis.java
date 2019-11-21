@@ -40,6 +40,11 @@ public class Diagnosis {
         this.name = name;
     }
 
+    public Diagnosis(String name, Categories category){
+        this.name = name;
+        this.categories = category;
+    }
+
     // you need this when trying to stream through the list of cases from the diagnosis to print or manipulate
     public List<CaseModel> getCases() {
         if(cases == null){

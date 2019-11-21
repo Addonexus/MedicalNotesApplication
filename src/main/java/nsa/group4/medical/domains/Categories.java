@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name= "categories")
+@ToString(exclude = "diagnosisList")
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
