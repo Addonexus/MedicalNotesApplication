@@ -32,7 +32,7 @@ public class CaseAndDiagnosisQueryTests {
     private DiagnosisRepositoryJPA diagnosisRepository;
 
     @Autowired
-    EntityManager em;
+    EntityManager entityManager;
 
     private CaseModel testCase;
     private CaseModel testCase2;
