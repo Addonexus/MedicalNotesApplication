@@ -16,14 +16,14 @@
     <title>Title</title>
   </head>
   <body>
-    <!-- <div class="hide-on-med-and-up" th:replace="fragments/nav :: navbar"></div> -->
     <div class="container hide-on-med-and-up">
+      <div th:replace="fragments/nav :: navbar"></div>
       <ul class="collection with-header">
         <li class="collection-header">
           <h3>Category name</h3>
         </li>
-        <a href="#!" class="collection-item" th:each="diagnosis : ${diagnoses}">
-          <span th:text="${diagnosis.name}"></span>
+        <a href="#!" class="collection-item" th:each="case : ${cases}">
+          <span th:text="${case.name}"></span>
         </a>
       </ul>
     </div>
@@ -32,21 +32,90 @@
       <div th:replace="fragments/nav :: navbar"></div>
       <div class="section-main">
         <div class="section-side-cases blue darken-1">
-          <div class="btn white black-text">
-            press
-          </div>
+          <a th:href="@{/createNewCase}">
+            <div class="btn white black-text">
+              New case
+            </div>
+          </a>
+          <!-- FIX THIS LATER -->
+          <!--<form th:action="@{/dia/1}" method="post" th:object="${diagnosisKey}">-->
+          <!--<div class="input-field">-->
+          <!--<input placeholder="Diagnosis" th:field="*{name}" type="text">-->
+          <!--</div>-->
+          <!--<button id="submit" type="submit">New Diagnosis</button>-->
+          <!--</form> -->
           <ul class="collection">
-            <a
-              href="#!"
-              class="collection-item"
-              th:each="diagnosis : ${diagnoses}"
-            >
-              <span th:text="${diagnosis.name}"></span>
+            <a href="#!" class="collection-item" th:each="case : ${cases}">
+              <span th:text="${case.name}"></span>
             </a>
           </ul>
         </div>
         <div class="section-right">
-          right content
+          <center>
+            <h3
+              th:if="${#ctx.containsVariable('diagnosisKey')}"
+              th:text="${diagnosisKey.categories.name}"
+            ></h3>
+            <h3 th:if="${#ctx.containsVariable('returnedCases')}"></h3>
+          </center>
+
+          <div class="content-grid">
+            <form
+              th:if="${#ctx.containsVariable('diagnosisKey')}"
+              th:action="@{/category/{id}(id=${diagnosisKey.categories.id})}"
+              method="post"
+              th:object="${diagnosisKey}"
+              class="content-item"
+            >
+              <input
+                placeholder="New Diagnosis"
+                th:field="*{name}"
+                type="text"
+              />
+              <button class="go-away" id="submit" type="submit">
+                New Diagnosis
+              </button>
+            </form>
+
+            <form
+              th:if="${#ctx.containsVariable('categoryKey')}"
+              th:action="@{/home}"
+              method="post"
+              th:object="${categoryKey}"
+              class="content-item"
+            >
+              <input
+                placeholder="New Category"
+                th:field="*{name}"
+                type="text"
+              />
+              <button class="go-away" id="submit" type="submit">
+                New Diagnosis
+              </button>
+            </form>
+
+            <button class="btn content-item" th:each="category : ${categories}">
+              <a th:href="@{/category/{id}(id=${category.id})}">
+                <b th:text="${category.name}"></b>
+              </a>
+            </button>
+            <button
+              class="btn content-item"
+              th:if="${diagnoses !=null}"
+              th:each="diagnosis : ${diagnoses}"
+            >
+              <a th:href="@{/dia/{id}(id=${diagnosis.id})}">
+                <b th:text="${diagnosis.name}"></b>
+              </a>
+            </button>
+            <div
+              class="content-item"
+              th:if="${returnedCases !=null}"
+              th:each="case : ${returnedCases}"
+            >
+              <b th:text="${case.name}"></b>
+            </div>
+          </div>
         </div>
       </div>
     </div>

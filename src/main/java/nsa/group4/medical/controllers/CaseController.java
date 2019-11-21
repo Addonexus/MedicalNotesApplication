@@ -1,10 +1,13 @@
 package nsa.group4.medical.controllers;
 
 
+import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
+import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseServiceInterface;
+import nsa.group4.medical.service.DiagnosisServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -27,11 +29,15 @@ public class CaseController {
 
     private CaseServiceInterface caseService;
 
-    private DiagnosisRepositoryJPA diagnosisRepository;//replace with the service class for diagnosis when implemented
+    private DiagnosisServiceInterface diagnosisService;//replace with the service class for diagnosis when implemented
 
-    public CaseController(CaseServiceInterface caseService, DiagnosisRepositoryJPA diagnosisRepository){
+    private CategoriesRepositoryJPA categoriesRepositoryJPA;
+
+    public CaseController(CaseServiceInterface caseService, DiagnosisServiceInterface diagnosisService,
+                          CategoriesRepositoryJPA categoriesRepositoryJPA){
         this.caseService = caseService;
-        this.diagnosisRepository = diagnosisRepository;
+        this.diagnosisService = diagnosisService;
+        this.categoriesRepositoryJPA = categoriesRepositoryJPA;
 
     }
 
@@ -62,7 +68,7 @@ public class CaseController {
         List<String> diagnosesList = Arrays.stream(diagnoses.split(",")).map(String::trim).collect(Collectors.toList());
 
         //      finding all of the existing diagnosis records
-        List<Diagnosis> existingDiagnosis = diagnosisRepository.findByNameIn(diagnosesList);
+        List<Diagnosis> existingDiagnosis = diagnosisService.findByCaseNameIn(diagnosesList);
 //        String strings = existingDiagnosis.stream().map(x -> x.getName()).collect(Collectors.joining(","));
 
         //      filters the list of existing diagnosis and returns all of the new diagnosis objects that have to be made
@@ -80,5 +86,57 @@ public class CaseController {
         caseService.createCase(caseModel);
 
         return "newCase";//redirect to the case page that has just been created
+    }
+
+    @GetMapping(path ="/case/{index}")
+    public String getCase(@PathVariable(name="index") Long index, Model model){
+        Optional<CaseModel> returnedCase = caseService.findByCaseId(index);
+        if(returnedCase.isPresent()){
+            model.addAttribute("case", returnedCase.get());
+            return "case";
+        }
+        return "404";
+    }
+
+    @GetMapping(path ="/dia/{diagnosisIndex}")
+    public String getCases(@PathVariable(name="diagnosisIndex") Long index, Model model){
+        List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(index);
+        List<CaseModel> recentCases = caseService.findAll();
+
+        model.addAttribute("cases", recentCases);
+        model.addAttribute("returnedCases", returnedCases);
+        return "home";
+    }
+
+    @GetMapping(path = "/home")
+    public String allCases(Model model) {
+        List<Categories> categories = categoriesRepositoryJPA.findAll();
+        List<CaseModel> cases = caseService.findAll();
+        if(cases.isEmpty()){
+            return "404";
+        }
+        else{
+            model.addAttribute("cases", cases);
+            model.addAttribute("categoryKey", new Categories());
+            model.addAttribute("categories", categories);
+            return "home";
+        }
+    }
+
+    @PostMapping(path = "/home")
+    public String allCasesPost(Model model, @ModelAttribute("categoryKey") Categories categoryKey) {
+
+        categoriesRepositoryJPA.save(categoryKey);
+
+        List<Categories> categories = categoriesRepositoryJPA.findAll();
+        List<CaseModel> cases = caseService.findAll();
+        if(cases.isEmpty()){
+            return "404";
+        }
+        else{
+            model.addAttribute("cases", cases);
+            model.addAttribute("categories", categories);
+            return "home";
+        }
     }
 }

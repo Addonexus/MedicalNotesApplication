@@ -6,6 +6,7 @@ import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseRepositoryInterface;
+import nsa.group4.medical.service.DiagnosisRepositoryInterface;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,7 @@ public class CaseAndDiagnosisQueryTests {
     private CaseRepositoryInterface caseRepository;
 
     @Autowired
-    private DiagnosisRepositoryJPA diagnosisRepository;
+    private DiagnosisRepositoryInterface diagnosisRepository;
 
     @Autowired
     EntityManager entityManager;
