@@ -5,6 +5,8 @@ import nsa.group4.medical.data.CaseRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Diagnosis;
+import nsa.group4.medical.service.CaseRepositoryInterface;
+import nsa.group4.medical.service.DiagnosisRepositoryInterface;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,13 +27,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 @Transactional
 public class CaseAndDiagnosisQueryTests {
     @Autowired
-    private CaseRepositoryJPA caseRepository;
+    private CaseRepositoryInterface caseRepository;
 
     @Autowired
-    private DiagnosisRepositoryJPA diagnosisRepository;
+    private DiagnosisRepositoryInterface diagnosisRepository;
 
     @Autowired
-    EntityManager em;
+    EntityManager entityManager;
 
     private CaseModel testCase;
     private CaseModel testCase2;
@@ -73,7 +75,7 @@ public class CaseAndDiagnosisQueryTests {
 
     @Test
     public void addingAnExistingDiagnosisObjectToACase(){
-        Diagnosis returnedDiagnosis = diagnosisRepository.findByName("heart").get();
+        Diagnosis returnedDiagnosis = diagnosisRepository.findByName("heart ache").get();
         assertNotNull(returnedDiagnosis);
 
         testCase.getDiagnosesList().add(returnedDiagnosis);
@@ -86,7 +88,7 @@ public class CaseAndDiagnosisQueryTests {
 
     @Test
     public void addingAnExistingDiagnosisAndANewDiagnosisObjectsToACase(){
-        Diagnosis returnedDiagnosis = diagnosisRepository.findByName("heart").get();
+        Diagnosis returnedDiagnosis = diagnosisRepository.findByName("heart ache").get();
         assertNotNull(returnedDiagnosis);
 
         testCase2.getDiagnosesList().add(returnedDiagnosis);

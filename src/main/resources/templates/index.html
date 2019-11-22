@@ -7,14 +7,15 @@
 <body>
 
 <main>
-    <a href="/createNewCase">
+    <a href="/category/1/createNewCase">
         <span>Create New Case</span>
     </a>
     <a href="/createNewCategory">
     <button>Create New Category</button>
     </a>
     <div>
-        <li th:each="categories: ${categories}">
+        <li th:each="category: ${categories}">
+            <span th:text="${category.name}"></span>
         </li>
     </div>
 </main>

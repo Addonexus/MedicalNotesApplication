@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+
+</head>
+<body>
+<div id=caseInfo th:if="${case}">
+
+    <div class="col-md">
+        <H3 th:text="${case.name}">
+
+        </H3>
+    </div>
+    <div class="col-md caseInformation">
+        <p>Demographics: <span th:text="${case.demographics}"></span> </p>
+    </div>
+    <div class="col-md caseInformation">
+        <p>Diagnosis: <span th:text="${case.formatDiagnosisList()}"></span> </p>
+    </div>
+</div>
+
+</body>
+</html>

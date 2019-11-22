@@ -1,5 +1,104 @@
+.no-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 50px;
+}
+
+/* nav {
+  height: 100%;
+} */
+
+.desktop-grid {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-columns: 100%;
+  grid-template-rows: 64px auto;
+  grid-template-areas:
+    "nav"
+    "main";
+}
+
+.section-main {
+  grid-area: main;
+}
+
 .nav-wrapper {
   padding-left: 15px;
   padding-right: 15px;
+  grid-area: nav;
 }
 
+.section-main {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 300px auto;
+  grid-template-areas: "left right";
+  overflow: scroll;
+}
+
+.section-main::-webkit-scrollbar {
+  display: none;
+}
+
+.section-side-cases {
+  grid-area: left;
+  overflow: scroll;
+}
+
+.section-side-cases::-webkit-scrollbar {
+  display: none;
+}
+
+.section-right {
+  grid-area: right;
+  overflow: scroll;
+}
+
+.section-right::-webkit-scrollbar {
+  display: none;
+}
+
+/* MATERIALIZE STUFF */
+
+.collection {
+  margin: 0px;
+}
+
+.btn {
+  width: 60%;
+  margin: 50px;
+  margin-left: 20%;
+}
+
+.content-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.content-item {
+  background-color: white;
+  color: black;
+  padding: 5px;
+  margin: 5px;
+  width: 230px;
+  height: 150px;
+  font-size: 30px;
+}
+
+.go-away {
+  position: absolute;
+  left: -9999px;
+}
+
+input[type="text"]:not(.browser-default) {
+  color: black;
+  height: 50px;
+}
+
+input {
+  height: 50px;
+}

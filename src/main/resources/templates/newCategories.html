@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Category</title>
+</head>
+<body>
+<main>
+    <form method="post" th:action="@{/categoryDetails}"
+          th:object="${categoryKey}">
+        <div>
+            <label th:for="name">Name</label>
+            <input aria-describedby="Enter a name"
+                   th:field="*{name}"
+                   type="text"/>
+            <div th:errors="*{name}"
+                 th:if="${#fields.hasErrors('name')}">
+                Name Error
+            </div>
+            <button id="submit" type="submit">Create Categories</button>
+
+        </div>
+    </form>
+</main>
+
+</body>
+</html>

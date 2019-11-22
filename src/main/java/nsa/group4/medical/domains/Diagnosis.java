@@ -22,9 +22,6 @@ public class Diagnosis {
     @Column(name="name")
     private String name;
 
-    @Column(name="category_id")
-    private Long categoryId;
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH,
@@ -35,8 +32,17 @@ public class Diagnosis {
             inverseJoinColumns = {@JoinColumn(name = "case_id")})
     private List<CaseModel> cases;
 
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Categories categories;
+
     public Diagnosis(String name){
         this.name = name;
+    }
+
+    public Diagnosis(String name, Categories category){
+        this.name = name;
+        this.categories = category;
     }
 
     // you need this when trying to stream through the list of cases from the diagnosis to print or manipulate
