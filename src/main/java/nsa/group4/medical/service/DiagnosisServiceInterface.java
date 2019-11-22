@@ -18,4 +18,8 @@ public interface DiagnosisServiceInterface {
     Optional<Diagnosis> getByDiagnosisId(Long index);
     List<Diagnosis> findByCategories(Categories categories);
     Diagnosis createDiagnosis(Diagnosis diagnosis);
+
+
+    List<Diagnosis> getAllDiagnosis();
+
 }
