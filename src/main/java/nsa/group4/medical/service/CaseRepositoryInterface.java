@@ -1,7 +1,6 @@
 package nsa.group4.medical.service;
 
 import nsa.group4.medical.domains.CaseModel;
-
 import java.util.List;
 import java.util.Optional;
 
