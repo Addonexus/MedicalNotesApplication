@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+</head>
+<body>
+<div class="container">
+    <br>
+    chip:
+    <div class="chips chips-autocomplete chips-placeholder"></div>
+
+    <div class="btn">
+        AHHH
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script type="text/javascript">
+    console.log('foo');
+    $( document ).ready(function() {
+        $('.chips').material_chip();
+        $('.chips-initial').material_chip({
+            data: [{
+                tag: 'Apple',
+            }, {
+                tag: 'Microsoft',
+            }, {
+                tag: 'Google',
+            }],
+        });
+        $('.chips-autocomplete').material_chip({
+            placeholder: 'Insert another tag',
+            secondaryPlaceholder: '+ Tag',
+            autocompleteData: {
+                'Apple': null,
+                'Microsoft': null,
+                'Google': null
+            }
+        });
+    });
+</script>
+</body>
+</html>
