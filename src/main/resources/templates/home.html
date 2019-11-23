@@ -42,30 +42,18 @@
     <div class="hide-on-small-only desktop-grid">
       <div th:replace="fragments/nav :: navbar"></div>
       <div class="section-main">
-        <div class="section-side-cases blue darken-1 z-depth-1" >
-          <div th:if="${#ctx.containsVariable('category')}">
-            <a th:href="@{/category/{id}/createNewCase(id=${category.id})}">
-              <div class="btn white black-text">
-                New case
-              </div>
-            </a>
-          </div>
-          <div th:unless="${#ctx.containsVariable('category')}" style="padding: 15px; color: white;">
-            <b>To create a new case, please enter a category or diagnosis</b>
-          </div>
-          <!-- FIX THIS LATER -->
-          <!--<form th:action="@{/dia/1}" method="post" th:object="${diagnosisKey}">-->
-          <!--<div class="input-field">-->
-          <!--<input placeholder="Diagnosis" th:field="*{name}" type="text">-->
-          <!--</div>-->
-          <!--<button id="submit" type="submit">New Diagnosis</button>-->
-          <!--</form> -->
-          <ul class="collection">
-            <a href="#!" class="collection-item" th:each="case : ${cases}">
-              <span th:text="${case.name}"></span>
-            </a>
-          </ul>
+
+        <!--   New Side Bar Fragment     -->
+        <div  class="section-side-cases blue darken-1 z-depth-1">
+        <div th:replace="${#ctx.containsVariable('category')}?
+        ~{fragments/sidebar.html :: sidebar-button} :
+        ~{fragments/sidebar.html :: sidebar-no-button}">
+
         </div>
+        <ul th:replace="fragments/sidebar.html :: sidebar-items"></ul>
+        </div>
+
+
         <div class="section-right">
           <center>
             <h3

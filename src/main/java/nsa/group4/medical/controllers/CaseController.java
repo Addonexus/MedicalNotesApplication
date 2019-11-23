@@ -12,7 +12,6 @@ import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
 import nsa.group4.medical.web.CaseForm;
-import nsa.group4.medical.web.CaseTestForm;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
