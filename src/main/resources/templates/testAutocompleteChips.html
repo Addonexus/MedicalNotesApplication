@@ -1,49 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-</head>
-<body>
-<div class="container">
-    <br>
-    chip:
-    <div class="chips chips-autocomplete chips-placeholder chips-initial"><i class="material-icons">close</i></div>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <br />
+      <form id="submitDiagnoses" action="/saveDiagnosis" method="post">
+        chip:
+        <div id="diagnoses" class="chips chips-autocomplete chips-placeholder chips-initial">
+          <i class="material-icons">close</i>
+        </div>
 
-    <div class="btn">
-        AHHH
+        <input type="submit" class="btn">
+        </input>
+      </form>
     </div>
-</div>
 
-
-<script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-<script type="text/javascript">
-    console.log('foo');
-    $( document ).ready(function() {
-    $.ajax({
-      type: 'GET',
-      url: 'http://localhost:8080/api/getAllDiagnosis',
-
-      success: function(response) {
-        var diagnosisArray = response;
+    <script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+      console.log("foo");
+      $(document).ready(function() {
+        $(".chips-initial").material_chip();
         var data = {};
 
-        for (var i = 0; i < diagnosisArray.length; i++) {
-          console.log(diagnosisArray[i].name);
-          data[diagnosisArray[i].name] =null;
-        }
-        $('.chips-autocomplete').material_chip({
-            autocompleteData: data
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/api/getAllDiagnosis",
+
+          success: function(response) {
+            var diagnosisArray = response;
+
+            for (var i = 0; i < diagnosisArray.length; i++) {
+              console.log(diagnosisArray[i].name);
+              data[diagnosisArray[i].name] = null;
+            }
+            $(".chips-autocomplete").material_chip({
+              autocompleteData: data
+            });
+          }
         });
-      }
 
-    });
-  });
+        $("#submitDiagnoses").submit(function(e) {
+          console.log("hi");
+          e.preventDefault(); // avoid to execute the actual submit of the form.
 
-</script>
-</body>
+          var form = $(this);
+          var url = "api" + form.attr("action");
+          var formData = {}
+
+          formData['diagnoses'] = $('#diagnoses').material_chip('data');
+
+          console.log(url);
+          console.log(formData);  
+
+          // $.ajax({
+          //   type: "POST",
+          //   url: url,
+          //   data: formData,
+          //   success: function(formData) {
+          //     alert(formData); // show response from the php script.
+          //   }
+          // });
+        });
+      });
+    </script>
+  </body>
 </html>
