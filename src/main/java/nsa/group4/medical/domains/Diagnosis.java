@@ -1,5 +1,7 @@
 package nsa.group4.medical.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,9 +32,11 @@ public class Diagnosis {
             name = "cases_diagnoses_link",
             joinColumns = {@JoinColumn(name="diagnosis_id")},
             inverseJoinColumns = {@JoinColumn(name = "case_id")})
+    @JsonManagedReference
     private List<CaseModel> cases;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name="category_id")
     private Categories categories;
 
@@ -44,7 +48,8 @@ public class Diagnosis {
         this.name = name;
         this.categories = category;
     }
-
+//    @JsonIgnore
+//    @JsonManagedReference
     // you need this when trying to stream through the list of cases from the diagnosis to print or manipulate
     public List<CaseModel> getCases() {
         if(cases == null){
@@ -52,4 +57,5 @@ public class Diagnosis {
         }
         return cases;
     }
+
 }

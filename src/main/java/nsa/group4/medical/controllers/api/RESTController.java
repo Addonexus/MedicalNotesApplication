@@ -1,7 +1,10 @@
 package nsa.group4.medical.controllers.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
+import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -37,11 +41,17 @@ public class RESTController {
     }
 
     @GetMapping("/getAllDiagnosis")
-    public List<Diagnosis> getDiagnoses(){
+    public @ResponseBody  List<Diagnosis> getDiagnoses(){
         log.debug("REST API RETURN: ");
         List<Diagnosis> returnedList = diagnosisService.getAllDiagnosis();
-        returnedList.stream().forEach(x-> System.out.println("Cases: " + x.getCases()));
-        return diagnosisService.getAllDiagnosis();
+        log.debug("Returned LIST: "+returnedList);
+//        for(Diagnosis diagnosis:returnedList){
+//            for(CaseModel caseModel: diagnosis.getCases()){
+//                caseModel.setDiagnosesList(null);
+//            }
+//        }
+//        returnedList.forEach(x-> x.getCases().forEach(y -> y.setDiagnosesList(new ArrayList<>())));
+        return returnedList;
 
     }
 

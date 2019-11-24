@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
 </head>
 <body>
 <div class="container">
     <br>
     chip:
-    <div class="chips chips-autocomplete chips-placeholder"></div>
+    <div class="chips chips-autocomplete chips-placeholder chips-initial"><i class="material-icons">close</i></div>
 
     <div class="btn">
         AHHH
@@ -23,26 +24,26 @@
 <script type="text/javascript">
     console.log('foo');
     $( document ).ready(function() {
-        $('.chips').material_chip();
-        $('.chips-initial').material_chip({
-            data: [{
-                tag: 'Apple',
-            }, {
-                tag: 'Microsoft',
-            }, {
-                tag: 'Google',
-            }],
-        });
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:8080/api/getAllDiagnosis',
+
+      success: function(response) {
+        var diagnosisArray = response;
+        var data = {};
+
+        for (var i = 0; i < diagnosisArray.length; i++) {
+          console.log(diagnosisArray[i].name);
+          data[diagnosisArray[i].name] =null;
+        }
         $('.chips-autocomplete').material_chip({
-            placeholder: 'Insert another tag',
-            secondaryPlaceholder: '+ Tag',
-            autocompleteData: {
-                'Apple': null,
-                'Microsoft': null,
-                'Google': null
-            }
+            autocompleteData: data
         });
+      }
+
     });
+  });
+
 </script>
 </body>
 </html>
