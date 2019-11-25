@@ -19,5 +19,5 @@ public interface DiagnosisRepositoryInterface {
     Diagnosis save(Diagnosis diagnosis);
 
 
-
+    List<Diagnosis> findAll();
 }

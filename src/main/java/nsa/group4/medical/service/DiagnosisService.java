@@ -48,4 +48,9 @@ public class DiagnosisService implements DiagnosisServiceInterface {
     public Diagnosis createDiagnosis(Diagnosis diagnosis) {
         return diagnosisRepository.save(diagnosis);
     }
+
+    @Override
+    public List<Diagnosis> findAll() {
+        return diagnosisRepository.findAll();
+    }
 }

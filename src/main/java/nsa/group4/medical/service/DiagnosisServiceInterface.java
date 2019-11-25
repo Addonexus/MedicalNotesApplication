@@ -13,9 +13,12 @@ public interface DiagnosisServiceInterface {
     Optional<Diagnosis> getCaseByDiagnosisName(String name);
     List<Diagnosis> findByCaseNameIn(Collection<String> names);
 
+
 //    List<Diagnosis> getByCategoryId(Long index);
 
     Optional<Diagnosis> getByDiagnosisId(Long index);
     List<Diagnosis> findByCategories(Categories categories);
     Diagnosis createDiagnosis(Diagnosis diagnosis);
+
+    List<Diagnosis> findAll();
 }
