@@ -38,3 +38,15 @@ CREATE TABLE IF NOT EXISTS `cases_diagnoses_link` (
   `case_id` INT NOT NULL,
   PRIMARY KEY (`diagnosis_id`, `case_id`))
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table  `Users`
+-- -----------------------------------------------------
+CREATE TABLE if not exists `user`
+(
+    `id`       int(11)      NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(45)  NOT NULL,
+    `password` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB;
