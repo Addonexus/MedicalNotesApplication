@@ -52,7 +52,7 @@ CREATE TABLE if not exists `user`
     ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table  `role`
--- -----------------------------------------------------      
+-- -----------------------------------------------------
 CREATE TABLE if not exists `role`
 (
     `id`     int(11)     NOT NULL AUTO_INCREMENT,
