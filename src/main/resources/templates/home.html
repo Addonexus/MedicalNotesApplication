@@ -134,6 +134,13 @@
               </a>
             </div>
           </div>
+          <div th:if="${#ctx.containsVariable('diagnosisInfoKey')}"
+               th:action="@{/home}">
+            <div th:if="${diagnosisInfoKey != null}"
+                 th:each="diagnosisInfo : ${diagnosisInfoKey}">
+              <p th:text="${diagnosisInfo.key}"></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
