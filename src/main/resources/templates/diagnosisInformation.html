@@ -7,7 +7,7 @@
 <body>
 
 <main>
-    <form method="post" th:action="@{/category/{categoryId}/diagnosis/{diagnosisId} (categoryID=${categoryIndex}, diagnosisID=${diagnosisIndex})" th:object="${diagnosisInfoKey}">
+    <form method="post" th:action="@{/category/{cat}/diagnosis/{dia}/addDiagnosisInfo (cat=${categoryIndex}, dia=${diagnosisIndex})}" th:object="${diagnosisInfoKey}">
         <div>
             <label th:for="key">Key</label>
 
