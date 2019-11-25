@@ -23,7 +23,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `diagnosis_info` (
   `diagnosis_id` INT UNSIGNED NOT NULL,
-  `key` INT UNSIGNED NOT NULL,
+  `key` VARCHAR(100) NOT NULL,
   `value` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`diagnosis_id`))
 ENGINE = InnoDB;
