@@ -50,3 +50,15 @@ CREATE TABLE if not exists `user`
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB;
+-- -----------------------------------------------------
+-- Table  `role`
+-- -----------------------------------------------------      
+CREATE TABLE if not exists `role`
+(
+    `id`     int(11)     NOT NULL AUTO_INCREMENT,
+    `userid` int(11)     NOT NULL,
+    `role`   varchar(45) NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB;
+
