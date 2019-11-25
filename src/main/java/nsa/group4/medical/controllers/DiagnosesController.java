@@ -1,5 +1,6 @@
 package nsa.group4.medical.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.Categories;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Controller
 public class DiagnosesController {
 
@@ -39,6 +41,22 @@ public class DiagnosesController {
 //        model.addAttribute("diagnoses", diagnoses);
 //        return "home";
 //    }
+
+
+    @GetMapping(path ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    public String addDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
+                                          @PathVariable(name="diagnosisIndex") Long diagnosisID,
+                                          Model model){
+
+        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryID);
+
+        if (!category.isPresent()){
+            return "404";
+        }
+
+        return "diagnosisInformation";
+    }
+
 
 
 
