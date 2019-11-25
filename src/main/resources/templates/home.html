@@ -57,10 +57,13 @@
         <div class="section-right">
           <center>
             <h3
-              th:if="${#ctx.containsVariable('diagnosisKey')}"
-              th:text="${diagnosisKey.categories.name}"
+              th:if="${#ctx.containsVariable('category')}"
+              th:text="${category.name}"
             ></h3>
-            <h3 th:if="${#ctx.containsVariable('returnedCases')}"></h3>
+            <h4 th:if="${#ctx.containsVariable('diagnosisName')}" th:text="${diagnosisName}"></h4>
+
+            <h3
+              th:if="${#ctx.containsVariable('diagnosisKey')}"></h3>
           </center>
 
           <div class="content-grid">

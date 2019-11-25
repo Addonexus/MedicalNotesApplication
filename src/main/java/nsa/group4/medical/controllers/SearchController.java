@@ -2,6 +2,7 @@ package nsa.group4.medical.controllers;
 
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
+import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
@@ -37,7 +38,27 @@ public class SearchController {
                 diagnosisContainingQuery.add(d);
             }
         }
-        model.addAttribute("data", diagnosisContainingQuery);
+
+        List<CaseModel> cases = caseService.findAll();
+        List<CaseModel> casesContainingQuery = new ArrayList<>();
+        for (CaseModel c : cases) {
+            if (c.getName().contains(q)) {
+                casesContainingQuery.add(c);
+            }
+        }
+
+        List<Categories> categoriesList = categoriesRepositoryJPA.findAll();
+        List<Categories> categoriesContainingQuery = new ArrayList<>();
+        for (Categories cat : categoriesList) {
+            if (cat.getName().contains(q)) {
+                categoriesContainingQuery.add(cat);
+            }
+        }
+
+        model.addAttribute("diagnoses", diagnosisContainingQuery);
+        model.addAttribute("cases", casesContainingQuery);
+        model.addAttribute("categories", categoriesContainingQuery);
+        model.addAttribute("query", q);
         System.out.println(q);
         return "searchPage";
 

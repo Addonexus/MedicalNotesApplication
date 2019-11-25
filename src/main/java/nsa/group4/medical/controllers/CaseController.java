@@ -157,6 +157,7 @@ public class CaseController {
         model.addAttribute("cases", recentCases);
         model.addAttribute("returnedCases", returnedCases);
         model.addAttribute("category", category.get());
+        model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
 
         return "home";
     }
