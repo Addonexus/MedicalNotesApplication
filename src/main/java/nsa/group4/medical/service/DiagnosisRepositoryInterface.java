@@ -17,6 +17,7 @@ public interface DiagnosisRepositoryInterface {
 //    List<Diagnosis> findByCategoryId(Long index);
     List<Diagnosis> findByCategories(Categories categories);
     Diagnosis save(Diagnosis diagnosis);
+    List<Diagnosis> findAll();
 
 
     List<Diagnosis> findAll();

@@ -1,5 +1,7 @@
 package nsa.group4.medical.controllers;
 
+import com.sun.istack.Nullable;
+import nsa.group4.medical.controllers.api.Form;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.Categories;
@@ -7,11 +9,13 @@ import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.DiagnosisRepositoryInterface;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,5 +64,13 @@ public class DiagnosesController {
             model.addAttribute("diagnoses", diagnoses);
             return "home";
         }
+    }
+
+    @GetMapping("ya")
+    public String ya(Model model) {
+
+
+        model.addAttribute("form", new Form());
+        return "testAutocompleteChips";
     }
 }

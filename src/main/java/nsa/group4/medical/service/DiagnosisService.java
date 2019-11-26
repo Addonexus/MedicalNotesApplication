@@ -50,6 +50,11 @@ public class DiagnosisService implements DiagnosisServiceInterface {
     }
 
     @Override
+    public List<Diagnosis> getAllDiagnosis() {
+        return diagnosisRepository.findAll();
+    }
+
+    @Override
     public List<Diagnosis> findAll() {
         return diagnosisRepository.findAll();
     }

@@ -22,4 +22,8 @@ public interface DiagnosisServiceInterface {
     List<Diagnosis> findAll();
 
     Optional<Diagnosis> findById(Long diagnosisId);
+
+
+    List<Diagnosis> getAllDiagnosis();
+
 }
