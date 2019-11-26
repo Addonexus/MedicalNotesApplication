@@ -163,11 +163,13 @@
           var grid = document.getElementById("content-grid");
           for (i = 0; i < data.length; i++) {
             console.log("diagnosis:" + data[i]);
-            var b = document.createElement("a");
+            var a = document.createElement("a");
+            var b = document.createElement("button");
+            a.setAttribute("href", "/diagnosis/" + data[i].id);
             b.appendChild(document.createTextNode(data[i].name));
-            b.setAttribute("href", "/diagnosis/" + data[i].id);
             b.setAttribute("class", "btn content-item")
-            grid.appendChild(b);
+            a.appendChild(b);
+            grid.appendChild(a);
             // var li = document.createElement("a");
             // li.appendChild(document.createTextNode(data[i].name));
             // li.setAttribute("id", data[i].id);

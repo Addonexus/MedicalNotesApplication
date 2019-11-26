@@ -138,26 +138,25 @@ public class CaseController {
         return "404";
     }
 
-    @GetMapping(path ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}")
-    public String getCases(@PathVariable(name="categoryIndex") Long categoryId,
-                           @PathVariable(name="diagnosisIndex") Long diagnosisId,
+    @GetMapping(path ="diagnosis/{diagnosisIndex}")
+    public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
                            Model model){
 
         List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
         List<CaseModel> recentCases = caseService.findAll();
-        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
+//        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
         log.debug("CASES: " + returnedCases);
 
         log.debug("CASES 2: " + recentCases);
-        log.debug("CAT: " + category);
+//        log.debug("CAT: " + category);
 
-        if(!category.isPresent()){
-            return "404";
-        }
+//        if(!category.isPresent()){
+//            return "404";
+//        }
 
         model.addAttribute("cases", recentCases);
         model.addAttribute("returnedCases", returnedCases);
-        model.addAttribute("category", category.get());
+//        model.addAttribute("category", category.get());
         model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
 
         return "home";
