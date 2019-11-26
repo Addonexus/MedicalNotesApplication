@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -66,7 +67,7 @@ public class RESTController {
 //    @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/saveDiagnosis", method = POST, produces = "application/json")
 //    @ResponseStatus(value = HttpStatus.OK)
-    public ResponseEntity<?> getAnson(@Valid @RequestBody Form formData, Errors bindingResult) throws JsonProcessingException {
+    public @ResponseBody ResponseEntity<?> getAnson(@Valid @RequestBody Form formData, Errors bindingResult) {
         ObjectMapper mapper = new ObjectMapper();
         System.out.println("Rerturned DATA:" +formData);
 //        for (String name: formData.get
@@ -85,18 +86,25 @@ public class RESTController {
         AjaxResponseBody result = new AjaxResponseBody();
         if (bindingResult.hasErrors()) {
             log.debug("BINDING ERROS" + bindingResult.toString());
+            //refactoring how error is returned
+            result.setStatus("FAIL");
+            List<FieldError> allErrors = bindingResult.getFieldErrors();
+            List<DiagnosisFieldsError> errorMessages = new ArrayList<>();
 
-            // get all errors
-            result.setMsg(bindingResult.getAllErrors()
-                    .stream()
-                    .map(x -> x.getDefaultMessage())
-                    .collect(Collectors.joining(",")));
+            for (FieldError objectError : allErrors) {
+                errorMessages.add(new DiagnosisFieldsError(objectError.getField(), objectError.getField() + "  " + objectError.getDefaultMessage()));
+            }
+            result.setResult(errorMessages);
 
+            log.debug("RETURNED ERRORS: " + result);
             return ResponseEntity.badRequest().body(result);
 
         }
-        result.setMsg("success");
-        return ResponseEntity.ok(result);
+        else {
+        result.setStatus("SUCCESS");
+            return ResponseEntity.ok(result);
+        }
+
     }
 
 }
