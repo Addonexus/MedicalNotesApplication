@@ -57,9 +57,10 @@
         <div class="section-right">
           <center>
             <h3
+              id="categoryName"
               th:if="${#ctx.containsVariable('category')}"
               th:text="${category.name}"
-            ></h3>
+            >helpme</h3>
             <h4 th:if="${#ctx.containsVariable('diagnosisName')}" th:text="${diagnosisName}"></h4>
 
             <h3
@@ -69,17 +70,14 @@
           <div class="content-grid">
             <form
               th:if="${#ctx.containsVariable('diagnosisKey')}"
-              th:action="@{/category/{id}(id=${diagnosisKey.categories.id})}"
-              method="post"
-              th:object="${diagnosisKey}"
-              class="content-item"
+              id="createDiagnosis"
             >
               <input
                 placeholder="New Diagnosis"
-                th:field="*{name}"
+                id="diagnosisName"
                 type="text"
               />
-              <button class="go-away" type="submit">
+              <button class="go-away" id="submit" type="submit">
                 New Diagnosis
               </button>
             </form>
@@ -107,7 +105,8 @@
               </button>
             </a>
 
-            <button
+            
+            <!-- <button
               class="btn content-item"
               th:if="${diagnoses !=null}"
               th:each="diagnosis : ${diagnoses}"
@@ -115,7 +114,7 @@
               <a th:href="@{/category/{categoryIndex}/diagnosis/{diagnosisIndex}(diagnosisIndex=${diagnosis.id}, categoryIndex=${category.Id})}">
                 <b th:text="${diagnosis.name}"></b>
               </a>
-            </button>
+            </button> -->
             <div
               class="content-item"
               th:if="${returnedCases !=null}"
@@ -154,6 +153,37 @@
             listOfCases.appendChild(li);
           }
         });
+        
+        $("#createDiagnosis").submit(function(e) {
+          console.log("please work");
+          e.preventDefault();
+
+          var $form = $(this);
+          var url = "/api/createDiagnosis/";
+          
+          var formData = {
+            "name" : document.getElementById("diagnosisName").value,
+            "categoryName" : document.getElementById("categoryName").innerHTML
+          }
+
+          console.log(formData);
+
+          $.ajax({
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+            type : "POST",
+            url: url,
+            data: JSON.stringify(formData),
+
+            // success: function(data) {
+            //   console.log(data);
+            // },
+
+            // error : function(e) {
+            //   console.log(e);
+            // }
+          })
+        })
       })
     </script>
   </body>

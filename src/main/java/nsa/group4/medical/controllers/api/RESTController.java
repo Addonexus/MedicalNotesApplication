@@ -1,22 +1,12 @@
 package nsa.group4.medical.controllers.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
-import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Diagnosis;
-import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
-import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
-import org.apache.catalina.User;
-import org.apache.catalina.mapper.Mapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -107,5 +96,15 @@ public class RESTController {
 
     }
 
+    @PostMapping(value = "/createDiagnosis", produces = "application/json")
+    public @ResponseBody String saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
+        System.out.println(formData.get("name"));
+        System.out.println(formData.get("categoryName"));
+        diagnosisService.createDiagnosis(new Diagnosis(
+                                        formData.get("name"),
+                                        categoriesRepository.findByName(formData.get("categoryName")).get()
+                                        ));
+        return "NUGGET";
+    }
 }
 

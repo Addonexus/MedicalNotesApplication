@@ -26,4 +26,5 @@ public interface DiagnosisServiceInterface {
 
     List<Diagnosis> getAllDiagnosis();
 
+    Optional<Diagnosis> findByName(String name);
 }
