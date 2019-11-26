@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -192,5 +193,11 @@ public class CaseController {
             model.addAttribute("categories", categories);
             return "home";
         }
+    }
+
+    @GetMapping("/recentCases")
+    public @ResponseBody List<String> getRecentCases() {
+        List<String> recentCases = caseService.findAll().stream().map(x->x.getName()).collect(Collectors.toList());
+        return recentCases;
     }
 }

@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `cases` (
   `name` VARCHAR(100) NOT NULL,
   `demographics` VARCHAR(100) NOT NULL,
   `notes` VARCHAR(100) NULL,
+  `date_created` DATETIME NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- -----------------------------------------------------
