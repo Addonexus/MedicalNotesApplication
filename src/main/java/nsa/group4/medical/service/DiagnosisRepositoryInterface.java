@@ -18,7 +18,4 @@ public interface DiagnosisRepositoryInterface {
     List<Diagnosis> findByCategories(Categories categories);
     Diagnosis save(Diagnosis diagnosis);
     List<Diagnosis> findAll();
-
-
-    List<Diagnosis> findAll();
 }

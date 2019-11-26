@@ -196,8 +196,7 @@ public class CaseController {
     }
 
     @GetMapping("/recentCases")
-    public @ResponseBody List<String> getRecentCases() {
-        List<String> recentCases = caseService.findAll().stream().map(x->x.getName()).collect(Collectors.toList());
-        return recentCases;
+    public @ResponseBody List<CaseModel> getRecentCases() {
+        return caseService.findAllByOrderByCreationDate();
     }
 }

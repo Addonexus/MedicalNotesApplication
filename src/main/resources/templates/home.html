@@ -101,11 +101,12 @@
               </button>
             </form>
 
-            <button class="btn content-item" th:each="category : ${categories}">
-              <a th:href="@{/category/{id}(id=${category.id})}">
-                <b th:text="${category.name}"></b>
-              </a>
-            </button>
+            <a th:each="category : ${categories}" th:href="@{/category/{id}(id=${category.id})}">
+              <button class="btn content-item">
+                  <b th:text="${category.name}"></b>
+              </button>
+            </a>
+
             <button
               class="btn content-item"
               th:if="${diagnoses !=null}"
@@ -138,12 +139,20 @@
       AOS.init();
     </script>
     <script>
-      console.log("hi")
+      console.log("hi");
       $(document).ready(function() {
-        $.get("recentCases", function(data) {
+        $.get("/recentCases/", function(data) {
           $(".result").html(data);
-          alert("Load was performed");
           console.log(data);
+          var listOfCases = document.getElementById("recentCases");
+          for (i = 0; i < data.length; i++) {
+            var li = document.createElement("a");
+            li.appendChild(document.createTextNode(data[i].name));
+            li.setAttribute("id", data[i].id);
+            li.setAttribute("class", "collection-item");
+            li.setAttribute("href", "case/" + data[i].id);
+            listOfCases.appendChild(li);
+          }
         });
       })
     </script>

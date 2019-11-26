@@ -63,6 +63,6 @@ public class CaseModel {
     }
 
     @Column(name = "date_created")
-    private LocalDateTime donationDate;
+    private LocalDateTime creationDate;
 
 }
