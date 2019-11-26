@@ -25,7 +25,7 @@ public class User {
 
     @ManyToMany
     private Set<Role> roles;
-    
+
 
 
 }
