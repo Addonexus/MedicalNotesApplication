@@ -54,4 +54,9 @@ public class CaseService implements CaseServiceInterface {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public List<CaseModel> findAllByOrderByCreationDate() {
+        return caseRepository.findAllByOrderByCreationDate();
+    }
 }

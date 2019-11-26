@@ -1,6 +1,5 @@
 package nsa.group4.medical.controllers;
 
-import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
@@ -13,12 +12,14 @@ import nsa.group4.medical.web.DiagnosisInformationForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -114,5 +115,13 @@ public class DiagnosesController {
             model.addAttribute("diagnoses", diagnoses);
             return "home";
         }
+    }
+
+    @GetMapping("ya")
+    public String ya(Model model) {
+
+
+        model.addAttribute("form", new Form());
+        return "testAutocompleteChips";
     }
 }

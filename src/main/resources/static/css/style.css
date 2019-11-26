@@ -102,3 +102,14 @@ input[type="text"]:not(.browser-default) {
 input {
   height: 50px;
 }
+
+.create-item-form {
+  width: 40%;
+  margin-left: 20%;
+}
+
+.create-item-input {
+  width: 20px;
+  left: 20%; 
+  position: relative;
+}

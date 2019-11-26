@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -144,27 +145,28 @@ public class CaseController {
         return "404";
     }
 
-    @GetMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}")
-    public String getCases(@PathVariable(name="categoryIndex") Long categoryId,
-                           @PathVariable(name="diagnosisIndex") Long diagnosisId,
+    @GetMapping(path ="diagnosis/{diagnosisIndex}")
+    public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
                            Model model){
 
         List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
         List<CaseModel> recentCases = caseService.findAll();
-        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
+//        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
         log.debug("CASES: " + returnedCases);
 
         log.debug("CASES 2: " + recentCases);
-        log.debug("CAT: " + category);
+//        log.debug("CAT: " + category);
 
-        if(!category.isPresent()){
-            return "404";
-        }
+//        if(!category.isPresent()){
+//            return "404";
+//        }
 
         List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
 
         model.addAttribute("cases", recentCases);
         model.addAttribute("returnedCases", returnedCases);
+        model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
+//        model.addAttribute("category", category.g());
         model.addAttribute("category", category.get());
         model.addAttribute("returnedDiagnosisInfo", diagnosisInformations);
         model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
@@ -202,5 +204,10 @@ public class CaseController {
             model.addAttribute("categories", categories);
             return "home";
         }
+    }
+
+    @GetMapping("/recentCases")
+    public @ResponseBody List<CaseModel> getRecentCases() {
+        return caseService.findAllByOrderByCreationDate();
     }
 }

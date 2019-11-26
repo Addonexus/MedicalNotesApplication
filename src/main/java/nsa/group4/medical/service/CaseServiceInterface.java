@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-@Component
 public interface CaseServiceInterface {
     Optional<CaseModel> findByCaseName(String caseName);
     Optional<CaseModel> findByCaseId(Long Id);
@@ -14,4 +13,6 @@ public interface CaseServiceInterface {
     List<CaseModel> findAll();
 
     List<CaseModel> findCasesByDiagnosisId(Long index);
+
+    List<CaseModel> findAllByOrderByCreationDate();
 }
