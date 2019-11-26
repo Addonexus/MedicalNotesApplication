@@ -23,6 +23,9 @@ public class User {
 
     private String password;
 
+    @Transient
+    private String passwordConfirm;
+
     @ManyToMany
     private Set<Role> roles;
 
