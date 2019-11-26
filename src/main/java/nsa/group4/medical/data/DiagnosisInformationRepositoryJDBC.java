@@ -1,6 +1,8 @@
 package nsa.group4.medical.data;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.domains.DiagnosisInformation;
+import nsa.group4.medical.domains.rowmappers.DiagnosisInformationRowmapper;
 import nsa.group4.medical.service.DiagnosisInformationRepositoryInterface;
 import nsa.group4.medical.service.events.DiagnosisInformationAdded;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 @Slf4j
 @Repository
@@ -57,5 +60,13 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                 },
                 holder);
         return holder.getKey().longValue();
+    }
+
+    public List<DiagnosisInformation> getDiagnosisInformationByDiagnosisId(Integer index){
+        return jdbcTemplate.query("SELECT * FROM diagnosis_info WHERE diagnosis_id = ?",
+                preparedStatement ->
+                {
+                    preparedStatement.setInt(1, index);
+                }, new DiagnosisInformationRowmapper());
     }
 }
