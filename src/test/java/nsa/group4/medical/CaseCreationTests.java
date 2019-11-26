@@ -60,7 +60,7 @@ public class CaseCreationTests {
 
     @Test(expected = ConstraintViolationException.class)
     public void formDataValid() {
-        caseController.caseAdded(new CaseForm(), null, null);
+        caseController.caseAdded(Long.valueOf(1), new CaseForm(), null, null);
     }
 
     @Test
