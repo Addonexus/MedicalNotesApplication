@@ -62,9 +62,6 @@
               th:text="${category.name}"
             >helpme</h3>
             <h4 th:if="${#ctx.containsVariable('diagnosisName')}" th:text="${diagnosisName}"></h4>
-
-            <h3
-              th:if="${#ctx.containsVariable('diagnosisKey')}"></h3>
           </center>
 
           <form

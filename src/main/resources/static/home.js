@@ -5,49 +5,30 @@ console.log("Window URL: " + windowUrl);
 // Show recent cases false by default
 var showRecentCases = false;
 
-if(windowUrl.pathname.includes("category")) {
-  showRecentCases = true;
-}
-
 $(document).ready(function() {
-  $.get("/recentCases/", function(data) {
-    $(".result").html(data);
-    console.log(data);
-    var listOfCases = document.getElementById("recentCases");
-    for (i = 0; i < data.length; i++) {
-      var li = document.createElement("a");
-      li.appendChild(document.createTextNode(data[i].name));
-      li.setAttribute("id", data[i].id);
-      li.setAttribute("class", "collection-item");
-      li.setAttribute("href", "/case/" + data[i].id);
-      listOfCases.appendChild(li);
-    }
-  });
-
-  refreshListOfDiagnoses();
   
-  $("#createDiagnosis").submit(function(e) {
-    e.preventDefault();
+  if(windowUrl.pathname.includes("category")) {
 
-    var $form = $(this);
-    var url = "/api/createDiagnosis/";
-    
-    var formData = {
-      "name" : document.getElementById("diagnosisName").value,
-      "categoryName" : document.getElementById("categoryName").innerHTML
-    }
+    showRecentCases = true;
 
-    $.ajax({
-      contentType : 'application/json; charset=utf-8',
-      dataType : 'json',
-      type : "POST",
-      url: url,
-      data: JSON.stringify(formData),
-    })
-
+    // Refresh the list / grid of diagnoses
     refreshListOfDiagnoses();
     
-  })
+    // Check if category form is posted
+    lookForCategoryFormPost();
+  }
+
+  if (windowUrl.pathname.includes("home")) {
+    showRecentCases = true;
+  }
+
+  if (windowUrl.pathname.includes("diagnosis")) {
+    showRecentCases = true;
+  }
+
+  if (showRecentCases) {
+    getRecentCases();
+  }
 })
 
 function refreshListOfDiagnoses() {
@@ -77,4 +58,43 @@ function refreshListOfDiagnoses() {
       }
     });
   }
+}
+
+function getRecentCases() {
+  $.get("/recentCases/", function(data) {
+    $(".result").html(data);
+    console.log(data);
+    var listOfCases = document.getElementById("recentCases");
+    for (i = 0; i < data.length; i++) {
+      var li = document.createElement("a");
+      li.appendChild(document.createTextNode(data[i].name));
+      li.setAttribute("id", data[i].id);
+      li.setAttribute("class", "collection-item");
+      li.setAttribute("href", "/case/" + data[i].id);
+      listOfCases.appendChild(li);
+    }
+  });
+}
+
+function lookForCategoryFormPost() {
+  $("#createDiagnosis").submit(function(e) {
+    e.preventDefault();
+
+    var $form = $(this);
+    var url = "/api/createDiagnosis/";
+    
+    var formData = {
+      "name" : document.getElementById("diagnosisName").value,
+      "categoryName" : document.getElementById("categoryName").innerHTML
+    }
+
+    $.ajax({
+      contentType : 'application/json; charset=utf-8',
+      dataType : 'json',
+      type : "POST",
+      url: url,
+      data: JSON.stringify(formData),
+    })
+    refreshListOfDiagnoses();
+  })
 }
