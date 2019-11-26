@@ -53,7 +53,7 @@ public class DiagnosesController {
 //        return "home";
 //    }
 
-    @PostMapping(path ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    @PostMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
     public String saveDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
                                            @PathVariable(name="diagnosisIndex") Long diagnosisID,
                                            @ModelAttribute("diagnosisInfoKey") @Valid DiagnosisInformationForm diagnosisInformationForm,
@@ -77,7 +77,7 @@ public class DiagnosesController {
     }
 
 
-    @GetMapping(path ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    @GetMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
     public String addDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
                                           @PathVariable(name="diagnosisIndex") Long diagnosisID,
                                           Model model){

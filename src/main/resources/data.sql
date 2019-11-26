@@ -66,4 +66,4 @@ insert into cases_diagnoses_link (case_id, diagnosis_id) values (18,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (19,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (20,1);
 
-
+insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'oke', 'hm');

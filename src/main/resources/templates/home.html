@@ -130,6 +130,7 @@
             <div th:if="${returnedDiagnosisInfo != null}"
                  th:each="diagnosisInfo : ${returnedDiagnosisInfo}">
               <p th:text="${diagnosisInfo.key}"></p>
+              <p th:text="${diagnosisInfo.value}"></p>
             </div>
           </div>
         </div>

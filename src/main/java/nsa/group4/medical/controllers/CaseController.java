@@ -144,7 +144,7 @@ public class CaseController {
         return "404";
     }
 
-    @GetMapping(path ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}")
+    @GetMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}")
     public String getCases(@PathVariable(name="categoryIndex") Long categoryId,
                            @PathVariable(name="diagnosisIndex") Long diagnosisId,
                            Model model){
