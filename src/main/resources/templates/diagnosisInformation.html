@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Diagnosis Information</title>
+</head>
+<body>
+
+<main>
+    <form method="post" th:action="@{/category/{cat}/diagnosis/{dia}/addDiagnosisInfo (cat=${categoryIndex}, dia=${diagnosisIndex})}" th:object="${diagnosisInfoKey}">
+        <div>
+            <label th:for="key">Key</label>
+
+            <input aria-describedby="Enter the key"
+                   th:field="*{key}"
+                   type="text"/>
+
+            <div th:errors="*{key}"
+                 th:if="${#fields.hasErrors('key')}">
+                Key Error
+            </div>
+        </div>
+
+        <div>
+            <label th:for="value">Value</label>
+
+            <input aria-describedby="Enter the value"
+                   th:field="*{value}"
+                   type="text"/>
+
+            <div th:errors="*{value}"
+                 th:if="${#fields.hasErrors('value')}">
+                Value Error
+            </div>
+        </div>
+
+        <button id="submit" type="submit">Add Diagnosis Info</button>
+    </form>
+</main>
+
+</body>
+</html>

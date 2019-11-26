@@ -20,5 +20,5 @@ public interface DiagnosisRepositoryInterface {
     List<Diagnosis> findAll();
 
 
-
+    List<Diagnosis> findAll();
 }

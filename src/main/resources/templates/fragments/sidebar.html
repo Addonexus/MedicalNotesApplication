@@ -1,0 +1,22 @@
+
+<div th:fragment="sidebar-button" >
+    <a th:href="@{/category/{id}/createNewCase(id=${category.id})}">
+        <div class="btn white black-text">
+            New case
+        </div>
+    </a>
+</div>
+
+<div th:fragment="sidebar-no-button" style="padding: 15px; color: white;">
+    <b>To create a new case, please enter a category or diagnosis</b>
+</div>
+
+    <ul class="collection" th:fragment="sidebar-items">
+        <a href="#!" class="collection-item" th:each="case : ${cases}">
+            <span th:text="${case.name}"></span>
+        </a>
+    </ul>
+
+
+
+

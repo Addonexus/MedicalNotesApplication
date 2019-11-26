@@ -19,6 +19,16 @@ CREATE TABLE IF NOT EXISTS `diagnoses` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- -----------------------------------------------------
+-- Table `diagnosis_information`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `diagnosis_info` (
+  `diagnosis_id` INT UNSIGNED NOT NULL,
+  `key` VARCHAR(100) NOT NULL,
+  `value` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`diagnosis_id`))
+ENGINE = InnoDB;
+-- ---------------
+-- -----------------------------------------------------
 -- Table `cases`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cases` (
