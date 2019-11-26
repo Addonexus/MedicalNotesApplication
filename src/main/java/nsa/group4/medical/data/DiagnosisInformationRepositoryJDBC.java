@@ -62,11 +62,11 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
         return holder.getKey().longValue();
     }
 
-    public List<DiagnosisInformation> getDiagnosisInformationByDiagnosisId(Integer index){
+    public List<DiagnosisInformation> getDiagnosisInformationByDiagnosisId(Long index){
         return jdbcTemplate.query("SELECT * FROM diagnosis_info WHERE diagnosis_id = ?",
                 preparedStatement ->
                 {
-                    preparedStatement.setInt(1, index);
+                    preparedStatement.setLong(1, index);
                 }, new DiagnosisInformationRowmapper());
     }
 }

@@ -5,10 +5,12 @@ package nsa.group4.medical.controllers;
 //import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
+import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
+import nsa.group4.medical.domains.DiagnosisInformation;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
 import nsa.group4.medical.web.CaseForm;
@@ -45,11 +47,15 @@ public class CaseController {
 
     private CategoriesRepositoryJPA categoriesRepositoryJPA;
 
+    private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
+
     public CaseController(CaseServiceInterface caseService, DiagnosisServiceInterface diagnosisService,
-                          CategoriesRepositoryJPA categoriesRepositoryJPA){
+                          CategoriesRepositoryJPA categoriesRepositoryJPA,
+                          DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC){
         this.caseService = caseService;
         this.diagnosisService = diagnosisService;
         this.categoriesRepositoryJPA = categoriesRepositoryJPA;
+        this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
 
     }
 
@@ -155,9 +161,12 @@ public class CaseController {
             return "404";
         }
 
+        List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
+
         model.addAttribute("cases", recentCases);
         model.addAttribute("returnedCases", returnedCases);
         model.addAttribute("category", category.get());
+        model.addAttribute("returnedDiagnosisInfo", diagnosisInformations);
 
         return "home";
     }

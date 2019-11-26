@@ -134,10 +134,10 @@
               </a>
             </div>
           </div>
-          <div th:if="${#ctx.containsVariable('diagnosisInfoKey')}"
+          <div th:if="${#ctx.containsVariable('returnedDiagnosisInfo')}"
                th:action="@{/home}">
-            <div th:if="${diagnosisInfoKey != null}"
-                 th:each="diagnosisInfo : ${diagnosisInfoKey}">
+            <div th:if="${returnedDiagnosisInfo != null}"
+                 th:each="diagnosisInfo : ${returnedDiagnosisInfo}">
               <p th:text="${diagnosisInfo.key}"></p>
             </div>
           </div>
