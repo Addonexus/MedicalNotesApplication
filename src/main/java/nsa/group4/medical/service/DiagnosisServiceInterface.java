@@ -19,8 +19,6 @@ public interface DiagnosisServiceInterface {
     List<Diagnosis> findByCategories(Categories categories);
     Diagnosis createDiagnosis(Diagnosis diagnosis);
 
-    List<Diagnosis> findAll();
-
     Optional<Diagnosis> findById(Long diagnosisId);
 
 
@@ -28,5 +26,5 @@ public interface DiagnosisServiceInterface {
 
     Optional<Diagnosis> findByName(String name);
 
-    List<Diagnosis> getAll();
+    List<Diagnosis> findAll();
 }

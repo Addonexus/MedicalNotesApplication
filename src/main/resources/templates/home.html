@@ -65,41 +65,38 @@
           </center>
 
           <form
-          th:if="${#ctx.containsVariable('diagnosisKey')}"
-          id="createDiagnosis"
-          style="width: 100%"
+            th:if="${#ctx.containsVariable('diagnosisKey')}"
+            id="createDiagnosis"
+            class="create-item-form">
+            <input
+              placeholder="New Diagnosis"
+              id="diagnosisName"
+              type="text"
+              class="create-item-input"/>
+            <button class="go-away" id="submit" type="submit">
+              New Diagnosis
+            </button>
+          </form>
 
+          <form
+          th:if="${#ctx.containsVariable('categoryKey')}"
+          th:action="@{/home}"
+          method="post"
+          th:object="${categoryKey}"
+          class="create-item-form"
         >
           <input
-            placeholder="New Diagnosis"
-            id="diagnosisName"
+            placeholder="New Category"
+            th:field="*{name}"
             type="text"
-            style="width: 60%; left: 20%; position: relative"
+            class="create-item-input"
           />
-          <button class="go-away" id="submit" type="submit" onSubmit="refreshList()">
-            New Diagnosis
+          <button class="go-away" id="submit" type="submit">
+            New Category
           </button>
         </form>
 
           <div class="content-grid" id="content-grid">
-
-            <form
-              th:if="${#ctx.containsVariable('categoryKey')}"
-              th:action="@{/home}"
-              method="post"
-              th:object="${categoryKey}"
-              class="content-item"
-            >
-              <input
-                placeholder="New Category"
-                th:field="*{name}"
-                type="text"
-              />
-              <button class="go-away" id="submit" type="submit">
-                New Category
-              </button>
-            </form>
-
             <br>
             <br>
             <br>

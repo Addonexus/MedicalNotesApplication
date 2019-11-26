@@ -17,9 +17,4 @@ public interface DiagnosisRepositoryJPA extends DiagnosisRepositoryInterface,Jpa
     Optional<Diagnosis>findByName(String name);
     List<Diagnosis> findByNameIn(Collection<String> names);
 
-    @Override
-    default List<Diagnosis> findAll() {
-        return null;
-    }
-
 }

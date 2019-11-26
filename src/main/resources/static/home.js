@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     showRecentCases = true;
 
-    // Refresh the list / grid of diagnoses
+    // Refresh / get the list / grid of diagnoses
     refreshListOfDiagnoses();
     
     // Check if category form is posted
@@ -32,7 +32,6 @@ $(document).ready(function() {
 })
 
 function refreshListOfDiagnoses() {
-
   var grid = document.getElementById("content-grid");
 
   while(grid.firstChild){

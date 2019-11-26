@@ -3,6 +3,7 @@ package nsa.group4.medical.controllers.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
+import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseServiceInterface;
@@ -27,16 +28,18 @@ public class RESTController {
     private CaseServiceInterface caseServiceInterface;
     private CategoriesRepositoryJPA categoriesRepository;
     private DiagnosisServiceInterface diagnosisService;
+    private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
 
 
     public RESTController(CaseServiceInterface caseServiceInterface,
                           CategoriesRepositoryJPA categoriesRepository,
-                          DiagnosisServiceInterface diagnosisService
+                          DiagnosisServiceInterface diagnosisService,
+                          DiagnosisRepositoryJPA diagnosisRepositoryJPA
                           ){
         this.caseServiceInterface =caseServiceInterface;
         this.categoriesRepository=categoriesRepository;
         this.diagnosisService=diagnosisService;
-
+        this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
 
     }
 
@@ -111,5 +114,20 @@ public class RESTController {
                                         ));
         return "NUGGET";
     }
-}
+
+    @GetMapping("/getAllDiagnosis")
+    public @ResponseBody List<Diagnosis> getDiagnoses(){
+            log.debug("REST API RETURN: ");
+            List<Diagnosis> returnedList = diagnosisRepositoryJPA.findAll();
+
+            log.debug("Returned LIST: "+returnedList);
+//        for(Diagnosis diagnosis:returnedList){
+//            for(CaseModel caseModel: diagnosis.getCases()){
+//        }
+//        returnedList.forEach(x-> x.getCases().forEach(y -> y.setDiagnosesList(new ArrayList<>())));
+            return returnedList;
+
+        }
+
+    }
 
