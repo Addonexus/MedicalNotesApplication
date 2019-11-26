@@ -16,14 +16,17 @@
     <div class="container">
       <br />
       <form id="submitDiagnoses" method="post" th:object="${form}">
-        chip:
         <div id="diagnoses" class="chips chips-autocomplete chips-placeholder chips-initial">
           <i class="material-icons">close</i>
+
         </div>
+        <span class="diagnoses error"></span>
+
+
 
 
         <input type="submit" class="btn">
-        </input>
+
       </form>
     </div>
 
@@ -83,10 +86,23 @@
             // data:JSON.stringify($('#diagnoses').material_chip('data')),
             data:JSON.stringify(formData),
             success: function(data) {
-              alert('HERE' + data); // show response from the php script.
+              // alert('HERE' + data); // show response from the php script.
+                console.log("SUCESS" +data);
             },
             error : function(e) {
-              alert('Error: ' + e);
+                console.log('Request Status: ' + e.status + ' Status Text: ' + e.statusText + ' ' + ' Response Text: ' + e.responseText);
+                var obj = JSON.parse(e.responseText);
+                for (i = 0; i < obj.result.length; i++) {
+                    var item = obj.result[i];
+                    console.log("LOGGED FIELD NAME: " + item.fieldName);
+                    console.log("LOGGED Message: " + item.errorMessage);
+                    var field = document.getElementsByClassName(item.fieldName)[0];
+                    console.log("FIELD " + field);
+                    field.innerHTML = item.errorMessage;
+
+                }
+                console.log("PARSED obj: " + obj.result.length);
+
             }
           });
         });
