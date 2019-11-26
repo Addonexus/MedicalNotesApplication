@@ -67,7 +67,7 @@
               th:if="${#ctx.containsVariable('diagnosisKey')}"></h3>
           </center>
 
-          <div class="content-grid">
+          <div class="content-grid" id="content-grid">
             <form
               th:if="${#ctx.containsVariable('diagnosisKey')}"
               id="createDiagnosis"
@@ -104,7 +104,6 @@
                   <b th:text="${category.name}"></b>
               </button>
             </a>
-
             
             <!-- <button
               class="btn content-item"
@@ -115,6 +114,7 @@
                 <b th:text="${diagnosis.name}"></b>
               </a>
             </button> -->
+
             <div
               class="content-item"
               th:if="${returnedCases !=null}"
@@ -149,8 +149,31 @@
             li.appendChild(document.createTextNode(data[i].name));
             li.setAttribute("id", data[i].id);
             li.setAttribute("class", "collection-item");
-            li.setAttribute("href", "case/" + data[i].id);
+            li.setAttribute("href", "/case/" + data[i].id);
             listOfCases.appendChild(li);
+          }
+        });
+
+        console.log(window.location);
+        lastInt = window.location.pathname[window.location.pathname.length-1];
+
+        $.get("/api/getDiagnosisByCategoryId/" + lastInt, function(data) {
+          $(".result").html(data);
+          console.log(data);
+          var grid = document.getElementById("content-grid");
+          for (i = 0; i < data.length; i++) {
+            console.log("diagnosis:" + data[i]);
+            var b = document.createElement("a");
+            b.appendChild(document.createTextNode(data[i].name));
+            b.setAttribute("href", "/diagnosis/" + data[i].id);
+            b.setAttribute("class", "btn content-item")
+            grid.appendChild(b);
+            // var li = document.createElement("a");
+            // li.appendChild(document.createTextNode(data[i].name));
+            // li.setAttribute("id", data[i].id);
+            // li.setAttribute("class", "collection-item");
+            // li.setAttribute("href", "case/" + data[i].id);
+            // listOfCases.appendChild(li);
           }
         });
         

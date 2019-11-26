@@ -3,6 +3,7 @@ package nsa.group4.medical.controllers.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
+import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
@@ -39,10 +40,11 @@ public class RESTController {
 
     }
 
-    @GetMapping("/getAllDiagnosis")
-    public @ResponseBody  List<Diagnosis> getDiagnoses(){
+    @GetMapping("/getDiagnosisByCategoryId/{index}")
+    public @ResponseBody  List<Diagnosis> getDiagnoses(@PathVariable Long index){
         log.debug("REST API RETURN: ");
-        List<Diagnosis> returnedList = diagnosisService.getAllDiagnosis();
+        Categories categories = categoriesRepository.findById(index).get();
+        List<Diagnosis> returnedList = diagnosisService.findByCategories(categories);
         log.debug("Returned LIST: "+returnedList);
 //        for(Diagnosis diagnosis:returnedList){
 //            for(CaseModel caseModel: diagnosis.getCases()){
@@ -51,8 +53,11 @@ public class RESTController {
 //        }
 //        returnedList.forEach(x-> x.getCases().forEach(y -> y.setDiagnosesList(new ArrayList<>())));
         return returnedList;
-
     }
+
+//    @GetMapping("/getDiagnosisByCategoryId")
+//    public @ResponseBody
+
 //    @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/saveDiagnosis", method = POST, produces = "application/json")
 //    @ResponseStatus(value = HttpStatus.OK)
