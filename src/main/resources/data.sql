@@ -66,4 +66,6 @@ insert into cases_diagnoses_link (case_id, diagnosis_id) values (18,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (19,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (20,1);
 
-insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'oke', 'hm');
+insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_1', 'sample_data_1');
+insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_2', 'sample_data_2');
+insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_3', 'sample_data_3');
