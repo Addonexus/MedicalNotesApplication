@@ -1,6 +1,7 @@
 package nsa.group4.medical.controllers;
 
 import com.sun.istack.Nullable;
+import nsa.group4.medical.controllers.api.Form;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.Categories;
@@ -66,7 +67,10 @@ public class DiagnosesController {
     }
 
     @GetMapping("ya")
-    public String ya() {
+    public String ya(Model model) {
+
+
+        model.addAttribute("form", new Form());
         return "testAutocompleteChips";
     }
 }
