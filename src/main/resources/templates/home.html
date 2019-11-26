@@ -67,20 +67,24 @@
               th:if="${#ctx.containsVariable('diagnosisKey')}"></h3>
           </center>
 
+          <form
+          th:if="${#ctx.containsVariable('diagnosisKey')}"
+          id="createDiagnosis"
+          style="width: 100%"
+
+        >
+          <input
+            placeholder="New Diagnosis"
+            id="diagnosisName"
+            type="text"
+            style="width: 60%; left: 20%; position: relative"
+          />
+          <button class="go-away" id="submit" type="submit" onSubmit="refreshList()">
+            New Diagnosis
+          </button>
+        </form>
+
           <div class="content-grid" id="content-grid">
-            <form
-              th:if="${#ctx.containsVariable('diagnosisKey')}"
-              id="createDiagnosis"
-            >
-              <input
-                placeholder="New Diagnosis"
-                id="diagnosisName"
-                type="text"
-              />
-              <button class="go-away" id="submit" type="submit">
-                New Diagnosis
-              </button>
-            </form>
 
             <form
               th:if="${#ctx.containsVariable('categoryKey')}"
@@ -98,6 +102,13 @@
                 New Category
               </button>
             </form>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
 
             <a th:each="category : ${categories}" th:href="@{/category/{id}(id=${category.id})}">
               <button class="btn content-item">
@@ -137,79 +148,9 @@
     <script>
       AOS.init();
     </script>
+    <script type="text/javascript" th:src="@{/home.js}"></script>
     <script>
-      console.log("hi");
-      $(document).ready(function() {
-        $.get("/recentCases/", function(data) {
-          $(".result").html(data);
-          console.log(data);
-          var listOfCases = document.getElementById("recentCases");
-          for (i = 0; i < data.length; i++) {
-            var li = document.createElement("a");
-            li.appendChild(document.createTextNode(data[i].name));
-            li.setAttribute("id", data[i].id);
-            li.setAttribute("class", "collection-item");
-            li.setAttribute("href", "/case/" + data[i].id);
-            listOfCases.appendChild(li);
-          }
-        });
-
-        console.log(window.location);
-        lastInt = window.location.pathname[window.location.pathname.length-1];
-
-        $.get("/api/getDiagnosisByCategoryId/" + lastInt, function(data) {
-          $(".result").html(data);
-          console.log(data);
-          var grid = document.getElementById("content-grid");
-          for (i = 0; i < data.length; i++) {
-            console.log("diagnosis:" + data[i]);
-            var a = document.createElement("a");
-            var b = document.createElement("button");
-            a.setAttribute("href", "/diagnosis/" + data[i].id);
-            b.appendChild(document.createTextNode(data[i].name));
-            b.setAttribute("class", "btn content-item")
-            a.appendChild(b);
-            grid.appendChild(a);
-            // var li = document.createElement("a");
-            // li.appendChild(document.createTextNode(data[i].name));
-            // li.setAttribute("id", data[i].id);
-            // li.setAttribute("class", "collection-item");
-            // li.setAttribute("href", "case/" + data[i].id);
-            // listOfCases.appendChild(li);
-          }
-        });
-        
-        $("#createDiagnosis").submit(function(e) {
-          console.log("please work");
-          e.preventDefault();
-
-          var $form = $(this);
-          var url = "/api/createDiagnosis/";
-          
-          var formData = {
-            "name" : document.getElementById("diagnosisName").value,
-            "categoryName" : document.getElementById("categoryName").innerHTML
-          }
-
-          console.log(formData);
-
-          $.ajax({
-            contentType : 'application/json; charset=utf-8',
-            dataType : 'json',
-            type : "POST",
-            url: url,
-            data: JSON.stringify(formData),
-
-            // success: function(data) {
-            //   console.log(data);
-            // },
-
-            // error : function(e) {
-            //   console.log(e);
-            // }
-          })
-        })
-      })
+      
     </script>
   </body>
 </html>
