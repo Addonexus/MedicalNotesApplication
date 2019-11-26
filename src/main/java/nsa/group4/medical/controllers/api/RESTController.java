@@ -12,6 +12,7 @@ import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
+import nsa.group4.medical.web.CaseForm;
 import org.apache.catalina.User;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.http.HttpStatus;
@@ -65,11 +66,15 @@ public class RESTController {
 
     }
 //    @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(value = "/saveDiagnosis", method = POST, produces = "application/json")
+    @RequestMapping(value = "/saveDiagnosis/{categoryIndex}", method = POST, produces = "application/json")
 //    @ResponseStatus(value = HttpStatus.OK)
-    public @ResponseBody ResponseEntity<?> getAnson(@Valid @RequestBody Form formData, Errors bindingResult) {
+    public @ResponseBody ResponseEntity<?> getForm(@PathVariable(name="categoryIndex") Long categoryId,
+                                                    @Valid @RequestBody CaseForm formData,
+                                                    Errors bindingResult) {
         ObjectMapper mapper = new ObjectMapper();
         System.out.println("Rerturned DATA:" +formData);
+
+        System.out.println("DIAGLIST: " + formData.getDiagnosesList());
 //        for (String name: formData.get
 //        Form test = mapper.treeToValue(formData, Form.class);
 //        System.out.println("TSETING"+ test);
@@ -84,6 +89,8 @@ public class RESTController {
 //        formData.forEach(x-> System.out.println("DATA: " + x.getTag()));
 //        formData.getDiagnoses().replaceAll("[,"");
         AjaxResponseBody result = new AjaxResponseBody();
+
+
         if (bindingResult.hasErrors()) {
             log.debug("BINDING ERROS" + bindingResult.toString());
             //refactoring how error is returned
@@ -104,7 +111,7 @@ public class RESTController {
         result.setStatus("SUCCESS");
             return ResponseEntity.ok(result);
         }
-
+//        return ResponseEntity.ok(result);
     }
 
 }

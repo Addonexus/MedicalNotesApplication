@@ -72,55 +72,55 @@ public class CaseController {
         return "newCase";
     }
 
-    @RequestMapping(path="/caseDetails/{categoryIndex}", method = RequestMethod.POST)
-    public String caseAdded(@PathVariable("categoryIndex") Long categoryId,
-                            @ModelAttribute("caseKey") @Valid  CaseForm caseForm,
-                            BindingResult bindingResult,
-                            Model model){
-
-
-//        log.debug(categories.toString());
-
-
-        if (bindingResult.hasErrors()){
-            log.debug("BINDING ERROR" +bindingResult.toString());
-            log.debug("FIELDS HAVE BINDING ERRORS");
-            return "newCase";
-        }
-        log.debug(caseForm.toString());
-
-        String diagnoses = caseForm.getDiagnosesList();
-//        log.debug("Testing category from FORM:" + caseForm.getCategory());
-//        log.debug("Testing category id:" + categoryId);
-        Optional<Categories> categories = categoriesRepositoryJPA.findById(categoryId);
-
-        //      splitting the diagnosis text box by a "," delimiter and then trimmed trailing and leading whitespaces
-        List<String> diagnosesList = Arrays.stream(diagnoses.split(",")).map(String::trim).collect(Collectors.toList());
-
-        //      finding all of the existing diagnosis records
-        List<Diagnosis> existingDiagnosis = diagnosisService.findByCaseNameIn(diagnosesList);
-//        String strings = existingDiagnosis.stream().map(x -> x.getName()).collect(Collectors.joining(","));
-
-        //      filters the list of existing diagnosis and returns all of the new diagnosis objects that have to be made
-        List<String> notExistingDiagnosis = diagnosesList.stream().filter(x -> existingDiagnosis.stream().noneMatch(
-                diagnosis -> diagnosis.getName().equals(x))).collect(Collectors.toList());
-//        System.out.println("GTFIO:" + notExistingDiagnosis);
-
-        //      creates new Diagnosis Objects with each item in the list
-        List<Diagnosis> storingDiagnosis = notExistingDiagnosis.stream().map(x -> new Diagnosis(x,categories.get())).collect(Collectors.toList());
-        CaseModel caseModel = new CaseModel(caseForm.getName(), caseForm.getDemographics());
-
-//      storing both diagnosis list objects into the case diagnosis list
-        caseModel.getDiagnosesList().addAll(storingDiagnosis);
-        caseModel.getDiagnosesList().addAll(existingDiagnosis);
-        caseService.createCase(caseModel);
-
-//        return "newCase";//redirect to the case page that has just been created
-//        model.addAttribute("attribute", "redirectWithRedirectPrefix");
-//        session.invalidate();
-        String url = "redirect:/category/"+categoryId;
-        return url;
-    }
+//    @RequestMapping(path="/caseDetails/{categoryIndex}", method = RequestMethod.POST)
+//    public String caseAdded(@PathVariable("categoryIndex") Long categoryId,
+//                            @ModelAttribute("caseKey") @Valid  CaseForm caseForm,
+//                            BindingResult bindingResult,
+//                            Model model){
+//
+//
+////        log.debug(categories.toString());
+//
+//
+//        if (bindingResult.hasErrors()){
+//            log.debug("BINDING ERROR" +bindingResult.toString());
+//            log.debug("FIELDS HAVE BINDING ERRORS");
+//            return "newCase";
+//        }
+//        log.debug(caseForm.toString());
+//
+//        String diagnoses = caseForm.getDiagnosesList();
+////        log.debug("Testing category from FORM:" + caseForm.getCategory());
+////        log.debug("Testing category id:" + categoryId);
+//        Optional<Categories> categories = categoriesRepositoryJPA.findById(categoryId);
+//
+//        //      splitting the diagnosis text box by a "," delimiter and then trimmed trailing and leading whitespaces
+//        List<String> diagnosesList = Arrays.stream(diagnoses.split(",")).map(String::trim).collect(Collectors.toList());
+//
+//        //      finding all of the existing diagnosis records
+//        List<Diagnosis> existingDiagnosis = diagnosisService.findByCaseNameIn(diagnosesList);
+////        String strings = existingDiagnosis.stream().map(x -> x.getName()).collect(Collectors.joining(","));
+//
+//        //      filters the list of existing diagnosis and returns all of the new diagnosis objects that have to be made
+//        List<String> notExistingDiagnosis = diagnosesList.stream().filter(x -> existingDiagnosis.stream().noneMatch(
+//                diagnosis -> diagnosis.getName().equals(x))).collect(Collectors.toList());
+////        System.out.println("GTFIO:" + notExistingDiagnosis);
+//
+//        //      creates new Diagnosis Objects with each item in the list
+//        List<Diagnosis> storingDiagnosis = notExistingDiagnosis.stream().map(x -> new Diagnosis(x,categories.get())).collect(Collectors.toList());
+//        CaseModel caseModel = new CaseModel(caseForm.getName(), caseForm.getDemographics());
+//
+////      storing both diagnosis list objects into the case diagnosis list
+//        caseModel.getDiagnosesList().addAll(storingDiagnosis);
+//        caseModel.getDiagnosesList().addAll(existingDiagnosis);
+//        caseService.createCase(caseModel);
+//
+////        return "newCase";//redirect to the case page that has just been created
+////        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+////        session.invalidate();
+//        String url = "redirect:/category/"+categoryId;
+//        return url;
+//    }
 
     @GetMapping(path ="/case/{index}")
     public String getCase(@PathVariable(name="index") Long index, Model model){
