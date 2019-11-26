@@ -52,4 +52,8 @@ public class Diagnosis {
         }
         return cases;
     }
+
+    public String searchable() {
+        return name;
+    }
 }
