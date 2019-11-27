@@ -1,23 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Home Page</title>
-</head>
-<body>
-
-<main>
-    <a href="/category/1/createNewCase">
-        <span>Create New Case</span>
-    </a>
-    <a href="/createNewCategory">
-    <button>Create New Category</button>
-    </a>
-    <div>
-        <li th:each="category: ${categories}">
-            <span th:text="${category.name}"></span>
-        </li>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Oswald&display=swap"
+      rel="stylesheet"
+    />
+    <!-- import aos.css (slide in on scroll)-->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!--Import materialize.css-->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />
+    <!--Import custom css-->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="css/styleIndex.css"
+      media="screen,projection"
+    />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header class="hero-header">
+      <div data-aos="zoom-in-right" class="flexy aos-init aos-animate">
+        <div class="center">
+          <p class="hero-title blue-text text-darken-4">
+            Case a day
+          </p>
+          <center>
+            <div class="hero-buttons">
+                <span
+                class="btn-large blue"
+                style="margin: 10px; border-radius: 0px; font-size: 20px"
+                >
+                Register
+                </span>
+                <span
+                class="btn-large white black-text"
+                style="margin: 10px; border-radius: 0px; font-size: 20px"
+                >
+                Login
+                </span>
+            </center>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="main">
+        <div class="container">
+            <h1 class="blue-text text-darken-2">Create medical cases wherever you go</h1>
+            <div class="divider"></div>
+            <h3>Whether you are making notes in the field, or typing them up from home, Case a Day is fully functional on dekstops, laptops, tablets, and mobile devices </h3>
+        </div>
     </div>
-</main>
-</body>
+  </body>
 </html>
