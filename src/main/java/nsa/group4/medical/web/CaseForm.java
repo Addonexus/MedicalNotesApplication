@@ -26,6 +26,22 @@ public class CaseForm {
     @Size(min=3, message = "Invalid Demographics Name(s) provided")
     private String demographics;
 
+    private String presentingComplaint;
+
+    private String presentingComplaintHistory;
+
+    private String medicalHistory;
+
+    private String drugHistory;
+
+    private String allergies;
+
+    private String familyHistory;
+
+    private String socialHistory;
+
+    private String notes;
+
 //    @NotNull
 //    @Size(min=2, message = "Invalid Diagnosis Name(s) provided")
 //    private String diagnosesList;
