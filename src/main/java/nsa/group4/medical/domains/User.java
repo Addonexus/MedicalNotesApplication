@@ -27,12 +27,12 @@ public class User {
     @NotEmpty
     private String password;
 
-//    @Transient
-//    private String passwordConfirm;
-//
-//    @ManyToMany
-//    private Set<Role> roles;
-//
+    @Transient
+    private String passwordConfirm;
+
+    @ManyToMany
+    private Set<Role> roles;
+
 
 
 }
