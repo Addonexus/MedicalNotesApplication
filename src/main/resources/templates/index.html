@@ -20,8 +20,8 @@
       rel="stylesheet"
     />
     <!-- import aos (animate on scroll)-->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!--Import materialize.css-->
     <link
       rel="stylesheet"
@@ -92,39 +92,44 @@
     </header>
     <div class="main">
       <div class="container">
-        <h1 class="blue-text text-darken-2">
+        <h1 class="blue-text text-darken-2" data-aos="fade-right">
           Create medical cases wherever you go
         </h1>
         <div class="divider"></div>
-        <h3>
+        <h3 data-aos="fade-left">
           Whether you are making notes in the field, or typing them up from
           home, Case a Day is fully functional on dekstops, laptops, tablets,
-          and mobile devices
+          and all mobile devices
         </h3>
         <img
-          id="img-1"
-          src="https://png.pngtree.com/png-vector/20190814/ourlarge/pngtree-computer-monitor-smartphone-laptop-and-tablet-pc-design-mobile-phone-png-image_1692135.jpg"
+            data-aos="fade-up"
+            id="img-1"
+            src="https://png.pngtree.com/png-vector/20190814/ourlarge/pngtree-computer-monitor-smartphone-laptop-and-tablet-pc-design-mobile-phone-png-image_1692135.jpg"
         />
 
-        <h1 class="blue-text text-darken-2">
-            Save cases across all your devices
+        <h1 class="blue-text text-darken-2" data-aos="zoom-in-left">
+            Save cases across all of your devices
         </h1>
         <div class="divider"></div>
-        <h3>
-        Create an account to store cases across all of your registered devices
+        <h3 data-aos="zoom-in-right">
+        Create an account to store cases across all of your registered devices, allowing exchange of cases
         </h3>
         <img
-        id="img-2"
-        src="http://cdn.onlinewebfonts.com/svg/img_286661.png"
+            data-aos="zoom-in-up"
+            id="img-2"
+            src="http://cdn.onlinewebfonts.com/svg/img_286661.png"
         />
       </div>
     </div>
 
     <div class="footer black white-text">
-        <span class="left-align"> Case a day  -
+        <span class="left-align"> Case a day  - </span>
         <span class="right-align"> Group 4 </span>
         <br>
         Jake Morris, Luke Arnold, Anson Gurung, Amina Begum Nessa
     </div>
+    <script>
+        AOS.init();
+    </script>
   </body>
 </html>
