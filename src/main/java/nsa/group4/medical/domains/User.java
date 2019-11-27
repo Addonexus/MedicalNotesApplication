@@ -13,22 +13,26 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name= "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    @NotNull
+    @NotEmpty
     private String username;
 
+    @NotNull
+    @NotEmpty
     private String password;
 
-    @Transient
-    private String passwordConfirm;
-
-    @ManyToMany
-    private Set<Role> roles;
-
+//    @Transient
+//    private String passwordConfirm;
+//
+//    @ManyToMany
+//    private Set<Role> roles;
+//
 
 
 }
