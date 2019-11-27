@@ -55,6 +55,11 @@ public class DiagnosisService implements DiagnosisServiceInterface {
     }
 
     @Override
+    public Optional<Diagnosis> findByName(String name) {
+        return diagnosisRepository.findByName(name);
+    }
+
+    @Override
     public List<Diagnosis> findAll() {
         return diagnosisRepository.findAll();
     }

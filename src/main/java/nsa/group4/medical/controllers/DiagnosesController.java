@@ -1,6 +1,7 @@
 package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.controllers.api.Form;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
@@ -55,7 +56,7 @@ public class DiagnosesController {
 //        return "home";
 //    }
 
-    @PostMapping(path ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    @PostMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
     public String saveDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
                                            @PathVariable(name="diagnosisIndex") Long diagnosisID,
                                            @ModelAttribute("diagnosisInfoKey") @Valid DiagnosisInformationForm diagnosisInformationForm,
@@ -79,7 +80,7 @@ public class DiagnosesController {
     }
 
 
-    @GetMapping(path ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    @GetMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
     public String addDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
                                           @PathVariable(name="diagnosisIndex") Long diagnosisID,
                                           Model model){
@@ -116,5 +117,13 @@ public class DiagnosesController {
             model.addAttribute("diagnoses", diagnoses);
             return "home";
         }
+    }
+
+    @GetMapping("ya")
+    public String ya(Model model) {
+
+
+        model.addAttribute("form", new Form());
+        return "testAutocompleteChips";
     }
 }

@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
-import nsa.group4.medical.domains.CaseModel;
+import nsa.group4.medical.data.DiagnosisRepositoryJPA;
+import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
@@ -17,7 +18,6 @@ import org.apache.catalina.User;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -38,23 +37,26 @@ public class RESTController {
     private CaseServiceInterface caseServiceInterface;
     private CategoriesRepositoryJPA categoriesRepository;
     private DiagnosisServiceInterface diagnosisService;
+    private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
 
 
     public RESTController(CaseServiceInterface caseServiceInterface,
                           CategoriesRepositoryJPA categoriesRepository,
-                          DiagnosisServiceInterface diagnosisService
+                          DiagnosisServiceInterface diagnosisService,
+                          DiagnosisRepositoryJPA diagnosisRepositoryJPA
                           ){
         this.caseServiceInterface =caseServiceInterface;
         this.categoriesRepository=categoriesRepository;
         this.diagnosisService=diagnosisService;
-
+        this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
 
     }
 
-    @GetMapping("/getAllDiagnosis")
-    public @ResponseBody  List<Diagnosis> getDiagnoses(){
+    @GetMapping("/getDiagnosisByCategoryId/{index}")
+    public @ResponseBody  List<Diagnosis> getDiagnoses(@PathVariable Long index){
         log.debug("REST API RETURN: ");
-        List<Diagnosis> returnedList = diagnosisService.getAllDiagnosis();
+        Categories categories = categoriesRepository.findById(index).get();
+        List<Diagnosis> returnedList = diagnosisService.findByCategories(categories);
         log.debug("Returned LIST: "+returnedList);
 //        for(Diagnosis diagnosis:returnedList){
 //            for(CaseModel caseModel: diagnosis.getCases()){
@@ -63,8 +65,11 @@ public class RESTController {
 //        }
 //        returnedList.forEach(x-> x.getCases().forEach(y -> y.setDiagnosesList(new ArrayList<>())));
         return returnedList;
-
     }
+
+//    @GetMapping("/getDiagnosisByCategoryId")
+//    public @ResponseBody
+
 //    @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/saveDiagnosis/{categoryIndex}", method = POST, produces = "application/json")
 //    @ResponseStatus(value = HttpStatus.OK)
@@ -114,5 +119,30 @@ public class RESTController {
 //        return ResponseEntity.ok(result);
     }
 
-}
+    @PostMapping(value = "/createDiagnosis", produces = "application/json")
+    public @ResponseBody String saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
+        System.out.println(formData.get("name"));
+        System.out.println(formData.get("categoryName"));
+        diagnosisService.createDiagnosis(new Diagnosis(
+                                        formData.get("name"),
+                                        categoriesRepository.findByName(formData.get("categoryName")).get()
+                                        ));
+        return "NUGGET";
+    }
+
+    @GetMapping("/getAllDiagnosis")
+    public @ResponseBody List<Diagnosis> getDiagnoses(){
+            log.debug("REST API RETURN: ");
+            List<Diagnosis> returnedList = diagnosisRepositoryJPA.findAll();
+
+            log.debug("Returned LIST: "+returnedList);
+//        for(Diagnosis diagnosis:returnedList){
+//            for(CaseModel caseModel: diagnosis.getCases()){
+//        }
+//        returnedList.forEach(x-> x.getCases().forEach(y -> y.setDiagnosesList(new ArrayList<>())));
+            return returnedList;
+
+        }
+
+    }
 

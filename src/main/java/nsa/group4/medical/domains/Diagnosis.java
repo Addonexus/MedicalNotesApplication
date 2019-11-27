@@ -48,8 +48,7 @@ public class Diagnosis {
         this.name = name;
         this.categories = category;
     }
-//    @JsonIgnore
-//    @JsonManagedReference
+
     // you need this when trying to stream through the list of cases from the diagnosis to print or manipulate
     public List<CaseModel> getCases() {
         if(cases == null){

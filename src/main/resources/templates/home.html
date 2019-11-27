@@ -57,56 +57,60 @@
         <div class="section-right">
           <center>
             <h3
+              id="categoryName"
               th:if="${#ctx.containsVariable('category')}"
               th:text="${category.name}"
-            ></h3>
+            >helpme</h3>
             <h4 th:if="${#ctx.containsVariable('diagnosisName')}" th:text="${diagnosisName}"></h4>
-
-            <h3
-              th:if="${#ctx.containsVariable('diagnosisKey')}"></h3>
           </center>
 
-          <div class="content-grid">
-            <form
-              th:if="${#ctx.containsVariable('diagnosisKey')}"
-              th:action="@{/category/{id}(id=${diagnosisKey.categories.id})}"
-              method="post"
-              th:object="${diagnosisKey}"
-              class="content-item"
-            >
-              <input
-                placeholder="New Diagnosis"
-                th:field="*{name}"
-                type="text"
-              />
-              <button class="go-away" type="submit">
-                New Diagnosis
-              </button>
-            </form>
-
-            <form
-              th:if="${#ctx.containsVariable('categoryKey')}"
-              th:action="@{/home}"
-              method="post"
-              th:object="${categoryKey}"
-              class="content-item"
-            >
-              <input
-                placeholder="New Category"
-                th:field="*{name}"
-                type="text"
-              />
-              <button class="go-away" id="submit" type="submit">
-                New Category
-              </button>
-            </form>
-
-            <button class="btn content-item" th:each="category : ${categories}">
-              <a th:href="@{/category/{id}(id=${category.id})}">
-                <b th:text="${category.name}"></b>
-              </a>
+          <form
+            th:if="${#ctx.containsVariable('diagnosisKey')}"
+            id="createDiagnosis"
+            class="create-item-form">
+            <input
+              placeholder="New Diagnosis"
+              id="diagnosisName"
+              type="text"
+              class="create-item-input"/>
+            <button class="go-away" id="submit" type="submit">
+              New Diagnosis
             </button>
-            <button
+          </form>
+
+          <form
+          th:if="${#ctx.containsVariable('categoryKey')}"
+          th:action="@{/home}"
+          method="post"
+          th:object="${categoryKey}"
+          class="create-item-form"
+        >
+          <input
+            placeholder="New Category"
+            th:field="*{name}"
+            type="text"
+            class="create-item-input"
+          />
+          <button class="go-away" id="submit" type="submit">
+            New Category
+          </button>
+        </form>
+
+          <div class="content-grid" id="content-grid">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <a th:each="category : ${categories}" th:href="@{/category/{id}(id=${category.id})}">
+              <button class="btn content-item">
+                  <b th:text="${category.name}"></b>
+              </button>
+            </a>
+            
+            <!-- <button
               class="btn content-item"
               th:if="${diagnoses !=null}"
               th:each="diagnosis : ${diagnoses}"
@@ -114,7 +118,8 @@
               <a th:href="@{/category/{categoryIndex}/diagnosis/{diagnosisIndex}(diagnosisIndex=${diagnosis.id}, categoryIndex=${category.Id})}">
                 <b th:text="${diagnosis.name}"></b>
               </a>
-            </button>
+            </button> -->
+
             <div
               class="content-item"
               th:if="${returnedCases !=null}"
@@ -130,15 +135,24 @@
             <div th:if="${returnedDiagnosisInfo != null}"
                  th:each="diagnosisInfo : ${returnedDiagnosisInfo}">
               <p th:text="${diagnosisInfo.key}"></p>
+              <p th:text="${diagnosisInfo.value}"></p>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init();
+    </script>
+    <script type="text/javascript" th:src="@{/home.js}"></script>
+    <script>
+      
     </script>
   </body>
 </html>
