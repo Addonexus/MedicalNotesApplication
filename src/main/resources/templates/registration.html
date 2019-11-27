@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:spring="http://www.springframework.org/tags"
-      xmlns:form="http://www.springframework.org/tags/form">
+      xmlns:form="http://www.springframework.org/tags/form" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>Create an account</title>
@@ -13,7 +13,33 @@
 
 <div class="container">
 
-    <form:form method="POST" modelAttribute="userForm" class="form-signin">
+    <form action="/" enctype="utf8" method="POST" th:object="${userForm}">
+
+
+        <div>
+            <label th:text="#{label.user.username}">username</label>
+            <input th:field="*{username}"/>
+            <p th:each="error : ${#fields.errors('username')}"
+               th:text="${error}">Validation error</p>
+        </div>
+
+        <div>
+            <label th:text="#{label.user.password}">password</label>
+            <input th:field="*{password}" type="password"/>
+            <p th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
+        </div>
+
+        <div>
+            <label th:text="#{label.user.passwordConfirm}">confirm</label>
+            <input th:field="*{passwordConfirm}" type="password"/>
+        </div>
+        <button th:text="#{label.form.submit}" type="submit">submit</button>
+    </form>
+
+    <a th:href="@{/login}" th:text="#{label.form.loginLink}">login</a>
+
+    <!--<form:form method="POST" modelAttribute="userForm" class="form-signin">
         <h2 class="form-signin-heading">Create your account</h2>
         <spring:bind path="username">
             <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -39,7 +65,7 @@
         </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-    </form:form>
+    </form:form>-->
 
 </div>
 
