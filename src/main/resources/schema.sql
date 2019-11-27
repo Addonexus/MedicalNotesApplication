@@ -34,7 +34,14 @@ CREATE TABLE IF NOT EXISTS `cases` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `demographics` VARCHAR(100) NOT NULL,
-  `notes` VARCHAR(100) NULL,
+  `presenting_complaint` VARCHAR(100) NULL,
+  `presenting_complaint_history` VARCHAR(100) NULL,
+  `medical_history` VARCHAR(100) NULL,
+  `drug_history` VARCHAR(100) NULL,
+  `allergies` VARCHAR(100) NULL,
+  `family_history` VARCHAR(100) NULL,
+  `social_history` VARCHAR(100) NULL,
+  `notes` VARCHAR(300) NULL,
   `date_created` DATETIME NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
