@@ -73,7 +73,7 @@ public class RESTController {
 //    @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/saveCase/{categoryIndex}", method = POST, produces = "application/json")
 //    @ResponseStatus(value = HttpStatus.OK)
-    public @ResponseBody ResponseEntity<?> getForm(@PathVariable(name="categoryIndex") Long categoryId,
+    public @ResponseBody ResponseEntity<?> saveCase(@PathVariable(name="categoryIndex") Long categoryId,
                                                    @Valid @RequestBody CaseForm formData,
                                                    Errors bindingResult) {
         ObjectMapper mapper = new ObjectMapper();

@@ -1,6 +1,7 @@
 package nsa.group4.medical;
 
 import nsa.group4.medical.controllers.CaseController;
+import nsa.group4.medical.controllers.api.RESTController;
 import nsa.group4.medical.web.CaseForm;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.validation.*;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
@@ -38,11 +40,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes=CaseADayApplication.class)
-@WebMvcTest(controllers = CaseController.class)
+@WebMvcTest(controllers = RESTController.class)
 @Import(TestConfig.class)
 public class CaseCreationTests {
     @Autowired
-    private CaseController caseController;
+    private RESTController caseController;
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,7 +62,7 @@ public class CaseCreationTests {
 
     @Test(expected = ConstraintViolationException.class)
     public void formDataValid() {
-        caseController.caseAdded(Long.valueOf(1), new CaseForm(), null, null);
+        caseController.saveCase(Long.valueOf(1), new CaseForm(), null);
     }
 
     @Test
