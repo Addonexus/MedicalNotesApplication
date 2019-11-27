@@ -33,7 +33,15 @@ $(document).ready(function() {
             var formData = {
                 "name" : document.getElementById("name").value,
                 "demographics" : document.getElementById("demographics").value,
-                "diagnosesList" : $('#diagnosesList').material_chip('data')
+                "diagnosesList" : $('#diagnosesList').material_chip('data'),
+                "presentingComplaint" : document.getElementById("presentingComplaint").value,
+                "presentingComplaintHistory" : document.getElementById("presentingComplaintHistory").value,
+                "medicalHistory" : document.getElementById("medicalHistory").value,
+                "drugHistory" : document.getElementById("drugHistory").value,
+                "allergies" : document.getElementById("allergies").value,
+                "familyHistory" : document.getElementById("familyHistory").value,
+                "socialHistory" : document.getElementById("socialHistory").value,
+                "notes" : document.getElementById("notes").value
             };
 
             // formData['diagnoses'] = $('#diagnoses').material_chip('data');

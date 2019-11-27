@@ -24,6 +24,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -111,7 +113,20 @@ public class RESTController {
                     diagnosis -> diagnosis.getName().equals(x))).collect(Collectors.toList());
 
             List<Diagnosis> storingDiagnosis = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, categories.get())).collect(Collectors.toList());
-            CaseModel caseModel = new CaseModel(formData.getName(), formData.getDemographics());
+            CaseModel caseModel = new CaseModel(
+                    formData.getName(),
+                    formData.getDemographics(),
+                    new ArrayList<>(),
+                    formData.getPresentingComplaint(),
+                    formData.getPresentingComplaintHistory(),
+                    formData.getMedicalHistory(),
+                    formData.getDrugHistory(),
+                    formData.getAllergies(),
+                    formData.getFamilyHistory(),
+                    formData.getSocialHistory(),
+                    formData.getNotes(),
+                    LocalDateTime.now()
+            );
 
 //      storing both diagnosis list objects into the case diagnosis list
             caseModel.getDiagnosesList().addAll(storingDiagnosis);

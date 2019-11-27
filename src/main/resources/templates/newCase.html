@@ -11,11 +11,15 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css"
     />
+
 </head>
 <body>
+<div th:replace="fragments/nav :: navbar"></div>
+<main class = "desktop-grid container">
 
-<main>
-    <form id ="submitCases" method="post" th:object="${caseKey}">
+    <h2 class = "container">Create a New Case</h2>
+
+    <form class = "container" id ="submitCases" method="post" th:object="${caseKey}">
         <div>
             <label th:for="name">Name</label>
 
@@ -26,21 +30,66 @@
 
         <div>
             <label th:for="demographics">Demographics</label>
-
             <input id = "demographics" aria-describedBy="Enter the demographics"
                    type="text"/>
             <span class="demographics error"></span>
-
         </div>
 
         <div>
             <label th:for="diagnosesList">Diagnoses</label>
-
             <div id="diagnosesList" class="chips chips-autocomplete chips-placeholder chips-initial" >
                 <i class="material-icons">close</i>
-
             </div>
             <span class="diagnosesList error"></span>
+        </div>
+
+        <div>
+            <label th:for="presentingComplaint">Presenting Complaint</label>
+            <input id = "presentingComplaint" aria-describedBy="Enter the presenting complaint"
+                   type="text"/>
+            <span class="presentingComplaint error"></span>
+        </div>
+        <div>
+            <label th:for="presentingComplaintHistory">Presenting Complaint History</label>
+            <input id = "presentingComplaintHistory" aria-describedBy="Enter the presenting complaint history"
+                   type="text"/>
+            <span class="presentingComplaintHistory error"></span>
+        </div>
+        <div>
+            <label th:for="medicalHistory">Medical History</label>
+            <input id = "medicalHistory" aria-describedBy="Enter the medical history"
+                   type="text"/>
+            <span class="medicalHistory error"></span>
+        </div>
+        <div>
+            <label th:for="drugHistory">Drug History</label>
+            <input id = "drugHistory" aria-describedBy="Enter the drug history"
+                   type="text"/>
+            <span class="drugHistory error"></span>
+        </div>
+        <div>
+            <label th:for="allergies">Allergies</label>
+            <input id = "allergies" aria-describedBy="Enter the allergies"
+                   type="text"/>
+            <span class="allergies error"></span>
+        </div>
+        <div>
+            <label th:for="familyHistory">Family History</label>
+            <input id = "familyHistory" aria-describedBy="Enter the family history"
+                   type="text"/>
+            <span class="familyHistory error"></span>
+        </div>
+        <div>
+            <label th:for="socialHistory">Social History</label>
+            <input id = "socialHistory" aria-describedBy="Enter the social history"
+                   type="text"/>
+            <span class="socialHistory error"></span>
+        </div>
+        <div>
+            <label th:for="notes">Notes</label>
+            <input id = "notes" aria-describedBy="Enter the notes"
+                   type="text"/>
+            <span class="notes error"></span>
         </div>
 
         <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">

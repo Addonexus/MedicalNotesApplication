@@ -41,16 +41,69 @@ public class CaseModel {
     @JsonBackReference
     private List<Diagnosis> diagnosesList;
 
+    //Extra Form Fields
+    @Column(name="presenting_complaint")
+    private String presentingComplaint;
+
+    @Column(name="presenting_complaint_history")
+    private String presentingComplaintHistory;
+
+    @Column(name="medical_history")
+    private String medicalHistory;
+
+    @Column(name="drug_history")
+    private String drugHistory;
+
+    @Column(name="allergies")
+    private String allergies;
+
+    @Column(name="family_history")
+    private String familyHistory;
+
+    @Column(name="social_history")
+    private String socialHistory;
+
+    @Column(name="notes")
+    private String notes;
+
+    @Column(name = "date_created")
+    private LocalDateTime creationDate;
+
     public CaseModel(String name, String demographics, Diagnosis... diagnoses){
         this.name = name;
         this.demographics = demographics;
         this.diagnosesList = Stream.of(diagnoses).collect(Collectors.toList());
         this.diagnosesList.forEach(diagnosis -> diagnosis.getCases().add(this));
     }
-//    @JsonIgnore
+
+    public CaseModel(String name,
+                     String demographics,
+                     List<Diagnosis> diagnosesList,
+                     String presentingComplaint,
+                     String presentingComplaintHistory,
+                     String medicalHistory,
+                     String drugHistory,
+                     String allergies,
+                     String familyHistory,
+                     String socialHistory,
+                     String notes,
+                     LocalDateTime creationDate) {
+        this.name = name;
+        this.demographics = demographics;
+        this.diagnosesList = diagnosesList;
+        this.presentingComplaint = presentingComplaint;
+        this.presentingComplaintHistory = presentingComplaintHistory;
+        this.medicalHistory = medicalHistory;
+        this.drugHistory = drugHistory;
+        this.allergies = allergies;
+        this.familyHistory = familyHistory;
+        this.socialHistory = socialHistory;
+        this.notes = notes;
+        this.creationDate = creationDate;
+    }
 
     public List<Diagnosis> getDiagnosesList() {
-        if(diagnosesList == null){
+        if (diagnosesList == null) {
             return new ArrayList<>();
         }
         return diagnosesList;
@@ -62,7 +115,5 @@ public class CaseModel {
         return diagnoses;
     }
 
-    @Column(name = "date_created")
-    private LocalDateTime creationDate;
 
 }
