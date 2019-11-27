@@ -24,8 +24,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `diagnosis_info` (
   `diagnosis_id` INT UNSIGNED NOT NULL,
   `key` VARCHAR(100) NOT NULL,
-  `value` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`diagnosis_id`))
+  `value` VARCHAR(100) NOT NULL)
 ENGINE = InnoDB;
 -- ---------------
 -- -----------------------------------------------------
@@ -36,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `cases` (
   `name` VARCHAR(100) NOT NULL,
   `demographics` VARCHAR(100) NOT NULL,
   `notes` VARCHAR(100) NULL,
+  `date_created` DATETIME NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- -----------------------------------------------------

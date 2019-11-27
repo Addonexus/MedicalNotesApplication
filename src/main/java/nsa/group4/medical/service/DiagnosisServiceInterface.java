@@ -19,7 +19,13 @@ public interface DiagnosisServiceInterface {
     List<Diagnosis> findByCategories(Categories categories);
     Diagnosis createDiagnosis(Diagnosis diagnosis);
 
-    List<Diagnosis> findAll();
-
     Optional<Diagnosis> findById(Long diagnosisId);
+
+
+    List<Diagnosis> getAllDiagnosis();
+
+    Optional<Diagnosis> findByName(String name);
+
+
+    List<Diagnosis> findAll();
 }

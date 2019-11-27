@@ -69,4 +69,9 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                     preparedStatement.setLong(1, index);
                 }, new DiagnosisInformationRowmapper());
     }
+
+    public List<DiagnosisInformation> getAllDiagnosisInformation(){
+        return jdbcTemplate.query("SELECT * FROM diagnosis_info"
+                , new DiagnosisInformationRowmapper());
+    }
 }

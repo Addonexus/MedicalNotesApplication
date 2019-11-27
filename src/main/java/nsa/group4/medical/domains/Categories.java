@@ -1,5 +1,6 @@
 package nsa.group4.medical.domains;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Categories {
 
 
     @OneToMany(mappedBy="categories")
+    @JsonBackReference
     private List<Diagnosis> diagnosisList;
 
 

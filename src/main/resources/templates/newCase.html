@@ -3,53 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Create New Case</title>
+    <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css"
+    />
 </head>
 <body>
 
 <main>
-    <form method="post" th:action="@{/caseDetails/{id}(id=${categoryIndex})}" th:object="${caseKey}">
+    <form id ="submitCases" method="post" th:object="${caseKey}">
         <div>
             <label th:for="name">Name</label>
 
-            <input aria-describedBy="Enter your name"
-                   th:field="*{name}"
+            <input id = "name" aria-describedBy="Enter your name"
                    type="text"/>
-
-            <div th:errors="*{name}"
-                 th:if="${#fields.hasErrors('name')}">
-                Name Error
-            </div>
+            <span class="name error"></span>
         </div>
 
         <div>
             <label th:for="demographics">Demographics</label>
 
-            <input aria-describedBy="Enter the demographics"
-                   th:field="*{demographics}"
+            <input id = "demographics" aria-describedBy="Enter the demographics"
                    type="text"/>
+            <span class="demographics error"></span>
 
-            <div th:errors="*{demographics}"
-                 th:if="${#fields.hasErrors('demographics')}">
-                Demographic Error
-            </div>
         </div>
 
         <div>
             <label th:for="diagnosesList">Diagnoses</label>
 
-            <input aria-describedBy="Enter the diagnoses"
-                   th:field="*{diagnosesList}"
-                   type="text"/>
+            <div id="diagnosesList" class="chips chips-autocomplete chips-placeholder chips-initial" >
+                <i class="material-icons">close</i>
 
-            <div th:errors="*{diagnosesList}"
-                 th:if="${#fields.hasErrors('diagnosesList')}">
-                Diagnoses Error
             </div>
+            <span class="diagnosesList error"></span>
         </div>
+
+        <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">
 
         <button id="submit" type="submit">Create Case</button>
     </form>
 </main>
-
+<script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script type="text/javascript" th:src="@{/casePost.js}"></script>
 </body>
 </html>
