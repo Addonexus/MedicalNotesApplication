@@ -11,7 +11,7 @@ if (windowUrl.pathname.includes("category")) {
   showRecentCases = true;
 
   // Refresh / get the list / grid of diagnoses
-  refreshListOfDiagnoses();
+  setTimeout(refreshListOfDiagnoses, 0);
 
   // Check if category form is posted
   lookForCategoryFormPost();
@@ -93,6 +93,6 @@ function lookForCategoryFormPost() {
       url: url,
       data: JSON.stringify(formData)
     });
-    refreshListOfDiagnoses();
+  setTimeout(refreshListOfDiagnoses, 50);
   });
 }
