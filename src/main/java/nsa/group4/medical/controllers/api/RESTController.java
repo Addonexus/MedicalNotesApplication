@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
+import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseService;
@@ -23,9 +24,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -71,28 +71,16 @@ public class RESTController {
 //    public @ResponseBody
 
 //    @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(value = "/saveDiagnosis/{categoryIndex}", method = POST, produces = "application/json")
+    @RequestMapping(value = "/saveCase/{categoryIndex}", method = POST, produces = "application/json")
 //    @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody ResponseEntity<?> getForm(@PathVariable(name="categoryIndex") Long categoryId,
-                                                    @Valid @RequestBody CaseForm formData,
-                                                    Errors bindingResult) {
+                                                   @Valid @RequestBody CaseForm formData,
+                                                   Errors bindingResult) {
         ObjectMapper mapper = new ObjectMapper();
-        System.out.println("Rerturned DATA:" +formData);
+        System.out.println("Rerturned DATA:" + formData);
 
         System.out.println("DIAGLIST: " + formData.getDiagnosesList());
-//        for (String name: formData.get
-//        Form test = mapper.treeToValue(formData, Form.class);
-//        System.out.println("TSETING"+ test);
-//        formData.forEach(x->x.toString());
-//        Diagnoses()
-//             ) {
-//            System.out.println("NICE:"+name);
-//
-//        }
 
-//        System.out.println(formData.getDiagnoses().toString());
-//        formData.forEach(x-> System.out.println("DATA: " + x.getTag()));
-//        formData.getDiagnoses().replaceAll("[,"");
         AjaxResponseBody result = new AjaxResponseBody();
 
 
@@ -111,12 +99,36 @@ public class RESTController {
             log.debug("RETURNED ERRORS: " + result);
             return ResponseEntity.badRequest().body(result);
 
+        } else {
+            result.setStatus("SUCCESS");
+            List<String> diagnosesList = formData.getDiagnosesList().stream().map(x -> Objects.toString(x.getTag(), null)).collect(Collectors.toList());
+
+            Optional<Categories> categories = categoriesRepository.findById(categoryId);
+
+            List<Diagnosis> existingDiagnosis = diagnosisService.findByCaseNameIn(diagnosesList);
+
+            List<String> notExistingDiagnosis = diagnosesList.stream().filter(x -> existingDiagnosis.stream().noneMatch(
+                    diagnosis -> diagnosis.getName().equals(x))).collect(Collectors.toList());
+
+            List<Diagnosis> storingDiagnosis = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, categories.get())).collect(Collectors.toList());
+            CaseModel caseModel = new CaseModel(formData.getName(), formData.getDemographics());
+
+//      storing both diagnosis list objects into the case diagnosis list
+            caseModel.getDiagnosesList().addAll(storingDiagnosis);
+            caseModel.getDiagnosesList().addAll(existingDiagnosis);
+            caseServiceInterface.createCase(caseModel);
+
+            result.setRedirectUrl("/home");
+
+//        return "newCase";//redirect to the case page that has just been created
+//        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+//        session.invalidate();
+//        String url = "redirect:/category/"+categoryId;
+//        return url;
+//        }
+            log.debug("RETURNED SUCEUSS: " + result);
+            return ResponseEntity.ok().body(result);
         }
-        else {
-        result.setStatus("SUCCESS");
-            return ResponseEntity.ok(result);
-        }
-//        return ResponseEntity.ok(result);
     }
 
     @PostMapping(value = "/createDiagnosis", produces = "application/json")

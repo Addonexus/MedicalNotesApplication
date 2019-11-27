@@ -11,4 +11,5 @@ import java.util.List;
 public class AjaxResponseBody {
     String status;
     List<DiagnosisFieldsError> result;
+    String redirectUrl;
 }
