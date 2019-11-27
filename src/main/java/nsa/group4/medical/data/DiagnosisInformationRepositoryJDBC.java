@@ -50,7 +50,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                         PreparedStatement ps =
                                 connection.prepareStatement("INSERT INTO diagnosis_info(diagnosis_id, key, value)" +
                                                 "VALUES(?, ?, ?)"
-                                        , Statement.RETURN_GENERATED_KEYS);
+                                        , new String[] {"diagnosis_id"});
 
                         ps.setLong(1, diagnosisId);
                         ps.setString(2, key);

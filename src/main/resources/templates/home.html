@@ -135,13 +135,40 @@
           </div>
 
           <div th:if="${#ctx.containsVariable('diagnosisName')}">
-            <form>
+            <form method="post" th:action="@{/diagnosis/{dia}/addDiagnosisInfo (dia=${diagnosisIndex})}" th:object="${diagnosisInfoKey}">
               <table id="diaInfoTable">
                 <tr>
                   <th>Key</th>
                   <th>Value</th>
                 </tr>
+                <tr>
+                  <th>
+                    <label th:for="key">Key</label>
+
+                    <input aria-describedby="Enter the key"
+                           th:field="*{key}"
+                           type="text"/>
+
+                    <div th:errors="*{key}"
+                         th:if="${#fields.hasErrors('key')}">
+                      Key Error
+                    </div>
+                  </th>
+                  <th>
+                    <label th:for="value">Value</label>
+
+                    <input aria-describedby="Enter the value"
+                           th:field="*{value}"
+                           type="text"/>
+
+                    <div th:errors="*{value}"
+                         th:if="${#fields.hasErrors('value')}">
+                      Value Error
+                    </div>
+                  </th>
+                </tr>
               </table>
+              <button id="submit" type="submit">Add Diagnosis Info</button>
             </form>
           </div>
 
@@ -166,20 +193,12 @@
           console.log(data);
           var diagnosisInfoTable = document.getElementById("diaInfoTable");
           for (i = 0; i < data.length; i++) {
-            var row = diagnosisInfoTable.insertRow(-1);
+            var row = diagnosisInfoTable.insertRow(diagnosisInfoTable.rows.length - 1);
             var key = row.insertCell(-1);
             var value = row.insertCell(-1);
 
             key.innerHTML = data[i].key;
             value.innerHTML = data[i].value;
-
-
-            /*var li = document.createElement("tr");
-            li.appendChild(document.createTextNode(data[i].name));
-            li.setAttribute("id", data[i].id);
-            li.setAttribute("class", "collection-item");
-            li.setAttribute("href", "case/" + data[i].id);
-            listOfCases.appendChild(li);*/
           }
         });
       })

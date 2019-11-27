@@ -15,6 +15,7 @@ import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 //import nsa.group4.medical.web.CaseTestForm;
+import nsa.group4.medical.web.DiagnosisInformationForm;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,6 +164,7 @@ public class CaseController {
 
         List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
 
+        model.addAttribute("diagnosisInfoKey", new DiagnosisInformationForm());
         model.addAttribute("cases", recentCases);
         model.addAttribute("returnedCases", returnedCases);
         model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());

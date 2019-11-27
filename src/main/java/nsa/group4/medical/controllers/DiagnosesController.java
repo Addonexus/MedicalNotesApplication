@@ -57,9 +57,8 @@ public class DiagnosesController {
 //        return "home";
 //    }
 
-    @PostMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
-    public String saveDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
-                                           @PathVariable(name="diagnosisIndex") Long diagnosisID,
+    @PostMapping(value ="/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    public String saveDiagnosisInformation(@PathVariable(name="diagnosisIndex") Long diagnosisID,
                                            @ModelAttribute("diagnosisInfoKey") @Valid DiagnosisInformationForm diagnosisInformationForm,
                                            BindingResult bindingResult,
                                            Model model) {
@@ -68,6 +67,9 @@ public class DiagnosesController {
             LOG.debug(bindingResult.toString());
             return "diagnosisInformation";
         }
+
+        LOG.debug("Wagawan: "+model.toString());
+        LOG.debug("ChefBoyardee: "+diagnosisInformationForm.toString());
 
         DiagnosisInformationAdded diagnosisInformationAdded = new DiagnosisInformationAdded(
                 diagnosisID,
@@ -81,7 +83,7 @@ public class DiagnosesController {
     }
 
 
-    @GetMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    @GetMapping(value ="/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
     public String addDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
                                           @PathVariable(name="diagnosisIndex") Long diagnosisID,
                                           Model model){
