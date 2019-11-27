@@ -1,5 +1,7 @@
 package nsa.group4.medical.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.controllers.api.Form;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;

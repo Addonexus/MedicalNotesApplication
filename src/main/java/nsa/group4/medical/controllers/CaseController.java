@@ -167,7 +167,6 @@ public class CaseController {
         model.addAttribute("returnedCases", returnedCases);
         model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
 //        model.addAttribute("category", category.g());
-        model.addAttribute("category", category.get());
         model.addAttribute("returnedDiagnosisInfo", diagnosisInformations);
         model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
 
