@@ -11,11 +11,15 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css"
     />
+
 </head>
 <body>
+<div th:replace="fragments/nav :: navbar"></div>
+<main class = "desktop-grid container">
 
-<main>
-    <form id ="submitCases" method="post" th:object="${caseKey}">
+    <h2 class = "container">Create a New Case</h2>
+
+    <form class = "container" id ="submitCases" method="post" th:object="${caseKey}">
         <div>
             <label th:for="name">Name</label>
 
