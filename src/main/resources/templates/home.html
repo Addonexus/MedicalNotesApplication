@@ -42,80 +42,78 @@
     <div class="hide-on-small-only desktop-grid">
       <div th:replace="fragments/nav :: navbar"></div>
       <div class="section-main">
-        <div class="section-side-cases blue darken-1 z-depth-1" >
-          <div th:if="${#ctx.containsVariable('category')}">
-            <a th:href="@{/category/{id}/createNewCase(id=${category.id})}">
-              <div class="btn white black-text">
-                New case
-              </div>
-            </a>
-          </div>
-          <div th:unless="${#ctx.containsVariable('category')}" style="padding: 15px; color: white;">
-            <b>To create a new case, please enter a category or diagnosis</b>
-          </div>
-          <!-- FIX THIS LATER -->
-          <!--<form th:action="@{/dia/1}" method="post" th:object="${diagnosisKey}">-->
-          <!--<div class="input-field">-->
-          <!--<input placeholder="Diagnosis" th:field="*{name}" type="text">-->
-          <!--</div>-->
-          <!--<button id="submit" type="submit">New Diagnosis</button>-->
-          <!--</form> -->
-          <ul class="collection">
-            <a href="#!" class="collection-item" th:each="case : ${cases}">
-              <span th:text="${case.name}"></span>
-            </a>
-          </ul>
+
+        <!--   New Side Bar Fragment     -->
+        <div  class="section-side-cases blue darken-1 z-depth-1">
+        <div th:replace="${#ctx.containsVariable('category')}?
+        ~{fragments/sidebar.html :: sidebar-button} :
+        ~{fragments/sidebar.html :: sidebar-no-button}">
+
         </div>
+        <ul th:replace="fragments/sidebar.html :: sidebar-items"></ul>
+        </div>
+
+
         <div class="section-right">
           <center>
             <h3
-              th:if="${#ctx.containsVariable('diagnosisKey')}"
-              th:text="${diagnosisKey.categories.name}"
+              id="categoryName"
+              th:if="${#ctx.containsVariable('category')}"
+              th:text="${category.name}"
             ></h3>
-            <h3 th:if="${#ctx.containsVariable('returnedCases')}"></h3>
+            <h4 th:if="${#ctx.containsVariable('diagnosisName')}" th:text="${diagnosisName}"></h4>
+
+            <h3
+              th:if="${#ctx.containsVariable('diagnosisKey')}"></h3>
           </center>
 
-          <div class="content-grid">
-            <form
-              th:if="${#ctx.containsVariable('diagnosisKey')}"
-              th:action="@{/category/{id}(id=${diagnosisKey.categories.id})}"
-              method="post"
-              th:object="${diagnosisKey}"
-              class="content-item"
-            >
-              <input
-                placeholder="New Diagnosis"
-                th:field="*{name}"
-                type="text"
-              />
-              <button class="go-away" type="submit">
-                New Diagnosis
-              </button>
-            </form>
-
-            <form
-              th:if="${#ctx.containsVariable('categoryKey')}"
-              th:action="@{/home}"
-              method="post"
-              th:object="${categoryKey}"
-              class="content-item"
-            >
-              <input
-                placeholder="New Category"
-                th:field="*{name}"
-                type="text"
-              />
-              <button class="go-away" id="submit" type="submit">
-                New Category
-              </button>
-            </form>
-
-            <button class="btn content-item" th:each="category : ${categories}">
-              <a th:href="@{/category/{id}(id=${category.id})}">
-                <b th:text="${category.name}"></b>
-              </a>
+          <form
+            th:if="${#ctx.containsVariable('diagnosisKey')}"
+            id="createDiagnosis"
+            class="create-item-form">
+            <input
+              placeholder="New Diagnosis"
+              id="diagnosisName"
+              type="text"
+              class="create-item-input"/>
+            <button class="go-away" id="submit" type="submit">
+              New Diagnosis
             </button>
-            <button
+          </form>
+
+          <form
+          th:if="${#ctx.containsVariable('categoryKey')}"
+          th:action="@{/home}"
+          method="post"
+          th:object="${categoryKey}"
+          class="create-item-form"
+        >
+          <input
+            placeholder="New Category"
+            th:field="*{name}"
+            type="text"
+            class="create-item-input"
+          />
+          <button class="go-away" id="submit" type="submit">
+            New Category
+          </button>
+        </form>
+
+          <div class="content-grid" id="content-grid">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <a th:each="category : ${categories}" th:href="@{/category/{id}(id=${category.id})}">
+              <button class="btn content-item">
+                  <b th:text="${category.name}"></b>
+              </button>
+            </a>
+
+            <!-- <button
               class="btn content-item"
               th:if="${diagnoses !=null}"
               th:each="diagnosis : ${diagnoses}"
@@ -123,7 +121,8 @@
               <a th:href="@{/category/{categoryIndex}/diagnosis/{diagnosisIndex}(diagnosisIndex=${diagnosis.id}, categoryIndex=${category.Id})}">
                 <b th:text="${diagnosis.name}"></b>
               </a>
-            </button>
+            </button> -->
+
             <div
               class="content-item"
               th:if="${returnedCases !=null}"
@@ -134,13 +133,89 @@
               </a>
             </div>
           </div>
+
+          <div th:if="${#ctx.containsVariable('diagnosisName')}">
+            <form method="post" th:action="@{/diagnosis/{dia}/addDiagnosisInfo (dia=${diagnosisIndex})}" th:object="${diagnosisInfoKey}">
+              <table id="diaInfoTable">
+                <tr>
+                  <th>Key</th>
+                  <th>Value</th>
+                </tr>
+                <tr>
+                  <th>
+                    <label th:for="key">Key</label>
+
+                    <input aria-describedby="Enter the key"
+                           th:field="*{key}"
+                           type="text"/>
+
+                    <div th:errors="*{key}"
+                         th:if="${#fields.hasErrors('key')}">
+                      Key Error
+                    </div>
+                  </th>
+                  <th>
+                    <label th:for="value">Value</label>
+
+                    <input aria-describedby="Enter the value"
+                           th:field="*{value}"
+                           type="text"/>
+
+                    <div th:errors="*{value}"
+                         th:if="${#fields.hasErrors('value')}">
+                      Value Error
+                    </div>
+                  </th>
+                </tr>
+              </table>
+              <button id="submit" type="submit">Add Diagnosis Info</button>
+            </form>
+          </div>
+
+          <!--<div th:if="${#ctx.containsVariable('returnedDiagnosisInfo')}"
+               th:action="@{/home}">
+            <div th:if="${returnedDiagnosisInfo != null}"
+                 th:each="diagnosisInfo : ${returnedDiagnosisInfo}">
+              <p th:text="${diagnosisInfo.key}"></p>
+            </div>
+          </div>-->
         </div>
       </div>
     </div>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function() {
+        $.get("/returnedDiagnosisInfo", function(data) {
+          $(".result").html(data);
+          console.log(data);
+          var diagnosisInfoTable = document.getElementById("diaInfoTable");
+          for (i = 0; i < data.length; i++) {
+            var row = diagnosisInfoTable.insertRow(diagnosisInfoTable.rows.length - 1);
+            var key = row.insertCell(-1);
+            var value = row.insertCell(-1);
+
+            key.innerHTML = data[i].key;
+            value.innerHTML = data[i].value;
+          }
+        });
+      })
+
+    </script>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init();
+    </script>
+    <script type="text/javascript" th:src="@{/home.js}"></script>
+    <script>
+
     </script>
   </body>
 </html>

@@ -14,26 +14,26 @@ insert into diagnoses (id, name, category_id) values (13,'brain missing', 3);
 insert into diagnoses (id, name, category_id) values (14,'dog ate brain', 3);
 insert into diagnoses (id, name, category_id) values (15,'insane brain pain', 3);
 
-insert into cases (id, name, demographics, notes) values (1,'things that went wrong', '80 y/o woman', null);
-insert into cases (id, name, demographics, notes) values (2,'things from kid', '6 y/o kid', 'the kid was nice');
-insert into cases (id, name, demographics, notes) values (3,'dog title', '8 y/o dog', null);
-insert into cases (id, name, demographics, notes) values (4,'dummy data', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (5,'dummy data 1', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (6,'dummy data 2', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (7,'dummy data 3', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (8,'dummy data 4', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (9,'dummy data 5', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (10,'dummy data 6', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (11,'dummy data 7', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (12,'dummy data 8', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (13,'dummy data 9', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (14,'dummy data 10', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (15,'dummy data 11', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (16,'dummy data 12', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (17,'dummy data 13', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (18,'dummy data 14', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (19,'dummy data 15', 'dont care', null);
-insert into cases (id, name, demographics, notes) values (20,'dummy data 16', 'dont care', null);
+insert into cases (id, name, demographics, notes, date_created) values (1,'things that went wrong', '80 y/o woman', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (2,'things from kid', '6 y/o kid', 'the kid was nice', CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (3,'dog title', '8 y/o dog', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (4,'dummy data', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (5,'dummy data 1', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (6,'dummy data 2', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (7,'dummy data 3', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (8,'dummy data 4', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (9,'dummy data 5', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (10,'dummy data 6', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (11,'dummy data 7', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (12,'dummy data 8', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (13,'dummy data 9', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (14,'dummy data 10', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (15,'dummy data 11', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (16,'dummy data 12', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (17,'dummy data 13', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (18,'dummy data 14', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (19,'dummy data 15', 'dont care', null, CURRENT_TIMESTAMP);
+insert into cases (id, name, demographics, notes, date_created) values (20,'dummy data 16', 'dont care', null, CURRENT_TIMESTAMP);
 
 
 
@@ -66,4 +66,10 @@ insert into cases_diagnoses_link (case_id, diagnosis_id) values (18,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (19,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (20,1);
 
+insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_1', 'sample_data_1');
+insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_2', 'sample_data_2');
+insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_3', 'sample_data_3');
 
+INSERT INTO user(username,password)
+VALUES ('jude','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G');
+/* password = password */

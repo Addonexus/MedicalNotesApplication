@@ -4,6 +4,8 @@ import nsa.group4.medical.domains.User;
 import nsa.group4.medical.service.SecurityService;
 import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.validator.UserValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+
+    static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -46,8 +50,12 @@ public class UserController {
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
-        if (error != null)
+        if (error != null) {
+            LOG.debug("RELOAD IT");
             model.addAttribute("error", "Your username and password is invalid.");
+        } else {
+            LOG.debug("NAAAAAHH");
+        }
 
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
