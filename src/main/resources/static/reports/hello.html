@@ -2,26 +2,20 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Home Page</title>
+    <title>Hello</title>
 </head>
 <body>
 
 <main>
+    AHHHHHHHHHHHHHHHH
     <div sec:authorize="isAuthenticated()">
         Welcome back:
         <div sec:authentication="name"></div>
     </div>
-    <a href="/category/1/createNewCase">
-        <span>Create New Case</span>
-    </a>
-    <a href="/createNewCategory">
-    <button>Create New Category</button>
-    </a>
-    <div>
-        <li th:each="category: ${categories}">
-            <span th:text="${category.name}"></span>
-        </li>
+    <div sec:authorize="!isAuthenticated()">
+        Login
     </div>
+
 </main>
 </body>
 </html>

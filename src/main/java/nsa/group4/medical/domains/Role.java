@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -13,9 +12,10 @@ import java.util.Set;
 @Entity
 @Table(name = "role")
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "user_role_id")
     private Long userroleid;
 
     @Column(name = "userid")
@@ -23,8 +23,5 @@ public class Role {
 
     @Column(name = "role")
     private String role;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
 
 }

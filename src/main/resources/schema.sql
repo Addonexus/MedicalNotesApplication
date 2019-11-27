@@ -59,17 +59,36 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table  `Users`
 -- -----------------------------------------------------
+-- CREATE TABLE if not exists `user`
+-- (
+--     `id`       int(11)      NOT NULL AUTO_INCREMENT,
+--     `username` VARCHAR(45)  NOT NULL,
+--     `password` VARCHAR(100) NOT NULL,
+--     `user_type`     int(11)      NULL,
+--     PRIMARY KEY (`id`)
+-- )
+--     ENGINE = InnoDB;
+-- -----------------------------------------------------
+-- Table  `role`
+-- -----------------------------------------------------
+-- CREATE TABLE if not exists `role`
+-- (
+--     `id`     int(11)     NOT NULL AUTO_INCREMENT,
+--     `userid` int(11)     NOT NULL,
+--     `role`   varchar(45) NOT NULL,
+--     PRIMARY KEY (`id`)
+-- )
+--     ENGINE = InnoDB;
 CREATE TABLE if not exists `user`
 (
     `id`       int(11)      NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(45)  NOT NULL,
     `password` VARCHAR(100) NOT NULL,
+    `fav_charity_id` int(11),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB;
--- -----------------------------------------------------
--- Table  `role`
--- -----------------------------------------------------
+
 CREATE TABLE if not exists `role`
 (
     `id`     int(11)     NOT NULL AUTO_INCREMENT,
@@ -78,4 +97,3 @@ CREATE TABLE if not exists `role`
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB;
-

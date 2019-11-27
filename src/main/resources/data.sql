@@ -70,6 +70,19 @@ insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_fie
 insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_2', 'sample_data_2');
 insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_3', 'sample_data_3');
 
-INSERT INTO user(username,password)
-VALUES ('jude','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G');
+
+INSERT INTO user(username,password, fav_charity_id)
+VALUES ('carl','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G',1);
+
+/* password = password*/
+
+
+INSERT INTO user(username,password, fav_charity_id)
+VALUES ('jude','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G',2);
 /* password = password */
+
+INSERT INTO role(userid, role)
+VALUES (001, 'ROLE_USER');
+
+INSERT INTO role(userid, role)
+VALUES (002, 'ROLE_ADMIN');

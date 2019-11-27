@@ -1,75 +1,62 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:spring="http://www.springframework.org/tags"
-      xmlns:form="http://www.springframework.org/tags/form" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8">
-    <title>Create an account</title>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--<head th:replace="fragments/header :: head"></head>-->
+<!--<body>-->
+<!--<div th:replace="fragments/header :: header"></div>-->
 
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
-</head>
-
-<body>
-
-<div class="container">
-
-    <form action="/" enctype="utf8" method="POST" th:object="${userForm}">
+<!--<h1 th:text="#{label.form.title}">form</h1>-->
+<!--<form action="/" enctype="utf8" method="POST" th:object="${user}">-->
 
 
-        <div>
-            <label th:text="#{label.user.username}">username</label>
-            <input th:field="*{username}"/>
-            <p th:each="error : ${#fields.errors('username')}"
-               th:text="${error}">Validation error</p>
-        </div>
+<!--    <div>-->
+<!--        <label th:text="#{label.user.username}">username</label>-->
+<!--        <input th:field="*{username}"/>-->
+<!--        <p th:each="error : ${#fields.errors('username')}"-->
+<!--           th:text="${error}">Validation error</p>-->
+<!--    </div>-->
 
-        <div>
-            <label th:text="#{label.user.password}">password</label>
-            <input th:field="*{password}" type="password"/>
-            <p th:each="error : ${#fields.errors('password')}"
-               th:text="${error}">Validation error</p>
-        </div>
+<!--    <div>-->
+<!--        <label th:text="#{label.user.password}">password</label>-->
+<!--        <input th:field="*{password}" type="password"/>-->
+<!--        <p th:each="error : ${#fields.errors('password')}"-->
+<!--           th:text="${error}">Validation error</p>-->
+<!--    </div>-->
 
-        <div>
-            <label th:text="#{label.user.passwordConfirm}">confirm</label>
-            <input th:field="*{passwordConfirm}" type="password"/>
-        </div>
-        <button th:text="#{label.form.submit}" type="submit">submit</button>
-    </form>
+<!--    &lt;!&ndash;<div>-->
+<!--        <label th:text="#{label.user.confirmPass}">confirm</label>-->
+<!--        <input th:field="*{matchingPassword}" type="password"/>-->
+<!--    </div>&ndash;&gt;-->
+<!--    <button th:text="#{label.form.submit}" type="submit">submit</button>-->
+<!--</form>-->
 
-    <a th:href="@{/login}" th:text="#{label.form.loginLink}">login</a>
+<!--<a th:href="@{/login}" th:text="#{label.form.loginLink}">login</a>-->
 
-    <!--<form:form method="POST" modelAttribute="userForm" class="form-signin">
-        <h2 class="form-signin-heading">Create your account</h2>
-        <spring:bind path="username">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="username" class="form-control" placeholder="Username"
-                            autofocus="true"></form:input>
-                <form:errors path="username"></form:errors>
-            </div>
-        </spring:bind>
 
-        <spring:bind path="password">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
-                <form:errors path="password"></form:errors>
-            </div>
-        </spring:bind>
+<form action="/registration" enctype="utf8" method="POST" th:object="${userForm}">
 
-        <spring:bind path="passwordConfirm">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="passwordConfirm" class="form-control"
-                            placeholder="Confirm your password"></form:input>
-                <form:errors path="passwordConfirm"></form:errors>
-            </div>
-        </spring:bind>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-    </form:form>-->
+    <div>
+        <label>username</label>
+        <input type="text" th:field="*{username}"/>
+        <p th:each="error : ${#fields.errors('username')}"
+           th:text="${error}">Validation error</p>
+    </div>
 
+    <div>
+        <label>password</label>
+        <input th:field="*{password}" type="password"/>
+        <p th:each="error : ${#fields.errors('password')}"
+           th:text="${error}">Validation error</p>
+    </div>
+
+    <!--<div>
+        <label th:text="#{label.user.confirmPass}">confirm</label>
+        <input th:field="*{matchingPassword}" type="password"/>
+    </div>-->
+    <button type="submit">submit</button>
+</form>
+
+<!--<div th:replace="fragments/footer :: footer">-->
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

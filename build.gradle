@@ -35,6 +35,7 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation 'org.springframework.security:spring-security-test'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 }
 
 test {
