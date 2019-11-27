@@ -79,7 +79,7 @@ public class DiagnosesController {
 
         diagnosisInformationRepositoryJDBC.saveDiagnosisInformation(diagnosisInformationAdded);
 
-        return "home";
+        return "redirect:/diagnosis/{diagnosisIndex}";
     }
 
 
