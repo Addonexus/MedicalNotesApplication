@@ -21,6 +21,9 @@ $(document).ready(function() {
             }
         });
 
+
+
+
         $("#submitCases").submit(function(e) {
             console.log("hi");
             e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -88,3 +91,18 @@ $(document).ready(function() {
             });
         });
     });
+
+function unhideForm(){
+    console.log("TSETING BUTTON CLICK EDIT")
+    var hiddenParam = document.getElementById("hiddenFormBoolean");
+    if(hiddenParam){
+        console.log("Param Exists, so hide all input fields")
+    //    toggle hide
+    //    toggle save to hide
+
+        var docUrl = document.URL;
+        console.log("URL OF THE PAGE: " + docUrl);
+    }else{
+        console.log("Param doesn't exist, so don't hide any fields")
+    }
+}

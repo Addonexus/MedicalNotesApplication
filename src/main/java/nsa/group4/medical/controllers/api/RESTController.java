@@ -54,6 +54,18 @@ public class RESTController {
 
     }
 
+    @GetMapping("/getCaseById/{index)")
+    public @ResponseBody CaseModel getCase(@PathVariable Long index){
+        log.debug("On REST API GET CASE BY ID: " + index);
+        Optional<CaseModel> returnedCase = caseServiceInterface.findByCaseId(index);
+        if(returnedCase.isPresent()){
+            log.debug("Case is found" + returnedCase.toString());
+
+
+        }
+        return new CaseModel();
+    }
+
     @GetMapping("/getDiagnosisByCategoryId/{index}")
     public @ResponseBody  List<Diagnosis> getDiagnoses(@PathVariable Long index){
         log.debug("REST API RETURN: ");

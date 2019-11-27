@@ -94,7 +94,10 @@
 
         <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">
 
+        <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value = "${hiddenForm}">
+
         <button id="submit" type="submit">Create Case</button>
+        <button th:if="${hiddenForm !=null}" id="editCase" type="button" onclick="unhideForm()">Edit Case</button>
     </form>
 </main>
 <script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>

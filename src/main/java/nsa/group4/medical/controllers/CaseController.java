@@ -80,10 +80,12 @@ public class CaseController {
 //        log.debug("CATEGORY BEFORE SHOWN: " + category.get());
         model.addAttribute("caseKey", caseForm);
         model.addAttribute("categoryIndex", category.get().getId());
+//        model.addAttribute("hiddenForm", 0);
 //        model.addAttribute("categoryKey", category.get());
 
         return "newCase";
     }
+
 
 //    @RequestMapping(path="/caseDetails/{categoryIndex}", method = RequestMethod.POST)
 //    public String caseAdded(@PathVariable("categoryIndex") Long categoryId,
@@ -140,7 +142,9 @@ public class CaseController {
         Optional<CaseModel> returnedCase = caseService.findByCaseId(index);
         if(returnedCase.isPresent()){
             model.addAttribute("case", returnedCase.get());
-            return "case";
+            model.addAttribute("caseKey", new CaseForm());
+            model.addAttribute("hiddenForm", "1");
+            return "newCase";
         }
         return "404";
     }
