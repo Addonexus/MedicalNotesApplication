@@ -4,11 +4,18 @@
       <a href="/home" class="brand-logo left">Case a Day</a>
       <ul class="right">
         <li>
-          <form action="/search" th:action="@{/search}" th:object="${search}" method="get">
+          <form
+            action="/search"
+            th:action="@{/search}"
+            th:object="${search}"
+            method="get"
+            style="width: 100px"
+          >
             <div class="input-field">
-                <input id="search" type="text" required name="search" value="">
-                <label class="label-icon" for="search"><i class="material-icons"></i></label>
-                <i class="material-icons">close</i>
+              <input id="search" type="text" required name="search" value="" />
+              <label class="label-icon" for="search"
+                ><i class="material-icons"></i
+              ></label>
             </div>
           </form>
         </li>

@@ -20,7 +20,7 @@
     />
   </head>
   <body>
-    <div class="desktop-grid">
+    <div class="desktop-grid blue lighten-5">
       <div th:replace="fragments/nav :: navbar"></div>
       <div class="section-main">
         <!--   New Side Bar Fragment     -->
@@ -84,54 +84,62 @@
             </button>
           </form>
 
-          <div th:if="${#ctx.containsVariable('diagnosisName')}">
-            <form
-              method="post"
-              th:action="@{/diagnosis/{dia}/addDiagnosisInfo (dia=${diagnosisIndex})}"
-              th:object="${diagnosisInfoKey}"
-            >
-              <table id="diaInfoTable">
-                <tr>
-                  <th>Key</th>
-                  <th>Value</th>
-                </tr>
-                <tr>
-                  <th>
-                    <label th:for="key">Key</label>
+          <button type="button" class="btn blue white-text collapsible">
+            Open Collapsible
+          </button>
+          <div class="content">
+            <div th:if="${#ctx.containsVariable('diagnosisName')}">
+              <form
+                method="post"
+                th:action="@{/diagnosis/{dia}/addDiagnosisInfo (dia=${diagnosisIndex})}"
+                th:object="${diagnosisInfoKey}"
+              >
+                <table id="diaInfoTable">
+                  <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                  </tr>
+                  <tr style="border-bottom: none">
+                    <th>
+                      <label class="black-text" th:for="key">Key</label>
 
-                    <input
-                      aria-describedby="Enter the key"
-                      th:field="*{key}"
-                      type="text"
-                    />
+                      <input
+                        aria-describedby="Enter the key"
+                        th:field="*{key}"
+                        type="text"
+                      />
 
-                    <div th:errors="*{key}" th:if="${#fields.hasErrors('key')}">
-                      Key Error
-                    </div>
-                  </th>
-                  <th>
-                    <label th:for="value">Value</label>
+                      <div
+                        th:errors="*{key}"
+                        th:if="${#fields.hasErrors('key')}"
+                      >
+                        Key Error
+                      </div>
+                    </th>
+                    <th>
+                      <label class="black-text" th:for="value">Value</label>
 
-                    <input
-                      aria-describedby="Enter the value"
-                      th:field="*{value}"
-                      type="text"
-                    />
+                      <input
+                        aria-describedby="Enter the value"
+                        th:field="*{value}"
+                        type="text"
+                      />
 
-                    <div
-                      th:errors="*{value}"
-                      th:if="${#fields.hasErrors('value')}"
-                    >
-                      Value Error
-                    </div>
-                  </th>
-                </tr>
-              </table>
+                      <div
+                        th:errors="*{value}"
+                        th:if="${#fields.hasErrors('value')}"
+                      >
+                        Value Error
+                      </div>
+                    </th>
+                  </tr>
+                </table>
 
-              <button class="btn blue white-text" id="submit" type="submit">
-                Update
-              </button>
-            </form>
+                <button class="btn blue white-text" id="submit" type="submit">
+                  Update
+                </button>
+              </form>
+            </div>
           </div>
 
           <div class="content-grid" id="content-grid">
