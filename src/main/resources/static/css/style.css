@@ -64,6 +64,7 @@
 .section-right {
   grid-area: right;
   overflow: scroll;
+  padding-bottom: 300px;
 }
 
 .section-right::-webkit-scrollbar {
