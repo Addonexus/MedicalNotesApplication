@@ -82,7 +82,6 @@
                         placeholder="Enter your email"
                         id="email"
                         type="text"
-                        class="validate"
                 />
                 <label for="email">Email</label>
               </div>
@@ -91,7 +90,6 @@
                   placeholder="Enter your username"
                   id="first_name"
                   type="text"
-                  class="validate"
                 />
                 <label for="first_name">Username</label>
               </div>
@@ -100,12 +98,12 @@
                   placeholder="Enter your password"
                   id="last_name"
                   type="password"
-                  class="validate"
                 />
                 <label for="last_name">Password</label>
               </div>
               <a class="waves-effect waves-light btn-large blue accent-3"
-                >Login</a
+                 th:href="@{/login}"
+                >register</a
               >
             </div>
           </div>
