@@ -49,8 +49,10 @@ function refreshListOfDiagnoses() {
         var a = document.createElement("a");
         var b = document.createElement("button");
         a.setAttribute("href", "/diagnosis/" + data[i].id);
+        a.style.width = "100%";
         b.appendChild(document.createTextNode(data[i].name));
-        b.setAttribute("class", "btn content-item");
+        b.setAttribute("class", "btn content-item bigger");
+        b.style.fontWeight = "600";
         a.appendChild(b);
         grid.appendChild(a);
       }
@@ -93,6 +95,6 @@ function lookForCategoryFormPost() {
       url: url,
       data: JSON.stringify(formData)
     });
-  setTimeout(refreshListOfDiagnoses, 50);
+    setTimeout(refreshListOfDiagnoses, 50);
   });
 }
