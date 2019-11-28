@@ -41,15 +41,14 @@
       </ul>
     </div>
     <ul id="mobile-demo" class="side-nav blue z-depth-5">
-      <li></li>
       <li>
         <a th:href="@{/home}"><h3 class="white-text">Case a day</h3></a>
-        <div class="btn white black-text">Create case</div>
       </li>
-      <li><a href="#!">Second Link</a></li>
-      <li><div class="divider"></div></li>
-      <li><a class="subheader">Subheader</a></li>
-      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+      <li>
+        <a th:if="${#ctx.containsVariable('category')}" th:href="@{/category/{id}/createNewCase(id=${category.id})}">
+          <div class="white-text">Create case</div>
+        </a>
+      </li>
     </ul>
   </nav>
 </div>
