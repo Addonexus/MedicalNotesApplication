@@ -1,6 +1,8 @@
 // Get the window URL
 windowUrl = window.location;
 console.log("Window URL: " + windowUrl);
+lastInt = window.location.pathname.replace(/^\D+/g, "");
+console.log(lastInt);
 
 // Show recent cases false by default
 var showRecentCases = false;
@@ -38,7 +40,7 @@ function refreshListOfDiagnoses() {
   }
   console.log("HI THERE");
   console.log(window.location);
-  lastInt = window.location.pathname[window.location.pathname.length - 1];
+
   if (window.location.pathname.includes("category")) {
     $.get("/api/getDiagnosisByCategoryId/" + lastInt, function(data) {
       $(".result").html(data);
@@ -60,25 +62,19 @@ function refreshListOfDiagnoses() {
   }
 }
 
-$.get(
-  "/api/returnedDiagnosisInfo/" +
-    window.location.pathname[window.location.pathname.length - 1],
-  function(data) {
-    $(".result").html(data);
-    console.log(data);
-    var diagnosisInfoTable = document.getElementById("diaInfoTable");
-    for (i = 0; i < data.length; i++) {
-      var row = diagnosisInfoTable.insertRow(
-        diagnosisInfoTable.rows.length - 1
-      );
-      var key = row.insertCell(-1);
-      var value = row.insertCell(-1);
+$.get("/api/returnedDiagnosisInfo/" + lastInt, function(data) {
+  $(".result").html(data);
+  console.log(data);
+  var diagnosisInfoTable = document.getElementById("diaInfoTable");
+  for (i = 0; i < data.length; i++) {
+    var row = diagnosisInfoTable.insertRow(diagnosisInfoTable.rows.length - 1);
+    var key = row.insertCell(-1);
+    var value = row.insertCell(-1);
 
-      key.innerHTML = data[i].key;
-      value.innerHTML = data[i].value;
-    }
+    key.innerHTML = data[i].key;
+    value.innerHTML = data[i].value;
   }
-);
+});
 
 function getRecentCases() {
   $.get("/recentCases/", function(data) {
