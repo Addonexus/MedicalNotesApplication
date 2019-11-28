@@ -183,5 +183,10 @@ public class RESTController {
 
         }
 
+    @GetMapping("getRecentCases")
+    public @ResponseBody List<CaseModel> getRecentCases() {
+        return caseServiceInterface.findAllByOrderByCreationDate();
+    }
+
     }
 

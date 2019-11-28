@@ -27,6 +27,10 @@ if (windowUrl.pathname.includes("diagnosis")) {
   showRecentCases = true;
 }
 
+if (windowUrl.pathname.includes("case")) {
+  showRecentCases = true;
+}
+
 if (showRecentCases) {
   getRecentCases();
 }
