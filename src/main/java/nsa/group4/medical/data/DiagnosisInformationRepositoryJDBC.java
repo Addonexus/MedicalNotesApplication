@@ -50,7 +50,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                         PreparedStatement ps =
                                 connection.prepareStatement("INSERT INTO diagnosis_info(diagnosis_id, key, value)" +
                                                 "VALUES(?, ?, ?)"
-                                        , Statement.RETURN_GENERATED_KEYS);
+                                        , new String[] {"diagnosis_id"});
 
                         ps.setLong(1, diagnosisId);
                         ps.setString(2, key);
@@ -68,5 +68,10 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                 {
                     preparedStatement.setLong(1, index);
                 }, new DiagnosisInformationRowmapper());
+    }
+
+    public List<DiagnosisInformation> getAllDiagnosisInformation(){
+        return jdbcTemplate.query("SELECT * FROM diagnosis_info"
+                , new DiagnosisInformationRowmapper());
     }
 }

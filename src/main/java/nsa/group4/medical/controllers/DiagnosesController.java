@@ -7,6 +7,7 @@ import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
+import nsa.group4.medical.domains.DiagnosisInformation;
 import nsa.group4.medical.service.DiagnosisRepositoryInterface;
 import nsa.group4.medical.service.events.DiagnosisInformationAdded;
 import nsa.group4.medical.web.CaseForm;
@@ -56,9 +57,8 @@ public class DiagnosesController {
 //        return "home";
 //    }
 
-    @PostMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
-    public String saveDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
-                                           @PathVariable(name="diagnosisIndex") Long diagnosisID,
+    @PostMapping(value ="/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    public String saveDiagnosisInformation(@PathVariable(name="diagnosisIndex") Long diagnosisID,
                                            @ModelAttribute("diagnosisInfoKey") @Valid DiagnosisInformationForm diagnosisInformationForm,
                                            BindingResult bindingResult,
                                            Model model) {
@@ -68,6 +68,9 @@ public class DiagnosesController {
             return "diagnosisInformation";
         }
 
+        LOG.debug("Wagawan: "+model.toString());
+        LOG.debug("ChefBoyardee: "+diagnosisInformationForm.toString());
+
         DiagnosisInformationAdded diagnosisInformationAdded = new DiagnosisInformationAdded(
                 diagnosisID,
                 diagnosisInformationForm.getKey(),
@@ -76,11 +79,11 @@ public class DiagnosesController {
 
         diagnosisInformationRepositoryJDBC.saveDiagnosisInformation(diagnosisInformationAdded);
 
-        return "home";
+        return "redirect:/diagnosis/{diagnosisIndex}";
     }
 
 
-    @GetMapping(value ="/category/{categoryIndex}/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
+    @GetMapping(value ="/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
     public String addDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
                                           @PathVariable(name="diagnosisIndex") Long diagnosisID,
                                           Model model){
@@ -95,8 +98,6 @@ public class DiagnosesController {
 
         return "diagnosisInformation";
     }
-
-
 
 
     @PostMapping("dia/{index}")
@@ -117,6 +118,11 @@ public class DiagnosesController {
             model.addAttribute("diagnoses", diagnoses);
             return "home";
         }
+    }
+
+    @GetMapping("/returnedDiagnosisInfo")
+    public @ResponseBody List<DiagnosisInformation> getDiagnosisInformation() {
+        return diagnosisInformationRepositoryJDBC.getAllDiagnosisInformation();
     }
 
     @GetMapping("ya")
