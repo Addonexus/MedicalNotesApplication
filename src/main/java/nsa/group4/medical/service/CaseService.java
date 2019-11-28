@@ -57,6 +57,6 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public List<CaseModel> findAllByOrderByCreationDate() {
-        return caseRepository.findAllByOrderByCreationDate();
+        return caseRepository.findAllByOrderByCreationDateDesc();
     }
 }

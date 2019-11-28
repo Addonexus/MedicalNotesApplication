@@ -16,4 +16,6 @@ public class AjaxResponseBody {
     List<Diagnosis> diagnoses;
     List<DiagnosisFieldsError> result;
     String redirectUrl;
+    List<CaseModel> casesList;
+    List<Long> categoryIds;
 }

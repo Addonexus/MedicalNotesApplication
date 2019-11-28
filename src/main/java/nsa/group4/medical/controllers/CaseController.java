@@ -4,6 +4,7 @@ package nsa.group4.medical.controllers;
 //import jdk.internal.jline.internal.Log;
 //import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.controllers.api.AjaxResponseBody;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
@@ -19,6 +20,7 @@ import nsa.group4.medical.web.DiagnosisInformationForm;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -213,7 +215,14 @@ public class CaseController {
     }
 
     @GetMapping("/recentCases")
-    public @ResponseBody List<CaseModel> getRecentCases() {
-        return caseService.findAllByOrderByCreationDate();
+    public @ResponseBody
+    ResponseEntity<?> getRecentCases() {
+
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        responseBody.setCasesList(caseService.findAllByOrderByCreationDate());
+        responseBody.setCategoryIds(responseBody.getCasesList()
+                .stream().map(x->x.getDiagnosesList()
+                .stream().findFirst().get().getCategories().getId()).collect(Collectors.toList()));
+        return ResponseEntity.ok().body(responseBody);
     }
 }
