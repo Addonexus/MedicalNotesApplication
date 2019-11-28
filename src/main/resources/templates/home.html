@@ -14,36 +14,19 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>Title</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <nav class="hide-on-med-and-up">
-      <div class="nav-wrapper blue darken-2">
-        <a href="#" class="brand-logo">Case a Day</a>
-        <ul class="right">
-          <li>
-            <a class="nav-item" href="#!">
-              <i class="material-icons">account_box</i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="container hide-on-med-and-up">
-      <ul class="collection with-header">
-        <li class="collection-header">
-          <h3>Category name</h3>
-        </li>
-        <a href="#!" class="collection-item" th:each="case : ${cases}">
-          <span th:text="${case.name}"></span>
-        </a>
-      </ul>
-    </div>
-
-    <div class="hide-on-small-only desktop-grid">
+    <div class="desktop-grid blue lighten-5">
       <div th:replace="fragments/nav :: navbar"></div>
       <div class="section-main">
         <!--   New Side Bar Fragment     -->
-        <div class="section-side-cases blue darken-1 z-depth-1">
+        <div
+          class="section-side-cases blue darken-1 z-depth-1 hide-on-small-only"
+        >
           <div
             th:replace="${#ctx.containsVariable('category')}?
         ~{fragments/sidebar.html :: sidebar-button} :
@@ -52,7 +35,8 @@
           <ul th:replace="fragments/sidebar.html :: sidebar-items"></ul>
         </div>
 
-        <div class="section-right">
+        <div class="section-right container">
+          <br>
           <center>
             <h3
               id="categoryName"
@@ -101,19 +85,75 @@
             </button>
           </form>
 
-          <div class="content-grid" id="content-grid">
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+          <button
+            th:if="${#ctx.containsVariable('diagnosisName')}"
+            type="button"
+            class="btn blue white-text collapsible"
+          >
+            Open Collapsible
+          </button>
+          <div class="content z-depth-1">
+            <div th:if="${#ctx.containsVariable('diagnosisName')}">
+              <form
+                method="post"
+                th:action="@{/diagnosis/{dia}/addDiagnosisInfo (dia=${diagnosisIndex})}"
+                th:object="${diagnosisInfoKey}"
+              >
+                <table id="diaInfoTable">
+                  <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                  </tr>
+                  <tr style="border-bottom: none">
+                    <th>
+                      <label class="black-text" th:for="key">Key</label>
 
+                      <input
+                        aria-describedby="Enter the key"
+                        th:field="*{key}"
+                        type="text"
+                      />
+
+                      <div
+                        th:errors="*{key}"
+                        th:if="${#fields.hasErrors('key')}"
+                      >
+                        Key Error
+                      </div>
+                    </th>
+                    <th>
+                      <label class="black-text" th:for="value">Value</label>
+
+                      <input
+                        aria-describedby="Enter the value"
+                        th:field="*{value}"
+                        type="text"
+                      />
+
+                      <div
+                        th:errors="*{value}"
+                        th:if="${#fields.hasErrors('value')}"
+                      >
+                        Value Error
+                      </div>
+                    </th>
+                  </tr>
+                </table>
+
+                <button class="btn blue white-text" id="submit" type="submit">
+                  Update
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="content-grid" id="content-grid">
             <a
               th:each="category : ${categories}"
               th:href="@{/category/{id}(id=${category.id})}"
+              style="width:100%"
             >
-              <button class="btn content-item">
+              <button class="btn content-item bigger">
                 <b th:text="${category.name}"></b>
               </button>
             </a>
@@ -128,53 +168,15 @@
               </a>
             </button> -->
 
-            <div
-              class="content-item"
-              th:if="${returnedCases !=null}"
+            <a
               th:each="case : ${returnedCases}"
+              th:href="@{/case/{caseId}(caseId=${case.id})}"
+              style="width:100%"
             >
-              <a th:href="@{/case/{categoryId}/{caseId}(caseId=${case.id},categoryId=${category.id})}">
+              <button class="btn content-item bigger">
                 <b th:text="${case.name}"></b>
-              </a>
-            </div>
-          </div>
-
-          <div th:if="${#ctx.containsVariable('diagnosisName')}">
-            <form method="post" th:action="@{/diagnosis/{dia}/addDiagnosisInfo (dia=${diagnosisIndex})}" th:object="${diagnosisInfoKey}">
-              <table id="diaInfoTable">
-                <tr>
-                  <th>Key</th>
-                  <th>Value</th>
-                </tr>
-                <tr>
-                  <th>
-                    <label th:for="key">Key</label>
-
-                    <input aria-describedby="Enter the key"
-                           th:field="*{key}"
-                           type="text"/>
-
-                    <div th:errors="*{key}"
-                         th:if="${#fields.hasErrors('key')}">
-                      Key Error
-                    </div>
-                  </th>
-                  <th>
-                    <label th:for="value">Value</label>
-
-                    <input aria-describedby="Enter the value"
-                           th:field="*{value}"
-                           type="text"/>
-
-                    <div th:errors="*{value}"
-                         th:if="${#fields.hasErrors('value')}">
-                      Value Error
-                    </div>
-                  </th>
-                </tr>
-              </table>
-              <button id="submit" type="submit">Add Diagnosis Info</button>
-            </form>
+              </button>
+            </a>
           </div>
 
           <!--<div th:if="${#ctx.containsVariable('returnedDiagnosisInfo')}"
@@ -188,35 +190,44 @@
       </div>
     </div>
     <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
     <script>
       $(document).ready(function() {
-        $.get("/returnedDiagnosisInfo", function(data) {
-          $(".result").html(data);
-          console.log(data);
-          var diagnosisInfoTable = document.getElementById("diaInfoTable");
-          for (i = 0; i < data.length; i++) {
-            var row = diagnosisInfoTable.insertRow(diagnosisInfoTable.rows.length - 1);
-            var key = row.insertCell(-1);
-            var value = row.insertCell(-1);
-
-            key.innerHTML = data[i].key;
-            value.innerHTML = data[i].value;
-          }
-        });
-      })
-
+        console.log("uhhh");
+        $(".button-collapse").sideNav();
+      });
     </script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      AOS.init();
+      AOS.init({
+        // Global settings:
+        disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+        startEvent: "DOMContentLoaded", // name of the event dispatched on the document, that AOS should initialize on
+        initClassName: "aos-init", // class applied after initialization
+        animatedClassName: "aos-animate", // class applied on animation
+        useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+        disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+        debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+        throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+        // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+        offset: 120, // offset (in px) from the original trigger point
+        delay: 0, // values from 0 to 3000, with step 50ms
+        duration: 400, // values from 0 to 3000, with step 50ms
+        easing: "ease", // default easing for AOS animations
+        once: true, // whether animation should happen only once - while scrolling down
+        mirror: false, // whether elements should animate out while scrolling past them
+        anchorPlacement: "top-bottom" // defines which position of the element regarding to window should trigger the animation
+      });
     </script>
     <script type="text/javascript" th:src="@{/home.js}"></script>
     <script>

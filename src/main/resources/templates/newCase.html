@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Create New Case</title>
+    <meta charset="UTF-8" />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
+    />
     <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
     />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title>Title</title>
     <link
+            href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css"
     />
-
 </head>
 <body>
 <div th:replace="fragments/nav :: navbar"></div>
 <main class = "desktop-grid container">
 
     <h2 id="title">Create a New Case</h2>
+<br>
+    <h2 class = "container">Create a New Case</h2>
 
     <form  id ="submitCases" method="post" th:object="${caseKey}">
         <fieldset id="allFields">

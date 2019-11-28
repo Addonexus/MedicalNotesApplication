@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
+import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
+import nsa.group4.medical.domains.DiagnosisInformation;
 import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisService;
@@ -42,18 +44,28 @@ public class RESTController {
     private CategoriesRepositoryJPA categoriesRepository;
     private DiagnosisServiceInterface diagnosisService;
     private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
+    private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
+
 
 
     public RESTController(CaseServiceInterface caseServiceInterface,
                           CategoriesRepositoryJPA categoriesRepository,
                           DiagnosisServiceInterface diagnosisService,
-                          DiagnosisRepositoryJPA diagnosisRepositoryJPA
+                          DiagnosisRepositoryJPA diagnosisRepositoryJPA,
+                          DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC
                           ){
         this.caseServiceInterface =caseServiceInterface;
         this.categoriesRepository=categoriesRepository;
         this.diagnosisService=diagnosisService;
         this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
+        this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
 
+    }
+
+    @GetMapping("/returnedDiagnosisInfo/{index}")
+    public @ResponseBody List<DiagnosisInformation> getDiagnosisInformation(@PathVariable Long index) {
+        System.out.println("hmdds");
+        return diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(index);
     }
 
     @GetMapping("/getCaseById/{index}")
@@ -243,6 +255,11 @@ public class RESTController {
             return returnedList;
 
         }
+
+    @GetMapping("getRecentCases")
+    public @ResponseBody List<CaseModel> getRecentCases() {
+        return caseServiceInterface.findAllByOrderByCreationDate();
+    }
 
     }
 

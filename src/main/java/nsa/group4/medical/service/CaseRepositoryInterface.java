@@ -17,5 +17,10 @@ public interface CaseRepositoryInterface {
     List<CaseModel> findAll();
 
 
+    List<CaseModel> findAllByOrderByCreationDate();
+
+    List<CaseModel> findAllByOrderByCreationDateAsc();
+
+    List<CaseModel> findAllByOrderByCreationDateDesc();
     List<CaseModel> findAllByOrderByCreationDateDesc();
 }
