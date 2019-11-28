@@ -24,31 +24,35 @@
       <div class="col s12 m4" th:if="${not #lists.isEmpty(categories)}">
         <ul class="collection with-header z-depth-1">
           <li class="collection-header"><h2>Categories</h2></li>
-          <li
+          <a
+                  th:href="@{/category/{categoryId} (categoryId=${category.id})}"
             th:each="category : ${categories}"
             class="collection-item"
             th:text="${category.name}"
-          ></li>
+          ></a>
         </ul>
       </div>
       <div class="col s12 m4" th:if="${not #lists.isEmpty(diagnoses)}">
         <ul class="collection with-header z-depth-1">
           <li class="collection-header"><h2>Diagnoses</h2></li>
-          <li
+          <a
+                  th:href="@{/diagnosis/{diagnosisId} (diagnosisId=${diagnosis.id})}"
             th:each="diagnosis : ${diagnoses}"
             class="collection-item"
             th:text="${diagnosis.name}"
-          ></li>
+          ></a>
         </ul>
       </div>
       <div class="col s12 m4" th:if="${not #lists.isEmpty(cases)}">
         <ul class="collection with-header z-depth-1">
           <li class="collection-header"><h2>Cases</h2></li>
-          <li
-            th:each="case : ${cases}"
+          <a
+                  th:href="@{/case/{caseId} (caseId=${case.id})}"
+
+                  th:each="case : ${cases}"
             class="collection-item"
             th:text="${case.name}"
-          ></li>
+          ></a>
         </ul>
       </div>
     </div>
