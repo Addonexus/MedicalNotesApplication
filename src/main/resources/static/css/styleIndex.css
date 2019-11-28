@@ -409,7 +409,7 @@ a:link {
     width: 100%;
   }
   .img-row {
-    padding: 0 0;
+    padding: @media 0 0;
   }
   .hero-header {
     background: -webkit-gradient(
@@ -519,15 +519,18 @@ a:link {
 }
 
 .big-box {
-  border-radius: 4px;
+  /* border-radius: 4px; */
 }
 
 .bb-title {
   padding: 10px;
+  font-size: 25px;
 }
 
 .bb-content {
-  padding: 50px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  text-align: center;
 }
 
 .link {
