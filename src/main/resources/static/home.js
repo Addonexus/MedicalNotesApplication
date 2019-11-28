@@ -60,6 +60,26 @@ function refreshListOfDiagnoses() {
   }
 }
 
+$.get(
+  "/api/returnedDiagnosisInfo/" +
+    window.location.pathname[window.location.pathname.length - 1],
+  function(data) {
+    $(".result").html(data);
+    console.log(data);
+    var diagnosisInfoTable = document.getElementById("diaInfoTable");
+    for (i = 0; i < data.length; i++) {
+      var row = diagnosisInfoTable.insertRow(
+        diagnosisInfoTable.rows.length - 1
+      );
+      var key = row.insertCell(-1);
+      var value = row.insertCell(-1);
+
+      key.innerHTML = data[i].key;
+      value.innerHTML = data[i].value;
+    }
+  }
+);
+
 function getRecentCases() {
   $.get("/recentCases/", function(data) {
     $(".result").html(data);

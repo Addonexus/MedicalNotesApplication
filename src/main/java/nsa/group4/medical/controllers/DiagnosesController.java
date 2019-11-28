@@ -120,10 +120,6 @@ public class DiagnosesController {
         }
     }
 
-    @GetMapping("/returnedDiagnosisInfo")
-    public @ResponseBody List<DiagnosisInformation> getDiagnosisInformation() {
-        return diagnosisInformationRepositoryJDBC.getAllDiagnosisInformation();
-    }
 
     @GetMapping("ya")
     public String ya(Model model) {
