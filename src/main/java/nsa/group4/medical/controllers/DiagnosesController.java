@@ -132,4 +132,14 @@ public class DiagnosesController {
         model.addAttribute("form", new Form());
         return "testAutocompleteChips";
     }
+
+    @GetMapping("/login")
+    public String getLoginPage(){
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String getRegisterPage(){
+        return "register";
+    }
 }
