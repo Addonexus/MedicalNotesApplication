@@ -209,6 +209,6 @@ public class CaseController {
 
     @GetMapping("/recentCases")
     public @ResponseBody List<CaseModel> getRecentCases() {
-        return caseService.findAllByOrderByCreationDate();
+        return caseService.findAllByOrderByCreationDateAsc();
     }
 }

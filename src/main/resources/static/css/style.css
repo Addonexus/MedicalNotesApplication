@@ -137,3 +137,9 @@ input {
   left: 20%;
   position: relative;
 }
+
+.btn:hover {
+  background-color: #3998ff;
+  color: white;
+  transition: 1ms;
+}
