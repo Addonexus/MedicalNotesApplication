@@ -1,7 +1,13 @@
 <div th:fragment="navbar">
   <nav>
-    <div class="nav-wrapper blue darken-2">
-      <a href="/home" class="brand-logo left">Case a Day</a>
+    <div class="nav-wrapper blue darken-2 z-depth-2">
+      <a
+        href="/home"
+        data-activates="mobile-demo"
+        class="button-collapse brand-logo left"
+        >Case a Day</a
+      >
+      <a href="/home" class="brand-logo left hide-on-small-only">Case a Day</a>
       <ul class="right">
         <li>
           <form
@@ -34,5 +40,16 @@
         </li>
       </ul>
     </div>
+    <ul id="mobile-demo" class="side-nav blue z-depth-5">
+      <li></li>
+      <li>
+        <a th:href="@{/home}"><h3 class="white-text">Case a day</h3></a>
+        <div class="btn white black-text">Create case</div>
+      </li>
+      <li><a href="#!">Second Link</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Subheader</a></li>
+      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    </ul>
   </nav>
 </div>

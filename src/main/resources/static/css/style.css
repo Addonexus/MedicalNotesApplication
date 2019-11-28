@@ -143,3 +143,25 @@ input {
   color: white;
   transition: 1ms;
 }
+
+.side-nav li > a {
+  padding: 0 16px;
+}
+
+.side-nav .divider {
+  margin: 0;
+  height: 8px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: transparent;
+}
+
+.sidenav-header {
+  background: url("../images/user-bg.jpg") no-repeat center center;
+  background-size: cover;
+  margin-bottom: 0px;
+  padding: 15px 0 0 15px;
+}
+.sidenav-footer {
+  margin-bottom: 0px;
+  padding: 0;
+}
