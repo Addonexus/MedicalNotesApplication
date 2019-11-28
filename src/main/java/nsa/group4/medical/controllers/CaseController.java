@@ -137,12 +137,13 @@ public class CaseController {
 //        return url;
 //    }
 
-    @GetMapping(path ="/case/{index}")
-    public String getCase(@PathVariable(name="index") Long index, Model model){
+    @GetMapping(path ="/case/{categoryId}/{index}")
+    public String getCase(@PathVariable(name="index") Long index, @PathVariable(name="categoryId") Long categoryIndex, Model model){
         Optional<CaseModel> returnedCase = caseService.findByCaseId(index);
         if(returnedCase.isPresent()){
             model.addAttribute("case", returnedCase.get());
             model.addAttribute("caseKey", new CaseForm());
+            model.addAttribute("categoryIndex", categoryIndex);
             model.addAttribute("hiddenForm", "1");
             return "newCase";
         }

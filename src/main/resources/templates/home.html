@@ -125,7 +125,7 @@
               th:if="${returnedCases !=null}"
               th:each="case : ${returnedCases}"
             >
-              <a th:href="@{/case/{caseId}(caseId=${case.id})}">
+              <a th:href="@{/case/{categoryId}/{caseId}(caseId=${case.id},categoryId=${category.id})}">
                 <b th:text="${case.name}"></b>
               </a>
             </div>

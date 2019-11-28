@@ -17,9 +17,10 @@
 <div th:replace="fragments/nav :: navbar"></div>
 <main class = "desktop-grid container">
 
-    <h2 class = "container">Create a New Case</h2>
+    <h2 id="title">Create a New Case</h2>
 
-    <form class = "container" id ="submitCases" method="post" th:object="${caseKey}">
+    <form  id ="submitCases" method="post" th:object="${caseKey}">
+        <fieldset id="allFields">
         <div>
             <label th:for="name">Name</label>
 
@@ -92,10 +93,11 @@
             <span class="notes error"></span>
         </div>
 
+
         <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">
 
         <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value = "${hiddenForm}">
-
+        </fieldset>
         <button id="submit" type="submit">Create Case</button>
         <button th:if="${hiddenForm !=null}" id="editCase" type="button" onclick="unhideForm()">Edit Case</button>
     </form>
