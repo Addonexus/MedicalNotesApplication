@@ -409,7 +409,7 @@ a:link {
     width: 100%;
   }
   .img-row {
-    padding: 0 0;
+    padding: @media 0 0;
   }
   .hero-header {
     background: -webkit-gradient(
@@ -483,4 +483,56 @@ a:link {
   padding: 20px;
   text-align: center;
   font-size: 18px;
+}
+
+.circle {
+  background: white;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  position: fixed;
+  animation-fill-mode: forwards;
+}
+
+#circle-1 {
+  top: 200px;
+}
+
+#blur-container-1 {
+  position: abosolute;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(30px);
+  background-color: #ccc;
+}
+
+#blur-container-2 {
+  position: abosolute;
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  background-color: #ccc;
+}
+
+.big-box {
+  /* border-radius: 4px; */
+}
+
+.bb-title {
+  padding: 10px;
+  font-size: 25px;
+}
+
+.bb-content {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.link {
+  text-decoration: underline;
 }

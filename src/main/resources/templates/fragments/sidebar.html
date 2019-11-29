@@ -1,17 +1,12 @@
-<div th:fragment="sidebar-button" >
-    <a th:href="@{/category/{id}/createNewCase(id=${category.id})}">
-        <div class="btn white black-text">
-            New case
-        </div>
-    </a>
+<div th:fragment="sidebar-button" class="z-depth-2">
+  <a th:href="@{/category/{id}/createNewCase(id=${category.id})}">
+    <div class="btn white black-text">
+      New case
+    </div>
+  </a>
 </div>
 
 <div th:fragment="sidebar-no-button" style="padding: 15px; color: white;">
-    <b>To create a new case, please enter a category or diagnosis</b>
+  <b>To create a new case, please enter a category or diagnosis</b>
 </div>
-<ul id="recentCases" class="collection" th:fragment="sidebar-items">
-</ul>
-
-
-
-
+<ul id="recentCases" class="collection" th:fragment="sidebar-items"></ul>
