@@ -85,29 +85,37 @@ function getRecentCases() {
     type: "GET",
     url: "/recentCases",
     // crossDomain: true,
-    contentType : 'application/json; charset=utf-8',
-    dataType : 'json',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
 
     success: function(response) {
-      var ids =response.categoryIds;
+      var ids = response.categoryIds;
       var cases = response.casesList;
 
-  // $.get("/recentCases", function(data) {
-  //   $(".result").html(data);
-  //   console.log("WHAT" + data.categoryIds);
-  //   console.log("NICE DATA",data);
-    var listOfCases = document.getElementById("recentCases");
-    for (i = 0; i < cases.length; i++) {
-      var li = document.createElement("a");
-      li.appendChild(document.createTextNode(cases[i].name));
-      li.setAttribute("id", cases[i].id);
-      li.setAttribute("class", "collection-item");
-      li.setAttribute("href", "/case/"+ ids[i]+"/"+ cases[i].id);
-      listOfCases.appendChild(li);
-    }
-  },
-    error: function(response){
-      console.log('Request Status: ' + response.status + ' Status Text: ' + response.statusText + ' ' + ' Response Text: ' + response.responseText);
+      // $.get("/recentCases", function(data) {
+      //   $(".result").html(data);
+      //   console.log("WHAT" + data.categoryIds);
+      //   console.log("NICE DATA",data);
+      var listOfCases = document.getElementById("recentCases");
+      for (i = 0; i < cases.length; i++) {
+        var li = document.createElement("a");
+        li.appendChild(document.createTextNode(cases[i].name));
+        li.setAttribute("id", cases[i].id);
+        li.setAttribute("class", "collection-item");
+        li.setAttribute("href", "/case/" + cases[i].id);
+        listOfCases.appendChild(li);
+      }
+    },
+    error: function(response) {
+      console.log(
+        "Request Status: " +
+          response.status +
+          " Status Text: " +
+          response.statusText +
+          " " +
+          " Response Text: " +
+          response.responseText
+      );
     }
   });
 }
