@@ -125,10 +125,9 @@ public class RESTController {
 //    public @ResponseBody
 
 //    @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(value = "/saveCase/{categoryIndex}", method = POST, produces = "application/json")
+    @RequestMapping(value = "/saveCase", method = POST, produces = "application/json")
 //    @ResponseStatus(value = HttpStatus.OK)
-    public @ResponseBody ResponseEntity<?> saveCase(@PathVariable(name="categoryIndex") Long categoryId,
-                                                   @Valid @RequestBody CaseForm formData,
+    public @ResponseBody ResponseEntity<?> saveCase(@Valid @RequestBody CaseForm formData,
                                                    Errors bindingResult) {
         ObjectMapper mapper = new ObjectMapper();
         System.out.println("Rerturned DATA:" + formData);
@@ -155,77 +154,80 @@ public class RESTController {
 
         } else {
 
+
+            caseServiceInterface.createCase(formData);
             result.setStatus("SUCCESS");
-            List<String> diagnosesList = formData.getDiagnosesList().stream().map(x -> Objects.toString(x.getTag(), null)).collect(Collectors.toList());
 
-            Optional<Categories> categories = categoriesRepository.findById(categoryId);
+//            List<String> diagnosesList = formData.getDiagnosesList().stream().map(x -> Objects.toString(x.getTag(), null)).collect(Collectors.toList());
+//
+////            Optional<Categories> categories = categoriesRepository.find(categoryId);
+//
+//            List<Diagnosis> existingDiagnosis = diagnosisService.findByCaseNameIn(diagnosesList);
+//
+//            List<String> notExistingDiagnosis = diagnosesList.stream().filter(x -> existingDiagnosis.stream().noneMatch(
+//                    diagnosis -> diagnosis.getName().equals(x))).collect(Collectors.toList());
+//
+//            List<Diagnosis> storingDiagnosis = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, categories.get())).collect(Collectors.toList());
+//
+//            if(formData.getId()==null){
+//                log.debug("EMPTY ID FOUND SO CREATING A NEW CASE");
+//                CaseModel caseModel = new CaseModel(
+//                        formData.getName(),
+//                        formData.getDemographics(),
+//                        new ArrayList<>(),
+//                        formData.getPresentingComplaint(),
+//                        formData.getPresentingComplaintHistory(),
+//                        formData.getMedicalHistory(),
+//                        formData.getDrugHistory(),
+//                        formData.getAllergies(),
+//                        formData.getFamilyHistory(),
+//                        formData.getSocialHistory(),
+//                        formData.getNotes(),
+//                        LocalDateTime.now()
+//                );
+//                //      storing both diagnosis list objects into the case diagnosis list
+//                caseModel.getDiagnosesList().addAll(storingDiagnosis);
+//                caseModel.getDiagnosesList().addAll(existingDiagnosis);
+//
+//
+//                caseServiceInterface.createCase(caseModel);
+//
+//                result.setRedirectUrl("/home");
+//            }
+//            else{
+//                log.debug("ID IS NOT NULL THEREFORE UPDATING THE CASE");
+//                CaseModel caseModel = caseServiceInterface.findByCaseId(formData.getId()).get();
+//                caseModel.setName(formData.getName());
+//                caseModel.setDemographics(formData.getDemographics());
+//                caseModel.setAllergies(formData.getAllergies());
+//                caseModel.setPresentingComplaint(formData.getPresentingComplaint());
+//                caseModel.setPresentingComplaintHistory(formData.getPresentingComplaintHistory());
+//                caseModel.setDrugHistory(formData.getDrugHistory());
+//                caseModel.setMedicalHistory(formData.getMedicalHistory());
+//                caseModel.setSocialHistory(formData.getSocialHistory());
+//                caseModel.setFamilyHistory(formData.getFamilyHistory());
+//                caseModel.setNotes(formData.getNotes());
+//
+//
+//                caseModel.setDiagnosesList(storingDiagnosis);
+//                caseModel.getDiagnosesList().addAll(existingDiagnosis);
+//
+//
+//                caseServiceInterface.createCase(caseModel);
+//
+//                result.setRedirectUrl("/case/"+categoryId+"/"+formData.getId());
+//            }
+//            }
 
-            List<Diagnosis> existingDiagnosis = diagnosisService.findByCaseNameIn(diagnosesList);
-
-            List<String> notExistingDiagnosis = diagnosesList.stream().filter(x -> existingDiagnosis.stream().noneMatch(
-                    diagnosis -> diagnosis.getName().equals(x))).collect(Collectors.toList());
-
-            List<Diagnosis> storingDiagnosis = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, categories.get())).collect(Collectors.toList());
-
-            if(formData.getId()==null){
-                log.debug("EMPTY ID FOUND SO CREATING A NEW CASE");
-                CaseModel caseModel = new CaseModel(
-                        formData.getName(),
-                        formData.getDemographics(),
-                        new ArrayList<>(),
-                        formData.getPresentingComplaint(),
-                        formData.getPresentingComplaintHistory(),
-                        formData.getMedicalHistory(),
-                        formData.getDrugHistory(),
-                        formData.getAllergies(),
-                        formData.getFamilyHistory(),
-                        formData.getSocialHistory(),
-                        formData.getNotes(),
-                        LocalDateTime.now()
-                );
-                //      storing both diagnosis list objects into the case diagnosis list
-                caseModel.getDiagnosesList().addAll(storingDiagnosis);
-                caseModel.getDiagnosesList().addAll(existingDiagnosis);
 
 
-                caseServiceInterface.createCase(caseModel);
-
-                result.setRedirectUrl("/home");
-            }
-            else{
-                log.debug("ID IS NOT NULL THEREFORE UPDATING THE CASE");
-                CaseModel caseModel = caseServiceInterface.findByCaseId(formData.getId()).get();
-                caseModel.setName(formData.getName());
-                caseModel.setDemographics(formData.getDemographics());
-                caseModel.setAllergies(formData.getAllergies());
-                caseModel.setPresentingComplaint(formData.getPresentingComplaint());
-                caseModel.setPresentingComplaintHistory(formData.getPresentingComplaintHistory());
-                caseModel.setDrugHistory(formData.getDrugHistory());
-                caseModel.setMedicalHistory(formData.getMedicalHistory());
-                caseModel.setSocialHistory(formData.getSocialHistory());
-                caseModel.setFamilyHistory(formData.getFamilyHistory());
-                caseModel.setNotes(formData.getNotes());
-
-
-                caseModel.setDiagnosesList(storingDiagnosis);
-                caseModel.getDiagnosesList().addAll(existingDiagnosis);
-
-
-                caseServiceInterface.createCase(caseModel);
-
-                result.setRedirectUrl("/case/"+categoryId+"/"+formData.getId());
-            }
-            }
-
-
-
-
+        result.setRedirectUrl("/home");
 //        return "newCase";//redirect to the case page that has just been created
 //        model.addAttribute("attribute", "redirectWithRedirectPrefix");
 //        session.invalidate();
 //        String url = "redirect:/category/"+categoryId;
 //        return url;
-//        }
+        }
             log.debug("RETURNED SUCEUSS: " + result);
             return ResponseEntity.ok().body(result);
         }
