@@ -18,4 +18,6 @@ public interface CaseServiceInterface {
     List<CaseModel> findAllByOrderByCreationDate();
 
     List<CaseModel> findAllByOrderByCreationDateAsc();
+
+    void updateCase(CaseForm formData);
 }

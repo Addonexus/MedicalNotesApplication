@@ -119,4 +119,52 @@ public class CaseService implements CaseServiceInterface {
     public List<CaseModel> findAllByOrderByCreationDateAsc() {
         return caseRepository.findAllByOrderByCreationDateDesc();
     }
+
+    @Override
+    public void updateCase(CaseForm form) {
+        //makes a list of all the diagnosis items that were entered by user in the input field
+        List<String> diagnosesList = form.getDiagnosesList()
+                .stream().map(x -> Objects.toString(x.getTag(), null))
+                .collect(Collectors.toList());
+        //gets all of the existing diagnosis in the db from the list of diagnosis entered by the user
+        List<Diagnosis> existingDiagnosis = diagnosisRepository.findByNameIn(diagnosesList);
+
+        //separates the diagnoses that don't already exist so that we can create new additions to the db
+        List<String> notExistingDiagnosis = diagnosesList
+                .stream().filter(x -> existingDiagnosis
+                        .stream().noneMatch(diagnosis -> diagnosis.getName().equals(x)))
+                .collect(Collectors.toList());
+        //Logic for a new category when a diagnosis doesn't already exist (puts into a "Miscellaneous" category by default)
+        boolean categoryExists = categoriesRepositoryJPA.existsByName("Miscellaneous");
+        Categories category;
+        if (categoryExists){
+            category =  categoriesRepositoryJPA.findByName("Miscellaneous").get();
+        }
+        else{
+            //creates the "Miscellaneous" category if it doesn't already exist
+            category = categoriesRepositoryJPA.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
+        }
+
+        //List of new Diagnosis in the object that will allow them to be stored like the existing Diagnosis List
+        List<Diagnosis> newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
+
+        log.debug("ID IS NOT NULL THEREFORE UPDATING THE CASE");
+                CaseModel caseModel = caseRepository.findById(form.getId()).get();
+                caseModel.setName(form.getName());
+                caseModel.setDemographics(form.getDemographics());
+                caseModel.setAllergies(form.getAllergies());
+                caseModel.setPresentingComplaint(form.getPresentingComplaint());
+                caseModel.setPresentingComplaintHistory(form.getPresentingComplaintHistory());
+                caseModel.setDrugHistory(form.getDrugHistory());
+                caseModel.setMedicalHistory(form.getMedicalHistory());
+                caseModel.setSocialHistory(form.getSocialHistory());
+                caseModel.setFamilyHistory(form.getFamilyHistory());
+                caseModel.setNotes(form.getNotes());
+
+        //storing both diagnosis list objects into the case diagnosis list
+        //sets a new diagnosis list to replace what was already there
+        caseModel.setDiagnosesList(newDiagnoses);
+        caseModel.getDiagnosesList().addAll(existingDiagnosis);
+        caseRepository.save(caseModel);
+    }
 }
