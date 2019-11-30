@@ -71,11 +71,14 @@ $(document).ready(function() {
 
             var $form = $(this);
             var id;
+            var url;
             if(hiddenParam){
                 id = caseID;
+                url = "/api/editCase"
             }
-//                var categoryID = document.getElementById("categoryId").value;
-                var url = "/api/saveCase";
+            else{
+            url = "/api/saveCase"
+            }
 
             var formData = {
                 "id" : id,
