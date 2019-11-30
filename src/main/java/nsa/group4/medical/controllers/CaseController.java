@@ -65,16 +65,15 @@ public class CaseController {
 
     static final Logger LOG = LoggerFactory.getLogger(CaseController.class);
 
-    @RequestMapping(path="/category/{categoryId}/createNewCase",
+    @RequestMapping(path="/createNewCase",
             method = RequestMethod.GET)
-    public String createNewCase(@PathVariable(name="categoryId") Long categoryId,
-                                Model model){
+    public String createNewCase(Model model){
 //        List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
-        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
+//        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
 //        Optional<Diagnosis> diagnosis = diagnosisService.getByDiagnosisId(diagnosisId);
-        if(!category.isPresent() ){
-            return "404";
-        }
+//        if(!category.isPresent() ){
+//            return "404";
+//        }
         CaseForm caseForm = new CaseForm();
 //        caseForm.setCategory(category.get());
 //        caseForm.set
@@ -82,7 +81,7 @@ public class CaseController {
         log.debug("CASE BEFORE SHWON: "+ caseForm);
 //        log.debug("CATEGORY BEFORE SHOWN: " + category.get());
         model.addAttribute("caseKey", caseForm);
-        model.addAttribute("categoryIndex", category.get().getId());
+//        model.addAttribute("categoryIndex", category.get().getId());
 //        model.addAttribute("hiddenForm", 0);
 //        model.addAttribute("categoryKey", category.get());
 
