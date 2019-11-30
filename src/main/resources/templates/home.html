@@ -27,11 +27,7 @@
         <div
           class="section-side-cases blue darken-1 z-depth-1 hide-on-small-only"
         >
-          <div
-            th:replace="${#ctx.containsVariable('category')}?
-        ~{fragments/sidebar.html :: sidebar-button} :
-        ~{fragments/sidebar.html :: sidebar-no-button}"
-          ></div>
+          <div th:replace="fragments/sidebar.html :: sidebar-button"></div>
           <ul th:replace="fragments/sidebar.html :: sidebar-items"></ul>
         </div>
 

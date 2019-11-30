@@ -74,8 +74,8 @@ $(document).ready(function() {
             if(hiddenParam){
                 id = caseID;
             }
-                var categoryID = document.getElementById("categoryId").value;
-                var url = "/api/saveCase/" + categoryID;
+//                var categoryID = document.getElementById("categoryId").value;
+                var url = "/api/saveCase";
 
             var formData = {
                 "id" : id,
