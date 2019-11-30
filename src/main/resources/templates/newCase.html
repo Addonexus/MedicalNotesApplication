@@ -27,10 +27,10 @@
 <div th:replace="fragments/nav :: navbar"></div>
 <main class = "desktop-grid container">
 
-    <h2 id="title">Create a New Case</h2>
+    <h2 class="container" id="title">Create a New Case</h2>
 <br>
 
-    <form  id ="submitCases" method="post" th:object="${caseKey}">
+    <form  class="container" id ="submitCases" method="post" th:object="${caseKey}">
         <fieldset id="allFields">
         <div>
             <label th:for="name">Name</label>
