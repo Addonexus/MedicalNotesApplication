@@ -137,9 +137,14 @@ function lookForCategoryFormPost() {
       dataType: "json",
       type: "POST",
       url: url,
-      data: JSON.stringify(formData)
+      data: JSON.stringify(formData),
+      success: function(json) {
+        refreshListOfDiagnoses();
+      },
+      error: function(json) {
+        alert("error!");
+      }
     });
-    setTimeout(refreshListOfDiagnoses, 50);
   });
 }
 

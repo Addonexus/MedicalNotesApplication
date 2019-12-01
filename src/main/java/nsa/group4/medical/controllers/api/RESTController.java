@@ -232,14 +232,18 @@ public class RESTController {
 
 
     @PostMapping(value = "/createDiagnosis", produces = "application/json")
-    public @ResponseBody String saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
+    public @ResponseBody ResponseEntity<?> saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         System.out.println(formData.get("categoryName"));
         diagnosisService.createDiagnosis(new Diagnosis(
                                         formData.get("name"),
                                         categoriesRepository.findByName(formData.get("categoryName")).get()
                                         ));
-        return "NUGGET";
+
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        responseBody.setDiagnoses(diagnosisRepositoryJPA.findAll());
+        responseBody.setStatus("SUCCESS");
+        return ResponseEntity.ok().body(responseBody);
     }
 
     @GetMapping("/getAllDiagnosis")

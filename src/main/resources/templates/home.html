@@ -36,7 +36,7 @@
         </div>
 
         <div class="section-right container">
-          <br>
+          <br />
           <center>
             <h3
               id="categoryName"
@@ -61,6 +61,7 @@
               id="diagnosisName"
               type="text"
               class="create-item-input"
+              minlength=5
             />
             <button class="go-away" id="submit" type="submit">
               New Diagnosis
@@ -194,11 +195,7 @@
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"
     ></script>
-    <script>
-      $(document).ready(function() {
-        console.log("uhhh");
-        $(".button-collapse").sideNav();
-      });
+
     </script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -230,8 +227,6 @@
       });
     </script>
     <script type="text/javascript" th:src="@{/home.js}"></script>
-    <script>
-      
-    </script>
+    <script type="text/javascript" th:src="@{/sitewide.js}"></script>
   </body>
 </html>
