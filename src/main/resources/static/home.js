@@ -13,14 +13,16 @@ if (windowUrl.pathname.includes("category")) {
   showRecentCases = true;
 
   // Refresh / get the list / grid of diagnoses
-  setTimeout(refreshListOfDiagnoses, 0);
+  refreshListOfDiagnoses();
 
   // Check if category form is posted
   lookForCategoryFormPost();
 }
 
 if (windowUrl.pathname.includes("home")) {
+  refreshListOfCategories();
   showRecentCases = true;
+  createCategory();
 }
 
 if (windowUrl.pathname.includes("diagnosis")) {
@@ -66,6 +68,35 @@ function refreshListOfDiagnoses() {
   }
 }
 
+function refreshListOfCategories() {
+  console.log("HIHHS");
+  var grid = document.getElementById("content-grid");
+
+  while (grid.firstChild) {
+    grid.removeChild(grid.firstChild);
+  }
+  console.log("HI THERE");
+  console.log(window.location);
+
+  $.get("/api/getAllCategories/" + lastInt, function(data) {
+    $(".result").html(data);
+    console.log(data);
+    var grid = document.getElementById("content-grid");
+    for (i = 0; i < data.length; i++) {
+      console.log("categories:" + data[i]);
+      var a = document.createElement("a");
+      var b = document.createElement("button");
+      a.setAttribute("href", "/category/" + data[i].id);
+      a.style.width = "100%";
+      b.appendChild(document.createTextNode(data[i].name));
+      b.setAttribute("class", "btn content-item bigger");
+      b.style.fontWeight = "600";
+      a.appendChild(b);
+      grid.appendChild(a);
+    }
+  });
+}
+
 $.get("/api/returnedDiagnosisInfo/" + lastInt, function(data) {
   $(".result").html(data);
   console.log(data);
@@ -92,10 +123,6 @@ function getRecentCases() {
       var ids = response.categoryIds;
       var cases = response.casesList;
 
-      // $.get("/recentCases", function(data) {
-      //   $(".result").html(data);
-      //   console.log("WHAT" + data.categoryIds);
-      //   console.log("NICE DATA",data);
       var listOfCases = document.getElementById("recentCases");
       for (i = 0; i < cases.length; i++) {
         var li = document.createElement("a");
@@ -117,6 +144,35 @@ function getRecentCases() {
           response.responseText
       );
     }
+  });
+}
+
+function createCategory() {
+  $("#createCategory").submit(function(e) {
+    e.preventDefault();
+
+    var $form = $(this);
+    var url = "/api/createCategory/";
+
+    console.log("did it!");
+
+    var formData = {
+      name: document.getElementById("categoryName").value
+    };
+
+    $.ajax({
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      type: "POST",
+      url: url,
+      data: JSON.stringify(formData),
+      success: function(json) {
+        refreshListOfCategories();
+      },
+      error: function(json) {
+        alert("error!");
+      }
+    });
   });
 }
 

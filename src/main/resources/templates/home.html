@@ -70,16 +70,15 @@
 
           <form
             th:if="${#ctx.containsVariable('categoryKey')}"
-            th:action="@{/home}"
-            method="post"
-            th:object="${categoryKey}"
+            id="createCategory"
             class="create-item-form"
           >
             <input
-              placeholder="New Category"
-              th:field="*{name}"
-              type="text"
-              class="create-item-input"
+            placeholder="New Category"
+            id="categoryName"
+            type="text"
+            class="create-item-input"
+            minlength=5
             />
             <button class="go-away" id="submit" type="submit">
               New Category

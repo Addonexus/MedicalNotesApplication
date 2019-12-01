@@ -246,19 +246,35 @@ public class RESTController {
         return ResponseEntity.ok().body(responseBody);
     }
 
+    @PostMapping(value = "/createCategory", produces = "application/json")
+    public @ResponseBody ResponseEntity<?> saveCategory(@RequestBody Map<String, String> formData, Errors bindingResult) {
+        System.out.println(formData.get("name"));
+        String categoryName = formData.get("name");
+        categoriesRepository.save(new Categories(categoryName));
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        responseBody.setStatus("SUCCESS");
+        return ResponseEntity.ok().body(responseBody);
+    }
+
     @GetMapping("/getAllDiagnosis")
     public @ResponseBody List<Diagnosis> getDiagnoses(){
             log.debug("REST API RETURN: ");
             List<Diagnosis> returnedList = diagnosisRepositoryJPA.findAll();
 
             log.debug("Returned LIST: "+returnedList);
-//        for(Diagnosis diagnosis:returnedList){
-//            for(CaseModel caseModel: diagnosis.getCases()){
-//        }
-//        returnedList.forEach(x-> x.getCases().forEach(y -> y.setDiagnosesList(new ArrayList<>())));
             return returnedList;
 
         }
+
+    @GetMapping("/getAllCategories")
+    public @ResponseBody List<Categories> getCategories(){
+        log.debug("REST API RETURN: ");
+        List<Categories> returnedList = categoriesRepository.findAll();
+
+        log.debug("Returned LIST: "+returnedList);
+        return returnedList;
+
+    }
 
     @GetMapping("getRecentCases")
     public @ResponseBody List<CaseModel> getRecentCases() {
