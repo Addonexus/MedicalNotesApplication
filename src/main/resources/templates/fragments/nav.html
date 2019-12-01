@@ -4,10 +4,10 @@
       <a
         href="/home"
         data-activates="mobile-demo"
-        class="button-collapse brand-logo left"
+        class="hide-on-med-and-up button-collapse brand-logo left"
         >Case a Day</a
       >
-      <a href="/home" class="brand-logo left hide-on-med-and-down">Case a Day</a>
+      <a href="/home" class="brand-logo left hide-on-small-only">Case a Day</a>
       <ul class="right">
         <li>
           <form
@@ -45,7 +45,10 @@
         <a th:href="@{/home}"><h3 class="white-text">Case a day</h3></a>
       </li>
       <li>
-        <a th:if="${#ctx.containsVariable('category')}" th:href="@{/category/{id}/createNewCase(id=${category.id})}">
+        <a
+          th:if="${#ctx.containsVariable('category')}"
+          th:href="@{/category/{id}/createNewCase(id=${category.id})}"
+        >
           <div class="white-text">Create case</div>
         </a>
       </li>
