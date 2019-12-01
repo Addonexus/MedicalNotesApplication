@@ -52,6 +52,14 @@
           <div class="white-text">Create case</div>
         </a>
       </li>
+      <li>
+        <a
+          th:unless="${#ctx.containsVariable('category')}"
+          th:href="@{/category/{id}/createNewCase(id=${0})}"
+        >
+          <div class="white-text">Create cease</div>
+        </a>
+      </li>
     </ul>
   </nav>
 </div>
