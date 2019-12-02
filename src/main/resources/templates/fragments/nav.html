@@ -2,16 +2,28 @@
   <nav>
     <div class="nav-wrapper blue darken-2 z-depth-2">
       <a
-        href="/home"
-        data-activates="mobile-demo"
-        class="hide-on-med-and-up button-collapse brand-logo left"
+        href="#"
+        data-target="slide-out"
+        class="brand-logo hide-on-med-and-up sidenav-trigger"
+        style="margin: 0px"
         >Case a Day</a
       >
       <a href="/home" class="brand-logo left hide-on-small-only">Case a Day</a>
-      <ul class="right">
+      <ul class="hide-on-med-and-up">
+        <li class="left">
+          <a
+            style="margin: 0px;"
+            href="#"
+            class="sidenav-trigger"
+            data-target="slide-out"
+            ><i class="material-icons">menu</i></a
+          >
+        </li>
+      </ul>
+      <ul class="right hide-on-small-only">
         <li>
-          <a th:href="@{/calendar}"
-            ><i class="material-icons white-text">date_range</i>
+          <a class="modal-trigger" href="#modal1">
+            <i class="material-icons white-text">date_range</i>
           </a>
         </li>
         <li>
@@ -45,7 +57,7 @@
         </li>
       </ul>
     </div>
-    <ul id="mobile-demo" class="side-nav blue z-depth-5">
+    <ul id="slide-out" class="sidenav blue z-depth-5">
       <li>
         <a th:href="@{/home}"><h3 class="white-text">Case a day</h3></a>
       </li>
@@ -56,4 +68,7 @@
       </li>
     </ul>
   </nav>
+  <div id="modal1" class="modal">
+    <div class="modal-content">a</div>
+  </div>
 </div>

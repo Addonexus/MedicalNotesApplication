@@ -39,6 +39,18 @@ if (showRecentCases) {
   getRecentCases();
 }
 
+// fetch("/calendar").then(function(response) {
+//   console.log("reponse:");
+//   a = response.text;
+//   console.log(a);
+//   modal1.children[0].innerHTML = response.text;
+// });
+
+// let modal1 = document.getElementById("modal1");
+// promise = fetch("/calendar");
+// console.log(promise.json());
+// console.log((modal1.children[0].innerHTML = fetch("/calendar")));
+
 function postDiagnosisInfo() {
   console.log("--- post diagnosis info function --- ");
   $("#createDiagnosisInfo").submit(function(e) {

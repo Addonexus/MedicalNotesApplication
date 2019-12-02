@@ -1,4 +1,11 @@
 $(document).ready(function() {
-  console.log("uhhh");
-  $(".button-collapse").sideNav();
+  $(".sidenav").sidenav();
+});
+
+$(document).ready(function() {
+  $(".modal").modal();
+});
+
+$(document).ready(function() {
+  $(".datepicker").datepicker();
 });
