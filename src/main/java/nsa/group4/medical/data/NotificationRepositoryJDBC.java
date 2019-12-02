@@ -4,6 +4,7 @@ package nsa.group4.medical.data;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.domains.Notification;
+import nsa.group4.medical.domains.rowmappers.NotificationRowmapper;
 import nsa.group4.medical.service.NotificationRepositoryInterface;
 import nsa.group4.medical.service.events.NotificationAdded;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class NotificationRepositoryJDBC implements NotificationRepositoryInterfa
     }
 
     public List<Notification> getAllNotifications(){
-        jdbcTemplate.query("SELECT * FROM notifications",
-                );
+        return jdbcTemplate.query("SELECT * FROM notifications",
+                new NotificationRowmapper());
     }
 }
