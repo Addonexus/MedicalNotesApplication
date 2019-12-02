@@ -356,7 +356,7 @@ a:link {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 900px;
+  height: 100vh;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -460,8 +460,8 @@ a:link {
 }
 
 .btm-icon {
-  position: relative;
-  top: 300px;
+  position: absolute;
+  bottom: 80px;
 }
 
 #arrow {
@@ -472,10 +472,10 @@ a:link {
 
 @keyframes example {
   from {
-    top: 300px;
+    bottom: 70px;
   }
   to {
-    top: 330px;
+    bottom: 0px;
   }
 }
 
