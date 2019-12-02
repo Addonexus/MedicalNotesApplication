@@ -10,6 +10,11 @@
       <a href="/home" class="brand-logo left hide-on-small-only">Case a Day</a>
       <ul class="right">
         <li>
+          <a th:href="@{/calendar}"
+            ><i class="material-icons white-text">date_range</i>
+          </a>
+        </li>
+        <li>
           <form
             action="/search"
             th:action="@{/search}"

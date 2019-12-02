@@ -23,7 +23,7 @@ public class HomeController {
 
     @GetMapping("/calendar")
     public String calendarPage() {
-        return "calender";
+        return "calendar";
     }
 }
 
