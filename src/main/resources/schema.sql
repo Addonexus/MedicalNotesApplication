@@ -26,7 +26,15 @@ CREATE TABLE IF NOT EXISTS `diagnosis_info` (
   `key` VARCHAR(100) NOT NULL,
   `value` VARCHAR(100) NOT NULL)
 ENGINE = InnoDB;
--- ---------------
+-- -----------------------------------------------------
+-- Table `notifications`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `notifications` (
+   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+   `content` VARCHAR(100) NOT NULL
+   PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+)
 -- -----------------------------------------------------
 -- Table `cases`
 -- -----------------------------------------------------
