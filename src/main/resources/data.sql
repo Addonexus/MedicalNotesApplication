@@ -36,7 +36,6 @@ insert into cases (id, name, demographics, notes, date_created) values (19,'dumm
 insert into cases (id, name, demographics, notes, date_created) values (20,'dummy data 16', 'dont care', null, CURRENT_TIMESTAMP);
 
 
-insert into categories (id, name) values (0, 'misc');
 insert into categories (id, name) values (1, 'heart');
 insert into categories (id, name) values (2, 'skin');
 insert into categories (id, name) values (3, 'brain');
