@@ -16,6 +16,6 @@ public class Notification {
     @Id
     @GeneratedValue
     private Long id;
-    
+
     private String content;
 }
