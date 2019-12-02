@@ -108,10 +108,25 @@ public class RESTController {
          response.setStatus("SUCCESS");
          response.setRedirectUrl("/home");
          return ResponseEntity.ok().body(response);
-
-
      }
-        response.setStatus("FALSE");
+        response.setStatus("FAILURE");
+        return ResponseEntity.badRequest().body(response);
+    }
+    @PostMapping("/deleteDiagnosis/{index}")
+    public @ResponseBody ResponseEntity<?> deleteDiagnosisById(
+            @PathVariable Long index, HttpServletRequest request
+    ){
+        Optional<Diagnosis> returnedCase = diagnosisService.getByDiagnosisId(index);
+
+        AjaxResponseBody response = new AjaxResponseBody();
+        if(returnedCase.isPresent())
+        {
+            diagnosisService.deleteDiagnosisById(returnedCase.get().getId());
+            response.setStatus("SUCCESS");
+            response.setRedirectUrl("/home");
+            return ResponseEntity.ok().body(response);
+        }
+        response.setStatus("FAILURE");
         return ResponseEntity.badRequest().body(response);
     }
 

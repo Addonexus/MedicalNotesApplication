@@ -136,27 +136,14 @@ $.ajax({
         type: "POST",
         url: "/api/deleteCase/"+id,
         data:JSON.stringify({"id": id}),
-
         success: function(data) {
         console.log('Request Status: ' + data.status + ' Status Text: ' + data.statusText + ' ' + ' Response URL: ' + data.redirectUrl);
-//            $form.find('.error').empty();
             window.location.href = data.redirectUrl;
             alert("Deleted Case");
-
         },
         error : function(e) {
-            $form.find('.error').empty();
-            console.log('Request Status: ' + e.status + ' Status Text: ' + e.statusText + ' ' + ' Response Text: ' + e.responseText);
-//            var obj = JSON.parse(e.responseText);
-//            for (i = 0; i < obj.result.length; i++) {
-//                var item = obj.result[i];
-//                var field = document.getElementsByClassName(item.fieldName)[0];
-//                field.innerHTML = item.errorMessage;
             alert("Something Went Wrong");
-
             }
-
-
     });
 }
 
