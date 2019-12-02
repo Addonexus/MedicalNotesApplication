@@ -11,8 +11,14 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("404")
+    @GetMapping("/404")
     public String errorPage() {
         return "404";
     }
+
+    @GetMapping("/calendar")
+    public String calendarPage() {
+        return "calender";
+    }
 }
+
