@@ -26,6 +26,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -93,17 +94,25 @@ public class RESTController {
 
 
 
-//        AjaxResponseBody result = new AjaxResponseBody();
-//        if(returnedCase.isPresent()){
-//            log.debug("Case is found" + returnedCase.toString());
-//            result.setStatus("SUCCESS");
-//            result.setCaseModel(returnedCase.get());
-//
-//            return "PEEPOHAPPY";
-//
-//        }
-//        result.setStatus("Fail");
-//        return "PEEPOSAD";
+    @PostMapping("/deleteCase/{index}")
+    public @ResponseBody ResponseEntity<?> deleteCaseById(
+            @PathVariable Long index, HttpServletRequest request
+    ){
+     Optional<CaseModel> returnedCase = caseServiceInterface.findByCaseId(index);
+
+        AjaxResponseBody response = new AjaxResponseBody();
+        if(returnedCase.isPresent())
+     {
+         caseServiceInterface.deleteCaseById(returnedCase.get().getId());
+         response.setStatus("SUCCESS");
+         response.setRedirectUrl("/home");
+         return ResponseEntity.ok().body(response);
+
+
+     }
+        response.setStatus("FALSE");
+        return ResponseEntity.badRequest().body(response);
+    }
 
 
     @GetMapping("/getDiagnosisByCategoryId/{index}")
