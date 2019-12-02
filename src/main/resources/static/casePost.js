@@ -1,3 +1,5 @@
+var splitUrl = window.location.pathname.split('/');
+        var caseID = splitUrl[splitUrl.length-1];
 $(document).ready(function() {
     var hiddenParam = document.getElementById("hiddenFormBoolean");
         var data = {};
@@ -8,8 +10,7 @@ $(document).ready(function() {
         document.getElementById("submit").innerText ="Save Case";
         document.getElementById("title").innerText ="Edit Case";
         document.getElementById("submit").hidden = true;
-        var splitUrl = window.location.pathname.split('/');
-        var caseID = splitUrl[splitUrl.length-1];
+
         console.log("PASSED ID: " + caseID);
 
         $.ajax({
@@ -126,6 +127,38 @@ $(document).ready(function() {
             });
         });
     });
+function deleteForm(){
+var id = caseID;
+
+$.ajax({
+        contentType : 'application/json; charset=utf-8',
+        dataType : 'json',
+        type: "POST",
+        url: "/api/deleteCase/"+id,
+        data:JSON.stringify({"id": id}),
+
+        success: function(data) {
+        console.log('Request Status: ' + data.status + ' Status Text: ' + data.statusText + ' ' + ' Response URL: ' + data.redirectUrl);
+//            $form.find('.error').empty();
+            window.location.href = data.redirectUrl;
+            alert("Deleted Case");
+
+        },
+        error : function(e) {
+            $form.find('.error').empty();
+            console.log('Request Status: ' + e.status + ' Status Text: ' + e.statusText + ' ' + ' Response Text: ' + e.responseText);
+//            var obj = JSON.parse(e.responseText);
+//            for (i = 0; i < obj.result.length; i++) {
+//                var item = obj.result[i];
+//                var field = document.getElementsByClassName(item.fieldName)[0];
+//                field.innerHTML = item.errorMessage;
+            alert("Something Went Wrong");
+
+            }
+
+
+    });
+}
 
 function unhideForm(){
     var hiddenParam = document.getElementById("hiddenFormBoolean");
