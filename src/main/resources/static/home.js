@@ -27,6 +27,8 @@ if (windowUrl.pathname.includes("home")) {
 
 if (windowUrl.pathname.includes("diagnosis")) {
   showRecentCases = true;
+  getDiagnosisInformation();
+  postDiagnosisInfo();
 }
 
 if (windowUrl.pathname.includes("case")) {
@@ -36,7 +38,52 @@ if (windowUrl.pathname.includes("case")) {
 if (showRecentCases) {
   getRecentCases();
 }
-// })
+
+function postDiagnosisInfo() {
+  console.log("--- post diagnosis info function --- ");
+  $("#createDiagnosisInfo").submit(function(e) {
+    e.preventDefault();
+    console.log("--- posting diagnosis info --- ");
+
+    var $form = $(this);
+    var url = "/api/createDiagnosisInformation/";
+
+    var formData = {
+      diagnosisId: lastInt,
+      key: document.getElementById("DiagnosisInfoKey").value,
+      value: document.getElementById("DiagnosisInfoValue").value
+    };
+
+    console.log(formData);
+
+    $.ajax({
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      type: "POST",
+      url: url,
+      data: JSON.stringify(formData),
+      success: function(json) {
+        $("#diaInfoTable tr").each(function() {
+          // console.log(this.id);
+          if (this.id) {
+            this.remove();
+          }
+          document.getElementsByClassName("content")[0].style.maxHeight =
+            "none";
+          // $(this)
+          //   .find("td")
+          //   .each(function() {
+          //     // console.log("hiya");
+          //   });
+        });
+        getDiagnosisInformation();
+      },
+      error: function(json) {
+        alert("error!");
+      }
+    });
+  });
+}
 
 function refreshListOfDiagnoses() {
   var grid = document.getElementById("content-grid");
@@ -102,19 +149,24 @@ function refreshListOfCategories() {
   });
 }
 
-$.get("/api/returnedDiagnosisInfo/" + lastInt, function(data) {
-  $(".result").html(data);
-  console.log(data);
-  var diagnosisInfoTable = document.getElementById("diaInfoTable");
-  for (i = 0; i < data.length; i++) {
-    var row = diagnosisInfoTable.insertRow(diagnosisInfoTable.rows.length - 1);
-    var key = row.insertCell(-1);
-    var value = row.insertCell(-1);
+function getDiagnosisInformation() {
+  $.get("/api/returnedDiagnosisInfo/" + lastInt, function(data) {
+    $(".result").html(data);
+    console.log(data);
+    var diagnosisInfoTable = document.getElementById("diaInfoTable");
+    for (i = 0; i < data.length; i++) {
+      var row = diagnosisInfoTable.insertRow(
+        diagnosisInfoTable.rows.length - 1
+      );
+      row.id = "hi";
+      var key = row.insertCell(-1);
+      var value = row.insertCell(-1);
 
-    key.innerHTML = data[i].key;
-    value.innerHTML = data[i].value;
-  }
-});
+      key.innerHTML = data[i].key;
+      value.innerHTML = data[i].value;
+    }
+  });
+}
 
 function getRecentCases() {
   $.ajax({

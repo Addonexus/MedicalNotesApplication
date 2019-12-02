@@ -16,6 +16,7 @@ import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
+import nsa.group4.medical.service.events.DiagnosisInformationAdded;
 import nsa.group4.medical.web.CaseForm;
 import org.apache.catalina.User;
 import org.apache.catalina.mapper.Mapper;
@@ -105,6 +106,24 @@ public class RESTController {
 //        result.setStatus("Fail");
 //        return "PEEPOSAD";
 
+    @RequestMapping(value = "/createDiagnosisInformation/", method = POST, produces = "application/json")
+    public @ResponseBody ResponseEntity<?> saveCase(@RequestBody Map<String, String> formData) {
+        System.out.println(formData);
+        System.out.println(formData.get("diagnosisId"));
+        System.out.println(formData.get("key"));
+        System.out.println(formData.get("value"));
+
+        diagnosisInformationRepositoryJDBC.saveDiagnosisInformation(
+                new DiagnosisInformationAdded(Long.parseLong(formData.get("diagnosisId")),
+                        formData.get("key"),
+                        formData.get("value")
+                )
+        );
+
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        return ResponseEntity.ok().body(responseBody);
+    }
+
 
     @GetMapping("/getDiagnosisByCategoryId/{index}")
     public @ResponseBody  List<Diagnosis> getDiagnoses(@PathVariable Long index){
@@ -112,17 +131,10 @@ public class RESTController {
         Categories categories = categoriesRepository.findById(index).get();
         List<Diagnosis> returnedList = diagnosisService.findByCategories(categories);
         log.debug("Returned LIST: "+returnedList);
-//        for(Diagnosis diagnosis:returnedList){
-//            for(CaseModel caseModel: diagnosis.getCases()){
-//                caseModel.setDiagnosesList(null);
-//            }
-//        }
-//        returnedList.forEach(x-> x.getCases().forEach(y -> y.setDiagnosesList(new ArrayList<>())));
         return returnedList;
     }
 
-//    @GetMapping("/getDiagnosisByCategoryId")
-//    public @ResponseBody
+
 
 //    @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/editCase", method = POST, produces = "application/json")
