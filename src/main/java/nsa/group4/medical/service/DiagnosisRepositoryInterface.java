@@ -18,4 +18,5 @@ public interface DiagnosisRepositoryInterface {
     List<Diagnosis> findByCategories(Categories categories);
     Diagnosis save(Diagnosis diagnosis);
     List<Diagnosis> findAll();
+    void deleteById(Long id);
 }

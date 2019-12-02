@@ -167,4 +167,9 @@ public class CaseService implements CaseServiceInterface {
         caseModel.getDiagnosesList().addAll(existingDiagnosis);
         caseRepository.save(caseModel);
     }
+
+    @Override
+    public void deleteCaseById(Long id) {
+        caseRepository.deleteById(id);
+    }
 }

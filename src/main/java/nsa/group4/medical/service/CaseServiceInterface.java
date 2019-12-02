@@ -20,4 +20,6 @@ public interface CaseServiceInterface {
     List<CaseModel> findAllByOrderByCreationDateAsc();
 
     void updateCase(CaseForm formData);
+
+    void deleteCaseById(Long id);
 }
