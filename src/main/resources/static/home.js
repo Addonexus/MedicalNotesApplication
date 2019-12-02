@@ -92,7 +92,12 @@ function refreshListOfCategories() {
       b.setAttribute("class", "btn content-item bigger");
       b.style.fontWeight = "600";
       a.appendChild(b);
-      grid.appendChild(a);
+      if (data[i].name == "Miscellaneous") {
+        console.log("UMMM WHY");
+        grid.insertBefore(a, grid.firstChild);
+      } else {
+        grid.appendChild(a);
+      }
     }
   });
 }
