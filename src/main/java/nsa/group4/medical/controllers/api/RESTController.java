@@ -192,14 +192,28 @@ public class RESTController {
 
 
     @PostMapping(value = "/createDiagnosis", produces = "application/json")
-    public @ResponseBody String saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
+    public @ResponseBody ResponseEntity<?> saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         System.out.println(formData.get("categoryName"));
         diagnosisService.createDiagnosis(new Diagnosis(
                                         formData.get("name"),
                                         categoriesRepository.findByName(formData.get("categoryName")).get()
                                         ));
-        return "NUGGET";
+
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        responseBody.setDiagnoses(diagnosisRepositoryJPA.findAll());
+        responseBody.setStatus("SUCCESS");
+        return ResponseEntity.ok().body(responseBody);
+    }
+
+    @PostMapping(value = "/createCategory", produces = "application/json")
+    public @ResponseBody ResponseEntity<?> saveCategory(@RequestBody Map<String, String> formData, Errors bindingResult) {
+        System.out.println(formData.get("name"));
+        String categoryName = formData.get("name");
+        categoriesRepository.save(new Categories(categoryName));
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        responseBody.setStatus("SUCCESS");
+        return ResponseEntity.ok().body(responseBody);
     }
 
     @GetMapping("/getAllDiagnosis")
@@ -208,13 +222,19 @@ public class RESTController {
             List<Diagnosis> returnedList = diagnosisRepositoryJPA.findAll();
 
             log.debug("Returned LIST: "+returnedList);
-//        for(Diagnosis diagnosis:returnedList){
-//            for(CaseModel caseModel: diagnosis.getCases()){
-//        }
-//        returnedList.forEach(x-> x.getCases().forEach(y -> y.setDiagnosesList(new ArrayList<>())));
             return returnedList;
 
         }
+
+    @GetMapping("/getAllCategories")
+    public @ResponseBody List<Categories> getCategories(){
+        log.debug("REST API RETURN: ");
+        List<Categories> returnedList = categoriesRepository.findAll();
+
+        log.debug("Returned LIST: "+returnedList);
+        return returnedList;
+
+    }
 
     @GetMapping("getRecentCases")
     public @ResponseBody List<CaseModel> getRecentCases() {

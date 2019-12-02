@@ -29,5 +29,7 @@ public class Categories {
     @JsonBackReference
     private List<Diagnosis> diagnosisList;
 
-
+    public Categories(String name) {
+        this.name = name;
+    }
 }
