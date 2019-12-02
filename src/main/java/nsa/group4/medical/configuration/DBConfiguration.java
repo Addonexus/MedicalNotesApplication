@@ -1,9 +1,11 @@
 package nsa.group4.medical.configuration;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
@@ -11,16 +13,14 @@ import org.springframework.core.env.Environment;
 
 @Configuration
 @ConfigurationProperties("spring.datasource")
+//@ComponentScan({ "nsa.group4.medical.*" })
 @SuppressWarnings("unused")
-public class DBConfiguration {
-
+@Data
+public class DBConfiguration  {
     private String driverClassName;
-    private  String url;
+    private String url;
     private String username;
     private String password;
-
-    @Autowired
-    private Environment env;
 
     @Profile("dev")
     @Bean
