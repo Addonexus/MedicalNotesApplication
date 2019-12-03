@@ -33,6 +33,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -249,13 +250,16 @@ public class RESTController {
     @PostMapping("getCasesByDate")
     public @ResponseBody ResponseEntity<?> getCasesByDate(@RequestBody Map<String, String> formData) throws ParseException {
         String date = formData.get("name").replaceAll("[$,]", "");
-        System.out.println(date);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
         Date myDate = simpleDateFormat.parse(date);
-        System.out.println(myDate);
-        System.out.println(simpleDateFormat);
+
+        Date today = new Date();
+        LocalDateTime ldt = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
+
         AjaxResponseBody responseBody = new AjaxResponseBody();
-        responseBody.setCasesList(caseServiceInterface.findAll());
+        System.out.println(ldt);
+        System.out.println(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
+        responseBody.setCasesList(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
         responseBody.setStatus("SUCCESS");
         return ResponseEntity.ok().body(responseBody);
     }

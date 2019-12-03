@@ -167,4 +167,9 @@ public class CaseService implements CaseServiceInterface {
         caseModel.getDiagnosesList().addAll(existingDiagnosis);
         caseRepository.save(caseModel);
     }
+
+    @Override
+    public List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2) {
+        return caseRepository.findByCreationDateBetween(creationDate, creationDate2);
+    }
 }

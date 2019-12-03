@@ -1,10 +1,14 @@
 package nsa.group4.medical.service;
 
 import nsa.group4.medical.domains.CaseModel;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface CaseRepositoryInterface {
+
+    List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2);
 
     Optional<CaseModel> findByName(String CaseName);
 
