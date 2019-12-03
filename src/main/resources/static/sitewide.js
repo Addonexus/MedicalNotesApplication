@@ -43,7 +43,7 @@ $("#calendar-form").submit(function(e) {
       }
     },
     error: function(json) {
-      alert("error!");
+      alert("Please enter a valid date!");
     }
   });
 });
