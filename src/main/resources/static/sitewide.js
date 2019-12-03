@@ -19,14 +19,28 @@ $("#calendar-form").submit(function(e) {
     name: document.getElementById("date").value
   };
 
+  var listOfCasesForDay = document.getElementById("casesForTheDay");
+  console.log(listOfCasesForDay);
+
+
   $.ajax({
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     type: "POST",
     url: url,
     data: JSON.stringify(formData),
-    success: function(json) {
-      console.log(json);
+    success: function(response) {
+      console.log(response.casesList);
+      for (let i = 0; i < response.casesList.length; i++) {
+        console.log(response.casesList[i].name);
+        var li = document.createElement("a");
+        li.appendChild(document.createTextNode(response.casesList[i].name));
+        li.setAttribute("id", response.casesList[i].id);
+        li.setAttribute("class", "collection-item");
+        li.setAttribute("href", "/case/" + response.casesList[i].id);
+        listOfCasesForDay.appendChild(li);
+        listOfCasesForDay.style.visibility = "visible"
+      }
     },
     error: function(json) {
       alert("error!");
