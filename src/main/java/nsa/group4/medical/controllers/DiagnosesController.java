@@ -138,8 +138,8 @@ public class DiagnosesController {
         return "index";
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String loginPage() {
+//        return "login";
+//    }
 }

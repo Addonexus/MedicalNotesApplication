@@ -84,7 +84,6 @@ CREATE TABLE if not exists `user`
     `id`       int(11)      NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(45)  NOT NULL,
     `password` VARCHAR(100) NOT NULL,
-    `fav_charity_id` int(11),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB;
@@ -95,5 +94,17 @@ CREATE TABLE if not exists `role`
     `userid` int(11)     NOT NULL,
     `role`   varchar(45) NOT NULL,
     PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB;
+
+CREATE TABLE if not exists `auth_user`
+(
+    `auth_user_id` (11) NOT NULL AUTO_INCREMENT,
+    `first_name` VARCHAR(255) NOT NULL,
+    `last_name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(100) NOT NULL,
+    `status` VARCHAR(255) NOT NULL,
+    PRIMARY KEY(`auth_user_id`)
 )
     ENGINE = InnoDB;
