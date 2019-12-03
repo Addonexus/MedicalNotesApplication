@@ -24,5 +24,9 @@ public class NotificationController {
     public String getNotifications(Model model){
 
         List<Notification> notificationList = notificationRepositoryJDBC.getAllNotifications();
+
+        model.addAttribute("notificationsKey", notificationList);
+
+        return "notifications";
     }
 }
