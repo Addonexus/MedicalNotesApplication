@@ -14,6 +14,8 @@ insert into diagnoses (id, name, category_id) values (13,'brain missing', 3);
 insert into diagnoses (id, name, category_id) values (14,'dog ate brain', 3);
 insert into diagnoses (id, name, category_id) values (15,'insane brain pain', 3);
 
+insert into notifications(content) values ('HEEHEE');
+
 insert into cases (id, name, demographics, notes, date_created) values (1,'things that went wrong', '80 y/o woman', null, CURRENT_TIMESTAMP);
 insert into cases (id, name, demographics, notes, date_created) values (2,'things from kid', '6 y/o kid', 'the kid was nice', CURRENT_TIMESTAMP);
 insert into cases (id, name, demographics, notes, date_created) values (3,'dog title', '8 y/o dog', null, CURRENT_TIMESTAMP);

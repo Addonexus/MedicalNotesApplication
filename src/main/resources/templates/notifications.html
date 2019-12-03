@@ -9,7 +9,7 @@
 <main>
     <div th:if="${notificationsKey}">
         <div th:each="notification : ${notificationsKey}">
-            <span th:text="${notificationsKey.content}"></span>
+            <span th:text="${notification.content}"></span>
         </div>
     </div>
 </main>
