@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -244,5 +246,19 @@ public class RESTController {
         return caseServiceInterface.findAllByOrderByCreationDate();
     }
 
+    @PostMapping("getCasesByDate")
+    public @ResponseBody ResponseEntity<?> getCasesByDate(@RequestBody Map<String, String> formData) throws ParseException {
+        String date = formData.get("name").replaceAll("[$,]", "");
+        System.out.println(date);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
+        Date myDate = simpleDateFormat.parse(date);
+        System.out.println(myDate);
+        System.out.println(simpleDateFormat);
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        responseBody.setCasesList(caseServiceInterface.findAll());
+        responseBody.setStatus("SUCCESS");
+        return ResponseEntity.ok().body(responseBody);
     }
+
+}
 
