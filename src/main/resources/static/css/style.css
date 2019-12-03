@@ -168,3 +168,15 @@ input {
 
 .cont {
 }
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.model {
+  overflow: hidden;
+}
+
+.modal::-webkit-scrollbar {
+  display: none;
+}
