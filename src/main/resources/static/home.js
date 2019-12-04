@@ -111,9 +111,12 @@ function refreshListOfDiagnoses() {
         a.appendChild(b);
         grid.appendChild(a);
 
+        var customId = "deleteButton" + data[i].id
+
         var settings = document.createElement("a");
         var settingsButton = document.createElement("button");
         var settingsIcon = document.createElement("i");
+        
 
         settings.style.width = "15%";
         settingsIcon.appendChild(document.createTextNode("settings"));
@@ -121,15 +124,22 @@ function refreshListOfDiagnoses() {
 
         settingsButton.appendChild(settingsIcon);
         settingsButton.setAttribute("class", "btn content-item bigger");
+        settingsButton.setAttribute("onClick", "deleteDiagnosis(" + (data[i].id) + ")");
+
         settingsButton.style.backgroundColor="#eeeeff";
         settingsButton.style.borderLeft="1px solid grey";
         settingsButton.style.fontWeight = "600";
+        settingsButton.id=customId;
         
         settings.appendChild(settingsButton);
         grid.appendChild(settings);    
       }
     });
   }
+}
+
+function deleteDiagnosis(num) {
+  console.log(num);
 }
 
 function refreshListOfCategories() {
