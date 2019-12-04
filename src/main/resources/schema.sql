@@ -141,7 +141,7 @@ CREATE TABLE if not exists auth_user (
   `auth_user_id`   INT(11) NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR (255) NOT NULL,
   `last_name` VARCHAR (255) NOT NULL,
-  `email `VARCHAR (255) NOT NULL,
+  `email` VARCHAR (255) NOT NULL,
   `password` VARCHAR (255) NOT NULL,
   `status` VARCHAR (255),
   PRIMARY KEY (`auth_user_id`)
@@ -151,7 +151,7 @@ CREATE TABLE if not exists auth_user_role (
   `auth_user_id` INT(11) NOT NULL,
   `auth_role_id` INT(11) NOT NULL,
   PRIMARY KEY (`auth_user_id`,`auth_role_id`),
-  KEY FK_user_role (auth_role_id),
+  KEY FK_user_role (`auth_role_id`),
   CONSTRAINT FK_auth_user FOREIGN KEY (`auth_user_id`) REFERENCES auth_user (`auth_user_id`),
   CONSTRAINT FK_auth_user_role FOREIGN KEY (`auth_role_id`) REFERENCES auth_role (`auth_role_id`)
 ) ENGINE = InnoDB;

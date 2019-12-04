@@ -19,6 +19,7 @@ import nsa.group4.medical.web.DiagnosisInformationForm;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -51,6 +52,7 @@ public class CaseController {
 
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
 
+    @Autowired
     public CaseController(CaseServiceInterface caseService, DiagnosisServiceInterface diagnosisService,
                           CategoriesRepositoryJPA categoriesRepositoryJPA,
                           DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC){

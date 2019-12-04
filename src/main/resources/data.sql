@@ -87,7 +87,7 @@ insert into auth_role (auth_role_id, role_name, role_desc) values(2,'ADMIN_USER'
 insert into auth_role (auth_role_id, role_name, role_desc) values(3,'SITE_USER','This user has access to site, after login - normal user');
 
 
--- insert into auth_user (auth_user_id,first_name,last_name,email,password,status) values (1,'Ankit','Wasankar','admin@gmail.com','{bycrypt}$2a$10$DD/FQ0hTIprg3fGarZl1reK1f7tzgM4RuFKjAKyun0Si60w6g3v5i','VERIFIED');
--- insert into auth_user_role (auth_user_id, auth_role_id) values ('1','1');
--- insert into auth_user_role (auth_user_id, auth_role_id) values ('1','2');
--- insert into auth_user_role (auth_user_id, auth_role_id) values ('1','3');
+insert into auth_user (auth_user_id,first_name,last_name,email,password,status) values (1,'Ankit','Wasankar','admin@gmail.com','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G','VERIFIED');
+insert into auth_user_role (auth_user_id, auth_role_id) values ('1','1');
+insert into auth_user_role (auth_user_id, auth_role_id) values ('1','2');
+insert into auth_user_role (auth_user_id, auth_role_id) values ('1','3');
