@@ -43,7 +43,7 @@ $("#calendar-form").submit(function(e) {
         li.setAttribute("href", "/case/" + response.casesList[i].id);
         listOfCasesForDay.appendChild(li);
         listOfCasesForDay.style.visibility = "visible"
-        listOfCasesForDay
+        listOfCasesForDay.style.marginBottom = "25px"
       }
     },
     error: function(json) {
