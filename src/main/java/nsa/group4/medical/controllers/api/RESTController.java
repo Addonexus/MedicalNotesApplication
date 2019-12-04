@@ -27,6 +27,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -94,17 +95,58 @@ public class RESTController {
 
 
 
-//        AjaxResponseBody result = new AjaxResponseBody();
-//        if(returnedCase.isPresent()){
-//            log.debug("Case is found" + returnedCase.toString());
-//            result.setStatus("SUCCESS");
-//            result.setCaseModel(returnedCase.get());
-//
-//            return "PEEPOHAPPY";
-//
-//        }
-//        result.setStatus("Fail");
-//        return "PEEPOSAD";
+    @DeleteMapping("/deleteCase/{index}")
+    public @ResponseBody ResponseEntity<?> deleteCaseById(
+            @PathVariable Long index, HttpServletRequest request
+    ){
+     Optional<CaseModel> returnedCase = caseServiceInterface.findByCaseId(index);
+
+        AjaxResponseBody response = new AjaxResponseBody();
+        if(returnedCase.isPresent())
+     {
+         caseServiceInterface.deleteCaseById(returnedCase.get().getId());
+         response.setStatus("SUCCESS");
+         response.setRedirectUrl("/home");
+         return ResponseEntity.ok().body(response);
+     }
+        response.setStatus("FAILURE");
+        return ResponseEntity.badRequest().body(response);
+    }
+    @DeleteMapping("/deleteDiagnosis/{index}")
+    public @ResponseBody ResponseEntity<?> deleteDiagnosisById(
+            @PathVariable Long index, HttpServletRequest request
+    ){
+        Optional<Diagnosis> returnedDiagnosis = diagnosisService.getByDiagnosisId(index);
+
+        AjaxResponseBody response = new AjaxResponseBody();
+        if(returnedDiagnosis.isPresent())
+        {
+            diagnosisService.deleteDiagnosisById(returnedDiagnosis.get().getId());
+            response.setStatus("SUCCESS");
+            response.setRedirectUrl("/home");
+            return ResponseEntity.ok().body(response);
+        }
+        response.setStatus("FAILURE");
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @DeleteMapping("/deleteCategory/{index}")
+    public @ResponseBody ResponseEntity<?> deleteCategoryById(
+            @PathVariable Long index, HttpServletRequest request
+    ){
+        Optional<Categories> returnedCategory = categoriesRepository.findById(index);
+
+        AjaxResponseBody response = new AjaxResponseBody();
+        if(returnedCategory.isPresent())
+        {
+            categoriesRepository.deleteById(returnedCategory.get().getId());
+            response.setStatus("SUCCESS");
+            response.setRedirectUrl("/home");
+            return ResponseEntity.ok().body(response);
+        }
+        response.setStatus("FAILURE");
+        return ResponseEntity.badRequest().body(response);
+    }
 
     @RequestMapping(value = "/createDiagnosisInformation", method = POST, produces = "application/json")
     public @ResponseBody ResponseEntity<?> saveCase(@RequestBody Map<String, String> formData) {

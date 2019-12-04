@@ -13,4 +13,6 @@ public interface CategoriesRepositoryJPA extends JpaRepository<Categories, Long>
 
     List<Categories> findByNameContaining(String contains);
     boolean existsByName(String name);
+
+    void deleteById(Long id);
 }

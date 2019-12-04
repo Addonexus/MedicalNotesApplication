@@ -175,4 +175,9 @@ public class CaseService implements CaseServiceInterface {
         }
         caseRepository.save(caseModel);
     }
+
+    @Override
+    public void deleteCaseById(Long id) {
+        caseRepository.deleteById(id);
+    }
 }
