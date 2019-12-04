@@ -1,0 +1,26 @@
+<div th:fragment="navbar-mobile">
+  <nav>
+    <div class="nav-wrapper blue darken-2 z-depth-2">
+      <a
+        href="#"
+        data-target="slide-out"
+        class="brand-logo hide-on-med-and-up sidenav-trigger"
+        style="margin: 0px"
+        >Case a Day</a
+      >
+      <a href="/home" class="brand-logo left hide-on-small-only">Case a Day</a>
+      <ul class="hide-on-med-and-up">
+        <li class="left">
+          <a
+            style="margin: 0px;"
+            href="#"
+            class="sidenav-trigger"
+            data-target="slide-out"
+            ><i class="material-icons">menu</i></a
+          >
+        </li>
+      </ul>
+    </div>
+    <div th:replace="fragments/mobileLinks :: mobile-links"></div>
+  </nav>
+</div>

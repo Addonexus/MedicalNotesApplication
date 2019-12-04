@@ -30,8 +30,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -287,5 +290,22 @@ public class RESTController {
         return caseServiceInterface.findAllByOrderByCreationDate();
     }
 
+    @PostMapping("getCasesByDate")
+    public @ResponseBody ResponseEntity<?> getCasesByDate(@RequestBody Map<String, String> formData) throws ParseException {
+        String date = formData.get("name").replaceAll("[$,]", "");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
+        Date myDate = simpleDateFormat.parse(date);
+
+        Date today = new Date();
+        LocalDateTime ldt = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
+
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        System.out.println(ldt);
+        System.out.println(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
+        responseBody.setCasesList(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
+        responseBody.setStatus("SUCCESS");
+        return ResponseEntity.ok().body(responseBody);
     }
+
+}
 

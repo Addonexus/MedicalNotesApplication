@@ -177,6 +177,11 @@ public class CaseService implements CaseServiceInterface {
     }
 
     @Override
+    public List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2) {
+        return caseRepository.findByCreationDateBetween(creationDate, creationDate2);
+    }
+
+    @Override
     public void deleteCaseById(Long id) {
         caseRepository.deleteById(id);
     }
