@@ -104,12 +104,22 @@ function refreshListOfDiagnoses() {
         var a = document.createElement("a");
         var b = document.createElement("button");
         a.setAttribute("href", "/diagnosis/" + data[i].id);
-        a.style.width = "100%";
+        a.style.width = "85%";
         b.appendChild(document.createTextNode(data[i].name));
         b.setAttribute("class", "btn content-item bigger");
         b.style.fontWeight = "600";
         a.appendChild(b);
         grid.appendChild(a);
+
+        var settings = document.createElement("a");
+        var settingsButton = document.createElement("button");
+        settings.style.width = "15%";
+        settingsButton.appendChild(document.createTextNode("s"));
+        settingsButton.setAttribute("class", "btn content-item bigger");
+        settingsButton.style.backgroundColor="#3322ee"
+        settingsButton.style.fontWeight = "600";
+        settings.appendChild(settingsButton);
+        grid.appendChild(settings);    
       }
     });
   }
