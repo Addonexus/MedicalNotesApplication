@@ -114,15 +114,17 @@ function refreshListOfDiagnoses() {
         var settings = document.createElement("a");
         var settingsButton = document.createElement("button");
         var settingsIcon = document.createElement("i");
+
         settings.style.width = "15%";
         settingsIcon.appendChild(document.createTextNode("settings"));
-        settingsIcon.setAttribute("class", "material-icons")
+        settingsIcon.setAttribute("class", "material-icons");
+
         settingsButton.appendChild(settingsIcon);
         settingsButton.setAttribute("class", "btn content-item bigger");
-        settingsButton.style.backgroundColor="#eeeeff"
-        settingsButton.style.borderLeft="1px solid grey"
-
+        settingsButton.style.backgroundColor="#eeeeff";
+        settingsButton.style.borderLeft="1px solid grey";
         settingsButton.style.fontWeight = "600";
+        
         settings.appendChild(settingsButton);
         grid.appendChild(settings);    
       }
