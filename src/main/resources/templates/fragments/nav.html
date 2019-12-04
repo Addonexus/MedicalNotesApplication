@@ -57,16 +57,7 @@
         </li>
       </ul>
     </div>
-    <ul id="slide-out" class="sidenav blue z-depth-5">
-      <li>
-        <a th:href="@{/home}"><h3 class="white-text">Case a day</h3></a>
-      </li>
-      <li>
-        <a th:href="@{/createNewCase}">
-          <div class="white-text">Create case</div>
-        </a>
-      </li>
-    </ul>
+    <div th:replace="fragments/mobileLinks :: mobile-links"></div>
   </nav>
   <div id="modal1" class="modal">
     <div class="modal-content" style="height:1000px">
