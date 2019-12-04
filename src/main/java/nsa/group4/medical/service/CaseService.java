@@ -165,10 +165,14 @@ public class CaseService implements CaseServiceInterface {
             //List of new Diagnosis in the object that will allow them to be stored like the existing Diagnosis List
             List<Diagnosis> newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
             caseModel.setDiagnosesList(newDiagnoses);
+            caseModel.getDiagnosesList().addAll(existingDiagnosis);
         }
         //storing both diagnosis list objects into the case diagnosis list
         //sets a new diagnosis list to replace what was already there
-        caseModel.getDiagnosesList().addAll(existingDiagnosis);
+        else{
+            caseModel.setDiagnosesList(existingDiagnosis);
+            log.debug("THERE ARE NO NEW DIAGNOSIS");
+        }
         caseRepository.save(caseModel);
     }
 }
