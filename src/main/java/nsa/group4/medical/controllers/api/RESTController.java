@@ -296,8 +296,7 @@ public class RESTController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
         Date myDate = simpleDateFormat.parse(date);
 
-        Date today = new Date();
-        LocalDateTime ldt = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
+        LocalDateTime ldt = LocalDateTime.ofInstant(myDate.toInstant(), ZoneId.systemDefault());
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         System.out.println(ldt);

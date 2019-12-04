@@ -12,10 +12,15 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Entity
 @Data
-public class Notification {
+public class Notifications {
     @Id
     @GeneratedValue
     private Long id;
+
+    // Add diagnosis link
+    // Add boolean on (if done)
+    // Add boolean on (if read)
+    // Add date
 
     private String content;
 }
