@@ -536,3 +536,7 @@ a:link {
 .link {
   text-decoration: underline;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}

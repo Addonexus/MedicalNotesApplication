@@ -10,6 +10,22 @@ $(document).ready(function() {
   $(".datepicker").datepicker();
 });
 
+notificationList = document.getElementById("notifications");
+console.log(notificationList);
+$.get("/api/getAllNotifications", function(data) {
+  var listItem = document.createElement
+  for (var i = 0; i < data.length; i++) {
+    console.log(data[i]);
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(data[i].content));
+    li.setAttribute("id", data[i].id);
+    li.setAttribute("class", "collection-item");
+    li.setAttribute("href", "/notification/" + data[i].id);
+    notificationList.appendChild(li);
+    notificationList.style.visibility = "visible";
+  }
+});
+
 console.log(document.getElementsByClassName("calendar-form"));
 $("#calendar-form").submit(function(e) {
   e.preventDefault();

@@ -8,10 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
-import nsa.group4.medical.domains.CaseModel;
-import nsa.group4.medical.domains.Categories;
-import nsa.group4.medical.domains.Diagnosis;
-import nsa.group4.medical.domains.DiagnosisInformation;
+import nsa.group4.medical.data.NotificationRepositoryJDBC;
+import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisService;
@@ -50,6 +48,8 @@ public class RESTController {
     private DiagnosisServiceInterface diagnosisService;
     private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
+    private NotificationRepositoryJDBC notificationRepositoryJDBC;
+
 
 
 
@@ -57,14 +57,15 @@ public class RESTController {
                           CategoriesRepositoryJPA categoriesRepository,
                           DiagnosisServiceInterface diagnosisService,
                           DiagnosisRepositoryJPA diagnosisRepositoryJPA,
-                          DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC
+                          DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC,
+                          NotificationRepositoryJDBC notificationRepositoryJDBC
                           ){
         this.caseServiceInterface =caseServiceInterface;
         this.categoriesRepository=categoriesRepository;
         this.diagnosisService=diagnosisService;
         this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
-
+        this.notificationRepositoryJDBC = notificationRepositoryJDBC;
     }
 
     @GetMapping("/returnedDiagnosisInfo/{index}")
@@ -304,6 +305,13 @@ public class RESTController {
         responseBody.setCasesList(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
         responseBody.setStatus("SUCCESS");
         return ResponseEntity.ok().body(responseBody);
+    }
+
+    @GetMapping("/getAllNotifications")
+    public @ResponseBody ResponseEntity<?> getAllNotifications() {
+        List<Notifications> notificationsList = notificationRepositoryJDBC.getAllNotifications();
+
+        return ResponseEntity.ok().body(notificationsList);
     }
 
 }

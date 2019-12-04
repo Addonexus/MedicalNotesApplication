@@ -27,6 +27,11 @@
           </a>
         </li>
         <li>
+            <a class="modal-trigger" href="#modal2">
+              <i class="material-icons white-text">notifications</i>
+            </a>
+          </li>
+        <li>
           <form
             action="/search"
             th:action="@{/search}"
@@ -50,11 +55,6 @@
             </div>
           </form>
         </li>
-        <li>
-          <a class="nav-item" href="#!">
-            <i class="material-icons">search</i>
-          </a>
-        </li>
       </ul>
     </div>
     <div th:replace="fragments/mobileLinks :: mobile-links"></div>
@@ -69,6 +69,13 @@
       </form>
       <br>
       <ul class="collection" id="casesForTheDay" style="visibility:hidden">
+      </ul>
+    </div>
+  </div>
+  <div id="modal2" class="modal">
+    <div class="modal-content" style="height:1000px">
+      <br>
+      <ul class="collection" id="notifications" style="visibility:hidden">
       </ul>
     </div>
   </div>
