@@ -1,3 +1,7 @@
+insert into categories (id, name) values (1, 'heart');
+insert into categories (id, name) values (2, 'skin');
+insert into categories (id, name) values (3, 'brain');
+
 insert into diagnoses (id, name, category_id) values (1,'heart ache', 1);
 insert into diagnoses (id, name, category_id) values (2,'circulation problems', 1);
 insert into diagnoses (id, name, category_id) values (3,'beats too fast', 1);
@@ -35,18 +39,12 @@ insert into cases (id, name, demographics, notes, date_created) values (18,'dumm
 insert into cases (id, name, demographics, notes, date_created) values (19,'dummy data 15', 'dont care', null, CURRENT_TIMESTAMP);
 insert into cases (id, name, demographics, notes, date_created) values (20,'dummy data 16', 'dont care', null, CURRENT_TIMESTAMP);
 
-
-insert into categories (id, name) values (1, 'heart');
-insert into categories (id, name) values (2, 'skin');
-insert into categories (id, name) values (3, 'brain');
-
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,2);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,3);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (2,2);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (3,2);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (3,1);
-
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (4,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (5,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (6,1);
@@ -65,6 +63,6 @@ insert into cases_diagnoses_link (case_id, diagnosis_id) values (18,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (19,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (20,1);
 
-insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_1', 'sample_data_1');
-insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_2', 'sample_data_2');
-insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_3', 'sample_data_3');
+insert into diagnosis_information (id,diagnosis_id, field, value) values (1,1, 'sample_field_1', 'sample_data_1');
+insert into diagnosis_information (id,diagnosis_id, field, value) values (2,1, 'sample_field_2', 'sample_data_2');
+insert into diagnosis_information (id,diagnosis_id, field, value) values (3,1, 'sample_field_3', 'sample_data_3');
