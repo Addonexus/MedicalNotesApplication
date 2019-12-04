@@ -37,10 +37,10 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
 
     @Override
     public void saveDiagnosisInformation(DiagnosisInformationAdded diagnosisInformationEvent) {
-        saveDiagnosisInformationDetails(diagnosisInformationEvent.getId(), diagnosisInformationEvent.getField(), diagnosisInformationEvent.getValue());
+        saveDiagnosisInformationDetails(diagnosisInformationEvent.getId(), diagnosisInformationEvent.getDiagnosisId(), diagnosisInformationEvent.getField(), diagnosisInformationEvent.getValue());
     }
 
-    private Long saveDiagnosisInformationDetails(Long id, String field, String value) {
+    private Long saveDiagnosisInformationDetails(Long id, Long diagnosisId, String field, String value) {
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
 
         jdbc.update(
@@ -48,11 +48,10 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                     @Override
                     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                         PreparedStatement ps =
-                                connection.prepareStatement("INSERT INTO diagnosis_information(id, field, value)" +
+                                connection.prepareStatement("INSERT INTO diagnosis_information(diagnosis_id, field, value)" +
                                                 "VALUES(?, ?, ?)"
                                         , new String[] {"diagnosis_id"});
-
-                        ps.setLong(1, id);
+                        ps.setLong(1, diagnosisId);
                         ps.setString(2, field);
                         ps.setString(3, value);
                         return ps;

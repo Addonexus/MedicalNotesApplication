@@ -46,7 +46,7 @@ function postDiagnosisInfo() {
     console.log("--- posting diagnosis info --- ");
 
     var $form = $(this);
-    var url = "/api/createDiagnosisInformation/";
+    var url = "/api/createDiagnosisInformation";
 
     var formData = {
       diagnosisId: lastInt,
@@ -162,7 +162,7 @@ function getDiagnosisInformation() {
       var key = row.insertCell(-1);
       var value = row.insertCell(-1);
 
-      key.innerHTML = data[i].key;
+      key.innerHTML = data[i].field;
       value.innerHTML = data[i].value;
     }
   });

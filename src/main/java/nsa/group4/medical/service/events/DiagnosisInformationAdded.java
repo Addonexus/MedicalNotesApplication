@@ -9,6 +9,7 @@ import nsa.group4.medical.domains.DiagnosisInformation;
 public class DiagnosisInformationAdded {
 
     private Long Id;
+    private Long diagnosisId;
     private String field;
     private String value;
 }

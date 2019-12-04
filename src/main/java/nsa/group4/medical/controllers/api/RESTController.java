@@ -106,7 +106,7 @@ public class RESTController {
 //        result.setStatus("Fail");
 //        return "PEEPOSAD";
 
-    @RequestMapping(value = "/createDiagnosisInformation/", method = POST, produces = "application/json")
+    @RequestMapping(value = "/createDiagnosisInformation", method = POST, produces = "application/json")
     public @ResponseBody ResponseEntity<?> saveCase(@RequestBody Map<String, String> formData) {
         System.out.println(formData);
         System.out.println(formData.get("diagnosisId"));
@@ -114,7 +114,8 @@ public class RESTController {
         System.out.println(formData.get("value"));
 
         diagnosisInformationRepositoryJDBC.saveDiagnosisInformation(
-                new DiagnosisInformationAdded(Long.parseLong(formData.get("diagnosisId")),
+                new DiagnosisInformationAdded(null,
+                        Long.parseLong(formData.get("diagnosisId")),
                         formData.get("key"),
                         formData.get("value")
                 )
