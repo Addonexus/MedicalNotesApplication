@@ -30,6 +30,9 @@ $("#calendar-form").submit(function(e) {
     url: url,
     data: JSON.stringify(formData),
     success: function(response) {
+      while (listOfCasesForDay.firstChild) {
+        listOfCasesForDay.removeChild(listOfCasesForDay.firstChild);
+      }
       console.log(response.casesList);
       for (let i = 0; i < response.casesList.length; i++) {
         console.log(response.casesList[i].name);
@@ -40,6 +43,7 @@ $("#calendar-form").submit(function(e) {
         li.setAttribute("href", "/case/" + response.casesList[i].id);
         listOfCasesForDay.appendChild(li);
         listOfCasesForDay.style.visibility = "visible"
+        listOfCasesForDay
       }
     },
     error: function(json) {
