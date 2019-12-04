@@ -10,7 +10,7 @@ public class AuthenticationController {
     @RequestMapping(value = { "/login1" }, method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login"); // resources/template/login.html
+        modelAndView.setViewName("login1"); // resources/template/login.html
         return modelAndView;
     }
 
@@ -19,7 +19,7 @@ public class AuthenticationController {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("register"); // resources/template/register.html
+        modelAndView.setViewName("register1"); // resources/template/register.html
         return modelAndView;
     }
 

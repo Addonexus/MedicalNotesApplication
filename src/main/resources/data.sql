@@ -71,18 +71,23 @@ insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_fie
 insert into diagnosis_info (diagnosis_id, `key`, `value`) values (1, 'sample_field_3', 'sample_data_3');
 
 
-INSERT INTO user(username,password, fav_charity_id)
-VALUES ('carl','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G',1);
+-- INSERT INTO user(username,password, fav_charity_id)
+-- VALUES ('carl','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G',1);
+-- INSERT INTO user(username,password, fav_charity_id)
+-- VALUES ('jude','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G',2);
+-- /* password = password */
+-- INSERT INTO role(userid, role)
+-- VALUES (001, 'ROLE_USER');
+-- INSERT INTO role(userid, role)
+-- VALUES (002, 'ROLE_ADMIN');
 
-/* password = password*/
+
+insert into auth_role (auth_role_id, role_name, role_desc) values(1,'SUPER_USER','This user has ultimate rights for everything');
+insert into auth_role (auth_role_id, role_name, role_desc) values(2,'ADMIN_USER','This user has admin rights for administrative work');
+insert into auth_role (auth_role_id, role_name, role_desc) values(3,'SITE_USER','This user has access to site, after login - normal user');
 
 
-INSERT INTO user(username,password, fav_charity_id)
-VALUES ('jude','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G',2);
-/* password = password */
-
-INSERT INTO role(userid, role)
-VALUES (001, 'ROLE_USER');
-
-INSERT INTO role(userid, role)
-VALUES (002, 'ROLE_ADMIN');
+-- insert into auth_user (auth_user_id,first_name,last_name,email,password,status) values (1,'Ankit','Wasankar','admin@gmail.com','{bycrypt}$2a$10$DD/FQ0hTIprg3fGarZl1reK1f7tzgM4RuFKjAKyun0Si60w6g3v5i','VERIFIED');
+-- insert into auth_user_role (auth_user_id, auth_role_id) values ('1','1');
+-- insert into auth_user_role (auth_user_id, auth_role_id) values ('1','2');
+-- insert into auth_user_role (auth_user_id, auth_role_id) values ('1','3');
