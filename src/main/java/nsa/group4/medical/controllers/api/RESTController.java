@@ -95,7 +95,7 @@ public class RESTController {
 
 
 
-    @PostMapping("/deleteCase/{index}")
+    @DeleteMapping("/deleteCase/{index}")
     public @ResponseBody ResponseEntity<?> deleteCaseById(
             @PathVariable Long index, HttpServletRequest request
     ){
@@ -112,7 +112,7 @@ public class RESTController {
         response.setStatus("FAILURE");
         return ResponseEntity.badRequest().body(response);
     }
-    @PostMapping("/deleteDiagnosis/{index}")
+    @DeleteMapping("/deleteDiagnosis/{index}")
     public @ResponseBody ResponseEntity<?> deleteDiagnosisById(
             @PathVariable Long index, HttpServletRequest request
     ){
@@ -130,7 +130,7 @@ public class RESTController {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @PostMapping("/deleteCategory/{index}")
+    @DeleteMapping("/deleteCategory/{index}")
     public @ResponseBody ResponseEntity<?> deleteCategoryById(
             @PathVariable Long index, HttpServletRequest request
     ){

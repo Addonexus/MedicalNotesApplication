@@ -133,7 +133,7 @@ var id = caseID;
 $.ajax({
         contentType : 'application/json; charset=utf-8',
         dataType : 'json',
-        type: "POST",
+        type: "DELETE",
         url: "/api/deleteCase/"+id,
         data:JSON.stringify({"id": id}),
         success: function(data) {
