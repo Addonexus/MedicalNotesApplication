@@ -65,6 +65,11 @@ public class DiagnosisService implements DiagnosisServiceInterface {
     }
 
     @Override
+    public void deleteDiagnosisById(Long id) {
+        diagnosisRepository.deleteById(id);
+    }
+
+    @Override
     public Optional<Diagnosis> findById(Long diagnosisId) {
         return diagnosisRepository.findById(diagnosisId);
     }

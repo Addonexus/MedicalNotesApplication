@@ -28,4 +28,5 @@ public interface DiagnosisServiceInterface {
 
 
     List<Diagnosis> findAll();
+    void deleteDiagnosisById(Long id);
 }

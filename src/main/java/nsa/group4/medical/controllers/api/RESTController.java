@@ -27,10 +27,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -94,19 +98,60 @@ public class RESTController {
 
 
 
-//        AjaxResponseBody result = new AjaxResponseBody();
-//        if(returnedCase.isPresent()){
-//            log.debug("Case is found" + returnedCase.toString());
-//            result.setStatus("SUCCESS");
-//            result.setCaseModel(returnedCase.get());
-//
-//            return "PEEPOHAPPY";
-//
-//        }
-//        result.setStatus("Fail");
-//        return "PEEPOSAD";
+    @DeleteMapping("/deleteCase/{index}")
+    public @ResponseBody ResponseEntity<?> deleteCaseById(
+            @PathVariable Long index, HttpServletRequest request
+    ){
+     Optional<CaseModel> returnedCase = caseServiceInterface.findByCaseId(index);
 
-    @RequestMapping(value = "/createDiagnosisInformation/", method = POST, produces = "application/json")
+        AjaxResponseBody response = new AjaxResponseBody();
+        if(returnedCase.isPresent())
+     {
+         caseServiceInterface.deleteCaseById(returnedCase.get().getId());
+         response.setStatus("SUCCESS");
+         response.setRedirectUrl("/home");
+         return ResponseEntity.ok().body(response);
+     }
+        response.setStatus("FAILURE");
+        return ResponseEntity.badRequest().body(response);
+    }
+    @DeleteMapping("/deleteDiagnosis/{index}")
+    public @ResponseBody ResponseEntity<?> deleteDiagnosisById(
+            @PathVariable Long index, HttpServletRequest request
+    ){
+        Optional<Diagnosis> returnedDiagnosis = diagnosisService.getByDiagnosisId(index);
+
+        AjaxResponseBody response = new AjaxResponseBody();
+        if(returnedDiagnosis.isPresent())
+        {
+            diagnosisService.deleteDiagnosisById(returnedDiagnosis.get().getId());
+            response.setStatus("SUCCESS");
+            response.setRedirectUrl("/home");
+            return ResponseEntity.ok().body(response);
+        }
+        response.setStatus("FAILURE");
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @DeleteMapping("/deleteCategory/{index}")
+    public @ResponseBody ResponseEntity<?> deleteCategoryById(
+            @PathVariable Long index, HttpServletRequest request
+    ){
+        Optional<Categories> returnedCategory = categoriesRepository.findById(index);
+
+        AjaxResponseBody response = new AjaxResponseBody();
+        if(returnedCategory.isPresent())
+        {
+            categoriesRepository.deleteById(returnedCategory.get().getId());
+            response.setStatus("SUCCESS");
+            response.setRedirectUrl("/home");
+            return ResponseEntity.ok().body(response);
+        }
+        response.setStatus("FAILURE");
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @RequestMapping(value = "/createDiagnosisInformation", method = POST, produces = "application/json")
     public @ResponseBody ResponseEntity<?> saveCase(@RequestBody Map<String, String> formData) {
         System.out.println(formData);
         System.out.println(formData.get("diagnosisId"));
@@ -114,7 +159,8 @@ public class RESTController {
         System.out.println(formData.get("value"));
 
         diagnosisInformationRepositoryJDBC.saveDiagnosisInformation(
-                new DiagnosisInformationAdded(Long.parseLong(formData.get("diagnosisId")),
+                new DiagnosisInformationAdded(null,
+                        Long.parseLong(formData.get("diagnosisId")),
                         formData.get("key"),
                         formData.get("value")
                 )
@@ -244,5 +290,22 @@ public class RESTController {
         return caseServiceInterface.findAllByOrderByCreationDate();
     }
 
+    @PostMapping("getCasesByDate")
+    public @ResponseBody ResponseEntity<?> getCasesByDate(@RequestBody Map<String, String> formData) throws ParseException {
+        String date = formData.get("name").replaceAll("[$,]", "");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
+        Date myDate = simpleDateFormat.parse(date);
+
+        Date today = new Date();
+        LocalDateTime ldt = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
+
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        System.out.println(ldt);
+        System.out.println(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
+        responseBody.setCasesList(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
+        responseBody.setStatus("SUCCESS");
+        return ResponseEntity.ok().body(responseBody);
     }
+
+}
 

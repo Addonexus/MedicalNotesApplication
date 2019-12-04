@@ -48,6 +48,10 @@
   display: none;
 }
 
+.desktop-grid::-webkit-scrollbar {
+  display: none;
+}
+
 .section-side-cases {
   grid-area: left;
   overflow: scroll;
@@ -160,4 +164,16 @@ input {
 .sidenav-footer {
   margin-bottom: 0px;
   padding: 0;
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.model {
+  overflow: hidden;
+}
+
+.modal::-webkit-scrollbar {
+  display: none;
 }

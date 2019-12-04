@@ -46,7 +46,7 @@ function postDiagnosisInfo() {
     console.log("--- posting diagnosis info --- ");
 
     var $form = $(this);
-    var url = "/api/createDiagnosisInformation/";
+    var url = "/api/createDiagnosisInformation";
 
     var formData = {
       diagnosisId: lastInt,
@@ -104,15 +104,44 @@ function refreshListOfDiagnoses() {
         var a = document.createElement("a");
         var b = document.createElement("button");
         a.setAttribute("href", "/diagnosis/" + data[i].id);
-        a.style.width = "100%";
+        a.style.width = "85%";
         b.appendChild(document.createTextNode(data[i].name));
         b.setAttribute("class", "btn content-item bigger");
         b.style.fontWeight = "600";
         a.appendChild(b);
         grid.appendChild(a);
+
+        var customId = "deleteButton" + data[i].id
+
+        var settings = document.createElement("a");
+        var settingsButton = document.createElement("button");
+        var settingsIcon = document.createElement("i");
+        
+
+        settings.style.width = "15%";
+        settingsIcon.appendChild(document.createTextNode("delete_forever"));
+        settingsIcon.setAttribute("class", "material-icons large");
+
+        settingsButton.appendChild(settingsIcon);
+        settingsButton.setAttribute("class", "btn content-item bigger");
+        settingsButton.setAttribute("onClick", "deleteDiagnosis(" + (data[i].id) + ")");
+
+        // settingsButton.style.backgroundColor="#eeeeff";
+        settingsButton.style.backgroundColor="#ffaaaa";
+        settingsButton.style.borderRadius="5px"
+        settingsButton.style.borderLeft="1px solid grey";
+        settingsButton.style.fontWeight = "600";
+        settingsButton.id=customId;
+        
+        settings.appendChild(settingsButton);
+        grid.appendChild(settings);    
       }
     });
   }
+}
+
+function deleteDiagnosis(num) {
+  console.log(num);
 }
 
 function refreshListOfCategories() {
@@ -162,7 +191,7 @@ function getDiagnosisInformation() {
       var key = row.insertCell(-1);
       var value = row.insertCell(-1);
 
-      key.innerHTML = data[i].key;
+      key.innerHTML = data[i].field;
       value.innerHTML = data[i].value;
     }
   });

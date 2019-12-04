@@ -2,13 +2,30 @@
   <nav>
     <div class="nav-wrapper blue darken-2 z-depth-2">
       <a
-        href="/home"
-        data-activates="mobile-demo"
-        class="hide-on-med-and-up button-collapse brand-logo left"
+        href="#"
+        data-target="slide-out"
+        class="brand-logo hide-on-med-and-up sidenav-trigger"
+        style="margin: 0px"
         >Case a Day</a
       >
       <a href="/home" class="brand-logo left hide-on-small-only">Case a Day</a>
-      <ul class="right">
+      <ul class="hide-on-med-and-up">
+        <li class="left">
+          <a
+            style="margin: 0px;"
+            href="#"
+            class="sidenav-trigger"
+            data-target="slide-out"
+            ><i class="material-icons">menu</i></a
+          >
+        </li>
+      </ul>
+      <ul class="right hide-on-small-only">
+        <li>
+          <a class="modal-trigger" href="#modal1">
+            <i class="material-icons white-text">date_range</i>
+          </a>
+        </li>
         <li>
           <form
             action="/search"
@@ -40,15 +57,19 @@
         </li>
       </ul>
     </div>
-    <ul id="mobile-demo" class="side-nav blue z-depth-5">
-      <li>
-        <a th:href="@{/home}"><h3 class="white-text">Case a day</h3></a>
-      </li>
-      <li>
-        <a th:href="@{/createNewCase}">
-          <div class="white-text">Create case</div>
-        </a>
-      </li>
-    </ul>
+    <div th:replace="fragments/mobileLinks :: mobile-links"></div>
   </nav>
+  <div id="modal1" class="modal">
+    <div class="modal-content" style="height:1000px">
+      <form id="calendar-form">
+        <input type="text" class="datepicker" id="date">
+        <button class="btn white black-text" id="submit" type="submit" style="margin-top: 10px; margin-bottom: 10px">
+          Search 
+        </button>
+      </form>
+      <br>
+      <ul class="collection" id="casesForTheDay" style="visibility:hidden">
+      </ul>
+    </div>
+  </div>
 </div>

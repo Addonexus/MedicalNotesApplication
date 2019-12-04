@@ -37,10 +37,10 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
 
     @Override
     public void saveDiagnosisInformation(DiagnosisInformationAdded diagnosisInformationEvent) {
-        saveDiagnosisInformationDetails(diagnosisInformationEvent.getDonationId(), diagnosisInformationEvent.getKey(), diagnosisInformationEvent.getValue());
+        saveDiagnosisInformationDetails(diagnosisInformationEvent.getId(), diagnosisInformationEvent.getDiagnosisId(), diagnosisInformationEvent.getField(), diagnosisInformationEvent.getValue());
     }
 
-    private Long saveDiagnosisInformationDetails(Long diagnosisId, String key, String value) {
+    private Long saveDiagnosisInformationDetails(Long id, Long diagnosisId, String field, String value) {
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
 
         jdbc.update(
@@ -48,12 +48,11 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                     @Override
                     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                         PreparedStatement ps =
-                                connection.prepareStatement("INSERT INTO diagnosis_info(diagnosis_id, key, value)" +
+                                connection.prepareStatement("INSERT INTO diagnosis_information(diagnosis_id, field, value)" +
                                                 "VALUES(?, ?, ?)"
                                         , new String[] {"diagnosis_id"});
-
                         ps.setLong(1, diagnosisId);
-                        ps.setString(2, key);
+                        ps.setString(2, field);
                         ps.setString(3, value);
                         return ps;
                     }
@@ -63,7 +62,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
     }
 
     public List<DiagnosisInformation> getDiagnosisInformationByDiagnosisId(Long index){
-        return jdbcTemplate.query("SELECT * FROM diagnosis_info WHERE diagnosis_id = ?",
+        return jdbcTemplate.query("SELECT * FROM diagnosis_information WHERE diagnosis_id = ?",
                 preparedStatement ->
                 {
                     preparedStatement.setLong(1, index);
@@ -71,7 +70,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
     }
 
     public List<DiagnosisInformation> getAllDiagnosisInformation(){
-        return jdbcTemplate.query("SELECT * FROM diagnosis_info"
+        return jdbcTemplate.query("SELECT * FROM diagnosis_information"
                 , new DiagnosisInformationRowmapper());
     }
 }

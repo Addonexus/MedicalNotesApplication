@@ -4,6 +4,7 @@ import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,9 @@ public interface CaseServiceInterface {
     List<CaseModel> findAllByOrderByCreationDateAsc();
 
     void updateCase(CaseForm formData);
+
+    void deleteCaseById(Long id);
+
+    List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2);
+
 }

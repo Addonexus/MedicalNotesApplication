@@ -22,9 +22,11 @@ ENGINE = InnoDB;
 -- Table `diagnosis_information`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `diagnosis_info` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `diagnosis_id` INT UNSIGNED NOT NULL,
-  `key` VARCHAR(100) NOT NULL,
-  `value` VARCHAR(100) NOT NULL)
+  `field` VARCHAR(100) NOT NULL,
+  `value` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `notifications`

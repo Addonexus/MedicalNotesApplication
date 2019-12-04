@@ -64,9 +64,9 @@ public class SearchController {
 
     }
 
-    @GetMapping("/searchTemp")
+    @GetMapping("/searchMobile")
     public String searchTemp() {
-        return "searchTemp";
+        return "searchMobile";
     }
 
 }

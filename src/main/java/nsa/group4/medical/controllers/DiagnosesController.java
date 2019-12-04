@@ -72,6 +72,7 @@ public class DiagnosesController {
         LOG.debug("ChefBoyardee: "+diagnosisInformationForm.toString());
 
         DiagnosisInformationAdded diagnosisInformationAdded = new DiagnosisInformationAdded(
+                null,
                 diagnosisID,
                 diagnosisInformationForm.getKey(),
                 diagnosisInformationForm.getValue()
