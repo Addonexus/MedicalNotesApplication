@@ -15,17 +15,22 @@ import javax.validation.constraints.NotNull;
 public class UserForm {
 
 
+//  @NotNull
+//  @NotEmpty
+//  private String firstName;
+//
+//  @NotNull
+//  @NotEmpty
+//  private String surnameName;
+
   @NotNull
   @NotEmpty
-  private String username;
+  private String email;
 
   @NotNull
   @NotEmpty
   private String password;
 
-  @NotNull
-  @NotEmpty
-  private String matchingPassword;
 
 
 }

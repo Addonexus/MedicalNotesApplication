@@ -8,19 +8,42 @@
 <body style="background-color:#ededed;">
 <div style="background-color:#337ab7;height:50px;"></div>
 <div class="container-fluid">
-    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 80px;background-color:#fff;padding:20px;border:solid 1px #ddd;">
-        <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
+    <!--<div class="row col-lg-4 col-lg-offset-4" style="margin-top: 80px;background-color:#fff;padding:20px;border:solid 1px #ddd;">
+        &lt;!&ndash; <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> &ndash;&gt;
         <form th:action="@{/login1}" method="POST" class="form-signin">
             <h3 class="form-signin-heading" th:text="Login"></h3>
             <br /> <input type="text" id="email" name="email" th:placeholder="Email" class="form-control" /> <br />
             <input type="password" th:placeholder="Password" id="password" name="password" class="form-control" />
             <br />
 
-<!--            <div align="center" th:if="${param.error}">-->
-<!--                <p>Email or Password is invalid.</p>-->
-<!--            </div>-->
+&lt;!&ndash;            <div align="center" th:if="${param.error}">&ndash;&gt;
+&lt;!&ndash;                <p>Email or Password is invalid.</p>&ndash;&gt;
+&lt;!&ndash;            </div>&ndash;&gt;
             <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login" style="margin-right:10px;"></button>
             <a href="/recover-password">Forgot password?</a>
+        </form>
+    </div>-->
+    <div>
+        <form method="post" th:object="${userForm}">
+            <h2>WAGWAN</h2>
+            <div>
+                <label th:for="email">
+                </label>
+
+                <input aria-describedby="Enter your email"
+                       type="text"/>
+                <span class="email error"></span>
+            </div>
+
+            <div>
+                <label th:for="password">
+                </label>
+
+                <input aria-describedby="Enter your password bigboi"
+                       type="text"/>
+                <span class="password error"></span>
+            </div>
+            <button id="submit" type="submit">Log In</button>
         </form>
     </div>
 </div>
