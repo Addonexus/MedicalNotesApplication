@@ -83,6 +83,7 @@ public class DiagnosesController {
     }
 
 
+    //Method for retrieving page to add diagnosis info.
     @GetMapping(value ="/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
     public String addDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
                                           @PathVariable(name="diagnosisIndex") Long diagnosisID,
