@@ -18,7 +18,10 @@ insert into diagnoses (id, name, category_id) values (13,'brain missing', 3);
 insert into diagnoses (id, name, category_id) values (14,'dog ate brain', 3);
 insert into diagnoses (id, name, category_id) values (15,'insane brain pain', 3);
 
-insert into notifications(id,content) values (1,'HEEHEE');
+insert into notifications(id,content, diagnosis_id) values (1,'HEEHEE', 1);
+insert into notifications(id,content, diagnosis_id) values (2,'HOOHOO', 1);
+insert into notifications(id,content, diagnosis_id) values (3,'SMOOTH CRIMINAL', 2);
+insert into notifications(id,content, diagnosis_id) values (4,'OH',3);
 
 insert into cases (id, name, demographics, notes, date_created) values (1,'things that went wrong', '80 y/o woman', null, CURRENT_TIMESTAMP);
 insert into cases (id, name, demographics, notes, date_created) values (2,'things from kid', '6 y/o kid', 'the kid was nice', CURRENT_TIMESTAMP);

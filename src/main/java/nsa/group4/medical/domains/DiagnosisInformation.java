@@ -22,8 +22,6 @@ public class DiagnosisInformation {
     @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosis;
 
-    //    @Column(name="key")
     private String field;
-    //    @Column(name="value")
     private String value;
 }

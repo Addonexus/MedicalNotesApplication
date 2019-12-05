@@ -15,12 +15,13 @@ console.log(notificationList);
 $.get("/api/getAllNotifications", function(data) {
   var listItem = document.createElement
   for (var i = 0; i < data.length; i++) {
+    console.log("notif " + i);
     console.log(data[i]);
-    var li = document.createElement("li");
-    li.appendChild(document.createTextNode(data[i].content));
+    var li = document.createElement("a");
+    li.appendChild(document.createTextNode("Remember to update the information for " + data[i].diagnosisLink.name));
     li.setAttribute("id", data[i].id);
     li.setAttribute("class", "collection-item");
-    li.setAttribute("href", "/notification/" + data[i].id);
+    li.setAttribute("href", "/diagnosis/" + data[i].diagnosisLink.id);
     notificationList.appendChild(li);
     notificationList.style.visibility = "visible";
   }

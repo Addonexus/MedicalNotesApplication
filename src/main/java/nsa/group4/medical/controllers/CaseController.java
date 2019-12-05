@@ -158,9 +158,9 @@ public class CaseController {
         List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
         List<CaseModel> recentCases = caseService.findAll();
 //        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
-        log.debug("CASES: " + returnedCases);
+//        log.debug("CASES: " + returnedCases);
 
-        log.debug("CASES 2: " + recentCases);
+//        log.debug("CASES 2: " + recentCases);
 //        log.debug("CAT: " + category);
 
 //        if(!category.isPresent()){

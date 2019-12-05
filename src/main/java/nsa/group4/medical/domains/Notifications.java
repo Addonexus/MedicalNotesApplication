@@ -1,12 +1,11 @@
 package nsa.group4.medical.domains;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +15,11 @@ public class Notifications {
     @Id
     @GeneratedValue
     private Long id;
+
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "diagnosis_id")
+    private Diagnosis diagnosisLink;
 
     // Add diagnosis link
     // Add boolean on (if done)
