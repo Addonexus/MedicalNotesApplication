@@ -17,17 +17,23 @@ $.get("/api/getAllNotifications", function(data) {
   for (var i = 0; i < data.length; i++) {
     console.log("notif " + i);
     console.log(data[i]);
-    var li = document.createElement("a");
-    li.appendChild(document.createTextNode("Remember to update the information for " + data[i].diagnosisLink.name));
+    var a = document.createElement("a");
+    a.appendChild(document.createTextNode("Update information for " + data[i].diagnosisLink.name));
     var icon = document.createElement("i");
     icon.setAttribute("class", "material-icons right");
     icon.appendChild(document.createTextNode("notifications_active"));
+    
     icon.style.color = "#ccccff";
-    li.appendChild(icon);
-    li.setAttribute("id", data[i].id);
-    li.setAttribute("class", "collection-item");
-    li.setAttribute("href", "/diagnosis/" + data[i].diagnosisLink.id);
-    notificationList.appendChild(li);
+    icon.style.visibility = data[i].read ? "hidden" : "visible"; 
+
+    a.appendChild(icon);
+    a.setAttribute("id", data[i].id);
+    a.setAttribute("class", "collection-item");
+    a.setAttribute("href", "/diagnosis/" + data[i].diagnosisLink.id);
+    a.style.fontWeight = data[i].read ? "200" : "600";
+    a.style.backgroundColor = data[i].done ? "#eeeeee" : "#ffffff";
+    a.style.textDecoration = data[i].done ? "line-through" : "none";
+    notificationList.appendChild(a);
     notificationList.style.visibility = "visible";
   }
 });
