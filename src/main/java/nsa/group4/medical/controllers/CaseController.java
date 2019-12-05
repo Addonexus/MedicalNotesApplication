@@ -218,9 +218,9 @@ public class CaseController {
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         responseBody.setCasesList(caseService.findAllByOrderByCreationDate());
-        responseBody.setCategoryIds(responseBody.getCasesList()
-                .stream().map(x->x.getDiagnosesList()
-                .stream().findFirst().get().getCategories().getId()).collect(Collectors.toList()));
+//        responseBody.setCategoryIds(responseBody.getCasesList()
+//                .stream().map(x->x.getDiagnosesList()
+//                .stream().findFirst().get().getCategories().getId()).collect(Collectors.toList()));
         return ResponseEntity.ok().body(responseBody);
     }
 }
