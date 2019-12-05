@@ -109,7 +109,7 @@
 
         <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value = "${hiddenForm}">
         </fieldset>
-        <button id="submit" type="submit">Create Case</button>
+        <button id="submit-button" type="submit">Create Case</button>
         <button th:if="${hiddenForm !=null}" id="editCase" type="button" onclick="unhideForm()">Edit Case</button>
         <button th:if="${hiddenForm !=null}" id="deleteCase" type="button" onclick="deleteForm()">Delete Case</button>
     </form>

@@ -6,10 +6,12 @@ $(document).ready(function() {
         var existingDiagnosisData = [];
 
     if(hiddenParam){
+    console.log("HIDDENPARAM")
         document.getElementById("allFields").disabled = true;
-        document.getElementById("submit").innerText ="Save Case";
+        document.getElementById("submit-button").innerText ="Save Case";
         document.getElementById("title").innerText ="Edit Case";
-        document.getElementById("submit").hidden = true;
+        console.log("HDIING SUBMIT BUTTON")
+        document.getElementById("submit-button").hidden = true;
 
         console.log("PASSED ID: " + caseID);
 
@@ -155,7 +157,7 @@ function unhideForm(){
         console.log("URL OF THE PAGE: " + docUrl);
         document.getElementById("editCase").hidden = true;
         document.getElementById("allFields").disabled = false;
-        document.getElementById("submit").hidden = false;
+        document.getElementById("submit-button").hidden = false;
     }else{
         console.log("Param doesn't exist, so don't hide any fields")
     }
