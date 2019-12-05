@@ -21,7 +21,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `diagnosis_information`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `diagnosis_info` (
+CREATE TABLE IF NOT EXISTS `diagnosis_information` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `diagnosis_id` INT UNSIGNED NOT NULL,
   `field` VARCHAR(100) NOT NULL,
@@ -31,7 +31,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `notifications`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `notifications` (
+CREATE TABLE IF NOT EXISTS `notification` (
    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
    `content` VARCHAR(100) NOT NULL,
    PRIMARY KEY (`id`))
