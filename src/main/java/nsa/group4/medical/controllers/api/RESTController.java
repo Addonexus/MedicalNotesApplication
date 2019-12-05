@@ -302,7 +302,7 @@ public class RESTController {
         AjaxResponseBody responseBody = new AjaxResponseBody();
         System.out.println(ldt);
 //        System.out.println(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
-        responseBody.setCasesList(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
+        responseBody.setCasesList(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1), ldt.plusDays(1)));
         responseBody.setStatus("SUCCESS");
         return ResponseEntity.ok().body(responseBody);
     }
