@@ -19,6 +19,11 @@ $.get("/api/getAllNotifications", function(data) {
     console.log(data[i]);
     var li = document.createElement("a");
     li.appendChild(document.createTextNode("Remember to update the information for " + data[i].diagnosisLink.name));
+    var icon = document.createElement("i");
+    icon.setAttribute("class", "material-icons right");
+    icon.appendChild(document.createTextNode("notifications_active"));
+    icon.style.color = "#ccccff";
+    li.appendChild(icon);
     li.setAttribute("id", data[i].id);
     li.setAttribute("class", "collection-item");
     li.setAttribute("href", "/diagnosis/" + data[i].diagnosisLink.id);
