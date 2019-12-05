@@ -21,7 +21,10 @@ public class Notifications {
     @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosisLink;
 
-    // Add diagnosis link
+    private boolean isDone;
+
+    private boolean isRead;
+
     // Add boolean on (if done)
     // Add boolean on (if read)
     // Add date
