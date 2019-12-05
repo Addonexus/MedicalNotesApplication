@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 public class Notifications {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -33,4 +33,11 @@ public class Notifications {
     // Add date
 
     private String content;
+
+    public Notifications(Diagnosis diagnosisLink) {
+        this.diagnosisLink = diagnosisLink;
+        this.isDone = false;
+        this.isRead = false;
+        this.creationDate = LocalDateTime.now();
+    }
 }

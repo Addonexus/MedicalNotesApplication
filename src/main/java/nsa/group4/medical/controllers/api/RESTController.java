@@ -245,10 +245,12 @@ public class RESTController {
     public @ResponseBody ResponseEntity<?> saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         System.out.println(formData.get("categoryName"));
-        diagnosisService.createDiagnosis(new Diagnosis(
+        Diagnosis createdDiagnosis = diagnosisService.createDiagnosis(new Diagnosis(
                                         formData.get("name"),
                                         categoriesRepository.findByName(formData.get("categoryName")).get()
                                         ));
+
+        notificationRepoJPA.save(new Notifications(createdDiagnosis));
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         responseBody.setDiagnoses(diagnosisRepositoryJPA.findAll());
