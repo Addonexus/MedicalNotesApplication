@@ -111,7 +111,7 @@ function refreshListOfDiagnoses() {
         a.appendChild(b);
         grid.appendChild(a);
 
-        var customId = "deleteButton" + data[i].id
+        var customId = "deleteButton" + data[i].id;
 
         var settings = document.createElement("a");
         var settingsButton = document.createElement("button");
@@ -128,7 +128,7 @@ function refreshListOfDiagnoses() {
 
         // settingsButton.style.backgroundColor="#eeeeff";
         settingsButton.style.backgroundColor="#ffaaaa";
-        settingsButton.style.borderRadius="5px"
+        settingsButton.style.borderRadius="5px";
         settingsButton.style.borderLeft="1px solid grey";
         settingsButton.style.fontWeight = "600";
         settingsButton.id=customId;
@@ -166,6 +166,31 @@ function deleteDiagnosis(num) {
       });
 }
 
+function deleteCategory(num) {
+  console.log(num);
+  var formData = {
+    id: num
+  };
+
+  $.ajax({
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    type: "DELETE",
+    url: "/api/deleteCategory/"+num,
+//        data: JSON.stringify(formData),
+    success: function(json) {
+      alert("Worked!");
+      refreshListOfCategories();
+//                var listOfCases = document.getElementById("recentCases");
+//
+//                listOfCases.empty();
+      getRecentCases();
+    },
+    error: function(json) {
+      alert("error!");
+    }
+  });
+}
 function refreshListOfCategories() {
   console.log("HIHHS");
   var grid = document.getElementById("content-grid");
@@ -185,7 +210,7 @@ function refreshListOfCategories() {
       var a = document.createElement("a");
       var b = document.createElement("button");
       a.setAttribute("href", "/category/" + data[i].id);
-      a.style.width = "100%";
+      a.style.width = "85%";
       b.appendChild(document.createTextNode(data[i].name));
       b.setAttribute("class", "btn content-item bigger");
       b.style.fontWeight = "600";
@@ -196,6 +221,33 @@ function refreshListOfCategories() {
       } else {
         grid.appendChild(a);
       }
+
+      var customId = "deleteButton" + data[i].id;
+
+      var settings = document.createElement("a");
+      var settingsButton = document.createElement("button");
+      var settingsIcon = document.createElement("i");
+
+
+      settings.style.width = "15%";
+      settingsIcon.appendChild(document.createTextNode("delete_forever"));
+      settingsIcon.setAttribute("class", "material-icons large");
+
+      settingsButton.appendChild(settingsIcon);
+      settingsButton.setAttribute("class", "btn content-item bigger");
+      settingsButton.setAttribute("onClick", "deleteCategory(" + (data[i].id) + ")");
+
+      // settingsButton.style.backgroundColor="#eeeeff";
+      settingsButton.style.backgroundColor="#ffaaaa";
+      settingsButton.style.borderRadius="5px";
+      settingsButton.style.borderLeft="1px solid grey";
+      settingsButton.style.fontWeight = "600";
+      settingsButton.id=customId;
+
+      settings.appendChild(settingsButton);
+      grid.appendChild(settings);
+
+
     }
   });
 }

@@ -125,6 +125,7 @@ public class RESTController {
         if(returnedDiagnosis.isPresent())
         {
             diagnosisService.deleteDiagnosisById(returnedDiagnosis.get().getId());
+            caseServiceInterface.checkEmptyDiagnosis();
             response.setStatus("SUCCESS");
             response.setRedirectUrl("/home");
             return ResponseEntity.ok().body(response);
@@ -143,6 +144,7 @@ public class RESTController {
         if(returnedCategory.isPresent())
         {
             categoriesRepository.deleteById(returnedCategory.get().getId());
+            caseServiceInterface.checkEmptyDiagnosis();
             response.setStatus("SUCCESS");
             response.setRedirectUrl("/home");
             return ResponseEntity.ok().body(response);

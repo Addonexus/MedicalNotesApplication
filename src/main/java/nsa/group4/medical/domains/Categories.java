@@ -25,7 +25,7 @@ public class Categories {
     private String name;
 
 
-    @OneToMany(mappedBy="categories")
+    @OneToMany(mappedBy="categories", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Diagnosis> diagnosisList;
 

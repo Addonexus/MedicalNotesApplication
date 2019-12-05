@@ -20,8 +20,10 @@ insert into diagnoses (id, name, category_id) values (15,'insane brain pain', 3)
 
 insert into notification(id,content) values (1,'HEEHEE');
 
-insert into cases (id, name, demographics, notes, date_created) values (1,'things that went wrong', '80 y/o woman', null, CURRENT_TIMESTAMP);
 insert into cases (id, name, demographics, notes, date_created) values (2,'things from kid', '6 y/o kid', 'the kid was nice', CURRENT_TIMESTAMP);
+
+
+insert into cases (id, name, demographics, notes, date_created) values (1,'things that went wrong', '80 y/o woman', null, CURRENT_TIMESTAMP);
 insert into cases (id, name, demographics, notes, date_created) values (3,'dog title', '8 y/o dog', null, CURRENT_TIMESTAMP);
 insert into cases (id, name, demographics, notes, date_created) values (4,'dummy data', 'dont care', null, CURRENT_TIMESTAMP);
 insert into cases (id, name, demographics, notes, date_created) values (5,'dummy data 1', 'dont care', null, CURRENT_TIMESTAMP);
@@ -42,10 +44,11 @@ insert into cases (id, name, demographics, notes, date_created) values (19,'dumm
 insert into cases (id, name, demographics, notes, date_created) values (20,'dummy data 16', 'dont care', null, CURRENT_TIMESTAMP);
 
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,2);
-insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,3);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (2,2);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (3,2);
+
+insert into cases_diagnoses_link (case_id, diagnosis_id) values (1,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (3,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (4,1);
 insert into cases_diagnoses_link (case_id, diagnosis_id) values (5,1);

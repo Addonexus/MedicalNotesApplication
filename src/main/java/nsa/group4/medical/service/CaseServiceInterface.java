@@ -23,6 +23,7 @@ public interface CaseServiceInterface {
     void updateCase(CaseForm formData);
 
     void deleteCaseById(Long id);
+    void checkEmptyDiagnosis();
 
     List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2);
 

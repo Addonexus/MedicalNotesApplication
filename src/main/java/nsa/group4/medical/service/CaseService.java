@@ -185,4 +185,16 @@ public class CaseService implements CaseServiceInterface {
     public void deleteCaseById(Long id) {
         caseRepository.deleteById(id);
     }
+
+    @Override
+    public void checkEmptyDiagnosis(){
+        List<CaseModel> listCases = caseRepository.findAll();
+        for (CaseModel caseModel:
+                listCases) {
+            if(caseModel.getDiagnosesList().isEmpty()){
+                caseRepository.deleteById(caseModel.getId());
+            }
+
+        }
+    }
 }
