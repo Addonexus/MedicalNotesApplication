@@ -142,6 +142,28 @@ function refreshListOfDiagnoses() {
 
 function deleteDiagnosis(num) {
   console.log(num);
+  var formData = {
+        id: num
+      };
+
+      $.ajax({
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        type: "DELETE",
+        url: "/api/deleteDiagnosis/"+num,
+//        data: JSON.stringify(formData),
+        success: function(json) {
+          alert("Worked!");
+          refreshListOfDiagnoses();
+//                var listOfCases = document.getElementById("recentCases");
+//
+//                listOfCases.empty();
+          getRecentCases();
+        },
+        error: function(json) {
+          alert("error!");
+        }
+      });
 }
 
 function refreshListOfCategories() {
@@ -198,6 +220,10 @@ function getDiagnosisInformation() {
 }
 
 function getRecentCases() {
+ var listOfCases = document.getElementById("recentCases");
+ while(listOfCases.hasChildNodes()){
+ listOfCases.removeChild(listOfCases.childNodes[0])
+ }
   $.ajax({
     type: "GET",
     url: "/recentCases",
@@ -209,7 +235,9 @@ function getRecentCases() {
       var ids = response.categoryIds;
       var cases = response.casesList;
 
-      var listOfCases = document.getElementById("recentCases");
+
+
+//      listOfCases.empty();
       for (i = 0; i < cases.length; i++) {
         var li = document.createElement("a");
         li.appendChild(document.createTextNode(cases[i].name));
