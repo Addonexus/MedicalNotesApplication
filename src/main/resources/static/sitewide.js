@@ -14,6 +14,10 @@ notificationList = document.getElementById("notifications");
 console.log(notificationList);
 $.get("/api/getAllNotifications", function(data) {
   var listItem = document.createElement
+  var needToRead = [];
+  var needToDo = [];
+  var done = [];
+
   for (var i = 0; i < data.length; i++) {
     console.log("notif " + i);
     console.log(data[i]);
@@ -33,9 +37,40 @@ $.get("/api/getAllNotifications", function(data) {
     a.style.fontWeight = data[i].read ? "200" : "600";
     a.style.backgroundColor = data[i].done ? "#eeeeee" : "#ffffff";
     a.style.textDecoration = data[i].done ? "line-through" : "none";
-    notificationList.appendChild(a);
+
+    if (data[i].read == false) {
+      needToRead.push(a);
+    } else {
+      if (data[i].done == false) {
+        needToDo.push(a);
+      } else {
+        done.push(a);
+      }
+    }
+
     notificationList.style.visibility = "visible";
   }
+
+  for (let i = 0; i < needToRead.length; i++) {
+    notificationList.appendChild(needToRead[i]);
+  }
+  for (let i = 0; i < needToDo.length; i++) {
+    notificationList.appendChild(needToDo[i]);
+  }
+  for (let i = 0; i < done.length; i++) {
+    notificationList.appendChild(done[i]);
+  }
+
+  if (needToRead.length > 0) {
+    notificationBell = document.getElementById("notification-bell");
+    notificationBell.classList.remove("white-text");
+    notificationBell.classList.add("blue-text");
+    notificationBell.classList.add("text-lighten-3");
+    notificationBell.innerHTML = "notifications_active"
+  }
+
+  // notificationList.appendChild(a);
+
 });
 
 console.log(document.getElementsByClassName("calendar-form"));
