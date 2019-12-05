@@ -41,7 +41,7 @@ public class Diagnosis {
     @JoinColumn(name="category_id")
     private Categories categories;
 
-    @OneToMany(mappedBy="diagnosis")
+    @OneToMany(mappedBy="diagnosis", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<DiagnosisInformation> diagnosisInfoList;
 
