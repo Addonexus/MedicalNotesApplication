@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +25,8 @@ public class Notifications {
     private boolean isDone;
 
     private boolean isRead;
+
+    private LocalDateTime creationDate;
 
     // Add boolean on (if done)
     // Add boolean on (if read)
