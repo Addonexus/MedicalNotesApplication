@@ -95,8 +95,16 @@ public class CaseController {
         List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
         List<CaseModel> recentCases = caseService.findAll();
         log.debug("CASES: " + returnedCases);
+//        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
+//        log.debug("CASES: " + returnedCases);
 
         log.debug("CASES 2: " + recentCases);
+//        log.debug("CASES 2: " + recentCases);
+//        log.debug("CAT: " + category);
+
+//        if(!category.isPresent()){
+//            return "404";
+//        }
 
         List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
 

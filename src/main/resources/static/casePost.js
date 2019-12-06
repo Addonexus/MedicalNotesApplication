@@ -1,6 +1,26 @@
 var splitUrl = window.location.pathname.split('/');
         var caseID = splitUrl[splitUrl.length-1];
 $(document).ready(function() {
+
+    function getAllDiagnosisForTags() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/getAllDiagnosis",
+            crossDomain: true,
+    
+            success: function(response) {
+                var diagnosisArray = response;
+                for (var i = 0; i < diagnosisArray.length; i++) {
+                    console.log(diagnosisArray[i].name);
+                    data[diagnosisArray[i].name] = null;
+                }
+                $(".chips-autocomplete").material_chip({
+                    data: existingDiagnosisData,
+                    autocompleteData: data
+                });
+            }
+        });
+    }
     var hiddenParam = document.getElementById("hiddenFormBoolean");
         var data = {};
         var existingDiagnosisData = [];
@@ -44,29 +64,16 @@ $(document).ready(function() {
                 document.getElementById("socialHistory").value = form.socialHistory;
                 document.getElementById("notes").value = form.notes;
                 console.log("ARRY OF EXSTING DIAGNOSIS: " + JSON.stringify(existingDiagnosisData))
+                getAllDiagnosisForTags();
+
             },
             error: function(response){
                 console.log('Request Status: ' + response.status + ' Status Text: ' + response.statusText + ' ' + ' Response Text: ' + response.responseText);
             }
             });
         }
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:8080/api/getAllDiagnosis",
-        crossDomain: true,
 
-        success: function(response) {
-            var diagnosisArray = response;
-            for (var i = 0; i < diagnosisArray.length; i++) {
-                console.log(diagnosisArray[i].name);
-                data[diagnosisArray[i].name] = null;
-            }
-            $(".chips-autocomplete").material_chip({
-                data: existingDiagnosisData,
-                autocompleteData: data
-            });
-        }
-    });
+        getAllDiagnosisForTags();
 
         $("#submitCases").submit(function(e) {
             console.log("hi");
@@ -162,3 +169,4 @@ function unhideForm(){
         console.log("Param doesn't exist, so don't hide any fields")
     }
 }
+

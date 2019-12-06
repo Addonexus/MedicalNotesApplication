@@ -111,14 +111,13 @@ function refreshListOfDiagnoses() {
         b.style.fontWeight = "600";
         a.appendChild(b);
         grid.appendChild(a);
-
+        
         var customId = "deleteButton" + data[i].id;
 
         var settings = document.createElement("a");
         var settingsButton = document.createElement("button");
         var settingsIcon = document.createElement("i");
         
-
         settings.style.width = "15%";
         settingsIcon.appendChild(document.createTextNode("delete_forever"));
         settingsIcon.setAttribute("class", "material-icons large");

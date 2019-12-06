@@ -8,8 +8,8 @@
 
 <main>
     <div th:if="${notificationsKey}">
-        <div th:each="notification : ${notificationsKey}">
-            <span th:text="${notification.content}"></span>
+        <div th:each="notifications : ${notificationsKey}">
+            <span th:text="${notifications.content}"></span>
         </div>
     </div>
 </main>

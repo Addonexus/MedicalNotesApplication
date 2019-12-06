@@ -1,10 +1,13 @@
 package nsa.group4.medical.service;
 
+import jdk.jshell.Diag;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
+import nsa.group4.medical.data.NotificationRepoJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
+import nsa.group4.medical.domains.Notifications;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +26,16 @@ public class CaseService implements CaseServiceInterface {
     private CaseRepositoryInterface caseRepository;
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CategoriesRepositoryJPA categoriesRepositoryJPA;
+    private NotificationRepoJPA notificationRepoJPA;
 
     public CaseService(CaseRepositoryInterface caseRepository,
                        DiagnosisRepositoryInterface diagnosisRepository,
-                       CategoriesRepositoryJPA categoriesRepositoryJPA){
+                       CategoriesRepositoryJPA categoriesRepositoryJPA,
+                       NotificationRepoJPA notificationRepoJPA){
         this.caseRepository = caseRepository;
         this.diagnosisRepository = diagnosisRepository;
         this.categoriesRepositoryJPA = categoriesRepositoryJPA;
+        this.notificationRepoJPA = notificationRepoJPA;
     }
 
     @Override
@@ -77,6 +83,8 @@ public class CaseService implements CaseServiceInterface {
                 form.getNotes(),
                 LocalDateTime.now()
         );
+        List<Diagnosis> newDiagnoses = new ArrayList<>();
+
         //storing both diagnosis list objects into the case diagnosis list
         if(!notExistingDiagnosis.isEmpty()){
 
@@ -87,12 +95,17 @@ public class CaseService implements CaseServiceInterface {
                 category =  categoriesRepositoryJPA.findByName("Miscellaneous").get();
             }
 
-            List<Diagnosis> newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
+            newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
+
             caseModel.getDiagnosesList().addAll(newDiagnoses);
         }
         caseModel.getDiagnosesList().addAll(existingDiagnosis);
         caseRepository.save(caseModel);
-
+        for (Diagnosis diagnosis : newDiagnoses) {
+            notificationRepoJPA.save(
+                    new Notifications(diagnosis)
+            );
+        }
     }
 
     @Override
