@@ -1,9 +1,11 @@
 package nsa.group4.medical.config;
 
+import nsa.group4.medical.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -23,171 +25,58 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 import javax.sql.DataSource;
 
+@ComponentScan("nsa.group4.medical.service")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
-
+    /**
+     * Error here with user details service
+     */
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserDetailsService userDetailsService;
 
-    @Autowired
-    private DataSource dataSource;
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
+    };
 
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
+    /**
+     *
+     * Added the bean annotation and now error is gone
+     */
 
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.authorizeRequests()
-                // URLs matching for access rights
-                .antMatchers("/").permitAll()
-                .antMatchers("/login1").permitAll()
-                .antMatchers("/register1").permitAll()
-                .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
+        http
+                .authorizeRequests()
+                .antMatchers("/resources/**", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                // form login
-                .csrf().disable().formLogin()
-                .loginPage("/login1")
-                .failureUrl("/login1?error=true")
-                .defaultSuccessUrl("/home")
-                .usernameParameter("email")
-                .passwordParameter("password")
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                // logout
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and()
-                .exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .permitAll();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+    @Bean
+    public AuthenticationManager customAuthenticationManager() throws Exception {
+        return authenticationManager();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
 
 
-
-//    @Autowired
-//    private MyUserDetailsService userDetailsService;
-//
-//    /**
-//     * Set up a password encoder
-//     */
-//
-//    @Bean
-//    public static PasswordEncoder passwordEncoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//    }
-//
-////  @Bean
-////  @Override
-////  public UserDetailsService userDetailsService() {
-////    UserDetails user =
-////            User.withDefaultPasswordEncoder()
-////                    .username("user")
-////                    .password("password")
-////                    .roles("USER")
-////                    .build();
-////
-////    return new InMemoryUserDetailsManager(user);
-////  }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        AuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-//
-//
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/reports/**").access("hasRole('ROLE_ADMIN')")
-//                .antMatchers("/user/**").access("hasRole('ROLE_USER')")
-//
-//                .antMatchers("/h2_console/**").permitAll()
-//                .antMatchers("/").permitAll()
-//                //.anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .successHandler(successHandler)
-//
-//                .loginPage("/login")
-//
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutSuccessUrl("/login")
-//                .permitAll()
-//                .and()
-//                .exceptionHandling().accessDeniedPage("/403")
-//                .and()
-//                .csrf()
-//                .ignoringAntMatchers("/h2-console/**")
-//        ;
-//
-//        http.headers().frameOptions().disable();
-//
-//    }
-
-    /**
-     * Point the authentication to our own user service
-     */
-
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService);
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        return authProvider;
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(authenticationProvider());
-//    }
-//
-//    @Autowired
-//    private UserDetailsService userDetailsService;
-//
-//    @Bean
-//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/resources/**", "/registration").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
-//
-//    @Bean
-//    public AuthenticationManager customAuthenticationManager() throws Exception {
-//        return authenticationManager();
-//    }
-//
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-//    }
 }
+
+

@@ -1,56 +1,30 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"-->
-<!--&gt;-->
-<!--<head>-->
-<!--    <title>Spring Security Example </title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div th:if="${param.error}">-->
-<!--    Invalid username and password.-->
-<!--</div>-->
-<!--<div th:if="${param.logout}">-->
-<!--    You have been logged out.-->
-<!--</div>-->
-<!--<form method="post" th:action="@{/login}">-->
-<!--    <div><label> User Name : <input name="username" type="text"/> </label></div>-->
-<!--    <div><label> Password: <input name="password" type="password"/> </label></div>-->
-<!--    <div><input type="submit" value="Sign In"/></div>-->
-<!--</form>-->
-<!--</body>-->
-<!--&lt;!&ndash;    <title>Spring Security Example </title>&ndash;&gt;-->
-<!--&lt;!&ndash;</head>&ndash;&gt;-->
-<!--&lt;!&ndash;<body>&ndash;&gt;-->
-<!--<div th:if="${param.error}">-->
-<!--    Invalid username and password.-->
-<!--</div>-->
-<!--&lt;!&ndash;<div th:if="${param.logout}">&ndash;&gt;-->
-<!--&lt;!&ndash;    You have been logged out.&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<form method="post" th:action="@{/login}">&ndash;&gt;-->
-<!--&lt;!&ndash;    <div><label> User Name : <input name="username" type="text"/> </label></div>&ndash;&gt;-->
-<!--&lt;!&ndash;    <div><label> Password: <input name="password" type="password"/> </label></div>&ndash;&gt;-->
-<!--&lt;!&ndash;    <div><input type="submit" value="Sign In"/></div>&ndash;&gt;-->
-<!--&lt;!&ndash;</form>&ndash;&gt;-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Log in with your account</title>
 
-<!--&lt;!&ndash;<div id="AAHH">&ndash;&gt;-->
+</head>
 
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<body>
 
-<!--&lt;!&ndash;<script&ndash;&gt;-->
-<!--&lt;!&ndash;        src="https://code.jquery.com/jquery-3.4.1.min.js"&ndash;&gt;-->
-<!--&lt;!&ndash;        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="&ndash;&gt;-->
-<!--&lt;!&ndash;        crossorigin="anonymous"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;<script>&ndash;&gt;-->
-<!--&lt;!&ndash;    $(document).ready(function() {&ndash;&gt;-->
-<!--&lt;!&ndash;        $.get("/api/returnedUserInfo", function(data) {&ndash;&gt;-->
-<!--&lt;!&ndash;            $(".result").html(data);&ndash;&gt;-->
-<!--&lt;!&ndash;            console.log(data);&ndash;&gt;-->
-<!--&lt;!&ndash;            var thingy = document.getElementById("AAHH");&ndash;&gt;-->
-<!--&lt;!&ndash;            thingy.innerHTML = data.length;&ndash;&gt;-->
-<!--&lt;!&ndash;            for (i = 0; i < data.length; i++) {&ndash;&gt;-->
-<!--&lt;!&ndash;                thingy.innerHTML = thingy.innerHTML + data[i].username;&ndash;&gt;-->
-<!--&lt;!&ndash;            }&ndash;&gt;-->
-<!--&lt;!&ndash;        })&ndash;&gt;-->
-<!--&lt;!&ndash;    })&ndash;&gt;-->
-<!--</html>-->
+<div class="container">
+    <form method="POST" action="$/login" class="form-signin">
+        <h2 class="form-heading">Log in</h2>
 
+        <div class="form-group ${error != null ? 'has-error' : ''}">
+            <span>${message}</span>
+            <input name="username" type="text" class="form-control" placeholder="Username"
+                   autofocus="true"/>
+            <input name="password" type="password" class="form-control" placeholder="Password"/>
+            <span>${error}</span>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+            <h4 class="text-center"><a href="$/registration">Create an account</a></h4>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

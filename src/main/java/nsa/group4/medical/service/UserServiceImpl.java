@@ -1,7 +1,7 @@
 package nsa.group4.medical.service;
 
-import nsa.group4.medical.data.RoleRepositoryJPA;
-import nsa.group4.medical.data.UserRepositoryJPA;
+import nsa.group4.medical.data.RoleRepository;
+import nsa.group4.medical.data.UserRepository;
 import nsa.group4.medical.domains.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,9 +15,9 @@ import java.util.HashSet;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepositoryJPA userRepository;
+    private UserRepository userRepository;
     @Autowired
-    private RoleRepositoryJPA roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -32,6 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByEmail(username);
+        return userRepository.findByUsername(username);
     }
 }
