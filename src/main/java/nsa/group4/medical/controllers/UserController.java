@@ -5,6 +5,7 @@ import nsa.group4.medical.domains.User;
 import nsa.group4.medical.service.SecurityService;
 import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.validator.UserValidator;
+import nsa.group4.medical.web.UserForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -29,13 +31,15 @@ public class UserController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+        model.addAttribute("userForm", new UserForm());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("userForm") UserForm userForm, BindingResult bindingResult) {
+
+
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {

@@ -6,28 +6,32 @@
 
 </head>
 <body>
-    <form method="POST" modelAttribute="userForm" class="form-signin" th:object="${user}">
+    <form method="POST" th:action="@{/registration}" th:object="${userForm}">
         <div>
-            <label th:text="#{user.username}">username</label>
-            <input th:field="*{username}"/>
-            <p th:each="error : ${#fields.errors('username')}"
-               th:text="${error}">Validation error</p>
+            <label th:for="email">Email</label>
+
+            <input th:field="*{email}"
+                   type="text"/>
+
+            <div th:errors="*{email}"
+                 th:if="${#fields.hasErrors('email')}">
+                Email Error
+            </div>
         </div>
 
         <div>
-            <label th:text="#{user.password}">password</label>
-            <input th:field="*{password}" type="password"/>
-            <p th:each="error : ${#fields.errors('password')}"
-               th:text="${error}">Validation error</p>
-        </div>
+            <label th:for="password">Password</label>
 
-        <div>
-            <label th:text="#{user.confirmPass}">confirm</label>
-            <input th:field="*{matchingPassword}" type="password"/>
-        </div>
-        <button th:text="#{form.submit}" type="submit">submit</button>
+            <input th:field="*{password}"
+                   type="password"/>
 
-        </form>
+            <div th:errors="*{password}"
+                 th:if="${#fields.hasErrors('password')}">
+                Password Error
+            </div>
+        </div>
+        <button type="submit">submit</button>
+    </form>
 
 
 
