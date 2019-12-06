@@ -79,7 +79,8 @@ function postDiagnosisInfo() {
         getDiagnosisInformation();
       },
       error: function(json) {
-        alert("error!");
+        // alert("error!");
+        console.log("error-h.html")
       }
     });
   });
@@ -153,7 +154,7 @@ function deleteDiagnosis(num) {
         url: "/api/deleteDiagnosis/"+num,
 //        data: JSON.stringify(formData),
         success: function(json) {
-          alert("Worked!");
+          // alert("Worked!");
           refreshListOfDiagnoses();
 //                var listOfCases = document.getElementById("recentCases");
 //
@@ -161,7 +162,8 @@ function deleteDiagnosis(num) {
           getRecentCases();
         },
         error: function(json) {
-          alert("error!");
+          console.log("ERROR")
+          // alert("error!");
         }
       });
 }
@@ -179,7 +181,7 @@ function deleteCategory(num) {
     url: "/api/deleteCategory/"+num,
 //        data: JSON.stringify(formData),
     success: function(json) {
-      alert("Worked!");
+      // alert("Worked!");
       refreshListOfCategories();
 //                var listOfCases = document.getElementById("recentCases");
 //
@@ -187,8 +189,10 @@ function deleteCategory(num) {
       getRecentCases();
     },
     error: function(json) {
-      alert("error!");
+      // alert("error!");
+      console.log("ERROR")
     }
+
   });
 }
 function refreshListOfCategories() {
@@ -215,12 +219,7 @@ function refreshListOfCategories() {
       b.setAttribute("class", "btn content-item bigger");
       b.style.fontWeight = "600";
       a.appendChild(b);
-      if (data[i].name == "Miscellaneous") {
-        console.log("UMMM WHY");
-        grid.insertBefore(a, grid.firstChild);
-      } else {
-        grid.appendChild(a);
-      }
+
 
       var customId = "deleteButton" + data[i].id;
 
@@ -245,7 +244,15 @@ function refreshListOfCategories() {
       settingsButton.id=customId;
 
       settings.appendChild(settingsButton);
-      grid.appendChild(settings);
+
+      if (data[i].name == "Miscellaneous") {
+        console.log("UMMM WHY");
+        grid.insertBefore(settings,grid.firstChild);
+        grid.insertBefore(a, grid.firstChild);
+      } else {
+        grid.appendChild(a);
+        grid.appendChild(settings);
+      }
 
 
     }
