@@ -1,5 +1,5 @@
-SET MODE MySQL;
-SET IGNORECASE=TRUE;
+# SET MODE MySQL;
+# SET IGNORECASE=TRUE;
 
 -- -----------------------------------------------------
 -- Table `categories`
@@ -21,20 +21,22 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `diagnosis_information`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `diagnosis_info` (
+CREATE TABLE IF NOT EXISTS `diagnosis_information` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `diagnosis_id` INT UNSIGNED NOT NULL,
   `field` VARCHAR(100) NOT NULL,
   `value` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
--- -----------------------------------------------------
--- Table `notifications`
--- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `notifications` (
-   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-   `content` VARCHAR(100) NOT NULL,
-   PRIMARY KEY (`id`))
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `content` VARCHAR(100) NULL,
+    `creation_date` DATETIME NULL,
+    `diagnosis_id` INT NOT NULL,
+    `is_read` BOOLEAN NULL,
+    `is_done` BOOLEAN NULL,
+    PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cases`

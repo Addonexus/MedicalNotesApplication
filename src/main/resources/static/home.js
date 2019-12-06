@@ -79,7 +79,8 @@ function postDiagnosisInfo() {
         getDiagnosisInformation();
       },
       error: function(json) {
-        alert("error!");
+        // alert("error!");
+        console.log("error-h.html")
       }
     });
   });
@@ -110,14 +111,13 @@ function refreshListOfDiagnoses() {
         b.style.fontWeight = "600";
         a.appendChild(b);
         grid.appendChild(a);
-
-        var customId = "deleteButton" + data[i].id
+        
+        var customId = "deleteButton" + data[i].id;
 
         var settings = document.createElement("a");
         var settingsButton = document.createElement("button");
         var settingsIcon = document.createElement("i");
         
-
         settings.style.width = "15%";
         settingsIcon.appendChild(document.createTextNode("delete_forever"));
         settingsIcon.setAttribute("class", "material-icons large");
@@ -128,7 +128,7 @@ function refreshListOfDiagnoses() {
 
         // settingsButton.style.backgroundColor="#eeeeff";
         settingsButton.style.backgroundColor="#ffaaaa";
-        settingsButton.style.borderRadius="5px"
+        settingsButton.style.borderRadius="5px";
         settingsButton.style.borderLeft="1px solid grey";
         settingsButton.style.fontWeight = "600";
         settingsButton.id=customId;
@@ -142,8 +142,58 @@ function refreshListOfDiagnoses() {
 
 function deleteDiagnosis(num) {
   console.log(num);
+  var formData = {
+        id: num
+      };
+
+      $.ajax({
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        type: "DELETE",
+        url: "/api/deleteDiagnosis/"+num,
+//        data: JSON.stringify(formData),
+        success: function(json) {
+          // alert("Worked!");
+          refreshListOfDiagnoses();
+//                var listOfCases = document.getElementById("recentCases");
+//
+//                listOfCases.empty();
+          getRecentCases();
+        },
+        error: function(json) {
+          console.log("ERROR")
+          // alert("error!");
+        }
+      });
 }
 
+function deleteCategory(num) {
+  console.log(num);
+  var formData = {
+    id: num
+  };
+
+  $.ajax({
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    type: "DELETE",
+    url: "/api/deleteCategory/"+num,
+//        data: JSON.stringify(formData),
+    success: function(json) {
+      // alert("Worked!");
+      refreshListOfCategories();
+//                var listOfCases = document.getElementById("recentCases");
+//
+//                listOfCases.empty();
+      getRecentCases();
+    },
+    error: function(json) {
+      // alert("error!");
+      console.log("ERROR")
+    }
+
+  });
+}
 function refreshListOfCategories() {
   console.log("HIHHS");
   var grid = document.getElementById("content-grid");
@@ -163,17 +213,47 @@ function refreshListOfCategories() {
       var a = document.createElement("a");
       var b = document.createElement("button");
       a.setAttribute("href", "/category/" + data[i].id);
-      a.style.width = "100%";
+      a.style.width = "85%";
       b.appendChild(document.createTextNode(data[i].name));
       b.setAttribute("class", "btn content-item bigger");
       b.style.fontWeight = "600";
       a.appendChild(b);
+
+
+      var customId = "deleteButton" + data[i].id;
+
+      var settings = document.createElement("a");
+      var settingsButton = document.createElement("button");
+      var settingsIcon = document.createElement("i");
+
+
+      settings.style.width = "15%";
+      settingsIcon.appendChild(document.createTextNode("delete_forever"));
+      settingsIcon.setAttribute("class", "material-icons large");
+
+      settingsButton.appendChild(settingsIcon);
+      settingsButton.setAttribute("class", "btn content-item bigger");
+      settingsButton.setAttribute("onClick", "deleteCategory(" + (data[i].id) + ")");
+
+      // settingsButton.style.backgroundColor="#eeeeff";
+      settingsButton.style.backgroundColor="#ffaaaa";
+      settingsButton.style.borderRadius="5px";
+      settingsButton.style.borderLeft="1px solid grey";
+      settingsButton.style.fontWeight = "600";
+      settingsButton.id=customId;
+
+      settings.appendChild(settingsButton);
+
       if (data[i].name == "Miscellaneous") {
         console.log("UMMM WHY");
+        grid.insertBefore(settings,grid.firstChild);
         grid.insertBefore(a, grid.firstChild);
       } else {
         grid.appendChild(a);
+        grid.appendChild(settings);
       }
+
+
     }
   });
 }
@@ -198,6 +278,10 @@ function getDiagnosisInformation() {
 }
 
 function getRecentCases() {
+ var listOfCases = document.getElementById("recentCases");
+ while(listOfCases.hasChildNodes()){
+ listOfCases.removeChild(listOfCases.childNodes[0])
+ }
   $.ajax({
     type: "GET",
     url: "/recentCases",
@@ -209,7 +293,9 @@ function getRecentCases() {
       var ids = response.categoryIds;
       var cases = response.casesList;
 
-      var listOfCases = document.getElementById("recentCases");
+
+
+//      listOfCases.empty();
       for (i = 0; i < cases.length; i++) {
         var li = document.createElement("a");
         li.appendChild(document.createTextNode(cases[i].name));

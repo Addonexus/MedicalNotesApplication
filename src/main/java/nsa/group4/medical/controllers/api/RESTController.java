@@ -5,13 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import nsa.group4.medical.data.CategoriesRepositoryJPA;
-import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
-import nsa.group4.medical.data.DiagnosisRepositoryJPA;
-import nsa.group4.medical.domains.CaseModel;
-import nsa.group4.medical.domains.Categories;
-import nsa.group4.medical.domains.Diagnosis;
-import nsa.group4.medical.domains.DiagnosisInformation;
+import nsa.group4.medical.data.*;
+import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisService;
@@ -50,6 +45,9 @@ public class RESTController {
     private DiagnosisServiceInterface diagnosisService;
     private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
+    private NotificationRepositoryJDBC notificationRepositoryJDBC;
+    private NotificationRepoJPA notificationRepoJPA;
+
 
 
 
@@ -57,14 +55,17 @@ public class RESTController {
                           CategoriesRepositoryJPA categoriesRepository,
                           DiagnosisServiceInterface diagnosisService,
                           DiagnosisRepositoryJPA diagnosisRepositoryJPA,
-                          DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC
+                          DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC,
+                          NotificationRepositoryJDBC notificationRepositoryJDBC,
+                          NotificationRepoJPA notificationRepoJPA
                           ){
         this.caseServiceInterface =caseServiceInterface;
         this.categoriesRepository=categoriesRepository;
         this.diagnosisService=diagnosisService;
         this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
-
+        this.notificationRepositoryJDBC = notificationRepositoryJDBC;
+        this.notificationRepoJPA = notificationRepoJPA;
     }
 
     @GetMapping("/returnedDiagnosisInfo/{index}")
@@ -125,6 +126,7 @@ public class RESTController {
         if(returnedDiagnosis.isPresent())
         {
             diagnosisService.deleteDiagnosisById(returnedDiagnosis.get().getId());
+            caseServiceInterface.checkEmptyDiagnosis();
             response.setStatus("SUCCESS");
             response.setRedirectUrl("/home");
             return ResponseEntity.ok().body(response);
@@ -143,6 +145,7 @@ public class RESTController {
         if(returnedCategory.isPresent())
         {
             categoriesRepository.deleteById(returnedCategory.get().getId());
+            caseServiceInterface.checkEmptyDiagnosis();
             response.setStatus("SUCCESS");
             response.setRedirectUrl("/home");
             return ResponseEntity.ok().body(response);
@@ -176,7 +179,7 @@ public class RESTController {
         log.debug("REST API RETURN: ");
         Categories categories = categoriesRepository.findById(index).get();
         List<Diagnosis> returnedList = diagnosisService.findByCategories(categories);
-        log.debug("Returned LIST: "+returnedList);
+//        log.debug("Returned LIST: "+returnedList);
         return returnedList;
     }
 
@@ -244,10 +247,12 @@ public class RESTController {
     public @ResponseBody ResponseEntity<?> saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         System.out.println(formData.get("categoryName"));
-        diagnosisService.createDiagnosis(new Diagnosis(
+        Diagnosis createdDiagnosis = diagnosisService.createDiagnosis(new Diagnosis(
                                         formData.get("name"),
                                         categoriesRepository.findByName(formData.get("categoryName")).get()
                                         ));
+
+        notificationRepoJPA.save(new Notifications(createdDiagnosis));
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         responseBody.setDiagnoses(diagnosisRepositoryJPA.findAll());
@@ -280,7 +285,7 @@ public class RESTController {
         log.debug("REST API RETURN: ");
         List<Categories> returnedList = categoriesRepository.findAll();
 
-        log.debug("Returned LIST: "+returnedList);
+//        log.debug("Returned LIST: "+returnedList);
         return returnedList;
 
     }
@@ -296,15 +301,21 @@ public class RESTController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
         Date myDate = simpleDateFormat.parse(date);
 
-        Date today = new Date();
-        LocalDateTime ldt = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
+        LocalDateTime ldt = LocalDateTime.ofInstant(myDate.toInstant(), ZoneId.systemDefault());
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         System.out.println(ldt);
-        System.out.println(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
-        responseBody.setCasesList(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
+//        System.out.println(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1000), ldt.plusDays(1000)));
+        responseBody.setCasesList(caseServiceInterface.findByCreationDateBetween(ldt.minusDays(1), ldt.plusDays(1)));
         responseBody.setStatus("SUCCESS");
         return ResponseEntity.ok().body(responseBody);
+    }
+
+    @GetMapping("/getAllNotifications")
+    public @ResponseBody ResponseEntity<?> getAllNotifications() {
+        List<Notifications> notificationsList = notificationRepoJPA.findAll();
+
+        return ResponseEntity.ok().body(notificationsList);
     }
 
 }

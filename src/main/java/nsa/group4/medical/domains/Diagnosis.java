@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name= "diagnoses")
-@ToString(exclude = {"cases", "diagnosisInfoList"})
+@ToString(exclude = {"cases", "diagnosisInfoList","notificationList"})
 public class Diagnosis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,9 +41,14 @@ public class Diagnosis {
     @JoinColumn(name="category_id")
     private Categories categories;
 
-    @OneToMany(mappedBy="diagnosis")
+    @OneToMany(mappedBy="diagnosis", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<DiagnosisInformation> diagnosisInfoList;
+
+    @OneToMany(mappedBy="diagnosisLink")
+    @JsonBackReference
+    private List<Notifications> notificationList;
+
 
     public Diagnosis(String name){
         this.name = name;

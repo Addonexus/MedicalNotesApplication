@@ -21,11 +21,12 @@ public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name="name")
     private String name;
 
 
-    @OneToMany(mappedBy="categories")
+    @OneToMany(mappedBy="categories", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Diagnosis> diagnosisList;
 

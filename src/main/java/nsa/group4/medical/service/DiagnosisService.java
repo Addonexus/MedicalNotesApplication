@@ -1,6 +1,7 @@
 package nsa.group4.medical.service;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,12 @@ import java.util.Optional;
 public class DiagnosisService implements DiagnosisServiceInterface {
 
     private DiagnosisRepositoryInterface diagnosisRepository;
-    public DiagnosisService( DiagnosisRepositoryInterface diagnosisRepository){
+    private CaseRepositoryInterface caseRepository;
+    private CaseServiceInterface caseServiceInterface;
+    public DiagnosisService( DiagnosisRepositoryInterface diagnosisRepository,CaseServiceInterface caseServiceInterface, CaseRepositoryInterface caseRepository){
         this.diagnosisRepository = diagnosisRepository;
+        this.caseRepository = caseRepository;
+        this.caseServiceInterface =caseServiceInterface;
     }
 
 
@@ -67,6 +72,8 @@ public class DiagnosisService implements DiagnosisServiceInterface {
     @Override
     public void deleteDiagnosisById(Long id) {
         diagnosisRepository.deleteById(id);
+//        caseServiceInterface.checkEmptyDiagnosis();
+
     }
 
     @Override

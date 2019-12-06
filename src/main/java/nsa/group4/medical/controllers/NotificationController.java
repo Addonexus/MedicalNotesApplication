@@ -3,7 +3,7 @@ package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.NotificationRepositoryJDBC;
-import nsa.group4.medical.domains.Notification;
+import nsa.group4.medical.domains.Notifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +23,9 @@ public class NotificationController {
     @GetMapping(value="/notifications")
     public String getNotifications(Model model){
 
-        List<Notification> notificationList = notificationRepositoryJDBC.getAllNotifications();
+        List<Notifications> notificationsList = notificationRepositoryJDBC.getAllNotifications();
 
-        model.addAttribute("notificationsKey", notificationList);
+        model.addAttribute("notificationsKey", notificationsList);
 
         return "notifications";
     }
