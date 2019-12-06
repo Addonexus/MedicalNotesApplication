@@ -45,7 +45,7 @@ public class Diagnosis {
     @JsonBackReference
     private List<DiagnosisInformation> diagnosisInfoList;
 
-    @OneToMany(mappedBy="diagnosisLink")
+    @OneToMany(mappedBy="diagnosisLink",  cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Notifications> notificationList;
 

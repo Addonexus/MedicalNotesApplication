@@ -12,66 +12,77 @@ $(document).ready(function() {
 
 notificationList = document.getElementById("notifications");
 console.log(notificationList);
-$.get("/api/getAllNotifications", function(data) {
-  var listItem = document.createElement
-  var needToRead = [];
-  var needToDo = [];
-  var done = [];
+refreshNotifications();
 
-  for (var i = 0; i < data.length; i++) {
-    console.log("notif " + i);
-    console.log(data[i]);
-    var a = document.createElement("a");
-    a.appendChild(document.createTextNode("Update information for " + data[i].diagnosisLink.name));
-    var icon = document.createElement("i");
-    icon.setAttribute("class", "material-icons right");
-    icon.appendChild(document.createTextNode("notifications_active"));
-    
-    icon.style.color = "#ccccff";
-    icon.style.visibility = data[i].read ? "hidden" : "visible"; 
+function refreshNotifications() {
+  while (notificationList.firstChild) {
+    notificationList.removeChild(notificationList.firstChild);
+  }
 
-    a.appendChild(icon);
-    a.setAttribute("id", data[i].id);
-    a.setAttribute("class", "collection-item");
-    a.setAttribute("href", "/diagnosis/" + data[i].diagnosisLink.id);
-    a.style.fontWeight = data[i].read ? "200" : "600";
-    a.style.backgroundColor = data[i].done ? "#eeeeee" : "#ffffff";
-    a.style.textDecoration = data[i].done ? "line-through" : "none";
-
-    if (data[i].read == false) {
-      needToRead.push(a);
-    } else {
-      if (data[i].done == false) {
-        needToDo.push(a);
+  $.get("/api/getAllNotifications", function(data) {
+    var needToRead = [];
+    var needToDo = [];
+    var done = [];
+  
+    for (var i = 0; i < data.length; i++) {
+      console.log("notif " + i);
+      console.log(data[i]);
+      var a = document.createElement("a");
+      a.appendChild(document.createTextNode("Update information for " + data[i].diagnosisLink.name));
+      var icon = document.createElement("i");
+      icon.setAttribute("class", "material-icons right");
+      icon.appendChild(document.createTextNode("notifications_active"));
+      
+      icon.style.color = "#ccccff";
+      icon.style.visibility = data[i].read ? "hidden" : "visible"; 
+  
+      a.appendChild(icon);
+      a.setAttribute("id", data[i].id);
+      a.setAttribute("class", "collection-item");
+      a.setAttribute("href", "/diagnosis/" + data[i].diagnosisLink.id);
+      a.style.fontWeight = data[i].read ? "200" : "600";
+      a.style.backgroundColor = data[i].done ? "#eeeeee" : "#ffffff";
+      a.style.textDecoration = data[i].done ? "line-through" : "none";
+  
+      if (data[i].read == false) {
+        needToRead.unshift(a);
       } else {
-        done.push(a);
+        if (data[i].done == false) {
+          needToDo.unshift(a);
+        } else {
+          done.unshift(a);
+        }
       }
+  
+      // notificationList.style.visibility = "visible";
+    }
+  
+    for (let i = 0; i < needToRead.length; i++) {
+      notificationList.appendChild(needToRead[i]);
+    }
+    for (let i = 0; i < needToDo.length; i++) {
+      notificationList.appendChild(needToDo[i]);
+    }
+    for (let i = 0; i < done.length; i++) {
+      notificationList.appendChild(done[i]);
+    }
+  
+    if (needToRead.length > 0) {
+      notificationBell = document.getElementById("notification-bell");
+      notificationBell.classList.remove("white-text");
+      notificationBell.classList.add("blue-text");
+      notificationBell.classList.add("text-lighten-3");
+      notificationBell.innerHTML = "notifications_active"
     }
 
-    notificationList.style.visibility = "visible";
-  }
+    if (notificationList.length > 0) {
+      notificationList.style.visibility = "visible";
+    }
+  
+    notificationList.style.visibility = (notificationList.childNodes.length > 0) ? "visible" : "hidden";
 
-  for (let i = 0; i < needToRead.length; i++) {
-    notificationList.appendChild(needToRead[i]);
-  }
-  for (let i = 0; i < needToDo.length; i++) {
-    notificationList.appendChild(needToDo[i]);
-  }
-  for (let i = 0; i < done.length; i++) {
-    notificationList.appendChild(done[i]);
-  }
-
-  if (needToRead.length > 0) {
-    notificationBell = document.getElementById("notification-bell");
-    notificationBell.classList.remove("white-text");
-    notificationBell.classList.add("blue-text");
-    notificationBell.classList.add("text-lighten-3");
-    notificationBell.innerHTML = "notifications_active"
-  }
-
-  // notificationList.appendChild(a);
-
-});
+  });
+}
 
 console.log(document.getElementsByClassName("calendar-form"));
 $("#calendar-form").submit(function(e) {

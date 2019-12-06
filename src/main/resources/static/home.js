@@ -155,10 +155,8 @@ function deleteDiagnosis(num) {
         success: function(json) {
           // alert("Worked!");
           refreshListOfDiagnoses();
-//                var listOfCases = document.getElementById("recentCases");
-//
-//                listOfCases.empty();
           getRecentCases();
+          refreshNotifications();
         },
         error: function(json) {
           console.log("ERROR")

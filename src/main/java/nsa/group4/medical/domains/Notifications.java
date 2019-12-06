@@ -24,7 +24,7 @@ public class Notifications {
 
     private boolean isDone;
 
-    private boolean isRead; 
+    private boolean isRead;
 
     private LocalDateTime creationDate;
 
