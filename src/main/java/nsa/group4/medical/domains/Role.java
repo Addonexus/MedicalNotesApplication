@@ -5,23 +5,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "auth_role")
+@Table(name = "role")
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_role_id")
-    private int id;
+    private Long id;
 
-    @Column(name = "role_name")
-    private String role;
+    private String name;
 
-    @Column(name = "role_desc")
-    private String desc;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
 }
