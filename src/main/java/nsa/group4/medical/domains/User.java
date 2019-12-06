@@ -14,42 +14,21 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="auth_user")
+@Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "auth_user_id")
     private Long id;
 
-    @Column(name = "first_name")
-    @NotNull
-    @NotEmpty
-    private String firstName;
+    private String username;
 
-    @Column(name = "last_name")
-    @NotNull
-    @NotEmpty
-    private String lastName;
-
-    @Column(name = "email")
-    @NotNull
-    @NotEmpty
-    private String email;
-
-    @Column(name = "password")
-    @NotNull
-    @NotEmpty
     private String password;
 
-    @Column(name = "status")
-    @NotNull
-    @NotEmpty
-    private String status;
+    @Transient
+    private String passwordConfirm;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "auth_user_role", joinColumns = @JoinColumn(name = "auth_user_id"), inverseJoinColumns = @JoinColumn(name = "auth_role_id"))
+    @ManyToMany
     private Set<Role> roles;
 
-
 }
+
