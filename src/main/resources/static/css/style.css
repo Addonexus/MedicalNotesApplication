@@ -225,3 +225,23 @@ fieldset:disabled {
 .flexy {
   display: flex;
 }
+
+.breadcrumb {
+  color: black;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.breadcrumb:last-child {
+  color: black;
+  font-weight: 1000;
+}
+
+.breadcrumb::before {
+  font-size: 30px;
+
+  position: relative;
+  top: 3px;
+  color: black;
+  font-weight: 1000;
+}
