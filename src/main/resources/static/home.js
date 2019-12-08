@@ -109,8 +109,10 @@ function refreshListOfDiagnoses() {
         a.style.width = "85%";
         b.appendChild(document.createTextNode(data[i].name));
         b.setAttribute("class", "btn content-item bigger");
+
         b.style.fontWeight = "600";
         a.appendChild(b);
+
         grid.appendChild(a);
         
         var customId = "deleteButton" + data[i].id;

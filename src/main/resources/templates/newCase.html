@@ -25,10 +25,12 @@
 </head>
 <body>
 <div th:replace="fragments/nav :: navbar"></div>
-<main class = "desktop-grid container">
+<main class = "desktop-grid">
+
 
     <h2 class="container" id="title">Create</h2>
 <br>
+<div class="flexy">
 
     <form  class="container" id ="submitCases" method="post" th:object="${caseKey}">
         <fieldset id="allFields">
@@ -109,10 +111,14 @@
 
         <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value = "${hiddenForm}">
         </fieldset>
-        <button id="submit-button" type="submit">Create Case</button>
-        <button th:if="${hiddenForm !=null}" id="editCase" type="button" onclick="unhideForm()">Edit Case</button>
-        <button th:if="${hiddenForm !=null}" id="deleteCase" type="button" onclick="deleteForm()">Delete Case</button>
+        <div class="btn-container">
+                <button class="ele-btn" id="submit-button" type="submit">Create Case</button>
+                <button class="ele-btn" th:if="${hiddenForm !=null}" id="editCase" type="button" onclick="unhideForm()">Edit Case</button>
+                <button class="ele-btn" th:if="${hiddenForm !=null}" id="deleteCase" type="button" onclick="deleteForm()">Delete Case</button>
+        </div>
     </form>
+</div>
+
 </main>
 <script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
 <!-- Compiled and minified JavaScript -->

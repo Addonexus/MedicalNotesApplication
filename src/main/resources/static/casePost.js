@@ -16,8 +16,10 @@ $(document).ready(function() {
                 }
                 $(".chips-autocomplete").material_chip({
                     data: existingDiagnosisData,
-                    autocompleteData: data
+                    autocompleteData: data,
                 });
+                $(".chip").addClass("blue lighten-3");
+
             }
         });
     }
@@ -169,4 +171,7 @@ function unhideForm(){
         console.log("Param doesn't exist, so don't hide any fields")
     }
 }
+
+console.log($(".chip")); 
+
 
