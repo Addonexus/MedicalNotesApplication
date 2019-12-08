@@ -42,6 +42,9 @@ public class CaseModel {
     private List<Diagnosis> diagnosesList;
 
     //Extra Form Fields
+    @Column(name="ward")
+    private String ward;
+
     @Column(name="presenting_complaint")
     private String presentingComplaint;
 
