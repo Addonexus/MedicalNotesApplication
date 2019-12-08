@@ -1,31 +1,21 @@
 package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import nsa.group4.medical.controllers.api.Form;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
-import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.data.NotificationRepoJPA;
 import nsa.group4.medical.domains.*;
-import nsa.group4.medical.service.CaseServiceInterface;
-import nsa.group4.medical.service.DiagnosisRepositoryInterface;
-import nsa.group4.medical.service.DiagnosisServiceInterface;
-import nsa.group4.medical.service.events.DiagnosisInformationAdded;
-import nsa.group4.medical.web.CaseForm;
-import nsa.group4.medical.web.DiagnosisInformationForm;
+import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
+import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Controller

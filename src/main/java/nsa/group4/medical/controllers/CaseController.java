@@ -2,7 +2,7 @@ package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.domains.*;
-import nsa.group4.medical.service.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

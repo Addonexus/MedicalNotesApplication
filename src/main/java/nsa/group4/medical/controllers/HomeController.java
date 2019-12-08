@@ -3,12 +3,10 @@ package nsa.group4.medical.controllers;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
-import nsa.group4.medical.service.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 

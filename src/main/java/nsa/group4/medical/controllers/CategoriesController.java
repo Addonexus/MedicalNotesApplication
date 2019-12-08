@@ -4,20 +4,14 @@ import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
-import nsa.group4.medical.service.CaseServiceInterface;
-import nsa.group4.medical.service.DiagnosisRepositoryInterface;
-import nsa.group4.medical.service.DiagnosisServiceInterface;
-import nsa.group4.medical.web.CaseForm;
-import nsa.group4.medical.web.CategoriesForm;
+import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 

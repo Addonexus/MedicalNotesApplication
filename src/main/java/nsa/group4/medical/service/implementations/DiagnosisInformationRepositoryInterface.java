@@ -1,4 +1,4 @@
-package nsa.group4.medical.service;
+package nsa.group4.medical.service.implementations;
 
 import nsa.group4.medical.service.events.DiagnosisInformationAdded;
 

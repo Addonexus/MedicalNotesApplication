@@ -1,9 +1,9 @@
-# SET MODE MySQL;
-# SET IGNORECASE=TRUE;
+SET MODE MySQL;
+SET IGNORECASE=TRUE;
 
-DROP SCHEMA medicaldb;
-CREATE SCHEMA medicaldb;
-use medicaldb;
+--DROP SCHEMA medicaldb;
+--CREATE SCHEMA medicaldb;
+--use medicaldb;
 
 
 -- -----------------------------------------------------

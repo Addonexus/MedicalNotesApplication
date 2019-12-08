@@ -1,6 +1,5 @@
 package nsa.group4.medical.service;
 
-import jdk.jshell.Diag;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.NotificationRepoJPA;
@@ -8,6 +7,9 @@ import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.domains.Notifications;
+import nsa.group4.medical.service.implementations.CaseRepositoryInterface;
+import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

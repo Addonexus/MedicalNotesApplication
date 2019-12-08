@@ -1,9 +1,12 @@
 package nsa.group4.medical.service;
 
 import lombok.extern.slf4j.Slf4j;
-import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
+import nsa.group4.medical.service.implementations.CaseRepositoryInterface;
+import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
+import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

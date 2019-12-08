@@ -1,37 +1,24 @@
 package nsa.group4.medical.controllers.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.*;
 import nsa.group4.medical.domains.*;
-import nsa.group4.medical.service.CaseService;
-import nsa.group4.medical.service.CaseServiceInterface;
-import nsa.group4.medical.service.DiagnosisService;
-import nsa.group4.medical.service.DiagnosisServiceInterface;
+import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import nsa.group4.medical.service.events.DiagnosisInformationAdded;
 import nsa.group4.medical.web.CaseForm;
-import org.apache.catalina.User;
-import org.apache.catalina.mapper.Mapper;
-import org.aspectj.weaver.loadtime.Aj;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 

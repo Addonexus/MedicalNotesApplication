@@ -4,7 +4,7 @@ package nsa.group4.medical.data;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.domains.Notifications;
 import nsa.group4.medical.domains.rowmappers.NotificationRowmapper;
-import nsa.group4.medical.service.NotificationRepositoryInterface;
+import nsa.group4.medical.service.implementations.NotificationRepositoryInterface;
 import nsa.group4.medical.service.events.NotificationAdded;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
