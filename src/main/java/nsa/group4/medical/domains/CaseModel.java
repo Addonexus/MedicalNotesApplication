@@ -82,6 +82,7 @@ public class CaseModel {
     public CaseModel(String name,
                      String demographics,
                      List<Diagnosis> diagnosesList,
+                     String ward,
                      String presentingComplaint,
                      String presentingComplaintHistory,
                      String medicalHistory,
@@ -94,6 +95,7 @@ public class CaseModel {
         this.name = name;
         this.demographics = demographics;
         this.diagnosesList = diagnosesList;
+        this.ward = ward;
         this.presentingComplaint = presentingComplaint;
         this.presentingComplaintHistory = presentingComplaintHistory;
         this.medicalHistory = medicalHistory;
