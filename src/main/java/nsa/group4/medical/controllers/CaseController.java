@@ -91,34 +91,6 @@ public class CaseController {
         return "404";
     }
 
-    @GetMapping(path ="diagnosis/{diagnosisIndex}")
-    public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
-                           Model model){
-
-        List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
-        List<CaseModel> recentCases = caseService.findAll();
-        log.debug("CASES: " + returnedCases);
-        log.debug("CASES 2: " + recentCases);
-
-        //TODO: move notification business logic into the notification service class
-        Notifications n = notificationRepoJPA.findByDiagnosisLink(diagnosisService.findById(diagnosisId).get());
-        if(n!=null){
-            System.out.println("notification: " + n);
-            n.setRead(true);
-            notificationRepoJPA.save(n);
-        }
-
-        List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
-        model.addAttribute("diagnosisInfoKey", new DiagnosisInformationForm());
-        model.addAttribute("cases", recentCases);
-        model.addAttribute("returnedCases", returnedCases);
-        model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
-        model.addAttribute("returnedDiagnosisInfo", diagnosisInformations);
-        model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
-
-        return "home";
-    }
-
     @GetMapping(path = "/home")
     public String allCases(Model model) {
         List<Categories> categories = categoriesRepositoryJPA.findAll();
