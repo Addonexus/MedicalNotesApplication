@@ -1,0 +1,40 @@
+
+<button
+        th:fragment="diagnosisFormToggle"
+        type="button"
+        class="btn blue white-text collapsible"
+>
+    Toggle notes
+</button>
+<div class="content z-depth-1" th:fragment="diagnosisForm">
+    <form id="createDiagnosisInfo">
+        <table id="diaInfoTable">
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <th>
+                    <label class="black-text" th:for="key">Key</label>
+                    <input
+                            minlength="5"
+                            aria-describedby="Enter the key"
+                            id="DiagnosisInfoKey"
+                            type="text"/>
+                </th>
+                <th>
+                    <label class="black-text" th:for="value">Value</label>
+                    <input
+                            minlength="5"
+                            aria-describedby="Enter the value"
+                            id="DiagnosisInfoValue"
+                            type="text"/>
+                </th>
+            </tr>
+        </table>
+
+        <button class="btn blue white-text" id="submit" type="submit">
+            Update
+        </button>
+    </form>
+</div>

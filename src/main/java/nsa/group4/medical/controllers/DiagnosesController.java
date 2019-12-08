@@ -67,7 +67,7 @@ public class DiagnosesController {
         model.addAttribute("returnedCases", returnedCases);
         model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
         model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
-        return "home";
+        return "main/diagnosis";
     }
 //  TODO: move this to separate controller
     @GetMapping("/login")

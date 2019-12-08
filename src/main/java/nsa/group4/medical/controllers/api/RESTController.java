@@ -32,7 +32,7 @@ public class RESTController {
     private DiagnosisServiceInterface diagnosisService;
     private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
-    private NotificationRepositoryJDBC notificationRepositoryJDBC;
+//    private NotificationRepositoryJDBC notificationRepositoryJDBC;
     private NotificationRepoJPA notificationRepoJPA;
 
 
@@ -43,7 +43,6 @@ public class RESTController {
                           DiagnosisServiceInterface diagnosisService,
                           DiagnosisRepositoryJPA diagnosisRepositoryJPA,
                           DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC,
-                          NotificationRepositoryJDBC notificationRepositoryJDBC,
                           NotificationRepoJPA notificationRepoJPA
                           ){
         this.caseServiceInterface =caseServiceInterface;
@@ -51,7 +50,7 @@ public class RESTController {
         this.diagnosisService=diagnosisService;
         this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
-        this.notificationRepositoryJDBC = notificationRepositoryJDBC;
+//        this.notificationRepositoryJDBC = notificationRepositoryJDBC;
         this.notificationRepoJPA = notificationRepoJPA;
     }
 
@@ -142,7 +141,7 @@ public class RESTController {
     }
 
     @RequestMapping(value = "/createDiagnosisInformation", method = POST, produces = "application/json")
-    public @ResponseBody ResponseEntity<?> saveCase(@RequestBody Map<String, String> formData) {
+    public @ResponseBody ResponseEntity<?> saveDiagnosisInformation(@RequestBody Map<String, String> formData) {
         System.out.println(formData);
         System.out.println(formData.get("diagnosisId"));
         System.out.println(formData.get("key"));
@@ -235,7 +234,7 @@ public class RESTController {
         } else {
             caseServiceInterface.createCase(formData);
             result.setStatus("SUCCESS");
-            result.setRedirectUrl("/home");
+            result.setRedirectUrl("main/home");
             log.debug("RETURNED SUCEUSS: " + result);
             return ResponseEntity.ok().body(result);
         }
@@ -320,7 +319,9 @@ public class RESTController {
 
     @GetMapping("/getAllNotifications")
     public @ResponseBody ResponseEntity<?> getAllNotifications() {
+        log.debug("---- GET Mapping: /api/getAllNotifications ----");
         List<Notifications> notificationsList = notificationRepoJPA.findAll();
+        log.debug("NOTIFICATIONS: " + notificationsList);
 
         return ResponseEntity.ok().body(notificationsList);
     }
