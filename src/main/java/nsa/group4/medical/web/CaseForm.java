@@ -26,6 +26,8 @@ public class CaseForm {
     @Size(min=3, message = "Invalid Demographics Name(s) provided")
     private String demographics;
 
+    private String ward;
+
     private String presentingComplaint;
 
     private String presentingComplaintHistory;
