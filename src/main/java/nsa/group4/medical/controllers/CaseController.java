@@ -27,7 +27,7 @@ public class CaseController {
         CaseForm caseForm = new CaseForm();
         log.debug("CASE FORM: "+ caseForm);
         model.addAttribute("caseKey", caseForm);
-        return "newCase";
+        return "main/case";
     }
 
     @GetMapping(path ="/case/{index}")
@@ -39,7 +39,7 @@ public class CaseController {
             model.addAttribute("case", returnedCase.get());
             model.addAttribute("caseKey", new CaseForm());
             model.addAttribute("hiddenForm", "1");
-            return "newCase";
+            return "main/case";
         }
         return "404";
     }
