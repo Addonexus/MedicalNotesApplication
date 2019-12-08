@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.management.Notification;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -99,10 +100,13 @@ public class CaseController {
         log.debug("CASES: " + returnedCases);
         log.debug("CASES 2: " + recentCases);
 
+        //TODO: move notification business logic into the notification service class
         Notifications n = notificationRepoJPA.findByDiagnosisLink(diagnosisService.findById(diagnosisId).get());
-        System.out.println("notification: " + n);
-        n.setRead(true);
-        notificationRepoJPA.save(n);
+        if(n!=null){
+            System.out.println("notification: " + n);
+            n.setRead(true);
+            notificationRepoJPA.save(n);
+        }
 
         List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
         model.addAttribute("diagnosisInfoKey", new DiagnosisInformationForm());
