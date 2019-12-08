@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.*;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.CategoryServiceInterface;
 import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import nsa.group4.medical.service.events.DiagnosisInformationAdded;
 import nsa.group4.medical.service.implementations.NotificationServiceInterface;
@@ -29,7 +30,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class RESTController {
 
     private CaseServiceInterface caseServiceInterface;
-    private CategoriesRepositoryJPA categoriesRepository;
+    private CategoryServiceInterface categoryService;
     private DiagnosisServiceInterface diagnosisService;
     private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
@@ -40,14 +41,14 @@ public class RESTController {
 
 
     public RESTController(CaseServiceInterface caseServiceInterface,
-                          CategoriesRepositoryJPA categoriesRepository,
+                          CategoryServiceInterface categoryService,
                           DiagnosisServiceInterface diagnosisService,
                           DiagnosisRepositoryJPA diagnosisRepositoryJPA,
                           DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC,
                           NotificationServiceInterface notificationService
                           ){
         this.caseServiceInterface =caseServiceInterface;
-        this.categoriesRepository=categoriesRepository;
+        this.categoryService=categoryService;
         this.diagnosisService=diagnosisService;
         this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
@@ -126,12 +127,12 @@ public class RESTController {
     public @ResponseBody ResponseEntity<?> deleteCategoryById(
             @PathVariable Long index, HttpServletRequest request
     ){
-        Optional<Categories> returnedCategory = categoriesRepository.findById(index);
+        Optional<Categories> returnedCategory = categoryService.findById(index);
 
         AjaxResponseBody response = new AjaxResponseBody();
         if(returnedCategory.isPresent())
         {
-            categoriesRepository.deleteById(returnedCategory.get().getId());
+            categoryService.deleteById(returnedCategory.get().getId());
             caseServiceInterface.checkEmptyDiagnosis();
             response.setStatus("SUCCESS");
             response.setRedirectUrl("/home");
@@ -176,7 +177,7 @@ public class RESTController {
     @GetMapping("/getDiagnosisByCategoryId/{index}")
     public @ResponseBody  List<Diagnosis> getDiagnoses(@PathVariable Long index){
         log.debug("REST API RETURN: ");
-        Categories categories = categoriesRepository.findById(index).get();
+        Categories categories = categoryService.findById(index).get();
         List<Diagnosis> returnedList = diagnosisService.findByCategories(categories);
 //        log.debug("Returned LIST: "+returnedList);
         return returnedList;
@@ -235,7 +236,7 @@ public class RESTController {
         } else {
             caseServiceInterface.createCase(formData);
             result.setStatus("SUCCESS");
-            result.setRedirectUrl("main/home");
+            result.setRedirectUrl("home");
             log.debug("RETURNED SUCEUSS: " + result);
             return ResponseEntity.ok().body(result);
         }
@@ -248,7 +249,7 @@ public class RESTController {
         System.out.println(formData.get("categoryName"));
         Diagnosis createdDiagnosis = diagnosisService.createDiagnosis(new Diagnosis(
                                         formData.get("name"),
-                                        categoriesRepository.findByName(formData.get("categoryName")).get()
+                                        categoryService.findByName(formData.get("categoryName")).get()
                                         ));
 
         notificationService.saveNotification(new Notifications(createdDiagnosis));
@@ -263,7 +264,7 @@ public class RESTController {
     public @ResponseBody ResponseEntity<?> saveCategory(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         String categoryName = formData.get("name");
-        categoriesRepository.save(new Categories(categoryName));
+        categoryService.saveCategory(new Categories(categoryName));
         AjaxResponseBody responseBody = new AjaxResponseBody();
         responseBody.setStatus("SUCCESS");
         return ResponseEntity.ok().body(responseBody);
@@ -282,7 +283,7 @@ public class RESTController {
     @GetMapping("/getAllCategories")
     public @ResponseBody List<Categories> getCategories(){
         log.debug("REST API RETURN: ");
-        List<Categories> returnedList = categoriesRepository.findAll();
+        List<Categories> returnedList = categoryService.findAll();
 
 //        log.debug("Returned LIST: "+returnedList);
         return returnedList;

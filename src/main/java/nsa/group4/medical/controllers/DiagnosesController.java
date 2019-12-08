@@ -5,10 +5,7 @@ import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.NotificationRepoJPA;
 import nsa.group4.medical.domains.*;
-import nsa.group4.medical.service.implementations.CaseServiceInterface;
-import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
-import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
-import nsa.group4.medical.service.implementations.NotificationServiceInterface;
+import nsa.group4.medical.service.implementations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,7 @@ public class DiagnosesController {
     private DiagnosisServiceInterface diagnosisService;
     private NotificationServiceInterface notificationService;
     private DiagnosisRepositoryInterface diagnosisRepository;
-    private CategoriesRepositoryJPA categoriesRepositoryJPA;
+    private CategoryServiceInterface categoryService;
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
 
     static final Logger LOG = LoggerFactory.getLogger(DiagnosesController.class);
@@ -37,10 +34,10 @@ public class DiagnosesController {
                                DiagnosisServiceInterface diagnosisService,
                                NotificationServiceInterface notificationService,
                                DiagnosisRepositoryInterface diagnosisRepository,
-                               CategoriesRepositoryJPA categoriesRepositoryJPA,
+                               CategoryServiceInterface categoryService,
                                DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC) {
         this.diagnosisRepository = diagnosisRepository;
-        this.categoriesRepositoryJPA = categoriesRepositoryJPA;
+        this.categoryService = categoryService;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
         this.caseService = caseService;
         this.diagnosisService = diagnosisService;

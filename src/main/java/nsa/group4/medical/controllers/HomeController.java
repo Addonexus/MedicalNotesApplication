@@ -4,6 +4,7 @@ import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.CategoryServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,14 +13,14 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-    private CategoriesRepositoryJPA categoriesRepositoryJPA;
+    private CategoryServiceInterface categoryService;
     private CaseServiceInterface caseService;
 
     public HomeController(CaseServiceInterface caseService,
-                          CategoriesRepositoryJPA categoriesRepositoryJPA
+                          CategoryServiceInterface categoryService
                           ){
         this.caseService = caseService;
-        this.categoriesRepositoryJPA = categoriesRepositoryJPA;
+        this.categoryService = categoryService;
 
     }
 
@@ -46,7 +47,7 @@ public class HomeController {
 
     @GetMapping(path = "/home")
     public String allCases(Model model) {
-        List<Categories> categories = categoriesRepositoryJPA.findAll();
+        List<Categories> categories = categoryService.findAll();
         List<CaseModel> cases = caseService.findAll();
         System.out.println("CATEGORIES TSET: "+categories.toString());
         System.out.println("CASES TSET: "+cases.toString());

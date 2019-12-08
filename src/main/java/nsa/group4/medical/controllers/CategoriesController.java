@@ -5,6 +5,7 @@ import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.CategoryServiceInterface;
 import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +24,14 @@ public class CategoriesController {
 
     private DiagnosisServiceInterface diagnosisService;//replace with the service class for diagnosis when implemented
 
-    private CategoriesRepositoryJPA categoriesRepositoryJPA;
+    private CategoryServiceInterface categoriesService;
 
-    public CategoriesController(CaseServiceInterface caseService, DiagnosisServiceInterface diagnosisService,
-                          CategoriesRepositoryJPA categoriesRepositoryJPA){
+    public CategoriesController(CaseServiceInterface caseService,
+                                DiagnosisServiceInterface diagnosisService,
+                                CategoryServiceInterface categoriesService){
         this.caseService = caseService;
         this.diagnosisService = diagnosisService;
-        this.categoriesRepositoryJPA = categoriesRepositoryJPA;
+        this.categoriesService = categoriesService;
 
     }
 
@@ -38,10 +40,10 @@ public class CategoriesController {
 
     @GetMapping("/category/{index}")
     public String getCategories(Model model, @PathVariable final Long index) {
-        List<Categories> categories = categoriesRepositoryJPA.findAll();
+        List<Categories> categories = categoriesService.findAll();
         List<CaseModel> cases = caseService.findAll();
 
-        Optional<Categories> thisCategory = categoriesRepositoryJPA.findById(index);
+        Optional<Categories> thisCategory = categoriesService.findById(index);
         if(thisCategory.isPresent()){
 
             List<Diagnosis> diagnoses = diagnosisService.findByCategories(thisCategory.get());

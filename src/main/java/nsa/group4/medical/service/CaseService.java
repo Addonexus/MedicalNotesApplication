@@ -7,10 +7,7 @@ import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.domains.Notifications;
-import nsa.group4.medical.service.implementations.CaseRepositoryInterface;
-import nsa.group4.medical.service.implementations.CaseServiceInterface;
-import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
-import nsa.group4.medical.service.implementations.NotificationServiceInterface;
+import nsa.group4.medical.service.implementations.*;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,16 +25,16 @@ public class CaseService implements CaseServiceInterface {
     @Autowired
     private CaseRepositoryInterface caseRepository;
     private DiagnosisRepositoryInterface diagnosisRepository;
-    private CategoriesRepositoryJPA categoriesRepositoryJPA;
+    private CategoryRepositoryInterface categoryRepository;
     private NotificationServiceInterface notificationService;
 
     public CaseService(CaseRepositoryInterface caseRepository,
                        DiagnosisRepositoryInterface diagnosisRepository,
-                       CategoriesRepositoryJPA categoriesRepositoryJPA,
+                       CategoryRepositoryInterface categoryRepository,
                        NotificationServiceInterface notificationService){
         this.caseRepository = caseRepository;
         this.diagnosisRepository = diagnosisRepository;
-        this.categoriesRepositoryJPA = categoriesRepositoryJPA;
+        this.categoryRepository = categoryRepository;
         this.notificationService = notificationService;
     }
 
@@ -66,7 +63,7 @@ public class CaseService implements CaseServiceInterface {
                 .stream().noneMatch(diagnosis -> diagnosis.getName().equals(x)))
                 .collect(Collectors.toList());
         //Logic for a new category when a diagnosis doesn't already exist (puts into a "Miscellaneous" category by default)
-        boolean categoryExists = categoriesRepositoryJPA.existsByName("Miscellaneous");
+        boolean categoryExists = categoryRepository.existsByName("Miscellaneous");
         Categories category;
 
         //List of new Diagnosis in the object that will allow them to be stored like the existing Diagnosis List
@@ -92,10 +89,10 @@ public class CaseService implements CaseServiceInterface {
         if(!notExistingDiagnosis.isEmpty()){
 
             if(!categoryExists ){
-                category = categoriesRepositoryJPA.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
+                category = categoryRepository.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
             }
             else{
-                category =  categoriesRepositoryJPA.findByName("Miscellaneous").get();
+                category =  categoryRepository.findByName("Miscellaneous").get();
             }
 
             newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
@@ -154,7 +151,7 @@ public class CaseService implements CaseServiceInterface {
                         .stream().noneMatch(diagnosis -> diagnosis.getName().equals(x)))
                 .collect(Collectors.toList());
         //Logic for a new category when a diagnosis doesn't already exist (puts into a "Miscellaneous" category by default)
-        boolean categoryExists = categoriesRepositoryJPA.existsByName("Miscellaneous");
+        boolean categoryExists = categoryRepository.existsByName("Miscellaneous");
         Categories category;
 
 
@@ -174,9 +171,9 @@ public class CaseService implements CaseServiceInterface {
         if(!notExistingDiagnosis.isEmpty()) {
 
             if (!categoryExists) {
-                category = categoriesRepositoryJPA.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
+                category = categoryRepository.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
             } else {
-                category = categoriesRepositoryJPA.findByName("Miscellaneous").get();
+                category = categoryRepository.findByName("Miscellaneous").get();
             }
             //List of new Diagnosis in the object that will allow them to be stored like the existing Diagnosis List
             List<Diagnosis> newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());

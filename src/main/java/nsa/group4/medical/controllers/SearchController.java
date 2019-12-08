@@ -5,6 +5,7 @@ import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.CategoryServiceInterface;
 import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +21,13 @@ public class SearchController {
 
     private DiagnosisServiceInterface diagnosisService;//replace with the service class for diagnosis when implemented
 
-    private CategoriesRepositoryJPA categoriesRepositoryJPA;
+    private CategoryServiceInterface categoryService;
 
     public SearchController(CaseServiceInterface caseService, DiagnosisServiceInterface diagnosisService,
-                            CategoriesRepositoryJPA categoriesRepositoryJPA){
+                            CategoryServiceInterface categoryService){
         this.caseService = caseService;
         this.diagnosisService = diagnosisService;
-        this.categoriesRepositoryJPA = categoriesRepositoryJPA;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/search")
@@ -47,7 +48,7 @@ public class SearchController {
             }
         }
 
-        List<Categories> categoriesList = categoriesRepositoryJPA.findAll();
+        List<Categories> categoriesList = categoryService.findAll();
         List<Categories> categoriesContainingQuery = new ArrayList<>();
         for (Categories cat : categoriesList) {
             if (cat.getName().contains(q)) {
