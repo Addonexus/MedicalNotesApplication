@@ -302,9 +302,17 @@ public class RESTController {
 
     }
 
-    @GetMapping("getRecentCases")
+    @GetMapping("/recentCases")
     public @ResponseBody List<CaseModel> getRecentCases() {
         return caseServiceInterface.findAllByOrderByCreationDate();
+    }
+
+    @GetMapping("/getRecentCases")
+    public @ResponseBody
+    ResponseEntity<?> getRecentCasesMain() {
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        responseBody.setCasesList(caseServiceInterface.findAllByOrderByCreationDate());
+        return ResponseEntity.ok().body(responseBody);
     }
 
     @PostMapping("getCasesByDate")

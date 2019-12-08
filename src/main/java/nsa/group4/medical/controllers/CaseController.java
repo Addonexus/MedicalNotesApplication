@@ -104,20 +104,4 @@ public class CaseController {
 //        }
     }
 
-    @PostMapping(path = "/home")
-    public String allCasesPost(Model model, @ModelAttribute("categoryKey") Categories categoryKey) {
-        categoriesRepositoryJPA.save(categoryKey);
-        List<Categories> categories = categoriesRepositoryJPA.findAll();
-        model.addAttribute("categories", categories);
-            return "home";
-//        }
-    }
-
-    @GetMapping("/recentCases")
-    public @ResponseBody
-    ResponseEntity<?> getRecentCases() {
-        AjaxResponseBody responseBody = new AjaxResponseBody();
-        responseBody.setCasesList(caseService.findAllByOrderByCreationDate());
-        return ResponseEntity.ok().body(responseBody);
-    }
 }

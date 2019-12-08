@@ -285,7 +285,7 @@ function getRecentCases() {
  }
   $.ajax({
     type: "GET",
-    url: "/recentCases",
+    url: "/api/getRecentCases",
     // crossDomain: true,
     contentType: "application/json; charset=utf-8",
     dataType: "json",
