@@ -18,7 +18,7 @@ public class CategoryService implements CategoryServiceInterface {
 
     @Override
     public Optional<Categories> findByName(String name) {
-        return findByName(name);
+        return categoryRepository.findByName(name);
     }
 
     @Override
