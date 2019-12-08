@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `cases` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `demographics` VARCHAR(100) NOT NULL,
+  `ward` VARCHAR(100) NOT NULL,
   `presenting_complaint` VARCHAR(100) NULL,
   `presenting_complaint_history` VARCHAR(100) NULL,
   `medical_history` VARCHAR(100) NULL,
