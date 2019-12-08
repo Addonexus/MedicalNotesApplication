@@ -67,6 +67,15 @@ public class CaseController {
     }
 
     static final Logger LOG = LoggerFactory.getLogger(CaseController.class);
+    @RequestMapping(path="/createNewCase",
+            method = RequestMethod.GET)
+    public String createNewCase(Model model){
+        CaseForm caseForm = new CaseForm();
+        log.debug("CASE BEFORE SHWON: "+ caseForm);
+        model.addAttribute("caseKey", caseForm);
+
+        return "newCase";
+    }
 
     @GetMapping(path ="/case/{index}")
     public String getCase(@PathVariable(name="index") Long index, Model model){
