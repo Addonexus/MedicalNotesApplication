@@ -161,13 +161,23 @@ public class RESTController {
         System.out.println(formData.get("key"));
         System.out.println(formData.get("value"));
 
+        Long diagnosisID = Long.parseLong(formData.get("diagnosisId"));
+
+
         diagnosisInformationRepositoryJDBC.saveDiagnosisInformation(
                 new DiagnosisInformationAdded(null,
-                        Long.parseLong(formData.get("diagnosisId")),
+                        diagnosisID,
                         formData.get("key"),
                         formData.get("value")
                 )
         );
+
+
+        Notifications n = notificationRepoJPA.findByDiagnosisLink(diagnosisService.findById(diagnosisID).get());
+        System.out.println("notification: " + n);
+        n.setRead(true);
+        n.setDone(true);
+        notificationRepoJPA.save(n);
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         return ResponseEntity.ok().body(responseBody);
