@@ -68,17 +68,6 @@ public class CaseController {
 
     static final Logger LOG = LoggerFactory.getLogger(CaseController.class);
 
-    @RequestMapping(path="/createNewCase",
-            method = RequestMethod.GET)
-    public String createNewCase(Model model){
-        CaseForm caseForm = new CaseForm();
-        log.debug("CASE BEFORE SHWON: "+ caseForm);
-        model.addAttribute("caseKey", caseForm);
-
-        return "newCase";
-    }
-
-
     @GetMapping(path ="/case/{index}")
     public String getCase(@PathVariable(name="index") Long index, Model model){
         Optional<CaseModel> returnedCase = caseService.findByCaseId(index);
@@ -91,17 +80,5 @@ public class CaseController {
         return "404";
     }
 
-    @GetMapping(path = "/home")
-    public String allCases(Model model) {
-        List<Categories> categories = categoriesRepositoryJPA.findAll();
-        List<CaseModel> cases = caseService.findAll();
-        System.out.println("CATEGORIES TSET: "+categories.toString());
-        System.out.println("CASES TSET: "+cases.toString());
-        model.addAttribute("cases", cases);
-        model.addAttribute("categoryKey", new Categories());
-        model.addAttribute("categories", categories);
-        return "home";
-//        }
-    }
 
 }
