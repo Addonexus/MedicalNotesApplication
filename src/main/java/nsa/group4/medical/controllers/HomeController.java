@@ -40,6 +40,7 @@ public class HomeController {
         return "error";
     }
 
+//  TODO: move this to a separate controller
     @GetMapping("/calendar")
     public String calendarPage() {
         return "calendar";

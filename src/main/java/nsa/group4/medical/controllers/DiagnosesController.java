@@ -56,51 +56,6 @@ public class DiagnosesController {
         this.notificationRepoJPA = notificationRepoJPA;
     }
 
-    @PostMapping(value ="/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
-    public String saveDiagnosisInformation(@PathVariable(name="diagnosisIndex") Long diagnosisID,
-                                           @ModelAttribute("diagnosisInfoKey") @Valid DiagnosisInformationForm diagnosisInformationForm,
-                                           BindingResult bindingResult,
-                                           Model model) {
-
-        if (bindingResult.hasErrors()){
-            LOG.debug(bindingResult.toString());
-            return "diagnosisInformation";
-        }
-
-        LOG.debug("Wagawan: "+model.toString());
-        LOG.debug("ChefBoyardee: "+diagnosisInformationForm.toString());
-
-        DiagnosisInformationAdded diagnosisInformationAdded = new DiagnosisInformationAdded(
-                null,
-                diagnosisID,
-                diagnosisInformationForm.getKey(),
-                diagnosisInformationForm.getValue()
-        );
-
-        diagnosisInformationRepositoryJDBC.saveDiagnosisInformation(diagnosisInformationAdded);
-
-        return "redirect:/diagnosis/{diagnosisIndex}";
-    }
-
-
-    //Method for retrieving page to add diagnosis info.
-    @GetMapping(value ="/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
-    public String addDiagnosisInformation(@PathVariable(name="categoryIndex") Long categoryID,
-                                          @PathVariable(name="diagnosisIndex") Long diagnosisID,
-                                          Model model){
-
-        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryID);
-
-        if (!category.isPresent()){
-            return "404";
-        }
-
-        model.addAttribute("diagnosisInfoKey", new DiagnosisInformationForm());
-
-        return "diagnosisInformation";
-    }
-
-
     @GetMapping(path ="/diagnosis/{diagnosisIndex}")
     public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
                            Model model){
@@ -124,16 +79,7 @@ public class DiagnosesController {
         model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
         return "home";
     }
-
-
-    @GetMapping("ya")
-    public String ya(Model model) {
-
-
-        model.addAttribute("form", new Form());
-        return "testAutocompleteChips";
-    }
-
+//  TODO: move this to separate controller
     @GetMapping("/login")
     public String getLoginPage(){
         return "login";

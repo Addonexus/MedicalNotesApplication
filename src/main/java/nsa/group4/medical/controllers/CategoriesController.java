@@ -42,31 +42,6 @@ public class CategoriesController {
     static final Logger LOG =
             LoggerFactory.getLogger(CategoriesController.class);
 
-    @RequestMapping(path="/createNewCategory",
-    method = RequestMethod.GET)
-    public String createNewCategory(Model model){
-        model.addAttribute("categoryKey" ,
-                new Categories());
-        return "newCategories";
-    }
-
-    @RequestMapping(path="/categoryDetails",
-    method = RequestMethod.POST)
-    public String category(@ModelAttribute("categoryKey") Categories categories,
-                           BindingResult bindingResult,
-                           Model model) {
-        categoriesRepositoryJPA.save(categories);
-
-        return "newCategories";
-    }
-
-//    @GetMapping("/category/{index}")
-//    public String getCategories(Model model, @PathVariable final Long index) {
-//        List<Categories> categories = categoriesRepositoryJPA.findAll();
-//        model.addAttribute("categories", categories);
-//        return "index";
-//    }
-
     @GetMapping("/category/{index}")
     public String getCategories(Model model, @PathVariable final Long index) {
         List<Categories> categories = categoriesRepositoryJPA.findAll();
@@ -86,31 +61,6 @@ public class CategoriesController {
         }
 
         return "404";
-    }
-
-    @PostMapping("category/{index}")
-    public String newDiagnosis(@PathVariable final Long index,
-                               @ModelAttribute("diagnosisKey") Diagnosis diagnosis,
-                               Model model) {
-
-        List<CaseModel> cases = caseService.findAll();
-
-        Diagnosis diagnosisArg = new Diagnosis();
-        Optional<Categories> thisCategory = categoriesRepositoryJPA.findById(index);
-        diagnosisArg.setCategories(thisCategory.get());
-
-
-
-        diagnosis.setCategories(thisCategory.get());
-        diagnosisService.createDiagnosis(diagnosis);
-        List<Diagnosis> diagnoses = diagnosisService.findByCategories(thisCategory.get());
-
-
-        model.addAttribute("diagnoses", diagnoses);
-        model.addAttribute("cases", cases);
-        model.addAttribute("category", thisCategory.get());
-        return "home";
-
     }
 
 }
