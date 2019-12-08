@@ -19,14 +19,23 @@ function refreshNotifications() {
     notificationList.removeChild(notificationList.firstChild);
   }
 
+
   $.get("/api/getAllNotifications", function(data) {
+    console.log(data[1].diagnosisLink);
+
+    // if (windowUrl.pathname.includes("diagnosis")) {
+    //   console.log("diagnosis num: " + lastInt);
+    //   for (var i = 0; i < data.length; i++) {
+    //     if (data[i].diagnosisLink.id == lastInt) {
+    //     }
+    //   }
+    // }
+
     var needToRead = [];
     var needToDo = [];
     var done = [];
   
     for (var i = 0; i < data.length; i++) {
-      console.log("notif " + i);
-      console.log(data[i]);
       var a = document.createElement("a");
       a.appendChild(document.createTextNode("Update information for " + data[i].diagnosisLink.name));
       var icon = document.createElement("i");

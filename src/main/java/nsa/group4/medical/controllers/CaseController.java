@@ -8,10 +8,8 @@ import nsa.group4.medical.controllers.api.AjaxResponseBody;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
-import nsa.group4.medical.domains.CaseModel;
-import nsa.group4.medical.domains.Categories;
-import nsa.group4.medical.domains.Diagnosis;
-import nsa.group4.medical.domains.DiagnosisInformation;
+import nsa.group4.medical.data.NotificationRepoJPA;
+import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
 import nsa.group4.medical.web.CaseForm;
@@ -53,13 +51,17 @@ public class CaseController {
 
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
 
+    private NotificationRepoJPA notificationRepoJPA;
+
     public CaseController(CaseServiceInterface caseService, DiagnosisServiceInterface diagnosisService,
                           CategoriesRepositoryJPA categoriesRepositoryJPA,
-                          DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC){
+                          DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC,
+                          NotificationRepoJPA notificationRepoJPA){
         this.caseService = caseService;
         this.diagnosisService = diagnosisService;
         this.categoriesRepositoryJPA = categoriesRepositoryJPA;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
+        this.notificationRepoJPA = notificationRepoJPA;
 
     }
 
@@ -95,24 +97,18 @@ public class CaseController {
         List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
         List<CaseModel> recentCases = caseService.findAll();
         log.debug("CASES: " + returnedCases);
-//        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
-//        log.debug("CASES: " + returnedCases);
-
         log.debug("CASES 2: " + recentCases);
-//        log.debug("CASES 2: " + recentCases);
-//        log.debug("CAT: " + category);
 
-//        if(!category.isPresent()){
-//            return "404";
-//        }
+        Notifications n = notificationRepoJPA.findByDiagnosisLink(diagnosisService.findById(diagnosisId).get());
+        System.out.println("notification: " + n);
+        n.setRead(true);
+        notificationRepoJPA.save(n);
 
         List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
-
         model.addAttribute("diagnosisInfoKey", new DiagnosisInformationForm());
         model.addAttribute("cases", recentCases);
         model.addAttribute("returnedCases", returnedCases);
         model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
-//        model.addAttribute("category", category.g());
         model.addAttribute("returnedDiagnosisInfo", diagnosisInformations);
         model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
 

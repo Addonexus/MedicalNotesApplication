@@ -81,4 +81,32 @@
       </ul>
     </div>
   </div>
+  <div id="modal3" class="modal">
+      <div class="modal-content" style="height:1000px">
+        <h3>Search</h3>
+        <br>
+        <form
+            action="/search"
+            th:action="@{/search}"
+            th:object="${search}"
+            method="get"
+          >
+            <div class="input-field">
+              <input
+                class="white"
+                style="border-radius: 20px"
+                id="search"
+                type="text"
+                required
+                name="search"
+                value=""
+              />
+              <label class="label-icon" for="search"
+                ><i class="material-icons black-text"></i
+              ></label>
+            </div>
+          </form>
+        </ul>
+      </div>
+    </div>
 </div>

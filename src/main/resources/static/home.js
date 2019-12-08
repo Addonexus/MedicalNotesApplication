@@ -27,6 +27,7 @@ if (windowUrl.pathname.includes("home")) {
 
 if (windowUrl.pathname.includes("diagnosis")) {
   showRecentCases = true;
+  markNotificationRead();
   getDiagnosisInformation();
   postDiagnosisInfo();
 }
@@ -387,4 +388,8 @@ for (i = 0; i < coll.length; i++) {
       content.style.maxHeight = content.scrollHeight + "px";
     }
   });
+}
+
+function markNotificationRead() {
+
 }

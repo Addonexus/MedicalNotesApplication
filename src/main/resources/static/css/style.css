@@ -177,3 +177,12 @@ input {
 .modal::-webkit-scrollbar {
   display: none;
 }
+
+.modal { 
+  background-color: #eeeeff;
+}
+
+fieldset {
+  border: none;
+  margin-top: 10px;
+}
