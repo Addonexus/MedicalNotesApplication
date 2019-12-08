@@ -31,7 +31,7 @@ import java.util.Optional;
 @Controller
 public class DiagnosesController {
 
-
+//  TODO:Remove any direct repository calls and move them to the service layer
     private CaseServiceInterface caseService;
     private DiagnosisServiceInterface diagnosisService;
     private NotificationRepoJPA notificationRepoJPA;
@@ -55,18 +55,6 @@ public class DiagnosesController {
         this.diagnosisService = diagnosisService;
         this.notificationRepoJPA = notificationRepoJPA;
     }
-
-
-//    @GetMapping("dia/{index}")
-//    public String getDiagnoses(Model model,
-//                               @PathVariable final Long index) {
-//        Optional<Categories> categoriesOptional = categoriesRepositoryJPA.findById(index);
-//
-//        List<Diagnosis> diagnoses = diagnosisRepository.findByCategories(categoriesOptional.get());
-//        model.addAttribute("diagnosisKey", new Diagnosis());
-//        model.addAttribute("diagnoses", diagnoses);
-//        return "home";
-//    }
 
     @PostMapping(value ="/diagnosis/{diagnosisIndex}/addDiagnosisInfo")
     public String saveDiagnosisInformation(@PathVariable(name="diagnosisIndex") Long diagnosisID,
@@ -113,7 +101,7 @@ public class DiagnosesController {
     }
 
 
-    @GetMapping(path ="diagnosis/{diagnosisIndex}")
+    @GetMapping(path ="/diagnosis/{diagnosisIndex}")
     public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
                            Model model){
 
@@ -131,13 +119,9 @@ public class DiagnosesController {
         }
 
         List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
-        model.addAttribute("diagnosisInfoKey", new DiagnosisInformationForm());
-        model.addAttribute("cases", recentCases);
         model.addAttribute("returnedCases", returnedCases);
         model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
-        model.addAttribute("returnedDiagnosisInfo", diagnosisInformations);
         model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
-
         return "home";
     }
 
