@@ -50,10 +50,10 @@ public class HomeController {
         List<CaseModel> cases = caseService.findAll();
         System.out.println("CATEGORIES TSET: "+categories.toString());
         System.out.println("CASES TSET: "+cases.toString());
-        model.addAttribute("cases", cases);
+//        model.addAttribute("cases", cases);
         model.addAttribute("categoryKey", new Categories());
         model.addAttribute("categories", categories);
-        return "home";
+        return "main/home";
 //        }
     }
 

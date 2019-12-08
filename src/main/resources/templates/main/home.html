@@ -32,30 +32,7 @@
         <div class="section-right container">
           <br />
           <br />
-          <center>
-              <a th:href="@{/category/{id}(id=${category.id})}" id="categoryName"
-              th:text="${category.name}" th:if="${#ctx.containsVariable('category')}" class="breadcrumb"></a>
-              <a 
-               th:text="${diagnosisName}" th:if="${#ctx.containsVariable('diagnosisName')}" class="breadcrumb"></a>
-          </center>
-
-          <form
-            th:if="${#ctx.containsVariable('diagnosisKey')}"
-            id="createDiagnosis"
-            class="create-item-form"
-          >
-            <input
-              placeholder="New Diagnosis"
-              id="diagnosisName"
-              type="text"
-              class="create-item-input"
-              minlength=5
-            />
-            <button class="go-away" id="submit" type="submit">
-              New Diagnosis
-            </button>
-          </form>
-
+          <!--   Form to create new Category     -->
           <form
             th:if="${#ctx.containsVariable('categoryKey')}"
             id="createCategory"

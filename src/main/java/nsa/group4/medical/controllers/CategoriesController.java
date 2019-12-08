@@ -47,11 +47,8 @@ public class CategoriesController {
             List<Diagnosis> diagnoses = diagnosisService.findByCategories(thisCategory.get());
             Diagnosis diagnosisArg = new Diagnosis();
             diagnosisArg.setCategories(thisCategory.get());
-            model.addAttribute("diagnosisKey", diagnosisArg);
-            model.addAttribute("diagnoses", diagnoses);
-            model.addAttribute("cases", cases);
             model.addAttribute("category", thisCategory.get());
-            return "home";
+            return "main/category";
         }
 
         return "404";
