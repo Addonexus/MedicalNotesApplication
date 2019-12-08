@@ -32,7 +32,7 @@
           <br />
           <br />
           <center>
-              <a th:href="@{/category/{id}(id=${category.id})}"
+              <a th:href="@{/category/{id}(id=${category.id})}" id="categoryName"
               th:text="${category.name}" th:if="${#ctx.containsVariable('category')}" class="breadcrumb"></a>
               <a 
                th:text="${diagnosisName}" th:if="${#ctx.containsVariable('diagnosisName')}" class="breadcrumb"></a>
