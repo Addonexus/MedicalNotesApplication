@@ -174,10 +174,12 @@ public class RESTController {
 
 
         Notifications n = notificationRepoJPA.findByDiagnosisLink(diagnosisService.findById(diagnosisID).get());
-        System.out.println("notification: " + n);
-        n.setRead(true);
-        n.setDone(true);
-        notificationRepoJPA.save(n);
+        if(n != null){
+            System.out.println("notification: " + n);
+            n.setRead(true);
+            n.setDone(true);
+            notificationRepoJPA.save(n);
+        }
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         return ResponseEntity.ok().body(responseBody);
