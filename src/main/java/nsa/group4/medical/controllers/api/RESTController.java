@@ -6,6 +6,7 @@ import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import nsa.group4.medical.service.events.DiagnosisInformationAdded;
+import nsa.group4.medical.service.implementations.NotificationServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -33,7 +34,7 @@ public class RESTController {
     private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
 //    private NotificationRepositoryJDBC notificationRepositoryJDBC;
-    private NotificationRepoJPA notificationRepoJPA;
+    private NotificationServiceInterface notificationService;
 
 
 
@@ -43,7 +44,7 @@ public class RESTController {
                           DiagnosisServiceInterface diagnosisService,
                           DiagnosisRepositoryJPA diagnosisRepositoryJPA,
                           DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC,
-                          NotificationRepoJPA notificationRepoJPA
+                          NotificationServiceInterface notificationService
                           ){
         this.caseServiceInterface =caseServiceInterface;
         this.categoriesRepository=categoriesRepository;
@@ -51,7 +52,7 @@ public class RESTController {
         this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
 //        this.notificationRepositoryJDBC = notificationRepositoryJDBC;
-        this.notificationRepoJPA = notificationRepoJPA;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/returnedDiagnosisInfo/{index}")
@@ -159,12 +160,12 @@ public class RESTController {
         );
 
 
-        Notifications n = notificationRepoJPA.findByDiagnosisLink(diagnosisService.findById(diagnosisID).get());
+        Notifications n = notificationService.findByDiagnosisLink(diagnosisService.findById(diagnosisID).get());
         if(n != null){
             System.out.println("notification: " + n);
             n.setRead(true);
             n.setDone(true);
-            notificationRepoJPA.save(n);
+            notificationService.saveNotification(n);
         }
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
@@ -250,7 +251,7 @@ public class RESTController {
                                         categoriesRepository.findByName(formData.get("categoryName")).get()
                                         ));
 
-        notificationRepoJPA.save(new Notifications(createdDiagnosis));
+        notificationService.saveNotification(new Notifications(createdDiagnosis));
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         responseBody.setDiagnoses(diagnosisRepositoryJPA.findAll());
@@ -320,7 +321,7 @@ public class RESTController {
     @GetMapping("/getAllNotifications")
     public @ResponseBody ResponseEntity<?> getAllNotifications() {
         log.debug("---- GET Mapping: /api/getAllNotifications ----");
-        List<Notifications> notificationsList = notificationRepoJPA.findAll();
+        List<Notifications> notificationsList = notificationService.getAllNotifications();
         log.debug("NOTIFICATIONS: " + notificationsList);
 
         return ResponseEntity.ok().body(notificationsList);

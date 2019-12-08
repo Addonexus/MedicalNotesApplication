@@ -10,6 +10,7 @@ import nsa.group4.medical.domains.Notifications;
 import nsa.group4.medical.service.implementations.CaseRepositoryInterface;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
+import nsa.group4.medical.service.implementations.NotificationServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,16 +29,16 @@ public class CaseService implements CaseServiceInterface {
     private CaseRepositoryInterface caseRepository;
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CategoriesRepositoryJPA categoriesRepositoryJPA;
-    private NotificationRepoJPA notificationRepoJPA;
+    private NotificationServiceInterface notificationService;
 
     public CaseService(CaseRepositoryInterface caseRepository,
                        DiagnosisRepositoryInterface diagnosisRepository,
                        CategoriesRepositoryJPA categoriesRepositoryJPA,
-                       NotificationRepoJPA notificationRepoJPA){
+                       NotificationServiceInterface notificationService){
         this.caseRepository = caseRepository;
         this.diagnosisRepository = diagnosisRepository;
         this.categoriesRepositoryJPA = categoriesRepositoryJPA;
-        this.notificationRepoJPA = notificationRepoJPA;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -104,7 +105,7 @@ public class CaseService implements CaseServiceInterface {
         caseModel.getDiagnosesList().addAll(existingDiagnosis);
         caseRepository.save(caseModel);
         for (Diagnosis diagnosis : newDiagnoses) {
-            notificationRepoJPA.save(
+            notificationService.saveNotification(
                     new Notifications(diagnosis)
             );
         }

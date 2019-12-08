@@ -8,6 +8,7 @@ import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
 import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
+import nsa.group4.medical.service.implementations.NotificationServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class DiagnosesController {
 //  TODO:Remove any direct repository calls and move them to the service layer
     private CaseServiceInterface caseService;
     private DiagnosisServiceInterface diagnosisService;
-    private NotificationRepoJPA notificationRepoJPA;
+    private NotificationServiceInterface notificationService;
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CategoriesRepositoryJPA categoriesRepositoryJPA;
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
@@ -34,7 +35,7 @@ public class DiagnosesController {
     @Autowired
     public DiagnosesController(CaseServiceInterface caseService,
                                DiagnosisServiceInterface diagnosisService,
-                               NotificationRepoJPA notificationRepoJPA,
+                               NotificationServiceInterface notificationService,
                                DiagnosisRepositoryInterface diagnosisRepository,
                                CategoriesRepositoryJPA categoriesRepositoryJPA,
                                DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC) {
@@ -43,7 +44,7 @@ public class DiagnosesController {
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
         this.caseService = caseService;
         this.diagnosisService = diagnosisService;
-        this.notificationRepoJPA = notificationRepoJPA;
+        this.notificationService = notificationService;
     }
 
     @GetMapping(path ="/diagnosis/{diagnosisIndex}")
@@ -56,14 +57,14 @@ public class DiagnosesController {
         log.debug("CASES 2: " + recentCases);
 
         //TODO: move notification business logic into the notification service class
-        Notifications n = notificationRepoJPA.findByDiagnosisLink(diagnosisService.findById(diagnosisId).get());
+        Notifications n = notificationService.findByDiagnosisLink(diagnosisService.findById(diagnosisId).get());
         if(n!=null){
             System.out.println("notification: " + n);
             n.setRead(true);
-            notificationRepoJPA.save(n);
+            notificationService.saveNotification(n);
         }
 
-        List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
+//        List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
         model.addAttribute("returnedCases", returnedCases);
         model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
         model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());

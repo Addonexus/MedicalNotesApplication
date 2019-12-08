@@ -2,6 +2,7 @@ package nsa.group4.medical.data;
 
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.domains.Notifications;
 import nsa.group4.medical.domains.rowmappers.NotificationRowmapper;
 import nsa.group4.medical.service.implementations.NotificationRepositoryInterface;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.management.Notification;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -30,9 +32,22 @@ public class NotificationRepositoryJDBC implements NotificationRepositoryInterfa
 
     public NotificationRepositoryJDBC(JdbcOperations aJdbcOperations) {jdbcOperations = aJdbcOperations;}
 
+
+
     @Override
-    public void saveNotification (NotificationAdded notificationAdded) {
-        saveNotificationDetails(notificationAdded.getId(), notificationAdded.getContent());
+    public Notifications findByDiagnosisLink(Diagnosis diagnosis) {
+        return null;
+    }
+
+    @Override
+    public Notifications save(Notifications notifications) {
+        saveNotificationDetails(notifications.getId(), notifications.getContent());;
+        return notifications;
+    }
+
+    @Override
+    public List<Notifications> findAll() {
+        return getAllNotifications();
     }
 
     private Long saveNotificationDetails(Long id, String content){
