@@ -201,7 +201,7 @@ function updateDiagnosis(num, modal) {
   var newName = document.getElementById("modalDiagnosisTitle" + num).value;
   console.log("my modal: " + modal);
   var instance = M.Modal.getInstance(modal);
-  instance.close();
+  // instance.close();
   var formData = {
     "newName": newName
   };
@@ -218,6 +218,7 @@ function updateDiagnosis(num, modal) {
       refreshNotifications();
     },
     error: function (json) {
+      refreshListOfDiagnoses();
       console.log("ERROR");
     }
   });
@@ -227,7 +228,7 @@ function deleteDiagnosis(num, modal) {
   console.log(num);
   console.log("my modal: " + modal);
   var instance = M.Modal.getInstance(modal);
-  instance.close();
+  // instance.close();
   var formData = {
     id: num
   };
