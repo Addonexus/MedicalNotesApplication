@@ -67,6 +67,8 @@ public class RESTDiagnosisController {
         return ResponseEntity.badRequest().body(response);
     }
 
+
+
     @GetMapping("/getDiagnosisByCategoryId/{index}")
     public @ResponseBody  List<Diagnosis> getDiagnoses(@PathVariable Long index){
         log.debug("REST API RETURN: ");
@@ -91,6 +93,23 @@ public class RESTDiagnosisController {
         responseBody.setDiagnoses(diagnosisService.findAll());
         responseBody.setStatus("SUCCESS");
         return ResponseEntity.ok().body(responseBody);
+    }
+
+    @PostMapping(value = "/updateDiagnosis/{index}", produces = "application/json")
+    public void updateDiagnosis(@PathVariable Long index, @RequestBody Map<String, String> formData, Errors bindingResult) {
+        System.out.println(index);
+        System.out.println(formData.get("newName"));
+        String newName = formData.get("newName");
+        Diagnosis diagnosis = diagnosisService.getByDiagnosisId(index).get();
+        diagnosis.setName(newName);
+        diagnosisService.createDiagnosis(diagnosis);
+        System.out.println(diagnosis);
+
+//        notificationService.saveNotification(new Notifications(createdDiagnosis));
+
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+//        responseBody.setDiagnoses(diagnosisService.findAll());
+        responseBody.setStatus("SUCCESS");
     }
 
     @GetMapping("/getAllDiagnosis")

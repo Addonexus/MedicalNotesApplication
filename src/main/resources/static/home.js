@@ -162,7 +162,7 @@ function refreshListOfDiagnoses() {
         saveButton.setAttribute("class", "btn-small white black-text");
         saveButton.setAttribute(
           "onClick",
-          "updateDiagnosis(" + data[i].id + ")"
+          "updateDiagnosis(" + data[i].id + ", diaModal" + i + ")"
         );
 
         saveButton.appendChild(document.createTextNode("save"));
@@ -196,6 +196,34 @@ function refreshListOfDiagnoses() {
   }
 }
 
+function updateDiagnosis(num, modal) {
+  console.log(num);
+  var string = "test";
+  console.log("my modal: " + modal);
+  var instance = M.Modal.getInstance(modal);
+  instance.close();
+  var formData = {
+    "test": "test",
+    "newName": string
+  };
+
+  $.ajax({
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    data: JSON.stringify(formData),
+    type: "POST",
+    url: "/api/updateDiagnosis/" + num,
+    success: function(json) {
+      refreshListOfDiagnoses();
+      getRecentCases();
+      refreshNotifications();
+    },
+    error: function(json) {
+      console.log("ERROR");
+    }
+  });
+}
+
 function deleteDiagnosis(num, modal) {
   console.log(num);
   console.log("my modal: " + modal);
@@ -210,16 +238,13 @@ function deleteDiagnosis(num, modal) {
     dataType: "json",
     type: "DELETE",
     url: "/api/deleteDiagnosis/" + num,
-    //        data: JSON.stringify(formData),
     success: function(json) {
-      // alert("Worked!");
       refreshListOfDiagnoses();
       getRecentCases();
       refreshNotifications();
     },
     error: function(json) {
       console.log("ERROR");
-      // alert("error!");
     }
   });
 }
