@@ -148,6 +148,7 @@ function refreshListOfDiagnoses() {
         // Modal stuff
 
         diagnosisTitle = document.createElement("input");
+        diagnosisTitle.id = "modalDiagnosisTitle" + data[i].id;
         diagnosisTitle.placeholder = data[i].name;
 
         // Modal content
@@ -170,7 +171,7 @@ function refreshListOfDiagnoses() {
         deleteButton.setAttribute("class", "btn-small white black-text");
         deleteButton.setAttribute(
           "onClick",
-          "deleteDiagnosis(" + data[i].id + ")"
+          "deleteDiagnosis(" + data[i].id + ", diaModal" + i + ")"
         );
         deleteButton.appendChild(document.createTextNode("delete"));
         deleteButton.style.marginLeft = "20px";
@@ -198,6 +199,8 @@ function refreshListOfDiagnoses() {
 function deleteDiagnosis(num, modal) {
   console.log(num);
   console.log("my modal: " + modal);
+  var instance = M.Modal.getInstance(modal);
+  instance.close();
   var formData = {
     id: num
   };
