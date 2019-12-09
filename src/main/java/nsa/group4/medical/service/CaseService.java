@@ -128,6 +128,21 @@ public class CaseService implements CaseServiceInterface {
     }
 
     @Override
+    public List<CaseModel> findCasesByWardId(Long index) {
+
+//        Optional<Ward> returnedWard = wardRepository.findById(index);
+//        log.debug("Internal Query for ward: " + returnedWard);
+//        if (returnedWard.isPresent()){
+//            Diagnosis diagnosis = returnedward.get();
+//            log.debug("Inter query for WardCases: " + returnedward.get().getCases().toString());
+//            return diagnosis.getCases();
+//        }else {
+            return new ArrayList<>();
+//        }
+
+    }
+
+    @Override
     public List<CaseModel> findAllByOrderByCreationDate() {
         return caseRepository.findAllByOrderByCreationDateDesc();
     }

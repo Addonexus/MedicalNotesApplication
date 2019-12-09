@@ -19,7 +19,7 @@ import java.util.List;
 @Controller
 public class WardController {
 
-    private  CaseServiceInterface caseServiceInterface;
+    private  CaseServiceInterface caseService;
     //private WardServiceInterface wardServiceInterface;
     //private WardRepositoryInterface wardRepositoryInterface;
     private DiagnosisServiceInterface diagnosisService;
@@ -30,8 +30,8 @@ public class WardController {
 
 
     @Autowired
-    public WardController(CaseServiceInterface caseServiceInterface){
-        this.caseServiceInterface = caseServiceInterface;
+    public WardController(CaseServiceInterface caseService){
+        this.caseService = caseService;
     }
 
     @GetMapping(path ="/ward/{wardIndex}")

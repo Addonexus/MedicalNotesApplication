@@ -16,6 +16,8 @@ public interface CaseServiceInterface {
 
     List<CaseModel> findCasesByDiagnosisId(Long index);
 
+    List<CaseModel> findCasesByWardId(Long index);
+
     List<CaseModel> findAllByOrderByCreationDate();
 
     List<CaseModel> findAllByOrderByCreationDateAsc();
