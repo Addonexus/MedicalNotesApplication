@@ -80,3 +80,15 @@ CREATE TABLE IF NOT EXISTS `ward` (
  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
+-- ----------------------------------------------------
+-- Table `ward_cases_link` to link many-to-many relationship
+-- between `cases` and `ward` table
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ward_cases_link` (
+--  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ward_id` INT NOT NULL,
+  `case_id` INT NOT NULL,
+  PRIMARY KEY (`ward_id`, `case_id`))
+ENGINE = InnoDB;
+
+
