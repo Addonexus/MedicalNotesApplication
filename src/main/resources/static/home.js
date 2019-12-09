@@ -154,26 +154,9 @@ function refreshListOfDiagnoses() {
         diagnosisTitle.id = "modalDiagnosisTitle" + data[i].id;
         diagnosisTitle.placeholder = data[i].name;
 
-        inputOption = document.createElement('option');
-        inputOption.setAttribute("value", "heart");
-        inputOption.appendChild(document.createTextNode("heart"));
-        inputOption.setAttribute("selected", "");
-
-        inputOption2 = document.createElement('option');
-        inputOption2.setAttribute("value", "skin");
-        inputOption2.appendChild(document.createTextNode("skin"));
-
-        inputOption3 = document.createElement('option');
-        inputOption3.setAttribute("value", "brain");
-        inputOption3.appendChild(document.createTextNode("brain"));
-
         inputSelect = document.createElement('select');
         inputSelect.setAttribute("class", "browser-default");
         inputSelect.id = "modalDiagnosisCategoryTitle" + data[i].id;
-
-        inputSelect.appendChild(inputOption);
-        inputSelect.appendChild(inputOption2);
-        inputSelect.appendChild(inputOption3);
 
         diagnosisCategoryTitle = document.createElement("div");
         diagnosisCategoryTitle.setAttribute("class", "input-field col s12");
@@ -224,10 +207,33 @@ function refreshListOfDiagnoses() {
 
         console.log(modal);
       }
+      doThis(data);
+
       $('.modal').modal();
     });
   }
 }
+
+function doThis(data) {
+  console.log("HAHHASHU")
+  $.get("/api/getAllCategories").then(function(categories) {
+    console.log("work or i haven noidae")
+    console.log(data);
+    for (var i = 0; i < data.length; i++) {
+      inputSelectRef = document.getElementById("modalDiagnosisCategoryTitle" + data[i].id);
+      console.log(inputSelectRef);
+      for (var j = 0; j < categories.length; j++) {
+        inputOption = document.createElement('option');
+        inputOption.setAttribute("value", categories[j].name);
+        inputOption.appendChild(document.createTextNode(categories[j].name));
+        inputSelectRef.appendChild(inputOption)
+      }
+    }
+    console.log("fuck this");
+    console.log(categories);
+  });
+}
+
 
 function updateDiagnosis(num, modal) {
   var newName = document.getElementById("modalDiagnosisTitle" + num).value;
