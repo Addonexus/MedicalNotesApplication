@@ -42,7 +42,7 @@ if (showRecentCases) {
 
 function postDiagnosisInfo() {
   console.log("--- post diagnosis info function --- ");
-  $("#createDiagnosisInfo").submit(function(e) {
+  $("#createDiagnosisInfo").submit(function (e) {
     e.preventDefault();
     console.log("--- posting diagnosis info --- ");
 
@@ -63,8 +63,8 @@ function postDiagnosisInfo() {
       type: "POST",
       url: url,
       data: JSON.stringify(formData),
-      success: function(json) {
-        $("#diaInfoTable tr").each(function() {
+      success: function (json) {
+        $("#diaInfoTable tr").each(function () {
           // console.log(this.id);
           if (this.id) {
             this.remove();
@@ -79,7 +79,7 @@ function postDiagnosisInfo() {
         });
         getDiagnosisInformation();
       },
-      error: function(json) {
+      error: function (json) {
         // alert("error!");
         console.log("error-h.html");
       }
@@ -101,7 +101,7 @@ function refreshListOfDiagnoses() {
   console.log(container);
 
   if (window.location.pathname.includes("category")) {
-    $.get("/api/getDiagnosisByCategoryId/" + lastInt, function(data) {
+    $.get("/api/getDiagnosisByCategoryId/" + lastInt, function (data) {
       $(".result").html(data);
       console.log(data);
       var grid = document.getElementById("content-grid");
@@ -198,13 +198,12 @@ function refreshListOfDiagnoses() {
 
 function updateDiagnosis(num, modal) {
   console.log(num);
-  var string = "test";
+  var newName = document.getElementById("modalDiagnosisTitle" + num).value;
   console.log("my modal: " + modal);
   var instance = M.Modal.getInstance(modal);
   instance.close();
   var formData = {
-    "test": "test",
-    "newName": string
+    "newName": newName
   };
 
   $.ajax({
@@ -213,12 +212,12 @@ function updateDiagnosis(num, modal) {
     data: JSON.stringify(formData),
     type: "POST",
     url: "/api/updateDiagnosis/" + num,
-    success: function(json) {
+    success: function (json) {
       refreshListOfDiagnoses();
       getRecentCases();
       refreshNotifications();
     },
-    error: function(json) {
+    error: function (json) {
       console.log("ERROR");
     }
   });
@@ -238,12 +237,12 @@ function deleteDiagnosis(num, modal) {
     dataType: "json",
     type: "DELETE",
     url: "/api/deleteDiagnosis/" + num,
-    success: function(json) {
+    success: function (json) {
       refreshListOfDiagnoses();
       getRecentCases();
       refreshNotifications();
     },
-    error: function(json) {
+    error: function (json) {
       console.log("ERROR");
     }
   });
@@ -261,7 +260,7 @@ function deleteCategory(num) {
     type: "DELETE",
     url: "/api/deleteCategory/" + num,
     //        data: JSON.stringify(formData),
-    success: function(json) {
+    success: function (json) {
       // alert("Worked!");
       refreshListOfCategories();
       //                var listOfCases = document.getElementById("recentCases");
@@ -269,7 +268,7 @@ function deleteCategory(num) {
       //                listOfCases.empty();
       getRecentCases();
     },
-    error: function(json) {
+    error: function (json) {
       // alert("error!");
       console.log("ERROR");
     }
@@ -285,7 +284,7 @@ function refreshListOfCategories() {
   console.log("HI THERE");
   console.log(window.location);
 
-  $.get("/api/getAllCategories/" + lastInt, function(data) {
+  $.get("/api/getAllCategories/" + lastInt, function (data) {
     $(".result").html(data);
     console.log(data);
     var grid = document.getElementById("content-grid");
@@ -339,7 +338,7 @@ function refreshListOfCategories() {
 }
 
 function getDiagnosisInformation() {
-  $.get("/api/returnedDiagnosisInfo/" + lastInt, function(data) {
+  $.get("/api/returnedDiagnosisInfo/" + lastInt, function (data) {
     $(".result").html(data);
     console.log(data);
     var diagnosisInfoTable = document.getElementById("diaInfoTable");
@@ -369,7 +368,7 @@ function getRecentCases() {
     contentType: "application/json; charset=utf-8",
     dataType: "json",
 
-    success: function(response) {
+    success: function (response) {
       var ids = response.categoryIds;
       var cases = response.casesList;
 
@@ -383,22 +382,22 @@ function getRecentCases() {
         listOfCases.appendChild(li);
       }
     },
-    error: function(response) {
+    error: function (response) {
       console.log(
         "Request Status: " +
-          response.status +
-          " Status Text: " +
-          response.statusText +
-          " " +
-          " Response Text: " +
-          response.responseText
+        response.status +
+        " Status Text: " +
+        response.statusText +
+        " " +
+        " Response Text: " +
+        response.responseText
       );
     }
   });
 }
 
 function createCategory() {
-  $("#createCategory").submit(function(e) {
+  $("#createCategory").submit(function (e) {
     e.preventDefault();
 
     var $form = $(this);
@@ -416,10 +415,10 @@ function createCategory() {
       type: "POST",
       url: url,
       data: JSON.stringify(formData),
-      success: function(json) {
+      success: function (json) {
         refreshListOfCategories();
       },
-      error: function(json) {
+      error: function (json) {
         alert("error!");
       }
     });
@@ -427,7 +426,7 @@ function createCategory() {
 }
 
 function lookForCategoryFormPost() {
-  $("#createDiagnosis").submit(function(e) {
+  $("#createDiagnosis").submit(function (e) {
     e.preventDefault();
 
     var $form = $(this);
@@ -444,10 +443,10 @@ function lookForCategoryFormPost() {
       type: "POST",
       url: url,
       data: JSON.stringify(formData),
-      success: function(json) {
+      success: function (json) {
         refreshListOfDiagnoses();
       },
-      error: function(json) {
+      error: function (json) {
         alert("error!");
       }
     });
@@ -458,7 +457,7 @@ var coll = document.getElementsByClassName("collapsible");
 var i;
 
 for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
+  coll[i].addEventListener("click", function () {
     this.classList.toggle("active");
     var content = this.nextElementSibling;
     if (content.style.maxHeight) {
@@ -469,8 +468,8 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-function markNotificationRead() {}
+function markNotificationRead() { }
 
-$(document).ready(function() {
+$(document).ready(function () {
   $(".modal").modal();
 });
