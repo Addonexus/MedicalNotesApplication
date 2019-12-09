@@ -100,6 +100,15 @@ function refreshListOfDiagnoses() {
   console.log("container");
   console.log(container);
 
+  var hmm;
+
+  async function getCategoriesSimple() {
+    const response = await fetch("/api/getAllCategories");
+    const json = await response.json();
+    console.log(JSON.stringify(json));
+    return json;
+  }
+
   if (window.location.pathname.includes("category")) {
     $.get("/api/getDiagnosisByCategoryId/" + lastInt, function (data) {
       $(".result").html(data);
@@ -146,16 +155,41 @@ function refreshListOfDiagnoses() {
         grid.appendChild(settings);
 
         // Modal stuff
-
+        // Title (input)
         diagnosisTitle = document.createElement("input");
         diagnosisTitle.id = "modalDiagnosisTitle" + data[i].id;
         diagnosisTitle.placeholder = data[i].name;
+
+        inputOption = document.createElement('option');
+        inputOption.setAttribute("value", "hiya");
+        inputOption.appendChild(document.createTextNode("hiya"));
+        inputOption.setAttribute("selected", "");
+
+        inputOption2 = document.createElement('option');
+        inputOption2.setAttribute("value", "hiyae");
+        inputOption2.appendChild(document.createTextNode("hiyae"));
+
+        inputSelect = document.createElement('select');
+        inputSelect.setAttribute("class", "browser-default");
+        inputSelect.id = "modalDiagnosisCategoryTitle" + data[i].id;
+
+        inputSelect.appendChild(inputOption);
+        inputSelect.appendChild(inputOption2);
+
+        diagnosisCategoryTitle = document.createElement("div");
+        diagnosisCategoryTitle.setAttribute("class", "input-field col s12");
+        diagnosisCategoryTitle.appendChild(inputSelect);
+
+
+        console.log(data[i].categories);
+        diagnosisCategoryTitle.placeholder = data[i].categories.name;
 
         // Modal content
         modalContent = document.createElement("div");
         modalContent.setAttribute("class", "modal-content");
         modalContent.style.padding = "30px";
         modalContent.appendChild(diagnosisTitle);
+        modalContent.appendChild(diagnosisCategoryTitle);
 
         // Modal footer
         saveButton = document.createElement("button");
@@ -197,13 +231,13 @@ function refreshListOfDiagnoses() {
 }
 
 function updateDiagnosis(num, modal) {
-  console.log(num);
   var newName = document.getElementById("modalDiagnosisTitle" + num).value;
-  console.log("my modal: " + modal);
-  var instance = M.Modal.getInstance(modal);
+  console.log("himmsdmsd")
+  console.log(document.getElementById("modalDiagnosisCategoryTitle" + num).value);
   // instance.close();
   var formData = {
-    "newName": newName
+    "newName": newName,
+    "newCategory": newCategory
   };
 
   $.ajax({
