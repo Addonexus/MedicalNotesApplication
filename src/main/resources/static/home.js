@@ -81,7 +81,7 @@ function postDiagnosisInfo() {
       },
       error: function(json) {
         // alert("error!");
-        console.log("error-h.html")
+        console.log("error-h.html");
       }
     });
   });
@@ -95,6 +95,10 @@ function refreshListOfDiagnoses() {
   }
   console.log("HI THERE");
   console.log(window.location);
+
+  container = $(".modal-container");
+  console.log("container");
+  console.log(container);
 
   if (window.location.pathname.includes("category")) {
     $.get("/api/getDiagnosisByCategoryId/" + lastInt, function(data) {
@@ -114,30 +118,40 @@ function refreshListOfDiagnoses() {
         a.appendChild(b);
 
         grid.appendChild(a);
-        
+
         var customId = "deleteButton" + data[i].id;
 
         var settings = document.createElement("a");
         var settingsButton = document.createElement("button");
         var settingsIcon = document.createElement("i");
-        
+
         settings.style.width = "15%";
-        settingsIcon.appendChild(document.createTextNode("delete_forever"));
+        settingsIcon.appendChild(document.createTextNode("edit"));
         settingsIcon.setAttribute("class", "material-icons large");
 
         settingsButton.appendChild(settingsIcon);
         settingsButton.setAttribute("class", "btn content-item bigger");
-        settingsButton.setAttribute("onClick", "deleteDiagnosis(" + (data[i].id) + ")");
+        settingsButton.setAttribute(
+          "onClick",
+          "deleteDiagnosis(" + data[i].id + ")"
+        );
 
-        // settingsButton.style.backgroundColor="#eeeeff";
-        settingsButton.style.backgroundColor="#ffaaaa";
-        settingsButton.style.borderRadius="5px";
-        settingsButton.style.borderLeft="1px solid grey";
+        settingsButton.style.backgroundColor = "#eeeeff";
+        // settingsButton.style.backgroundColor = "#ffaaaa";
+        settingsButton.style.borderRadius = "5px";
+        settingsButton.style.borderLeft = "1px solid grey";
         settingsButton.style.fontWeight = "600";
-        settingsButton.id=customId;
-        
+        settingsButton.id = customId;
+
         settings.appendChild(settingsButton);
-        grid.appendChild(settings);    
+        grid.appendChild(settings);
+
+        // Modal stuff
+        modal = document.createElement("div");
+        modal.setAttribute("class", "modal");
+        modal.setAttribute("id", "modal" + i);
+
+        console.log(modal);
       }
     });
   }
@@ -146,26 +160,26 @@ function refreshListOfDiagnoses() {
 function deleteDiagnosis(num) {
   console.log(num);
   var formData = {
-        id: num
-      };
+    id: num
+  };
 
-      $.ajax({
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        type: "DELETE",
-        url: "/api/deleteDiagnosis/"+num,
-//        data: JSON.stringify(formData),
-        success: function(json) {
-          // alert("Worked!");
-          refreshListOfDiagnoses();
-          getRecentCases();
-          refreshNotifications();
-        },
-        error: function(json) {
-          console.log("ERROR")
-          // alert("error!");
-        }
-      });
+  $.ajax({
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    type: "DELETE",
+    url: "/api/deleteDiagnosis/" + num,
+    //        data: JSON.stringify(formData),
+    success: function(json) {
+      // alert("Worked!");
+      refreshListOfDiagnoses();
+      getRecentCases();
+      refreshNotifications();
+    },
+    error: function(json) {
+      console.log("ERROR");
+      // alert("error!");
+    }
+  });
 }
 
 function deleteCategory(num) {
@@ -178,21 +192,20 @@ function deleteCategory(num) {
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     type: "DELETE",
-    url: "/api/deleteCategory/"+num,
-//        data: JSON.stringify(formData),
+    url: "/api/deleteCategory/" + num,
+    //        data: JSON.stringify(formData),
     success: function(json) {
       // alert("Worked!");
       refreshListOfCategories();
-//                var listOfCases = document.getElementById("recentCases");
-//
-//                listOfCases.empty();
+      //                var listOfCases = document.getElementById("recentCases");
+      //
+      //                listOfCases.empty();
       getRecentCases();
     },
     error: function(json) {
       // alert("error!");
-      console.log("ERROR")
+      console.log("ERROR");
     }
-
   });
 }
 function refreshListOfCategories() {
@@ -220,13 +233,11 @@ function refreshListOfCategories() {
       b.style.fontWeight = "600";
       a.appendChild(b);
 
-
       var customId = "deleteButton" + data[i].id;
 
       var settings = document.createElement("a");
       var settingsButton = document.createElement("button");
       var settingsIcon = document.createElement("i");
-
 
       settings.style.width = "15%";
       settingsIcon.appendChild(document.createTextNode("delete_forever"));
@@ -234,27 +245,28 @@ function refreshListOfCategories() {
 
       settingsButton.appendChild(settingsIcon);
       settingsButton.setAttribute("class", "btn content-item bigger");
-      settingsButton.setAttribute("onClick", "deleteCategory(" + (data[i].id) + ")");
+      settingsButton.setAttribute(
+        "onClick",
+        "deleteCategory(" + data[i].id + ")"
+      );
 
       // settingsButton.style.backgroundColor="#eeeeff";
-      settingsButton.style.backgroundColor="#ffaaaa";
-      settingsButton.style.borderRadius="5px";
-      settingsButton.style.borderLeft="1px solid grey";
+      settingsButton.style.backgroundColor = "#ffaaaa";
+      settingsButton.style.borderRadius = "5px";
+      settingsButton.style.borderLeft = "1px solid grey";
       settingsButton.style.fontWeight = "600";
-      settingsButton.id=customId;
+      settingsButton.id = customId;
 
       settings.appendChild(settingsButton);
 
       if (data[i].name == "Miscellaneous") {
         console.log("UMMM WHY");
-        grid.insertBefore(settings,grid.firstChild);
+        grid.insertBefore(settings, grid.firstChild);
         grid.insertBefore(a, grid.firstChild);
       } else {
         grid.appendChild(a);
         grid.appendChild(settings);
       }
-
-
     }
   });
 }
@@ -279,10 +291,10 @@ function getDiagnosisInformation() {
 }
 
 function getRecentCases() {
- var listOfCases = document.getElementById("recentCases");
- while(listOfCases.hasChildNodes()){
- listOfCases.removeChild(listOfCases.childNodes[0])
- }
+  var listOfCases = document.getElementById("recentCases");
+  while (listOfCases.hasChildNodes()) {
+    listOfCases.removeChild(listOfCases.childNodes[0]);
+  }
   $.ajax({
     type: "GET",
     url: "/api/getRecentCases",
@@ -294,9 +306,7 @@ function getRecentCases() {
       var ids = response.categoryIds;
       var cases = response.casesList;
 
-
-
-//      listOfCases.empty();
+      //      listOfCases.empty();
       for (i = 0; i < cases.length; i++) {
         var li = document.createElement("a");
         li.appendChild(document.createTextNode(cases[i].name));
@@ -392,6 +402,4 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-function markNotificationRead() {
-
-}
+function markNotificationRead() {}
