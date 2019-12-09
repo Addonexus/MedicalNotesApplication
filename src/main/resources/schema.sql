@@ -78,5 +78,5 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ward` (
  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
