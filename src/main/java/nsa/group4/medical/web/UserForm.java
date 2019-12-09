@@ -25,7 +25,7 @@ public class UserForm {
 
   @NotNull
   @NotEmpty
-  private String email;
+  private String username;
 
   @NotNull
   @NotEmpty

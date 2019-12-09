@@ -1,6 +1,7 @@
 package nsa.group4.medical.controllers;
 
 import nsa.group4.medical.data.UserRepository;
+import nsa.group4.medical.domains.Role;
 import nsa.group4.medical.domains.User;
 import nsa.group4.medical.service.SecurityService;
 import nsa.group4.medical.service.UserService;
@@ -15,7 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -39,16 +42,30 @@ public class UserController {
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") UserForm userForm, BindingResult bindingResult) {
 
+        Set<Role> temp = new HashSet<Role>();
 
-        userValidator.validate(userForm, bindingResult);
+        temp.add(new Role(
+                null,
+                "admin"
+        ));
+
+        User tempUser = new User(
+                null,
+                userForm.getUsername(),
+                userForm.getPassword(),
+                userForm.getPassword(),
+                temp
+        );
+
+        userValidator.validate(tempUser, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-        userService.save(userForm);
+        userService.save(tempUser);
 
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+        securityService.autoLogin(tempUser.getUsername(), tempUser.getPasswordConfirm());
 
         return "redirect:/welcome";
     }

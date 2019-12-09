@@ -88,6 +88,14 @@ CREATE TABLE if not exists `user`
 )
     ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `user_roles`
+(
+    `user_id` INT NOT NULL,
+    `roles_id` INT NOT NULL,
+    PRIMARY KEY(`user_id`)
+)
+
+ENGINE = InnoDB;
 -- CREATE TABLE if not exists `role`
 -- (
 --     `id`     int(11)     NOT NULL AUTO_INCREMENT,

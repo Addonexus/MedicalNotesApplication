@@ -94,6 +94,8 @@
 
         <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">
 
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
         <button id="submit" type="submit">Create Case</button>
     </form>
 </main>
