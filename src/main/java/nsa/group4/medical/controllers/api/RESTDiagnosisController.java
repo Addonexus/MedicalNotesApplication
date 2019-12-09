@@ -97,18 +97,17 @@ public class RESTDiagnosisController {
 
     @PostMapping(value = "/updateDiagnosis/{index}", produces = "application/json")
     public void updateDiagnosis(@PathVariable Long index, @RequestBody Map<String, String> formData, Errors bindingResult) {
-        System.out.println(index);
-        System.out.println(formData.get("newName"));
         String newName = formData.get("newName");
+        String newCategory = formData.get("newCategory");
         Diagnosis diagnosis = diagnosisService.getByDiagnosisId(index).get();
+        Categories category = categoryService.findByName(newCategory).get();
+        System.out.println(category);
+
+        diagnosis.setCategories(category);
         diagnosis.setName(newName);
         diagnosisService.createDiagnosis(diagnosis);
-        System.out.println(diagnosis);
-
-//        notificationService.saveNotification(new Notifications(createdDiagnosis));
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
-//        responseBody.setDiagnoses(diagnosisService.findAll());
         responseBody.setStatus("SUCCESS");
     }
 

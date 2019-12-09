@@ -161,13 +161,13 @@ function refreshListOfDiagnoses() {
         diagnosisTitle.placeholder = data[i].name;
 
         inputOption = document.createElement('option');
-        inputOption.setAttribute("value", "hiya");
-        inputOption.appendChild(document.createTextNode("hiya"));
+        inputOption.setAttribute("value", "heart");
+        inputOption.appendChild(document.createTextNode("heart"));
         inputOption.setAttribute("selected", "");
 
         inputOption2 = document.createElement('option');
-        inputOption2.setAttribute("value", "hiyae");
-        inputOption2.appendChild(document.createTextNode("hiyae"));
+        inputOption2.setAttribute("value", "brain");
+        inputOption2.appendChild(document.createTextNode("brain"));
 
         inputSelect = document.createElement('select');
         inputSelect.setAttribute("class", "browser-default");
@@ -233,7 +233,7 @@ function refreshListOfDiagnoses() {
 function updateDiagnosis(num, modal) {
   var newName = document.getElementById("modalDiagnosisTitle" + num).value;
   console.log("himmsdmsd")
-  console.log(document.getElementById("modalDiagnosisCategoryTitle" + num).value);
+  newCategory = document.getElementById("modalDiagnosisCategoryTitle" + num).value;
   // instance.close();
   var formData = {
     "newName": newName,
