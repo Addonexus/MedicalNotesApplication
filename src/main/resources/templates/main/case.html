@@ -7,19 +7,26 @@
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
     />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title>Case</title>
     <link
+            href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css"
     />
-
 </head>
 <body>
 <div th:replace="fragments/nav :: navbar"></div>
-<main class = "desktop-grid container">
+<main class = "desktop-grid">
 
-    <h2 class = "container">Create a New Case</h2>
 
-    <form class = "container" id ="submitCases" method="post" th:object="${caseKey}">
+    <h2 class="container" id="title">Create</h2>
+<br>
+<div class="flexy">
+
+    <form  class="container" id ="submitCases" method="post" th:object="${caseKey}">
+        <fieldset id="allFields">
         <div>
             <label th:for="name">Name</label>
 
@@ -34,6 +41,14 @@
                    type="text"/>
             <span class="demographics error"></span>
         </div>
+
+            <div>
+                <label th:for="ward">Ward</label>
+                <input id = "ward" aria-describedBy="Enter the ward the patient is in"
+                       type="text"/>
+                <span class="ward error"></span>
+            </div>
+
 
         <div>
             <label th:for="diagnosesList">Diagnoses</label>
@@ -91,17 +106,45 @@
                    type="text"/>
             <span class="notes error"></span>
         </div>
+            <div>
+                <input type="checkbox" name="personal" value="details" id="start-checkbox"/>
+                <label for="start-checkbox">I agree I haven't entered
+                    anyone's personal details</label>
+            </div>
 
-        <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">
 
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<!--        <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">-->
 
-        <button id="submit" type="submit">Create Case</button>
+        <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value = "${hiddenForm}">
+        </fieldset>
+        <div class="btn-container">
+                <button class="ele-btn" id="submit-button" type="submit">Create Case</button>
+                <button class="ele-btn" th:if="${hiddenForm !=null}" id="editCase" type="button" onclick="unhideForm()">Edit Case</button>
+                <button class="ele-btn" th:if="${hiddenForm !=null}" id="deleteCase" type="button" onclick="deleteForm()">Delete Case</button>
+        </div>
     </form>
+</div>
+
 </main>
+
 <script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 <script type="text/javascript" th:src="@{/casePost.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#submit-button').click(function() {
+            checked = $("input[type=checkbox]:checked").length;
+
+            if(!checked) {
+                alert("You have to check the box");
+                return false;
+            }
+
+        });
+    });
+</script>
 </body>
 </html>

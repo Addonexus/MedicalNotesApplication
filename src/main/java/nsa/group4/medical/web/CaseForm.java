@@ -18,13 +18,15 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CaseForm {
-
+    private Long id;
     @NotNull
     @Size(min=2, max=30, message = "Invalid Name")
     private String name;
     @NotNull
     @Size(min=3, message = "Invalid Demographics Name(s) provided")
     private String demographics;
+
+    private String ward;
 
     private String presentingComplaint;
 

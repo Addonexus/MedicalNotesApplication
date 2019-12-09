@@ -1,4 +1,4 @@
-package nsa.group4.medical.service;
+package nsa.group4.medical.service.implementations;
 
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
@@ -28,4 +28,5 @@ public interface DiagnosisServiceInterface {
 
 
     List<Diagnosis> findAll();
+    void deleteDiagnosisById(Long id);
 }

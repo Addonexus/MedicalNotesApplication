@@ -1,6 +1,11 @@
 SET MODE MySQL;
 SET IGNORECASE=TRUE;
 
+--DROP SCHEMA medicaldb;
+--CREATE SCHEMA medicaldb;
+--use medicaldb;
+
+
 -- -----------------------------------------------------
 -- Table `categories`
 -- -----------------------------------------------------
@@ -21,10 +26,22 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `diagnosis_information`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `diagnosis_info` (
+CREATE TABLE IF NOT EXISTS `diagnosis_information` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `diagnosis_id` INT UNSIGNED NOT NULL,
-  `key` VARCHAR(100) NOT NULL,
-  `value` VARCHAR(100) NOT NULL)
+  `field` VARCHAR(100) NOT NULL,
+  `value` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `notifications` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `content` VARCHAR(100) NULL,
+    `creation_date` DATETIME NULL,
+    `diagnosis_id` INT NOT NULL,
+    `is_read` BOOLEAN NULL,
+    `is_done` BOOLEAN NULL,
+    PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- ---------------
 -- -----------------------------------------------------
@@ -34,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `cases` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `demographics` VARCHAR(100) NOT NULL,
+  `ward` VARCHAR(100) NULL,
   `presenting_complaint` VARCHAR(100) NULL,
   `presenting_complaint_history` VARCHAR(100) NULL,
   `medical_history` VARCHAR(100) NULL,
@@ -163,3 +181,11 @@ ENGINE = InnoDB;
 --   CONSTRAINT FK_auth_user FOREIGN KEY (`auth_user_id`) REFERENCES auth_user (`auth_user_id`),
 --   CONSTRAINT FK_auth_user_role FOREIGN KEY (`auth_role_id`) REFERENCES auth_role (`auth_role_id`)
 -- ) ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ward that will link to cases
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ward` (
+ `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;

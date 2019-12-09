@@ -1,26 +1,20 @@
 package nsa.group4.medical;
 
-import jdk.jshell.Diag;
-import nsa.group4.medical.data.CaseRepositoryJPA;
-import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Diagnosis;
-import nsa.group4.medical.service.CaseRepositoryInterface;
-import nsa.group4.medical.service.DiagnosisRepositoryInterface;
+import nsa.group4.medical.service.implementations.CaseRepositoryInterface;
+import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
 
 @DataJpaTest
 @RunWith(SpringRunner.class)

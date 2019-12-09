@@ -1,36 +1,99 @@
+var splitUrl = window.location.pathname.split('/');
+        var caseID = splitUrl[splitUrl.length-1];
 $(document).ready(function() {
 
-        $(".chips-initial").material_chip();
-        var data = {};
-
+    function getAllDiagnosisForTags() {
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/api/getAllDiagnosis",
             crossDomain: true,
-
+    
             success: function(response) {
                 var diagnosisArray = response;
-
                 for (var i = 0; i < diagnosisArray.length; i++) {
                     console.log(diagnosisArray[i].name);
                     data[diagnosisArray[i].name] = null;
                 }
                 $(".chips-autocomplete").material_chip({
-                    autocompleteData: data
+                    data: existingDiagnosisData,
+                    autocompleteData: data,
                 });
+                $(".chip").addClass("blue lighten-3");
+
             }
         });
+    }
+    var hiddenParam = document.getElementById("hiddenFormBoolean");
+        var data = {};
+        var existingDiagnosisData = [];
+
+    if(hiddenParam){
+    console.log("HIDDENPARAM")
+        document.getElementById("allFields").disabled = true;
+        document.getElementById("submit-button").innerText ="Save Case";
+        document.getElementById("title").innerText ="Edit Case";
+        console.log("HDIING SUBMIT BUTTON")
+        document.getElementById("submit-button").hidden = true;
+
+        console.log("PASSED ID: " + caseID);
+
+        $.ajax({
+            type: "GET",
+            url: "/api/getCaseById/" + caseID,
+            // crossDomain: true,
+            contentType : 'application/json; charset=utf-8',
+            dataType : 'json',
+
+            success: function(response) {
+                console.log("Response" + response.caseModel.toString() + "STATus: " + response.statusText);
+
+                console.log("RESPONSE: " + response.diagnoses);
+                console.log("CASE RESPONSE: " + response.caseModel.toString());
+                for (var i = 0; i < response.diagnoses.length; i++) {
+                    existingDiagnosisData.push({tag:response.diagnoses[i].name});
+                    console.log("ROSIEJRLKESKR" +response.diagnoses[i].name);
+                }
+                console.log("EXCAPSED");
+                var form = response.caseModel;
+                document.getElementById('name').value = form.name;
+                document.getElementById("demographics").value = form.demographics;
+                document.getElementById("presentingComplaint").value = form.presentingComplaint;
+                document.getElementById("presentingComplaintHistory").value = form.presentingComplaintHistory;
+                document.getElementById("medicalHistory").value = form.medicalHistory;
+                document.getElementById("drugHistory").value = form.drugHistory;
+                document.getElementById('allergies').value = form.allergies;
+                document.getElementById("familyHistory").value = form.familyHistory;
+                document.getElementById("socialHistory").value = form.socialHistory;
+                document.getElementById("notes").value = form.notes;
+                console.log("ARRY OF EXSTING DIAGNOSIS: " + JSON.stringify(existingDiagnosisData))
+                getAllDiagnosisForTags();
+
+            },
+            error: function(response){
+                console.log('Request Status: ' + response.status + ' Status Text: ' + response.statusText + ' ' + ' Response Text: ' + response.responseText);
+            }
+            });
+        }
+
+        getAllDiagnosisForTags();
 
         $("#submitCases").submit(function(e) {
             console.log("hi");
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
             var $form = $(this);
-            var categoryID = document.getElementById("categoryId").value;
-            var url = "/api/saveCase/" + categoryID;
-            console.log("PASSED URK: " + url);
+            var id;
+            var url;
+            if(hiddenParam){
+                id = caseID;
+                url = "/api/editCase"
+            }
+            else{
+            url = "/api/saveCase"
+            }
 
             var formData = {
+                "id" : id,
                 "name" : document.getElementById("name").value,
                 "demographics" : document.getElementById("demographics").value,
                 "diagnosesList" : $('#diagnosesList').material_chip('data'),
@@ -44,10 +107,6 @@ $(document).ready(function() {
                 "notes" : document.getElementById("notes").value
             };
 
-            // formData['diagnoses'] = $('#diagnoses').material_chip('data');
-
-            // console.log(url);
-            // console.log(formData);
             console.log("NICE: "+JSON.stringify(formData));
 
 
@@ -56,18 +115,13 @@ $(document).ready(function() {
                 dataType : 'json',
                 type: "POST",
                 url: url,
-                // crossDomain: true,
-                // data:JSON.stringify($('#diagnoses').material_chip('data')),
                 data:JSON.stringify(formData),
 
                 success: function(data) {
                 console.log('Request Status: ' + data.status + ' Status Text: ' + data.statusText + ' ' + ' Response URL: ' + data.redirectUrl);
                     $form.find('.error').empty();
-//                    var obj = JSON.parse(data.redrectUrl);
-//                    console.log("REDIRECT URL: " + obj.redirectUrl + "REDIRECT: " + obj);
                     window.location.href = data.redirectUrl;
-                    // alert('HERE' + data); // show response from the php script.
-                    console.log("SUCESS" +data);
+
                 },
                 error : function(e) {
                     $form.find('.error').empty();
@@ -75,16 +129,49 @@ $(document).ready(function() {
                     var obj = JSON.parse(e.responseText);
                     for (i = 0; i < obj.result.length; i++) {
                         var item = obj.result[i];
-                        console.log("LOGGED FIELD NAME: " + item.fieldName);
-                        console.log("LOGGED Message: " + item.errorMessage);
                         var field = document.getElementsByClassName(item.fieldName)[0];
-                        console.log("FIELD " + field);
                         field.innerHTML = item.errorMessage;
 
                     }
-                    console.log("PARSED obj: " + obj.result.length);
 
                 }
             });
         });
     });
+function deleteForm(){
+var id = caseID;
+
+$.ajax({
+        contentType : 'application/json; charset=utf-8',
+        dataType : 'json',
+        type: "DELETE",
+        url: "/api/deleteCase/"+id,
+        data:JSON.stringify({"id": id}),
+        success: function(data) {
+        console.log('Request Status: ' + data.status + ' Status Text: ' + data.statusText + ' ' + ' Response URL: ' + data.redirectUrl);
+            window.location.href = data.redirectUrl;
+            alert("Deleted Case");
+        },
+        error : function(e) {
+            alert("Something Went Wrong");
+            }
+    });
+}
+
+function unhideForm(){
+    var hiddenParam = document.getElementById("hiddenFormBoolean");
+    if(hiddenParam){
+
+        var docUrl = document.URL;
+        console.log("URL OF THE PAGE: " + docUrl);
+        document.getElementById("editCase").hidden = true;
+        document.getElementById("allFields").disabled = false;
+        document.getElementById("submit-button").hidden = false;
+    }else{
+        console.log("Param doesn't exist, so don't hide any fields")
+    }
+}
+
+console.log($(".chip")); 
+
+

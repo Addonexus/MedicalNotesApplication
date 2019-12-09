@@ -11,8 +11,8 @@ public class DiagnosisInformationRowmapper implements RowMapper<DiagnosisInforma
     @Override
     public DiagnosisInformation mapRow(ResultSet resultSet, int rowNum) throws SQLException{
         DiagnosisInformation diagnosisInformation = new DiagnosisInformation();
-        diagnosisInformation.setId(resultSet.getLong("diagnosis_id"));
-        diagnosisInformation.setKey(resultSet.getString("key"));
+        diagnosisInformation.setId(resultSet.getLong("id"));
+        diagnosisInformation.setField(resultSet.getString("field"));
         diagnosisInformation.setValue(resultSet.getString("value"));
 
         return diagnosisInformation;

@@ -7,16 +7,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
-//import nsa.group4.medical.data.UserRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
-import nsa.group4.medical.domains.User;
 import nsa.group4.medical.service.CaseService;
 import nsa.group4.medical.service.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.DiagnosisServiceInterface;
 import nsa.group4.medical.web.CaseForm;
+import org.apache.catalina.User;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,20 +40,17 @@ public class RESTController {
     private CategoriesRepositoryJPA categoriesRepository;
     private DiagnosisServiceInterface diagnosisService;
     private DiagnosisRepositoryJPA diagnosisRepositoryJPA;
-  //  private UserRepositoryJPA userRepositoryJPA;
 
 
     public RESTController(CaseServiceInterface caseServiceInterface,
                           CategoriesRepositoryJPA categoriesRepository,
                           DiagnosisServiceInterface diagnosisService,
                           DiagnosisRepositoryJPA diagnosisRepositoryJPA
-
                           ){
         this.caseServiceInterface =caseServiceInterface;
         this.categoriesRepository=categoriesRepository;
         this.diagnosisService=diagnosisService;
         this.diagnosisRepositoryJPA = diagnosisRepositoryJPA;
-        //this.userRepositoryJPA = userRepositoryJPA;
 
     }
 
@@ -174,15 +170,6 @@ public class RESTController {
             return returnedList;
 
         }
-
-//    @GetMapping("/returnedUserInfo")
-//    public @ResponseBody List<User> getUserInfo() {
-//        System.out.println("Unique thing");
-//        System.out.println(userRepositoryJPA.findAll());
-//        return userRepositoryJPA.findAll();
-//    }
-
-
 
     }
 

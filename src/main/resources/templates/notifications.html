@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Notifications</title>
+</head>
+<body>
+
+<main>
+    <div th:if="${notificationsKey}">
+        <div th:each="notifications : ${notificationsKey}">
+            <span th:text="${notifications.content}"></span>
+        </div>
+    </div>
+</main>
+</body>
+</html>
