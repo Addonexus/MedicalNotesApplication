@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8" />
     <link
@@ -114,7 +114,7 @@
             <span class="notes error"></span>
         </div>
             <div>
-                <input type="checkbox" name="vehicle3" value="Boat" />
+                <input type="checkbox" name="personal" value="details" id="start-checkbox"/>
                 <span>I agree I haven't entered
                 anyone's personal details</span>
             </div>
@@ -133,9 +133,25 @@
 </div>
 
 </main>
+
 <script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 <script type="text/javascript" th:src="@{/casePost.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#submit-button').click(function() {
+            checked = $("input[type=checkbox]:checked").length;
+
+            if(!checked) {
+                alert("You have to check the box");
+                return false;
+            }
+
+        });
+    });
+</script>
 </body>
 </html>
