@@ -1,3 +1,6 @@
+$('.modal').modal();
+
+
 // Get the window URL
 windowUrl = window.location;
 console.log("Window URL: " + windowUrl);
@@ -99,15 +102,8 @@ function refreshListOfDiagnoses() {
   container = document.getElementById("modal-container");
   console.log("container");
   console.log(container);
-
+  container.innerHTML = "";
   var hmm;
-
-  async function getCategoriesSimple() {
-    const response = await fetch("/api/getAllCategories");
-    const json = await response.json();
-    console.log(JSON.stringify(json));
-    return json;
-  }
 
   if (window.location.pathname.includes("category")) {
     $.get("/api/getDiagnosisByCategoryId/" + lastInt, function (data) {
@@ -130,7 +126,7 @@ function refreshListOfDiagnoses() {
 
         var customId = "deleteButton" + data[i].id;
 
-        var settings = document.createElement("a");
+        var settings = document.createElement("div");
         var settingsButton = document.createElement("button");
         var settingsIcon = document.createElement("i");
 
@@ -143,10 +139,9 @@ function refreshListOfDiagnoses() {
           "class",
           "btn content-item bigger modal-trigger"
         );
-        settingsButton.setAttribute("data-target", "diaModal" + i);
+        settingsButton.setAttribute("href", "#diaModal" + i);
 
         settingsButton.style.backgroundColor = "#eeeeff";
-        // settingsButton.style.backgroundColor = "#ffaaaa";
         settingsButton.style.borderRadius = "5px";
         settingsButton.style.borderLeft = "1px solid grey";
         settingsButton.style.fontWeight = "600";
@@ -155,7 +150,6 @@ function refreshListOfDiagnoses() {
         grid.appendChild(settings);
 
         // Modal stuff
-        // Title (input)
         diagnosisTitle = document.createElement("input");
         diagnosisTitle.id = "modalDiagnosisTitle" + data[i].id;
         diagnosisTitle.placeholder = data[i].name;
@@ -166,8 +160,12 @@ function refreshListOfDiagnoses() {
         inputOption.setAttribute("selected", "");
 
         inputOption2 = document.createElement('option');
-        inputOption2.setAttribute("value", "brain");
-        inputOption2.appendChild(document.createTextNode("brain"));
+        inputOption2.setAttribute("value", "skin");
+        inputOption2.appendChild(document.createTextNode("skin"));
+
+        inputOption3 = document.createElement('option');
+        inputOption3.setAttribute("value", "brain");
+        inputOption3.appendChild(document.createTextNode("brain"));
 
         inputSelect = document.createElement('select');
         inputSelect.setAttribute("class", "browser-default");
@@ -175,11 +173,11 @@ function refreshListOfDiagnoses() {
 
         inputSelect.appendChild(inputOption);
         inputSelect.appendChild(inputOption2);
+        inputSelect.appendChild(inputOption3);
 
         diagnosisCategoryTitle = document.createElement("div");
         diagnosisCategoryTitle.setAttribute("class", "input-field col s12");
         diagnosisCategoryTitle.appendChild(inputSelect);
-
 
         console.log(data[i].categories);
         diagnosisCategoryTitle.placeholder = data[i].categories.name;
@@ -226,6 +224,7 @@ function refreshListOfDiagnoses() {
 
         console.log(modal);
       }
+      $('.modal').modal();
     });
   }
 }
@@ -247,9 +246,10 @@ function updateDiagnosis(num, modal) {
     type: "POST",
     url: "/api/updateDiagnosis/" + num,
     success: function (json) {
-      refreshListOfDiagnoses();
       getRecentCases();
       refreshNotifications();
+      console.log("ERROR");
+      refreshListOfDiagnoses();
     },
     error: function (json) {
       refreshListOfDiagnoses();
@@ -273,14 +273,18 @@ function deleteDiagnosis(num, modal) {
     type: "DELETE",
     url: "/api/deleteDiagnosis/" + num,
     success: function (json) {
-      refreshListOfDiagnoses();
       getRecentCases();
       refreshNotifications();
+      refreshListOfDiagnoses();
     },
     error: function (json) {
       console.log("ERROR");
     }
   });
+}
+
+function reload() {
+  document.location.reload();
 }
 
 function deleteCategory(num) {
@@ -504,7 +508,3 @@ for (i = 0; i < coll.length; i++) {
 }
 
 function markNotificationRead() { }
-
-$(document).ready(function () {
-  $(".modal").modal();
-});
