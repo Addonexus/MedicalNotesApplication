@@ -96,7 +96,7 @@ function refreshListOfDiagnoses() {
   console.log("HI THERE");
   console.log(window.location);
 
-  container = $(".modal-container");
+  container = document.getElementById("modal-container");
   console.log("container");
   console.log(container);
 
@@ -130,26 +130,55 @@ function refreshListOfDiagnoses() {
         settingsIcon.setAttribute("class", "material-icons large");
 
         settingsButton.appendChild(settingsIcon);
-        settingsButton.setAttribute("class", "btn content-item bigger");
         settingsButton.setAttribute(
-          "onClick",
-          "deleteDiagnosis(" + data[i].id + ")"
+          "class",
+          "btn content-item bigger modal-trigger"
         );
+        settingsButton.setAttribute("data-target", "diaModal" + i);
 
         settingsButton.style.backgroundColor = "#eeeeff";
         // settingsButton.style.backgroundColor = "#ffaaaa";
         settingsButton.style.borderRadius = "5px";
         settingsButton.style.borderLeft = "1px solid grey";
         settingsButton.style.fontWeight = "600";
-        settingsButton.id = customId;
 
         settings.appendChild(settingsButton);
         grid.appendChild(settings);
 
         // Modal stuff
+
+        diagnosisTitle = document.createElement("input");
+        diagnosisTitle.placeholder = data[i].name;
+
+        // Modal content
+        modalContent = document.createElement("div");
+        modalContent.setAttribute("class", "modal-content");
+        modalContent.style.padding = "30px";
+        modalContent.appendChild(diagnosisTitle);
+
+        // Modal footer
+        saveButton = document.createElement("button");
+        saveButton.setAttribute("class", "btn-small white black-text");
+        saveButton.appendChild(document.createTextNode("save"));
+
+        deleteButton = document.createElement("button");
+        deleteButton.setAttribute("class", "btn-small white black-text");
+        deleteButton.appendChild(document.createTextNode("delete"));
+        deleteButton.style.marginLeft = "20px";
+
+        modalFooter = document.createElement("div");
+        modalFooter.setAttribute("class", "modal-footer");
+        modalFooter.appendChild(saveButton);
+        modalFooter.appendChild(deleteButton);
+        modalFooter.style.borderTop = "2px solid black";
+
         modal = document.createElement("div");
         modal.setAttribute("class", "modal");
-        modal.setAttribute("id", "modal" + i);
+        modal.setAttribute("id", "diaModal" + i);
+        modal.appendChild(modalContent);
+        modal.appendChild(modalFooter);
+
+        container.appendChild(modal);
 
         console.log(modal);
       }
@@ -403,3 +432,7 @@ for (i = 0; i < coll.length; i++) {
 }
 
 function markNotificationRead() {}
+
+$(document).ready(function() {
+  $(".modal").modal();
+});
