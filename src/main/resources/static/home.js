@@ -159,10 +159,19 @@ function refreshListOfDiagnoses() {
         // Modal footer
         saveButton = document.createElement("button");
         saveButton.setAttribute("class", "btn-small white black-text");
+        saveButton.setAttribute(
+          "onClick",
+          "updateDiagnosis(" + data[i].id + ")"
+        );
+
         saveButton.appendChild(document.createTextNode("save"));
 
         deleteButton = document.createElement("button");
         deleteButton.setAttribute("class", "btn-small white black-text");
+        deleteButton.setAttribute(
+          "onClick",
+          "deleteDiagnosis(" + data[i].id + ")"
+        );
         deleteButton.appendChild(document.createTextNode("delete"));
         deleteButton.style.marginLeft = "20px";
 
@@ -186,8 +195,9 @@ function refreshListOfDiagnoses() {
   }
 }
 
-function deleteDiagnosis(num) {
+function deleteDiagnosis(num, modal) {
   console.log(num);
+  console.log("my modal: " + modal);
   var formData = {
     id: num
   };

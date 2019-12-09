@@ -20,8 +20,6 @@ function refreshNotifications() {
   }
 
   $.get("/api/getAllNotifications", function(data) {
-    console.log(data[1].diagnosisLink);
-
     // if (windowUrl.pathname.includes("diagnosis")) {
     //   console.log("diagnosis num: " + lastInt);
     //   for (var i = 0; i < data.length; i++) {
