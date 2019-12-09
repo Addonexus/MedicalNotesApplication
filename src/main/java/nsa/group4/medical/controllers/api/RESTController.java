@@ -11,9 +11,9 @@ import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.CaseService;
-import nsa.group4.medical.service.CaseServiceInterface;
+import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.service.DiagnosisService;
-import nsa.group4.medical.service.DiagnosisServiceInterface;
+import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 import org.apache.catalina.User;
 import org.apache.catalina.mapper.Mapper;
@@ -116,7 +116,7 @@ public class RESTController {
             CaseModel caseModel = new CaseModel(
                     formData.getName(),
                     formData.getDemographics(),
-                    new ArrayList<>(),
+                    formData.getDiagnosesList(),
                     formData.getPresentingComplaint(),
                     formData.getPresentingComplaintHistory(),
                     formData.getMedicalHistory(),

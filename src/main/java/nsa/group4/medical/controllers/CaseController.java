@@ -1,12 +1,19 @@
 package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.data.CategoriesRepositoryJPA;
+import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.domains.*;
+import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.web.CaseForm;
+import nsa.group4.medical.web.DiagnosisInformationForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 //@SessionAttributes("categoryKey")
@@ -16,9 +23,21 @@ import java.util.Optional;
 //@SessionAttributes("category")
 public class CaseController {
 
+    @Autowired
+    DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
+
+    @Autowired
+    DiagnosisService diagnosisService;
+
+    @Autowired
+    CategoriesRepositoryJPA categoriesRepositoryJPA;
+
     private CaseServiceInterface caseService;
-    public CaseController(CaseServiceInterface caseService){
+    public CaseController(CaseServiceInterface caseService, DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC, DiagnosisService diagnosisService, CategoriesRepositoryJPA categoriesRepositoryJPA){
         this.caseService = caseService;
+        this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
+        this.diagnosisService = diagnosisService;
+        this.categoriesRepositoryJPA = categoriesRepositoryJPA;
     }
 
     @RequestMapping(path="/createNewCase", method = RequestMethod.GET)
@@ -106,7 +125,8 @@ public class CaseController {
     }
 
     @GetMapping("/recentCases")
-    public @ResponseBody List<CaseModel> getRecentCases() {
+    public @ResponseBody
+    List<CaseModel> getRecentCases() {
         return caseService.findAllByOrderByCreationDate();
     }
 }
