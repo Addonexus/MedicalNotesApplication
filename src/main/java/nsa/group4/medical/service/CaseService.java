@@ -73,6 +73,7 @@ public class CaseService implements CaseServiceInterface {
                 form.getName(),
                 form.getDemographics(),
                 new ArrayList<>(),
+                form.getWard(),
                 form.getPresentingComplaint(),
                 form.getPresentingComplaintHistory(),
                 form.getMedicalHistory(),
@@ -159,6 +160,7 @@ public class CaseService implements CaseServiceInterface {
         CaseModel caseModel = caseRepository.findById(form.getId()).get();
         caseModel.setName(form.getName());
         caseModel.setDemographics(form.getDemographics());
+        caseModel.setWard(form.getWard());
         caseModel.setAllergies(form.getAllergies());
         caseModel.setPresentingComplaint(form.getPresentingComplaint());
         caseModel.setPresentingComplaintHistory(form.getPresentingComplaintHistory());

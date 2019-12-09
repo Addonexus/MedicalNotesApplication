@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `cases` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `demographics` VARCHAR(100) NOT NULL,
+  `ward` VARCHAR(100) NULL,
   `presenting_complaint` VARCHAR(100) NULL,
   `presenting_complaint_history` VARCHAR(100) NULL,
   `medical_history` VARCHAR(100) NULL,
@@ -70,4 +71,12 @@ CREATE TABLE IF NOT EXISTS `cases_diagnoses_link` (
   `diagnosis_id` INT NOT NULL,
   `case_id` INT NOT NULL,
   PRIMARY KEY (`diagnosis_id`, `case_id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table ward that will link to cases
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ward` (
+ `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
 ENGINE = InnoDB;

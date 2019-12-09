@@ -49,6 +49,14 @@
             <span class="demographics error"></span>
         </div>
 
+            <div>
+                <label th:for="ward">Ward</label>
+                <input id = "ward" aria-describedBy="Enter the ward the patient is in"
+                       type="text"/>
+                <span class="ward error"></span>
+            </div>
+
+
         <div>
             <label th:for="diagnosesList">Diagnoses</label>
             <div id="diagnosesList" class="chips chips-autocomplete chips-placeholder chips-initial" >
