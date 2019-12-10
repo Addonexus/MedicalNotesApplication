@@ -57,6 +57,7 @@ $(document).ready(function() {
                 var form = response.caseModel;
                 document.getElementById('name').value = form.name;
                 document.getElementById("demographics").value = form.demographics;
+                document.getElementById("ward").value = form.ward;
                 document.getElementById("presentingComplaint").value = form.presentingComplaint;
                 document.getElementById("presentingComplaintHistory").value = form.presentingComplaintHistory;
                 document.getElementById("medicalHistory").value = form.medicalHistory;
@@ -96,6 +97,7 @@ $(document).ready(function() {
                 "id" : id,
                 "name" : document.getElementById("name").value,
                 "demographics" : document.getElementById("demographics").value,
+                "ward" : document.getElementById("ward").value,
                 "diagnosesList" : $('#diagnosesList').material_chip('data'),
                 "presentingComplaint" : document.getElementById("presentingComplaint").value,
                 "presentingComplaintHistory" : document.getElementById("presentingComplaintHistory").value,
