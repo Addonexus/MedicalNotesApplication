@@ -96,19 +96,47 @@ public class RESTDiagnosisController {
     }
 
     @PostMapping(value = "/updateDiagnosis/{index}", produces = "application/json")
-    public void updateDiagnosis(@PathVariable Long index, @RequestBody Map<String, String> formData, Errors bindingResult) {
+    public @ResponseBody ResponseEntity<?> updateDiagnosis(@PathVariable Long index, @RequestBody Map<String, String> formData, Errors bindingResult) {
         String newName = formData.get("newName");
         String newCategory = formData.get("newCategory");
-        Diagnosis diagnosis = diagnosisService.getByDiagnosisId(index).get();
-        Categories category = categoryService.findByName(newCategory).get();
-        System.out.println(category);
-
-        diagnosis.setCategories(category);
-        diagnosis.setName(newName);
-        diagnosisService.createDiagnosis(diagnosis);
-
         AjaxResponseBody responseBody = new AjaxResponseBody();
-        responseBody.setStatus("SUCCESS");
+        Optional<Diagnosis> returnedDiagnosis = diagnosisService.getByDiagnosisId(index);
+        if (returnedDiagnosis.isPresent()){
+            Diagnosis diagnosis = returnedDiagnosis.get();
+            // the new diagnosis name has a name that already exists inside the database
+            if(!diagnosis.getName().toLowerCase().equals(newName)){
+
+                Optional<Diagnosis> checkDiagnosisNameAlreadyExists = diagnosisService.findByName(newName);
+                if(checkDiagnosisNameAlreadyExists.isPresent()){
+                    log.debug("DIAGNOSIS NAME ALREADY EXISTS----");
+                    // return a bad response indicating that the update didn't go through due to the name already existing
+                    responseBody.setStatus("NAME EXISTS");
+                    return ResponseEntity.badRequest().body(responseBody);
+                }
+            }
+            log.debug("RUNS THIS TO SET THE NAME ND MOVE TO A CATEGORY----");
+            //TODO: creates a new diagnosis if the with the new name if it is different without deleting the old one
+            // if also moved to a new category
+
+            // if the new name doesn't already exist in the database then the new details is changed and diagnosis object is saved
+            Categories category = categoryService.findByName(newCategory).get();
+            System.out.println(category);
+
+            diagnosis.setCategories(category);
+            diagnosis.setName(newName);
+            diagnosisService.createDiagnosis(diagnosis);
+
+//                AjaxResponseBody responseBody = new AjaxResponseBody();
+            responseBody.setStatus("SUCCESS");
+            return ResponseEntity.ok().body(responseBody);
+
+        }
+        // something went very wrong when updating the diagnosis
+        log.debug("FAT ERROR HAS OCCURED----");
+        responseBody.setStatus("FAILURE");
+        return ResponseEntity.ok().body(responseBody);
+
+
     }
 
     @GetMapping("/getAllDiagnosis")
