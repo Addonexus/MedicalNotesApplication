@@ -388,14 +388,18 @@ function deleteCategory(num) {
   });
 }
 function refreshListOfCategories() {
-  console.log("HIHHS");
+    console.log("HIHHS");
   var grid = document.getElementById("content-grid");
 
   while (grid.firstChild) {
     grid.removeChild(grid.firstChild);
   }
-  console.log("HI THERE");
-  console.log(window.location);
+    console.log("HI THERE");
+    console.log(window.location);
+    container = document.getElementById("modal-container");
+    console.log("container");
+    console.log(container);
+    container.innerHTML = "";
 
   $.get("/api/getAllCategories/" + lastInt, function (data) {
     $(".result").html(data);
@@ -419,18 +423,19 @@ function refreshListOfCategories() {
       var settingsIcon = document.createElement("i");
 
       settings.style.width = "15%";
-      settingsIcon.appendChild(document.createTextNode("delete_forever"));
+      settingsIcon.appendChild(document.createTextNode("edit"));
       settingsIcon.setAttribute("class", "material-icons large");
 
       settingsButton.appendChild(settingsIcon);
-      settingsButton.setAttribute("class", "btn content-item bigger");
-      settingsButton.setAttribute(
-        "onClick",
-        "deleteCategory(" + data[i].id + ")"
-      );
+      settingsButton.setAttribute("class", "btn content-item bigger modal-trigger");
+      settingsButton.setAttribute("href", "#categoryModal" + i);
+//      settingsButton.setAttribute(
+//        "onClick",
+//        "deleteCategory(" + data[i].id + ")"
+//      );
 
       // settingsButton.style.backgroundColor="#eeeeff";
-      settingsButton.style.backgroundColor = "#ffaaaa";
+      settingsButton.style.backgroundColor = "#eeeeff";
       settingsButton.style.borderRadius = "5px";
       settingsButton.style.borderLeft = "1px solid grey";
       settingsButton.style.fontWeight = "600";
@@ -446,7 +451,56 @@ function refreshListOfCategories() {
         grid.appendChild(a);
         grid.appendChild(settings);
       }
+
+      // Modal Form Setup
+      categoryTitle = document.createElement("input");
+      categoryTitle.id = "modalCategoryTitle" + data[i].id;
+      categoryTitle.placeholder = data[i].name;
+
+       // Modal content
+      modalContent = document.createElement("div");
+      modalContent.setAttribute("class", "modal-content");
+      modalContent.style.padding = "30px";
+      modalContent.appendChild(categoryTitle);
+
+
+      // Modal footer content
+      // Save Button
+      saveButton = document.createElement("button");
+      saveButton.setAttribute("class", "btn-small white black-text");
+      saveButton.setAttribute(
+        "onClick",
+        "updateCategory(" + data[i].id + ", categoryModal" + i + ")"
+      );
+      saveButton.appendChild(document.createTextNode("save"));
+
+      // Delete Button
+      deleteButton = document.createElement("button");
+      deleteButton.setAttribute("class", "btn-small white black-text");
+      deleteButton.setAttribute(
+        "onClick",
+        "deleteCategory(" + data[i].id + ", categoryModal" + i + ")"
+      );
+      deleteButton.appendChild(document.createTextNode("delete"));
+      deleteButton.style.marginLeft = "20px";
+
+      modalFooter = document.createElement("div");
+      modalFooter.setAttribute("class", "modal-footer");
+      modalFooter.appendChild(saveButton);
+      modalFooter.appendChild(deleteButton);
+      modalFooter.style.borderTop = "2px solid black";
+
+      modal = document.createElement("div");
+      modal.setAttribute("class", "modal");
+      modal.setAttribute("id", "categoryModal" + i);
+      modal.appendChild(modalContent);
+      modal.appendChild(modalFooter);
+
+      container.appendChild(modal);
+
+      console.log(modal);
     }
+    $('.modal').modal();
   });
 }
 
