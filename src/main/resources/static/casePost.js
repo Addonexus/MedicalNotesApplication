@@ -88,7 +88,11 @@ $(document).ready(function() {
       }
     });
   }
-
+  var passedDiagnosis = document.getElementById("passedDiagnosis");
+  console.log("PASSED DAINGOSIS VALUWE: "+passedDiagnosis.value);
+  if(passedDiagnosis){
+    existingDiagnosisData.push({tag : passedDiagnosis.value});
+  }
   getAllDiagnosisForTags();
 
   $("#submitCases").submit(function(e) {
