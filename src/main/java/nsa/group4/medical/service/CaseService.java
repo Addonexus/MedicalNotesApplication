@@ -3,10 +3,7 @@ package nsa.group4.medical.service;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.NotificationRepoJPA;
-import nsa.group4.medical.domains.CaseModel;
-import nsa.group4.medical.domains.Categories;
-import nsa.group4.medical.domains.Diagnosis;
-import nsa.group4.medical.domains.Notifications;
+import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.implementations.*;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +24,18 @@ public class CaseService implements CaseServiceInterface {
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CategoryRepositoryInterface categoryRepository;
     private NotificationServiceInterface notificationService;
+    private WardRepositoryInterface wardRepository;
 
     public CaseService(CaseRepositoryInterface caseRepository,
                        DiagnosisRepositoryInterface diagnosisRepository,
                        CategoryRepositoryInterface categoryRepository,
-                       NotificationServiceInterface notificationService){
+                       NotificationServiceInterface notificationService,
+                       WardRepositoryInterface wardRepository){
         this.caseRepository = caseRepository;
         this.diagnosisRepository = diagnosisRepository;
         this.categoryRepository = categoryRepository;
         this.notificationService = notificationService;
+        this.wardRepository = wardRepository;
     }
 
     @Override
@@ -129,16 +129,15 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public List<CaseModel> findCasesByWardId(Long index) {
-
-//        Optional<Ward> returnedWard = wardRepository.findById(index);
-//        log.debug("Internal Query for ward: " + returnedWard);
-//        if (returnedWard.isPresent()){
-//            Diagnosis diagnosis = returnedward.get();
-//            log.debug("Inter query for WardCases: " + returnedward.get().getCases().toString());
-//            return diagnosis.getCases();
-//        }else {
+        Optional<Ward> returnedWard = wardRepository.findById(index);
+        log.debug("Internal Query for ward: " + returnedWard);
+        if (returnedWard.isPresent()){
+            Ward ward = returnedWard.get();
+            log.debug("Inter query for ward Cases: " + returnedWard.get().getCases().toString());
+            return ward.getCases();
+        }else {
             return new ArrayList<>();
-//        }
+        }
 
     }
 
