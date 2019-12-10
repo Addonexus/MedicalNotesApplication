@@ -60,7 +60,7 @@ $(document).ready(function() {
         var form = response.caseModel;
         document.getElementById("name").value = form.name;
         document.getElementById("demographics").value = form.demographics;
-        document.getElementById("presentingComplaint").value =
+        document.getElementById("ward").value = form.ward;document.getElementById("presentingComplaint").value =
           form.presentingComplaint;
         document.getElementById("presentingComplaintHistory").value =
           form.presentingComplaintHistory;
@@ -109,7 +109,8 @@ $(document).ready(function() {
       "id": id,
       "name": document.getElementById("name").value,
       "demographics": document.getElementById("demographics").value,
-      "diagnosesList": $("#diagnosesList").material_chip("data"),
+      "ward" : document.getElementById("ward").value,
+                "diagnosesList": $("#diagnosesList").material_chip("data"),
       "presentingComplaint": document.getElementById("presentingComplaint").value,
       "presentingComplaintHistory": document.getElementById(
         "presentingComplaintHistory"
@@ -207,3 +208,5 @@ function unhideForm() {
 }
 
 console.log($(".chip"));
+
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:form="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Create an account</title>
+
+</head>
+<body>
+    <form method="POST" th:action="@{/registration}" th:object="${userForm}">
+        <div>
+            <label th:for="username">Email</label>
+
+            <input th:field="*{username}"
+                   type="text"/>
+
+            <div th:errors="*{username}"
+                 th:if="${#fields.hasErrors('username')}">
+                Email Error
+            </div>
+        </div>
+
+        <div>
+            <label th:for="password">Password</label>
+
+            <input th:field="*{password}"
+                   type="password"/>
+
+            <div th:errors="*{password}"
+                 th:if="${#fields.hasErrors('password')}">
+                Password Error
+            </div>
+        </div>
+
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+
+        <button type="submit">submit</button>
+    </form>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,6 +1,8 @@
 package nsa.group4.medical.service.implementations;
 
 import nsa.group4.medical.domains.CaseModel;
+import nsa.group4.medical.domains.Categories;
+import org.springframework.data.repository.RepositoryDefinition;
 
 import java.time.LocalDateTime;
 import java.util.List;

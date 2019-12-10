@@ -20,7 +20,9 @@ public class DiagnosisService implements DiagnosisServiceInterface {
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CaseRepositoryInterface caseRepository;
     private CaseServiceInterface caseServiceInterface;
-    public DiagnosisService( DiagnosisRepositoryInterface diagnosisRepository,CaseServiceInterface caseServiceInterface, CaseRepositoryInterface caseRepository){
+    public DiagnosisService( DiagnosisRepositoryInterface diagnosisRepository
+            ,CaseServiceInterface caseServiceInterface,
+                             CaseRepositoryInterface caseRepository){
         this.diagnosisRepository = diagnosisRepository;
         this.caseRepository = caseRepository;
         this.caseServiceInterface =caseServiceInterface;

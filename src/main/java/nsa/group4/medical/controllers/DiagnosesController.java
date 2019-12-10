@@ -68,13 +68,23 @@ public class DiagnosesController {
         return "main/diagnosis";
     }
 //  TODO: move this to separate controller
-    @GetMapping("/login")
-    public String getLoginPage(){
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String getLoginPage(){
+//        return "login";
+//    }
 
     @GetMapping("/register")
     public String getRegisterPage(){
         return "register";
     }
+
+//    @GetMapping("/")
+//    public String index() {
+//        return "index";
+//    }
+
+//    @GetMapping("/login")
+//    public String loginPage() {
+//        return "login";
+//    }
 }

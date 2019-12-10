@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+
+<main>
+    AHHHHHHHHHHHHHHHH
+    <div sec:authorize="isAuthenticated()">
+        Welcome back:
+        <div sec:authentication="name"></div>
+    </div>
+    <div sec:authorize="!isAuthenticated()">
+        Login
+    </div>
+
+</main>
+</body>
+</html>

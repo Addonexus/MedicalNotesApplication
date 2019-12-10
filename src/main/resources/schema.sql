@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
     `is_done` BOOLEAN NULL,
     PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+-- ---------------
 -- -----------------------------------------------------
 -- Table `cases`
 -- -----------------------------------------------------
@@ -74,9 +75,130 @@ CREATE TABLE IF NOT EXISTS `cases_diagnoses_link` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Table  `Users`
+-- -----------------------------------------------------
+-- CREATE TABLE if not exists `user`
+-- (
+--     `id`       int(11)      NOT NULL AUTO_INCREMENT,
+--     `username` VARCHAR(45)  NOT NULL,
+--     `password` VARCHAR(100) NOT NULL,
+--     `user_type`     int(11)      NULL,
+--     PRIMARY KEY (`id`)
+-- )
+--     ENGINE = InnoDB;
+-- -----------------------------------------------------
+-- Table  `role`
+-- -----------------------------------------------------
+CREATE TABLE if not exists `role`
+(
+    `id`     int(11)     NOT NULL AUTO_INCREMENT,
+--     `userid` int(11)     NOT NULL,
+    `role`   varchar(45) NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB;
+CREATE TABLE if not exists `user`
+(
+    `id`       int(11)      NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(45)  NOT NULL,
+    `password` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `user_roles`
+(
+    `user_id` INT NOT NULL,
+    `roles_id` INT NOT NULL,
+    PRIMARY KEY(`user_id`)
+)
+
+ENGINE = InnoDB;
+-- CREATE TABLE if not exists `role`
+-- (
+--     `id`     int(11)     NOT NULL AUTO_INCREMENT,
+--     `userid` int(11)     NOT NULL,
+--     `role`   varchar(45) NOT NULL,
+--     PRIMARY KEY (`id`)
+-- )
+--     ENGINE = InnoDB;
+
+-- CREATE TABLE if not exists `auth_user`
+-- (
+--     `auth_user_id` INT(11) NOT NULL AUTO_INCREMENT,
+--     `first_name` VARCHAR(255) NOT NULL,
+--     `last_name` VARCHAR(255) NOT NULL,
+--     `email` VARCHAR(255) NOT NULL,
+--     `password` VARCHAR(100) NOT NULL,
+--     `status` VARCHAR(255) NOT NULL,
+--     PRIMARY KEY(`auth_user_id`)
+-- )
+--     ENGINE = InnoDB;
+--
+-- CREATE TABLE if not exists `auth_user_role`
+-- (
+--     `auth_user_id` INT(11) NOT NULL,
+--     `auth_role_id` INT(11) NOT NULL,
+--     PRIMARY KEY(`auth_user_id`, `auth_role_id`),
+--     KEY FK_user_role(auth_role_id),
+--     CONSTRAINT FK_auth_user FOREIGN KEY (auth_user_id) REFERENCES auth_user(auth_user_id),
+--     CONSTRAINT FK_auth_user_role FOREIGN KEY (auth_role_id) REFERENCES auth_role(auth_role_id)
+--
+-- )
+--     ENGINE = InnoDB;
+
+-- CREATE TABLE if not exists `auth_role`
+-- (
+--     `auth_role_id` INT(11) NOT NULL,
+--     `role_name` VARCHAR(255) NOT NULL,
+--     `role_desc` VARCHAR(255) NOT NULL,
+--     PRIMARY KEY(`auth_role_id`)
+-- )
+--     ENGINE = InnoDB;
+
+-- CREATE TABLE if not exists `auth_role` (
+--   `auth_role_id` INT(11) NOT NULL AUTO_INCREMENT,
+--   `role_name` VARCHAR(255) DEFAULT NULL,
+--   `role_desc` VARCHAR (255) DEFAULT NULL,
+--   PRIMARY KEY (`auth_role_id`)
+-- ) ENGINE = InnoDB;
+--
+-- CREATE TABLE if not exists auth_user (
+--   `auth_user_id`   INT(11) NOT NULL AUTO_INCREMENT,
+--   `first_name` VARCHAR (255) NOT NULL,
+--   `last_name` VARCHAR (255) NOT NULL,
+--   `email` VARCHAR (255) NOT NULL,
+--   `password` VARCHAR (255) NOT NULL,
+--   `status` VARCHAR (255),
+--   PRIMARY KEY (`auth_user_id`)
+-- )ENGINE = InnoDB;
+--
+-- CREATE TABLE if not exists auth_user_role (
+--   `auth_user_id` INT(11) NOT NULL,
+--   `auth_role_id` INT(11) NOT NULL,
+--   PRIMARY KEY (`auth_user_id`,`auth_role_id`),
+--   KEY FK_user_role (`auth_role_id`),
+--   CONSTRAINT FK_auth_user FOREIGN KEY (`auth_user_id`) REFERENCES auth_user (`auth_user_id`),
+--   CONSTRAINT FK_auth_user_role FOREIGN KEY (`auth_role_id`) REFERENCES auth_role (`auth_role_id`)
+-- ) ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table ward that will link to cases
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ward` (
  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+ `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
+-- ----------------------------------------------------
+-- Table `ward_cases_link` to link many-to-many relationship
+-- between `cases` and `ward` table
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ward_cases_link` (
+--  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ward_id` INT NOT NULL,
+  `case_id` INT NOT NULL,
+  PRIMARY KEY (`ward_id`, `case_id`))
+ENGINE = InnoDB;
+
+
