@@ -63,6 +63,19 @@ public class CaseController {
         return "404";
     }
 
+    @GetMapping(path ="/createNewCase/diagnosis/{diagnosisIndex}")
+    public String getCaseWithDiagnosis(@PathVariable(name="diagnosisIndex") Long diagnosisIndex,
+                          Model model){
+        log.debug("----GET Mapping: /createNewCase/diagnosis/{diagnosisIndex}----");
+        Optional<Diagnosis> returnedDiagnosis = diagnosisService.getByDiagnosisId(diagnosisIndex);
+        if(returnedDiagnosis.isPresent()){
+            model.addAttribute("caseKey", new CaseForm());
+            returnedDiagnosis.ifPresent(diagnosis -> model.addAttribute("diagnosisName", diagnosis.getName()));
+            return "main/case";
+        }
+        return "404";
+    }
+
 //    @GetMapping(path ="diagnosis/{diagnosisIndex}")
 //    public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
 //                           Model model){
