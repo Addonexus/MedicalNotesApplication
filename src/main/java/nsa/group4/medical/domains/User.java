@@ -29,7 +29,7 @@ public class User {
 
     //private Role role;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<Role> roles;
 
 }

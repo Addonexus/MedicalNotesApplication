@@ -63,49 +63,49 @@ public class CaseController {
         return "404";
     }
 
-    @GetMapping(path ="diagnosis/{diagnosisIndex}")
-    public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
-                           Model model){
+//    @GetMapping(path ="diagnosis/{diagnosisIndex}")
+//    public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
+//                           Model model){
+//
+//        List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
+//        List<CaseModel> recentCases = caseService.findAll();
+////        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
+//        log.debug("CASES: " + returnedCases);
+//
+//        log.debug("CASES 2: " + recentCases);
+////        log.debug("CAT: " + category);
+//
+////        if(!category.isPresent()){
+////            return "404";
+////        }
+//
+//        List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
+//
+//        model.addAttribute("diagnosisInfoKey", new DiagnosisInformationForm());
+//        model.addAttribute("cases", recentCases);
+//        model.addAttribute("returnedCases", returnedCases);
+//        model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
+////        model.addAttribute("category", category.g());
+//        model.addAttribute("returnedDiagnosisInfo", diagnosisInformations);
+//        model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
+//
+//        return "home";
+//    }
 
-        List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
-        List<CaseModel> recentCases = caseService.findAll();
-//        Optional<Categories> category = categoriesRepositoryJPA.findById(categoryId);
-        log.debug("CASES: " + returnedCases);
-
-        log.debug("CASES 2: " + recentCases);
-//        log.debug("CAT: " + category);
-
-//        if(!category.isPresent()){
+//    @GetMapping(path = "/home")
+//    public String allCases(Model model) {
+//        List<Categories> categories = categoriesRepositoryJPA.findAll();
+//        List<CaseModel> cases = caseService.findAll();
+//        if(cases.isEmpty()){
 //            return "404";
 //        }
-
-        List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
-
-        model.addAttribute("diagnosisInfoKey", new DiagnosisInformationForm());
-        model.addAttribute("cases", recentCases);
-        model.addAttribute("returnedCases", returnedCases);
-        model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
-//        model.addAttribute("category", category.g());
-        model.addAttribute("returnedDiagnosisInfo", diagnosisInformations);
-        model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
-
-        return "home";
-    }
-
-    @GetMapping(path = "/home")
-    public String allCases(Model model) {
-        List<Categories> categories = categoriesRepositoryJPA.findAll();
-        List<CaseModel> cases = caseService.findAll();
-        if(cases.isEmpty()){
-            return "404";
-        }
-        else{
-            model.addAttribute("cases", cases);
-            model.addAttribute("categoryKey", new Categories());
-            model.addAttribute("categories", categories);
-            return "home";
-        }
-    }
+//        else{
+//            model.addAttribute("cases", cases);
+//            model.addAttribute("categoryKey", new Categories());
+//            model.addAttribute("categories", categories);
+//            return "home";
+//        }
+//    }
 
     @PostMapping(path = "/home")
     public String allCasesPost(Model model, @ModelAttribute("categoryKey") Categories categoryKey) {
