@@ -39,10 +39,10 @@ public class UserController {
         return "registration";
     }
 
-//    @GetMapping("/logout")
-//    public String logout(){
-//        return "logoutPage";
-//    }
+    @GetMapping("/logout")
+    public String logout(){
+        return "logoutPage";
+    }
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") UserForm userForm, BindingResult bindingResult) {
