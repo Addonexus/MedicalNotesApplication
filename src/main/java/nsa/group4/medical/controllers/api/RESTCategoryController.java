@@ -42,7 +42,7 @@ public class RESTCategoryController {
     }
 
     @PostMapping(value = "/updateCategory/{index}", produces = "application/json")
-    public void updateCategory(@PathVariable Long index, @RequestBody Map<String, String> formData, Errors bindingResult) {
+    public @ResponseBody ResponseEntity<?> updateCategory(@PathVariable Long index, @RequestBody Map<String, String> formData, Errors bindingResult) {
         String newName = formData.get("newName");
 //        String newCategory = formData.get("newCategory");
 //        Diagnosis diagnosis = diagnosisService.getByDiagnosisId(index).get();
@@ -50,10 +50,26 @@ public class RESTCategoryController {
         Optional<Categories> returnedCategory = categoryService.findById(index);
         if (returnedCategory.isPresent()) {
             Categories category = returnedCategory.get();
+            // the new category name has a name that already exists inside the database
+            if (!category.getName().toLowerCase().equals(newName.toLowerCase())) {
+                Optional<Categories> checkCategoryNameAlreadyExists = categoryService.findByName(newName);
+                if (checkCategoryNameAlreadyExists.isPresent()) {
+                    // return a bad response indicating that the update didn't go through due to the name already existing
+                    responseBody.setStatus("Name Already Exists");
+                    return ResponseEntity.badRequest().body(responseBody);
+                } else {
+                    // if the new name doesn't already exist in the database then the name is changed and category object is saved
                     category.setName(newName);
                     categoryService.saveCategory(category);
+                    responseBody.setStatus("SUCCESS");
+                    return ResponseEntity.ok().body(responseBody);
+                }
+            }
         }
-}
+        // something went very wrong when updating the category
+        responseBody.setStatus("FAILURE");
+        return ResponseEntity.ok().body(responseBody);
+    }
 
     @PostMapping(value = "/createCategory", produces = "application/json")
     public @ResponseBody ResponseEntity<?> saveCategory(@RequestBody Map<String, String> formData, Errors bindingResult) {
