@@ -1,5 +1,6 @@
 package nsa.group4.medical.service.implementations;
 
+import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.domains.Ward;
 
 import java.util.Collection;
@@ -18,5 +19,7 @@ public interface WardServiceInterface {
     Optional<Ward> findByName(String name);
 
     List<Ward> findAll();
+
+    Optional<Ward> getByWardId(Long index);
 
 }
