@@ -234,7 +234,66 @@ function doThis(data) {
   });
 }
 
+function updateCategory(num, modal) {
+  var categoryModalTitle = document.getElementById("modalCategoryTitle" + num);
+  //checks to see if the user entered anything in the diagnosis title field
+  if (categoryModalTitle.value == ""){
+  //  sets the new name as whatever the current name of the diagnosis is
+    newName = categoryModalTitle.placeholder;
+  }
+  else{
+  // otherwise sets the new diagnosis name as title entered by the user
+    newName = categoryModalTitle.value;
+  }
+  console.log("himmsdmsd")
+  // instance.close();
+  var formData = {
+    "newName": newName
+  };
 
+  $.ajax({
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    data: JSON.stringify(formData),
+    type: "POST",
+    url: "/api/updateCategory/" + num,
+    success: function (json) {
+      getRecentCases();
+      refreshNotifications();
+      console.log("ERROR");
+      refreshListOfCategories();
+    },
+    error: function (json) {
+      alert("Category Name already exists, please try a different name");
+//      refreshListOfCategories();
+      console.log("ERROR");
+    }
+  });
+}
+function deleteCategory(num, modal) {
+  console.log(num);
+  console.log("my modal: " + modal);
+  var instance = M.Modal.getInstance(modal);
+  // instance.close();
+  var formData = {
+    id: num
+  };
+
+  $.ajax({
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    type: "DELETE",
+    url: "/api/deleteCategory/" + num,
+    success: function (json) {
+      getRecentCases();
+      refreshNotifications();
+      refreshListOfCategories();
+    },
+    error: function (json) {
+      console.log("ERROR");
+    }
+  });
+}
 function updateDiagnosis(num, modal) {
   var diagnosisModalTitle = document.getElementById("modalDiagnosisTitle" + num);
   //checks to see if the user entered anything in the diagnosis title field
