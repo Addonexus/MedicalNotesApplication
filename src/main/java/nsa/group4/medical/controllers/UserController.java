@@ -1,5 +1,6 @@
 package nsa.group4.medical.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.UserRepository;
 import nsa.group4.medical.domains.Role;
 import nsa.group4.medical.domains.User;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
+@Slf4j
 @Controller
 public class UserController {
 
@@ -63,10 +65,12 @@ public class UserController {
 
         String username = "";
         Long id = null;
-        if (principal instanceof User){
+        if (principal instanceof UserDetails){
+            log.debug("HEEHEE");
             username = ((User)principal).getUsername();
             id = ((User)principal).getId();
         } else {
+            log.debug("OOOOOO");
             username = principal.toString();
         }
 
