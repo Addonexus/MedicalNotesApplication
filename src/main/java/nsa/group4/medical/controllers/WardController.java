@@ -20,25 +20,39 @@ import java.util.List;
 public class WardController {
 
     private  CaseServiceInterface caseService;
-    //private WardServiceInterface wardServiceInterface;
-    //private WardRepositoryInterface wardRepositoryInterface;
-    private DiagnosisServiceInterface diagnosisService;
-    private NotificationServiceInterface notificationService;
-    private DiagnosisRepositoryInterface diagnosisRepository;
-    private CategoryServiceInterface categoryService;
-    private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
+    private WardServiceInterface wardService;
+    private WardRepositoryInterface wardRepository;
 
+    static final Logger LOG = LoggerFactory.getLogger(
+            WardController.class
+    );
 
     @Autowired
-    public WardController(CaseServiceInterface caseService){
+    public WardController(CaseServiceInterface caseService,
+                          WardServiceInterface wardService,
+                          WardRepositoryInterface wardRepository){
         this.caseService = caseService;
+        this.wardService = wardService;
+        this.wardRepository = wardRepository;
     }
 
     @GetMapping(path ="/ward/{wardIndex}")
-    public String returnCases(@PathVariable(
-            name="wardIndex")Long wardId, Model model){
+    public String getCases(@PathVariable(name="wardIndex")
+                           Long wardId, Model model) {
+
+        List<CaseModel> returnedCases =
+                caseService.findCasesByWardId(wardId);
+        log.debug("CASES RETURNED HOPEFULLY: "
+        + returnedCases);
+
+
+        model.addAttribute("returnedCases ", returnedCases);
+        model.addAttribute("wardName", wardService.findById(wardId).get()
+        .getName());
 
         return "main/ward";
-
     }
+
+
+
 }

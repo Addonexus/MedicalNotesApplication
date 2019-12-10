@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface WardRepositoryInterface {
     Optional<Ward> findByName(String name);
 
-    List<Ward> findByWardNameIn(Collection<String> names);
+    List<Ward> findByNameIn(Collection<String> names);
 
     Ward save(Ward ward);
 

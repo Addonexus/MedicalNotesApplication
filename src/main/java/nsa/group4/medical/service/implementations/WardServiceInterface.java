@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface WardServiceInterface {
 
     Optional<Ward> getCaseByWardName(String name);
-    List<Ward> findByWardNameIn(Collection<String> names);
+    List<Ward> findByNameIn(Collection<String> names);
 
     Optional<Ward> findById(Long wardId);
 

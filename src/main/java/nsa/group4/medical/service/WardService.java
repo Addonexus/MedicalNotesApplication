@@ -34,8 +34,8 @@ public class WardService implements WardServiceInterface {
     }
 
     @Override
-    public List<Ward> findByWardNameIn(Collection<String> names){
-        return wardRepositoryInterface.findByWardNameIn(names);
+    public List<Ward> findByNameIn(Collection<String> names){
+        return wardRepositoryInterface.findByNameIn(names);
     }
 
     @Override
