@@ -75,8 +75,15 @@ insert into diagnosis_information (id,diagnosis_id, field, value) values (2,1, '
 insert into diagnosis_information (id,diagnosis_id, field, value) values (3,1, 'sample_field_3', 'sample_data_3');
 
 
--- INSERT INTO user(username,password, fav_charity_id)
--- VALUES ('carl','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G',1);
+INSERT INTO user(id,username,password)
+VALUES (1,'admin','$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G');
+
+
+INSERT INTO role(id,role) VALUES(1,'ADMIN');
+
+
+INSERT INTO user_roles(user_id,roles_id) VALUES(1,1);
+
 -- INSERT INTO user(username,password, fav_charity_id)
 -- VALUES ('jude','{bcrypt}$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G',2);
 -- /* password = password */
