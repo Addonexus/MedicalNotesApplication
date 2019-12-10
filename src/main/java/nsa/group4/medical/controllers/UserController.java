@@ -67,8 +67,8 @@ public class UserController {
         Long id = null;
         if (principal instanceof UserDetails){
             log.debug("HEEHEE");
-            username = ((User)principal).getUsername();
-            id = ((User)principal).getId();
+            username = ((UserDetails)principal).getUsername();
+            //id = ((UserDetails)principal).getId();
         } else {
             log.debug("OOOOOO");
             username = principal.toString();
