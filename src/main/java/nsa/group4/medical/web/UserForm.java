@@ -26,6 +26,7 @@ public class UserForm {
 
   @NotNull
   @NotEmpty
+  @Size(min=5, max=30, message="wahoo")
   private String username;
 
   @NotNull
