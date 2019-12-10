@@ -3,24 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
-</head>
-<body>
 
-<main>
     <div sec:authorize="isAuthenticated()">
         Welcome back:
         <div sec:authentication="name"></div>
     </div>
-    <a href="/category/1/createNewCase">
-        <span>Create New Case</span>
-    </a>
-    <a href="/createNewCategory">
-    <button>Create New Category</button>
-    </a>
-    <div>
-        <li th:each="category: ${categories}">
-            <span th:text="${category.name}"></span>
-        </li>
+
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -175,6 +163,6 @@
         anchorPlacement: "top-bottom" // defines which position of the element regarding to window should trigger the animation
       });
     </script>
-    <script type="text/javascript" th:src="@{/sitewide.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/sitewide.js}"></script>-->
   </body>
 </html>
