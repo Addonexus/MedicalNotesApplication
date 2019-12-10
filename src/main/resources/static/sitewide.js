@@ -19,10 +19,7 @@ function refreshNotifications() {
     notificationList.removeChild(notificationList.firstChild);
   }
 
-
   $.get("/api/getAllNotifications", function(data) {
-    console.log(data[1].diagnosisLink);
-
     // if (windowUrl.pathname.includes("diagnosis")) {
     //   console.log("diagnosis num: " + lastInt);
     //   for (var i = 0; i < data.length; i++) {
@@ -34,17 +31,21 @@ function refreshNotifications() {
     var needToRead = [];
     var needToDo = [];
     var done = [];
-  
+
     for (var i = 0; i < data.length; i++) {
       var a = document.createElement("a");
-      a.appendChild(document.createTextNode("Update information for " + data[i].diagnosisLink.name));
+      a.appendChild(
+        document.createTextNode(
+          "Update information for " + data[i].diagnosisLink.name
+        )
+      );
       var icon = document.createElement("i");
       icon.setAttribute("class", "material-icons right");
       icon.appendChild(document.createTextNode("notifications_active"));
-      
+
       icon.style.color = "#ccccff";
-      icon.style.visibility = data[i].read ? "hidden" : "visible"; 
-  
+      icon.style.visibility = data[i].read ? "hidden" : "visible";
+
       a.appendChild(icon);
       a.setAttribute("id", data[i].id);
       a.setAttribute("class", "collection-item");
@@ -52,7 +53,7 @@ function refreshNotifications() {
       a.style.fontWeight = data[i].read ? "200" : "600";
       a.style.backgroundColor = data[i].done ? "#eeeeee" : "#ffffff";
       a.style.textDecoration = data[i].done ? "line-through" : "none";
-  
+
       if (data[i].read == false) {
         needToRead.unshift(a);
       } else {
@@ -62,34 +63,41 @@ function refreshNotifications() {
           done.unshift(a);
         }
       }
-  
+
       // notificationList.style.visibility = "visible";
     }
-  
+
+    divider = document.createElement("div");
+    divider.setAttribute("class", "divider");
+
     for (let i = 0; i < needToRead.length; i++) {
       notificationList.appendChild(needToRead[i]);
     }
+
     for (let i = 0; i < needToDo.length; i++) {
       notificationList.appendChild(needToDo[i]);
     }
+
+    notificationList.appendChild(divider);
+
     for (let i = 0; i < done.length; i++) {
       notificationList.appendChild(done[i]);
     }
-  
+
     if (needToRead.length > 0) {
       notificationBell = document.getElementById("notification-bell");
       notificationBell.classList.remove("white-text");
       notificationBell.classList.add("blue-text");
       notificationBell.classList.add("text-lighten-3");
-      notificationBell.innerHTML = "notifications_active"
+      notificationBell.innerHTML = "notifications_active";
     }
 
     if (notificationList.length > 0) {
       notificationList.style.visibility = "visible";
     }
-  
-    notificationList.style.visibility = (notificationList.childNodes.length > 0) ? "visible" : "hidden";
 
+    notificationList.style.visibility =
+      notificationList.childNodes.length > 0 ? "visible" : "hidden";
   });
 }
 
@@ -104,7 +112,6 @@ $("#calendar-form").submit(function(e) {
 
   var listOfCasesForDay = document.getElementById("casesForTheDay");
   console.log(listOfCasesForDay);
-
 
   $.ajax({
     contentType: "application/json; charset=utf-8",
@@ -125,8 +132,8 @@ $("#calendar-form").submit(function(e) {
         li.setAttribute("class", "collection-item");
         li.setAttribute("href", "/case/" + response.casesList[i].id);
         listOfCasesForDay.appendChild(li);
-        listOfCasesForDay.style.visibility = "visible"
-        listOfCasesForDay.style.marginBottom = "25px"
+        listOfCasesForDay.style.visibility = "visible";
+        listOfCasesForDay.style.marginBottom = "25px";
       }
     },
     error: function(json) {

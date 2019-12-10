@@ -1,3 +1,6 @@
+$('.modal').modal();
+
+
 // Get the window URL
 windowUrl = window.location;
 console.log("Window URL: " + windowUrl);
@@ -42,7 +45,7 @@ if (showRecentCases) {
 
 function postDiagnosisInfo() {
   console.log("--- post diagnosis info function --- ");
-  $("#createDiagnosisInfo").submit(function(e) {
+  $("#createDiagnosisInfo").submit(function (e) {
     e.preventDefault();
     console.log("--- posting diagnosis info --- ");
 
@@ -63,8 +66,8 @@ function postDiagnosisInfo() {
       type: "POST",
       url: url,
       data: JSON.stringify(formData),
-      success: function(json) {
-        $("#diaInfoTable tr").each(function() {
+      success: function (json) {
+        $("#diaInfoTable tr").each(function () {
           // console.log(this.id);
           if (this.id) {
             this.remove();
@@ -79,9 +82,9 @@ function postDiagnosisInfo() {
         });
         getDiagnosisInformation();
       },
-      error: function(json) {
+      error: function (json) {
         // alert("error!");
-        console.log("error-h.html")
+        console.log("error-h.html");
       }
     });
   });
@@ -96,8 +99,14 @@ function refreshListOfDiagnoses() {
   console.log("HI THERE");
   console.log(window.location);
 
+  container = document.getElementById("modal-container");
+  console.log("container");
+  console.log(container);
+  container.innerHTML = "";
+  var hmm;
+
   if (window.location.pathname.includes("category")) {
-    $.get("/api/getDiagnosisByCategoryId/" + lastInt, function(data) {
+    $.get("/api/getDiagnosisByCategoryId/" + lastInt, function (data) {
       $(".result").html(data);
       console.log(data);
       var grid = document.getElementById("content-grid");
@@ -114,58 +123,183 @@ function refreshListOfDiagnoses() {
         a.appendChild(b);
 
         grid.appendChild(a);
-        
+
         var customId = "deleteButton" + data[i].id;
 
-        var settings = document.createElement("a");
+        var settings = document.createElement("div");
         var settingsButton = document.createElement("button");
         var settingsIcon = document.createElement("i");
-        
+
         settings.style.width = "15%";
-        settingsIcon.appendChild(document.createTextNode("delete_forever"));
+        settingsIcon.appendChild(document.createTextNode("edit"));
         settingsIcon.setAttribute("class", "material-icons large");
 
         settingsButton.appendChild(settingsIcon);
-        settingsButton.setAttribute("class", "btn content-item bigger");
-        settingsButton.setAttribute("onClick", "deleteDiagnosis(" + (data[i].id) + ")");
+        settingsButton.setAttribute(
+          "class",
+          "btn content-item bigger modal-trigger"
+        );
+        settingsButton.setAttribute("href", "#diaModal" + i);
 
-        // settingsButton.style.backgroundColor="#eeeeff";
-        settingsButton.style.backgroundColor="#ffaaaa";
-        settingsButton.style.borderRadius="5px";
-        settingsButton.style.borderLeft="1px solid grey";
+        settingsButton.style.backgroundColor = "#eeeeff";
+        settingsButton.style.borderRadius = "5px";
+        settingsButton.style.borderLeft = "1px solid grey";
         settingsButton.style.fontWeight = "600";
-        settingsButton.id=customId;
-        
+
         settings.appendChild(settingsButton);
-        grid.appendChild(settings);    
+        grid.appendChild(settings);
+
+        // Modal stuff
+        diagnosisTitle = document.createElement("input");
+        diagnosisTitle.id = "modalDiagnosisTitle" + data[i].id;
+        diagnosisTitle.placeholder = data[i].name;
+
+        inputSelect = document.createElement('select');
+        inputSelect.setAttribute("class", "browser-default");
+        inputSelect.id = "modalDiagnosisCategoryTitle" + data[i].id;
+
+        diagnosisCategoryTitle = document.createElement("div");
+        diagnosisCategoryTitle.setAttribute("class", "input-field col s12");
+        diagnosisCategoryTitle.appendChild(inputSelect);
+
+        console.log(data[i].categories);
+        diagnosisCategoryTitle.placeholder = data[i].categories.name;
+
+        // Modal content
+        modalContent = document.createElement("div");
+        modalContent.setAttribute("class", "modal-content");
+        modalContent.style.padding = "30px";
+        modalContent.appendChild(diagnosisTitle);
+        modalContent.appendChild(diagnosisCategoryTitle);
+
+        // Modal footer
+        saveButton = document.createElement("button");
+        saveButton.setAttribute("class", "btn-small white black-text");
+        saveButton.setAttribute(
+          "onClick",
+          "updateDiagnosis(" + data[i].id + ", diaModal" + i + ")"
+        );
+
+        saveButton.appendChild(document.createTextNode("save"));
+
+        deleteButton = document.createElement("button");
+        deleteButton.setAttribute("class", "btn-small white black-text");
+        deleteButton.setAttribute(
+          "onClick",
+          "deleteDiagnosis(" + data[i].id + ", diaModal" + i + ")"
+        );
+        deleteButton.appendChild(document.createTextNode("delete"));
+        deleteButton.style.marginLeft = "20px";
+
+        modalFooter = document.createElement("div");
+        modalFooter.setAttribute("class", "modal-footer");
+        modalFooter.appendChild(saveButton);
+        modalFooter.appendChild(deleteButton);
+        modalFooter.style.borderTop = "2px solid black";
+
+        modal = document.createElement("div");
+        modal.setAttribute("class", "modal");
+        modal.setAttribute("id", "diaModal" + i);
+        modal.appendChild(modalContent);
+        modal.appendChild(modalFooter);
+
+        container.appendChild(modal);
+
+        console.log(modal);
       }
+      doThis(data);
+
+      $('.modal').modal();
     });
   }
 }
 
-function deleteDiagnosis(num) {
-  console.log(num);
-  var formData = {
-        id: num
-      };
+function doThis(data) {
+  console.log("HAHHASHU")
+  $.get("/api/getAllCategories").then(function(categories) {
+    console.log("work or i haven noidae")
+    console.log(data);
+    for (var i = 0; i < data.length; i++) {
+      inputSelectRef = document.getElementById("modalDiagnosisCategoryTitle" + data[i].id);
+      console.log(inputSelectRef);
+      for (var j = 0; j < categories.length; j++) {
+        inputOption = document.createElement('option');
+        inputOption.setAttribute("value", categories[j].name);
+        inputOption.appendChild(document.createTextNode(categories[j].name));
+        inputSelectRef.appendChild(inputOption)
+      }
+    }
+    console.log("fuck this");
+    console.log(categories);
+  });
+}
 
-      $.ajax({
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        type: "DELETE",
-        url: "/api/deleteDiagnosis/"+num,
-//        data: JSON.stringify(formData),
-        success: function(json) {
-          // alert("Worked!");
-          refreshListOfDiagnoses();
-          getRecentCases();
-          refreshNotifications();
-        },
-        error: function(json) {
-          console.log("ERROR")
-          // alert("error!");
-        }
-      });
+
+function updateDiagnosis(num, modal) {
+  var diagnosisModalTitle = document.getElementById("modalDiagnosisTitle" + num);
+  //checks to see if the user entered anything in the diagnosis title field
+  if (diagnosisModalTitle.value == ""){
+  //  sets the new name as whatever the current name of the diagnosis is
+    newName = diagnosisModalTitle.placeholder;
+  }
+  else{
+  // otherwise sets the new diagnosis name as title entered by the user
+    newName = diagnosisModalTitle.value;
+  }
+  console.log("himmsdmsd")
+  newCategory = document.getElementById("modalDiagnosisCategoryTitle" + num).value;
+  // instance.close();
+  var formData = {
+    "newName": newName,
+    "newCategory": newCategory
+  };
+
+  $.ajax({
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    data: JSON.stringify(formData),
+    type: "POST",
+    url: "/api/updateDiagnosis/" + num,
+    success: function (json) {
+      getRecentCases();
+      refreshNotifications();
+      console.log("ERROR");
+      refreshListOfDiagnoses();
+    },
+    error: function (json) {
+      refreshListOfDiagnoses();
+      console.log("ERROR");
+    }
+  });
+}
+
+function deleteDiagnosis(num, modal) {
+  console.log(num);
+  console.log("my modal: " + modal);
+  var instance = M.Modal.getInstance(modal);
+  // instance.close();
+  var formData = {
+    id: num
+  };
+
+  $.ajax({
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    type: "DELETE",
+    url: "/api/deleteDiagnosis/" + num,
+    success: function (json) {
+      getRecentCases();
+      refreshNotifications();
+      refreshListOfDiagnoses();
+    },
+    error: function (json) {
+      console.log("ERROR");
+    }
+  });
+}
+
+function reload() {
+  document.location.reload();
 }
 
 function deleteCategory(num) {
@@ -178,21 +312,20 @@ function deleteCategory(num) {
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     type: "DELETE",
-    url: "/api/deleteCategory/"+num,
-//        data: JSON.stringify(formData),
-    success: function(json) {
+    url: "/api/deleteCategory/" + num,
+    //        data: JSON.stringify(formData),
+    success: function (json) {
       // alert("Worked!");
       refreshListOfCategories();
-//                var listOfCases = document.getElementById("recentCases");
-//
-//                listOfCases.empty();
+      //                var listOfCases = document.getElementById("recentCases");
+      //
+      //                listOfCases.empty();
       getRecentCases();
     },
-    error: function(json) {
+    error: function (json) {
       // alert("error!");
-      console.log("ERROR")
+      console.log("ERROR");
     }
-
   });
 }
 function refreshListOfCategories() {
@@ -205,7 +338,7 @@ function refreshListOfCategories() {
   console.log("HI THERE");
   console.log(window.location);
 
-  $.get("/api/getAllCategories/" + lastInt, function(data) {
+  $.get("/api/getAllCategories/" + lastInt, function (data) {
     $(".result").html(data);
     console.log(data);
     var grid = document.getElementById("content-grid");
@@ -220,13 +353,11 @@ function refreshListOfCategories() {
       b.style.fontWeight = "600";
       a.appendChild(b);
 
-
       var customId = "deleteButton" + data[i].id;
 
       var settings = document.createElement("a");
       var settingsButton = document.createElement("button");
       var settingsIcon = document.createElement("i");
-
 
       settings.style.width = "15%";
       settingsIcon.appendChild(document.createTextNode("delete_forever"));
@@ -234,33 +365,34 @@ function refreshListOfCategories() {
 
       settingsButton.appendChild(settingsIcon);
       settingsButton.setAttribute("class", "btn content-item bigger");
-      settingsButton.setAttribute("onClick", "deleteCategory(" + (data[i].id) + ")");
+      settingsButton.setAttribute(
+        "onClick",
+        "deleteCategory(" + data[i].id + ")"
+      );
 
       // settingsButton.style.backgroundColor="#eeeeff";
-      settingsButton.style.backgroundColor="#ffaaaa";
-      settingsButton.style.borderRadius="5px";
-      settingsButton.style.borderLeft="1px solid grey";
+      settingsButton.style.backgroundColor = "#ffaaaa";
+      settingsButton.style.borderRadius = "5px";
+      settingsButton.style.borderLeft = "1px solid grey";
       settingsButton.style.fontWeight = "600";
-      settingsButton.id=customId;
+      settingsButton.id = customId;
 
       settings.appendChild(settingsButton);
 
       if (data[i].name == "Miscellaneous") {
         console.log("UMMM WHY");
-        grid.insertBefore(settings,grid.firstChild);
+        grid.insertBefore(settings, grid.firstChild);
         grid.insertBefore(a, grid.firstChild);
       } else {
         grid.appendChild(a);
         grid.appendChild(settings);
       }
-
-
     }
   });
 }
 
 function getDiagnosisInformation() {
-  $.get("/api/returnedDiagnosisInfo/" + lastInt, function(data) {
+  $.get("/api/returnedDiagnosisInfo/" + lastInt, function (data) {
     $(".result").html(data);
     console.log(data);
     var diagnosisInfoTable = document.getElementById("diaInfoTable");
@@ -279,10 +411,10 @@ function getDiagnosisInformation() {
 }
 
 function getRecentCases() {
- var listOfCases = document.getElementById("recentCases");
- while(listOfCases.hasChildNodes()){
- listOfCases.removeChild(listOfCases.childNodes[0])
- }
+  var listOfCases = document.getElementById("recentCases");
+  while (listOfCases.hasChildNodes()) {
+    listOfCases.removeChild(listOfCases.childNodes[0]);
+  }
   $.ajax({
     type: "GET",
     url: "/api/getRecentCases",
@@ -290,13 +422,11 @@ function getRecentCases() {
     contentType: "application/json; charset=utf-8",
     dataType: "json",
 
-    success: function(response) {
+    success: function (response) {
       var ids = response.categoryIds;
       var cases = response.casesList;
 
-
-
-//      listOfCases.empty();
+      //      listOfCases.empty();
       for (i = 0; i < cases.length; i++) {
         var li = document.createElement("a");
         li.appendChild(document.createTextNode(cases[i].name));
@@ -306,22 +436,22 @@ function getRecentCases() {
         listOfCases.appendChild(li);
       }
     },
-    error: function(response) {
+    error: function (response) {
       console.log(
         "Request Status: " +
-          response.status +
-          " Status Text: " +
-          response.statusText +
-          " " +
-          " Response Text: " +
-          response.responseText
+        response.status +
+        " Status Text: " +
+        response.statusText +
+        " " +
+        " Response Text: " +
+        response.responseText
       );
     }
   });
 }
 
 function createCategory() {
-  $("#createCategory").submit(function(e) {
+  $("#createCategory").submit(function (e) {
     e.preventDefault();
 
     var $form = $(this);
@@ -339,10 +469,10 @@ function createCategory() {
       type: "POST",
       url: url,
       data: JSON.stringify(formData),
-      success: function(json) {
+      success: function (json) {
         refreshListOfCategories();
       },
-      error: function(json) {
+      error: function (json) {
         alert("error!");
       }
     });
@@ -350,7 +480,7 @@ function createCategory() {
 }
 
 function lookForCategoryFormPost() {
-  $("#createDiagnosis").submit(function(e) {
+  $("#createDiagnosis").submit(function (e) {
     e.preventDefault();
 
     var $form = $(this);
@@ -367,10 +497,10 @@ function lookForCategoryFormPost() {
       type: "POST",
       url: url,
       data: JSON.stringify(formData),
-      success: function(json) {
+      success: function (json) {
         refreshListOfDiagnoses();
       },
-      error: function(json) {
+      error: function (json) {
         alert("error!");
       }
     });
@@ -381,7 +511,7 @@ var coll = document.getElementsByClassName("collapsible");
 var i;
 
 for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
+  coll[i].addEventListener("click", function () {
     this.classList.toggle("active");
     var content = this.nextElementSibling;
     if (content.style.maxHeight) {
@@ -392,6 +522,4 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-function markNotificationRead() {
-
-}
+function markNotificationRead() { }
