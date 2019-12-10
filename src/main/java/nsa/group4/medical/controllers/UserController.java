@@ -10,6 +10,7 @@ import nsa.group4.medical.web.UserForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,6 +55,25 @@ public class UserController {
         httpServletRequest.logout();
 
         return "login";
+    }
+
+    @GetMapping("/accountDetails")
+    public String getAccountDetails(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String username = "";
+        Long id = null;
+        if (principal instanceof User){
+            username = ((User)principal).getUsername();
+            id = ((User)principal).getId();
+        } else {
+            username = principal.toString();
+        }
+
+        model.addAttribute("usernameKey", username);
+        model.addAttribute("idKey", id);
+
+        return "accountDetails";
     }
 
     @PostMapping("/registration")
