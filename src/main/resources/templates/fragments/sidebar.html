@@ -6,6 +6,14 @@
   </a>
   <h4 class="white-text" style="margin: 0px; margin-bottom: 5px; display: flex; justify-content: center;">Recent cases</h4>
 </div>
+<div th:fragment="sidebar-passing-diagnosis-button">
+  <a th:href="@{'/createNewCase/diagnosis/'+ ${diagnosisIndex}}">
+    <div class="btn white black-text">
+      New case
+    </div>
+  </a>
+  <h4 class="white-text" style="margin: 0px; margin-bottom: 5px; display: flex; justify-content: center;">Recent cases</h4>
+</div>
 
 <!--<div th:fragment="sidebar-no-button" style="padding: 15px; color: white;">-->
 <!--  <b>To create a new case, please enter a category or diagnosis</b>-->

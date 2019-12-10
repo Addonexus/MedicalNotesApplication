@@ -123,6 +123,8 @@
 <!--        <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">-->
 
         <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value = "${hiddenForm}">
+        <input th:if="${diagnosisName !=null}" type="hidden" id="passedDiagnosis" th:value = "${diagnosisName}">
+
         </fieldset>
         <div class="btn-container">
                 <button class="ele-btn" id="submit-button" type="submit">Create Case</button>
