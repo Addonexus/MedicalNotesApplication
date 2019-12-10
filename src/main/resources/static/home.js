@@ -236,7 +236,16 @@ function doThis(data) {
 
 
 function updateDiagnosis(num, modal) {
-  var newName = document.getElementById("modalDiagnosisTitle" + num).value;
+  var diagnosisModalTitle = document.getElementById("modalDiagnosisTitle" + num);
+  //checks to see if the user entered anything in the diagnosis title field
+  if (diagnosisModalTitle.value == ""){
+  //  sets the new name as whatever the current name of the diagnosis is
+    newName = diagnosisModalTitle.placeholder;
+  }
+  else{
+  // otherwise sets the new diagnosis name as title entered by the user
+    newName = diagnosisModalTitle.value;
+  }
   console.log("himmsdmsd")
   newCategory = document.getElementById("modalDiagnosisCategoryTitle" + num).value;
   // instance.close();
