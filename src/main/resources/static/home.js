@@ -263,11 +263,16 @@ function updateCategory(num, modal) {
       console.log("ERROR");
       refreshListOfCategories();
     },
-    error: function (json) {
-      alert("Category Name already exists, please try a different name");
-//      refreshListOfCategories();
-      console.log("ERROR");
+    error: function (response) {
+//        if(response.status == "NAME EXISTS"){
+
+        var obj = JSON.parse(response.responseText);
+        if(obj.status = "NAME EXISTS"){
+            alert("Category Name already exists, please try a different name");
+        }
+        console.log("ERROR");
     }
+//      refreshListOfCategories();
   });
 }
 function deleteCategory(num, modal) {
@@ -325,9 +330,12 @@ function updateDiagnosis(num, modal) {
       console.log("ERROR");
       refreshListOfDiagnoses();
     },
-    error: function (json) {
-      refreshListOfDiagnoses();
-      console.log("ERROR");
+    error: function (response) {
+        var obj = JSON.parse(response.responseText);
+        if(obj.status = "NAME EXISTS"){
+            alert("Diagnosis Name already exists, please try a different name")
+        }
+        console.log("ERROR");
     }
   });
 }
