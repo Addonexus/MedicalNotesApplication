@@ -41,6 +41,20 @@ public class RESTCategoryController {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @PostMapping(value = "/updateCategory/{index}", produces = "application/json")
+    public void updateCategory(@PathVariable Long index, @RequestBody Map<String, String> formData, Errors bindingResult) {
+        String newName = formData.get("newName");
+//        String newCategory = formData.get("newCategory");
+//        Diagnosis diagnosis = diagnosisService.getByDiagnosisId(index).get();
+        AjaxResponseBody responseBody = new AjaxResponseBody();
+        Optional<Categories> returnedCategory = categoryService.findById(index);
+        if (returnedCategory.isPresent()) {
+            Categories category = returnedCategory.get();
+                    category.setName(newName);
+                    categoryService.saveCategory(category);
+        }
+}
+
     @PostMapping(value = "/createCategory", produces = "application/json")
     public @ResponseBody ResponseEntity<?> saveCategory(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
