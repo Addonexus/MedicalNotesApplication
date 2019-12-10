@@ -216,7 +216,7 @@ function refreshListOfDiagnoses() {
 
 function doThis(data) {
   console.log("HAHHASHU")
-  $.get("/api/getAllCategories").then(function(categories) {
+  $.get("/api/getAllCategories").then(function (categories) {
     console.log("work or i haven noidae")
     console.log(data);
     for (var i = 0; i < data.length; i++) {
@@ -237,12 +237,12 @@ function doThis(data) {
 function updateCategory(num, modal) {
   var categoryModalTitle = document.getElementById("modalCategoryTitle" + num);
   //checks to see if the user entered anything in the diagnosis title field
-  if (categoryModalTitle.value == ""){
-  //  sets the new name as whatever the current name of the diagnosis is
+  if (categoryModalTitle.value == "") {
+    //  sets the new name as whatever the current name of the diagnosis is
     newName = categoryModalTitle.placeholder;
   }
-  else{
-  // otherwise sets the new diagnosis name as title entered by the user
+  else {
+    // otherwise sets the new diagnosis name as title entered by the user
     newName = categoryModalTitle.value;
   }
   console.log("himmsdmsd")
@@ -264,15 +264,15 @@ function updateCategory(num, modal) {
       refreshListOfCategories();
     },
     error: function (response) {
-//        if(response.status == "NAME EXISTS"){
+      //        if(response.status == "NAME EXISTS"){
 
-        var obj = JSON.parse(response.responseText);
-        if(obj.status = "NAME EXISTS"){
-            alert("Category Name already exists, please try a different name");
-        }
-        console.log("ERROR");
+      var obj = JSON.parse(response.responseText);
+      if (obj.status = "NAME EXISTS") {
+        alert("Category Name already exists, please try a different name");
+      }
+      console.log("ERROR");
     }
-//      refreshListOfCategories();
+    //      refreshListOfCategories();
   });
 }
 function deleteCategory(num, modal) {
@@ -302,12 +302,12 @@ function deleteCategory(num, modal) {
 function updateDiagnosis(num, modal) {
   var diagnosisModalTitle = document.getElementById("modalDiagnosisTitle" + num);
   //checks to see if the user entered anything in the diagnosis title field
-  if (diagnosisModalTitle.value == ""){
-  //  sets the new name as whatever the current name of the diagnosis is
+  if (diagnosisModalTitle.value == "") {
+    //  sets the new name as whatever the current name of the diagnosis is
     newName = diagnosisModalTitle.placeholder;
   }
-  else{
-  // otherwise sets the new diagnosis name as title entered by the user
+  else {
+    // otherwise sets the new diagnosis name as title entered by the user
     newName = diagnosisModalTitle.value;
   }
   console.log("himmsdmsd")
@@ -331,11 +331,11 @@ function updateDiagnosis(num, modal) {
       refreshListOfDiagnoses();
     },
     error: function (response) {
-        var obj = JSON.parse(response.responseText);
-        if(obj.status = "NAME EXISTS"){
-            alert("Diagnosis Name already exists, please try a different name")
-        }
-        console.log("ERROR");
+      var obj = JSON.parse(response.responseText);
+      if (obj.status = "NAME EXISTS") {
+        alert("Diagnosis Name already exists, please try a different name")
+      }
+      console.log("ERROR");
     }
   });
 }
@@ -396,21 +396,23 @@ function deleteCategory(num) {
   });
 }
 function refreshListOfCategories() {
-    console.log("HIHHS");
+  console.log("HIHHS");
   var grid = document.getElementById("content-grid");
 
   while (grid.firstChild) {
     grid.removeChild(grid.firstChild);
   }
-    console.log("HI THERE");
-    console.log(window.location);
-    container = document.getElementById("modal-container");
-    console.log("container");
-    console.log(container);
-    container.innerHTML = "";
+  console.log("HI THERE");
+  console.log(window.location);
+  container = document.getElementById("modal-container");
+  console.log("container");
+  console.log(container);
+  container.innerHTML = "";
 
-  $.get("/api/getAllCategories/" + lastInt, function (data) {
+  $.get("/api/getAllCategories/", function (data) {
     $(".result").html(data);
+
+    console.log("home data");
     console.log(data);
     var grid = document.getElementById("content-grid");
     for (i = 0; i < data.length; i++) {
@@ -437,10 +439,10 @@ function refreshListOfCategories() {
       settingsButton.appendChild(settingsIcon);
       settingsButton.setAttribute("class", "btn content-item bigger modal-trigger");
       settingsButton.setAttribute("href", "#categoryModal" + i);
-//      settingsButton.setAttribute(
-//        "onClick",
-//        "deleteCategory(" + data[i].id + ")"
-//      );
+      //      settingsButton.setAttribute(
+      //        "onClick",
+      //        "deleteCategory(" + data[i].id + ")"
+      //      );
 
       // settingsButton.style.backgroundColor="#eeeeff";
       settingsButton.style.backgroundColor = "#eeeeff";
@@ -465,7 +467,7 @@ function refreshListOfCategories() {
       categoryTitle.id = "modalCategoryTitle" + data[i].id;
       categoryTitle.placeholder = data[i].name;
 
-       // Modal content
+      // Modal content
       modalContent = document.createElement("div");
       modalContent.setAttribute("class", "modal-content");
       modalContent.style.padding = "30px";

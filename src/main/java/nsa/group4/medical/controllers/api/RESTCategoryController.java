@@ -1,10 +1,15 @@
 package nsa.group4.medical.controllers.api;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.domains.*;
+import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.service.implementations.CategoryServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +28,11 @@ public class RESTCategoryController {
         this.caseServiceInterface =caseServiceInterface;
         this.categoryService=categoryService;
     }
+
+    @Autowired
+    public UserService userService;
+
+    public Helpers helpers;
 
     @DeleteMapping("/deleteCategory/{index}")
     public @ResponseBody ResponseEntity<?> deleteCategoryById(
@@ -83,9 +93,18 @@ public class RESTCategoryController {
 
     @GetMapping("/getAllCategories")
     public @ResponseBody List<Categories> getCategories(){
+
         log.debug("REST API RETURN: ");
-        List<Categories> returnedList = categoryService.findAll();
-        return returnedList;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails)principal).getUsername();
+        User returnedUser = userService.findByUsername(username);
+        System.out.println(returnedUser);
+        Long userId = returnedUser.getId();
+        System.out.println("User id: " + userId);
+
+        List<Categories> categories = categoryService.findByUserId(userId);
+        System.out.println("    categories: " + categories);
+        return categoryService.findByUserId(userId);
     }
 }
 

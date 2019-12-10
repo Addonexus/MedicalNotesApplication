@@ -3,8 +3,13 @@ package nsa.group4.medical.controllers;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
+import nsa.group4.medical.domains.User;
+import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.service.implementations.CategoryServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +20,9 @@ import java.util.List;
 public class HomeController {
     private CategoryServiceInterface categoryService;
     private CaseServiceInterface caseService;
+
+    @Autowired
+    private UserService userService;
 
     public HomeController(CaseServiceInterface caseService,
                           CategoryServiceInterface categoryService
@@ -47,7 +55,16 @@ public class HomeController {
 
     @GetMapping(path = "/home")
     public String allCases(Model model) {
-        List<Categories> categories = categoryService.findAll();
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails)principal).getUsername();
+        User returnedUser = userService.findByUsername(username);
+        System.out.println(returnedUser);
+        Long userId = returnedUser.getId();
+
+        System.out.println(categoryService.findAll());
+
+        List<Categories> categories = categoryService.findByUserId(userId);
         List<CaseModel> cases = caseService.findAll();
         System.out.println("CATEGORIES TSET: "+categories.toString());
         System.out.println("CASES TSET: "+cases.toString());

@@ -1,12 +1,15 @@
 package nsa.group4.medical.service;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.NotificationRepoJPA;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.implementations.*;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +28,11 @@ public class CaseService implements CaseServiceInterface {
     private CategoryRepositoryInterface categoryRepository;
     private NotificationServiceInterface notificationService;
     private WardRepositoryInterface wardRepository;
+
+    public Helpers helpers;
+
+    @Autowired
+    private UserService userService;
 
     public CaseService(CaseRepositoryInterface caseRepository,
                        DiagnosisRepositoryInterface diagnosisRepository,
@@ -90,7 +98,7 @@ public class CaseService implements CaseServiceInterface {
         if(!notExistingDiagnosis.isEmpty()){
 
             if(!categoryExists ){
-                category = categoryRepository.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
+                category = categoryRepository.save(new Categories(null, helpers.getUserId(), "Miscellaneous", new ArrayList<>()));
             }
             else{
                 category =  categoryRepository.findByName("Miscellaneous").get();
@@ -153,6 +161,9 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public void updateCase(CaseForm form) {
+
+
+
         //makes a list of all the diagnosis items that were entered by user in the input field
         List<String> diagnosesList = form.getDiagnosesList()
                 .stream().map(x -> Objects.toString(x.getTag(), null))
@@ -187,7 +198,7 @@ public class CaseService implements CaseServiceInterface {
         if(!notExistingDiagnosis.isEmpty()) {
 
             if (!categoryExists) {
-                category = categoryRepository.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
+                category = categoryRepository.save(new Categories(null, helpers.getUserId(), "Miscellaneous", new ArrayList<>()));
             } else {
                 category = categoryRepository.findByName("Miscellaneous").get();
             }

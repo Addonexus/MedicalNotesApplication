@@ -45,4 +45,9 @@ public class CategoryService implements CategoryServiceInterface {
     public Categories saveCategory(Categories categories) {
         return categoryRepository.save(categories);
     }
+
+    @Override
+    public List<Categories> findByUserId(Long userId) {
+       return categoryRepository.findByUserId(userId);
+    }
 }

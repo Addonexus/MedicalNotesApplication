@@ -17,4 +17,5 @@ public interface CategoryRepositoryInterface {
     void deleteById(Long id);
     List<Categories> findAll();
     Categories save(Categories categories);
+    List<Categories> findByUserId(Long userId);
 }
