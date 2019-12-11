@@ -45,6 +45,7 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new UserForm());
@@ -97,23 +98,29 @@ public class UserController {
                 "admin"
         ));
 
-        User tempUser = new User(
-                null,
-                userForm.getUsername(),
-                userForm.getPassword(),
-                userForm.getPassword(),
-                temp
-        );
-
-        userValidator.validate(tempUser, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return "registration";
+        if(userExists(userForm.getUsername())) {
+            //add error message
         }
+        else {
+            User tempUser = new User(
+                    null,
+                    userForm.getUsername(),
+                    userForm.getPassword(),
+                    userForm.getPassword(),
+                    temp
+            );
 
-        userService.save(tempUser);
+            userValidator.validate(tempUser, bindingResult);
 
-        securityService.autoLogin(tempUser.getUsername(), tempUser.getPasswordConfirm());
+            if (bindingResult.hasErrors()) {
+                return "registration";
+            }
+
+            userService.save(tempUser);
+
+            securityService.autoLogin(tempUser.getUsername(), tempUser.getPasswordConfirm());
+
+        }
 
         return "redirect:/home";
     }
@@ -134,6 +141,14 @@ public class UserController {
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
         return "welcome";
+    }
+
+    private boolean userExists(String username){
+        User user = userService.findByUsername(username);
+        if(user != null){
+            return true;
+        }
+        return false;
     }
 
 }
