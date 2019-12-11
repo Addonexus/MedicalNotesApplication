@@ -1,0 +1,33 @@
+<button
+        th:fragment="FreehandNotesFormToggle"
+        type="button"
+        class="btn blue white-text collapsible"
+>
+    Toggle freehand notes
+</button>
+<div class="content z-depth-1" th:fragment="freehandNotesForm">
+    <form id="createFreehandNotes">
+        <table id="FreehandnotesTable">
+            <tr>
+                <th>Field</th>
+            </tr>
+            <tr>
+                <th>
+                    <label class="black-text" th:for="field">Enter Notes</label>
+                    <input
+                            minlength="5"
+                            aria-describedby="Enter the field"
+                            id="freehandnotesField"
+                            type="text"/>
+                </th>
+
+            </tr>
+        </table>
+
+        <button class="btn blue white-text" id="submit" type="submit">
+            Submit
+        </button>
+
+    </form>
+
+</div>

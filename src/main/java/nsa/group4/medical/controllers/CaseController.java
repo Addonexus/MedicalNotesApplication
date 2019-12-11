@@ -3,6 +3,7 @@ package nsa.group4.medical.controllers;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
+import nsa.group4.medical.data.FreehandNotesRepoJDBC;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
@@ -27,17 +28,22 @@ public class CaseController {
     DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
 
     @Autowired
+    FreehandNotesRepoJDBC freehandNotesRepoJDBC;
+
+    @Autowired
     DiagnosisService diagnosisService;
 
     @Autowired
     CategoriesRepositoryJPA categoriesRepositoryJPA;
 
     private CaseServiceInterface caseService;
-    public CaseController(CaseServiceInterface caseService, DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC, DiagnosisService diagnosisService, CategoriesRepositoryJPA categoriesRepositoryJPA){
+    public CaseController(CaseServiceInterface caseService, DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC, DiagnosisService diagnosisService, CategoriesRepositoryJPA categoriesRepositoryJPA,
+                          FreehandNotesRepoJDBC freehandNotesRepoJDBC){
         this.caseService = caseService;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
         this.diagnosisService = diagnosisService;
         this.categoriesRepositoryJPA = categoriesRepositoryJPA;
+        this.freehandNotesRepoJDBC = freehandNotesRepoJDBC;
     }
 
     @RequestMapping(path="/createNewCase", method = RequestMethod.GET)

@@ -30,7 +30,8 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
 
     static final Logger LOG = LoggerFactory.getLogger(DiagnosisInformationRepositoryJDBC.class);
 
-    public DiagnosisInformationRepositoryJDBC(JdbcOperations aJdbc) {
+    public DiagnosisInformationRepositoryJDBC(JdbcOperations aJdbc)
+    {
         jdbc = aJdbc;
     }
 

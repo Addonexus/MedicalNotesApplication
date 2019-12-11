@@ -42,6 +42,10 @@
             <button th:replace="fragments/diagnosisInfoForm.html :: diagnosisFormToggle"></button>
             <div th:replace="fragments/diagnosisInfoForm.html :: diagnosisForm"></div>
 
+            <button th:replace="fragments/FreehandNotesForm.html :: FreehandNotesFormToggle"></button>
+            <div th:replace="fragments/FreehandNotesForm.html :: freehandNotesForm"></div>
+
+
             <div class="content-grid" id="content-grid">
                 <a      th:each="case : ${returnedCases}"
                         th:href="@{/case/{caseId}(caseId=${case.id})}"
