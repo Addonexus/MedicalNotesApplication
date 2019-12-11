@@ -45,6 +45,7 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new UserForm());
@@ -97,26 +98,38 @@ public class UserController {
                 "admin"
         ));
 
-        User tempUser = new User(
-                null,
-                userForm.getUsername(),
-                userForm.getPassword(),
-                userForm.getPassword(),
-                temp
-        );
+        if(userExists(userForm.getUsername())) {
+            //add error message
 
-        userValidator.validate(tempUser, bindingResult);
+            System.out.println("user already exists");
 
-        if (bindingResult.hasErrors()) {
-            return "registration";
+        }
+        else {
+            User tempUser = new User(
+                    null,
+                    userForm.getUsername(),
+                    userForm.getPassword(),
+                    userForm.getPassword(),
+                    temp
+            );
+
+            userValidator.validate(tempUser, bindingResult);
+
+            if (bindingResult.hasErrors()) {
+                return "registration";
+            }
+
+            userService.save(tempUser);
+
+            securityService.autoLogin(tempUser.getUsername(), tempUser.getPasswordConfirm());
+            return "redirect:/home";
         }
 
-        userService.save(tempUser);
 
-        securityService.autoLogin(tempUser.getUsername(), tempUser.getPasswordConfirm());
+        return "/registration";
 
-        return "redirect:/home";
     }
+
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
@@ -136,4 +149,11 @@ public class UserController {
         return "welcome";
     }
 
+    private boolean userExists(String username){
+        User user = userService.findByUsername(username);
+        if(user != null){
+            return true;
+        }
+        return false;
+    }
 }
