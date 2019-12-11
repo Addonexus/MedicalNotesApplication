@@ -11,25 +11,33 @@ $(document).ready(function() {
 
 
 
+
 });
 function toggleDiagnosisCheckBox() {
     var diagnosisCheckBox = document.getElementById("diagnosis-checkbox");
     var diagnosisInputBox = document.getElementById("diagnosesList");
     if (diagnosisCheckBox.checked){
         console.log("------CHECKBOX IS CHECKED");
-        diagnosisInputBox.hidden = true;
+
         var chipsDiv = $(".chips-autocomplete");
         chipsDiv.material_chip('data');
         console.log("CHIPS DEV" + chipsDiv);
+        console.log("DATA INSIDE THE CHIPS :", chipsDiv.material_chip('data'));
         old_state = chipsDiv.material_chip('data');
+        console.log("SP<ETJOMG" ,old_state);
         getAllDiagnosisForTags([{tag:"Unconfirmed"}]);
+        diagnosisInputBox.hidden = true;
 
 
     }
     else{
         console.log("------CHECKBOX IS NOT CHECKED");
-        diagnosisInputBox.hidden = false;
+
         getAllDiagnosisForTags(old_state);
+        setTimeout(function(){
+            diagnosisInputBox.hidden = false;
+        }, 25);
+
     }
 }
 function checkSubmitButtonPressed(){
@@ -119,50 +127,63 @@ function mapExistingCaseDetailsToFields(){
     contentType: "application/json; charset=utf-8",
     dataType: "json",
 
-    success: function(response) {
-      console.log(
-          "Response" +
-          response.caseModel.toString() +
-          "STATus: " +
-          response.statusText
-      );
 
-      console.log("RESPONSE: " + response.diagnoses);
-      console.log("CASE RESPONSE: " + response.caseModel.toString());
-      for (var i = 0; i < response.diagnoses.length; i++) {
-        existingDiagnosisData.push({ tag: response.diagnoses[i].name });
-        console.log("ROSIEJRLKESKR" + response.diagnoses[i].name);
+      success: function(response) {
+          console.log(
+              "Response" +
+              response.caseModel.toString() +
+              "STATus: " +
+              response.statusText
+          );
+
+          console.log("RESPONSE: " + response.diagnoses);
+          console.log("CASE RESPONSE: " + response.caseModel.toString());
+          for (var i = 0; i < response.diagnoses.length; i++) {
+              existingDiagnosisData.push({ tag: response.diagnoses[i].name });
+              console.log("ROSIEJRLKESKR" + response.diagnoses[i].name);
+          }
+          console.log("EXCAPSED");
+          var form = response.caseModel;
+          document.getElementById("name").value = form.name;
+          document.getElementById("demographics").value = form.demographics;
+          document.getElementById("ward").value = form.ward;document.getElementById("presentingComplaint").value =
+              form.presentingComplaint;
+          document.getElementById("presentingComplaintHistory").value =
+              form.presentingComplaintHistory;
+          document.getElementById("medicalHistory").value = form.medicalHistory;
+          document.getElementById("drugHistory").value = form.drugHistory;
+          document.getElementById("allergies").value = form.allergies;
+          document.getElementById("familyHistory").value = form.familyHistory;
+          document.getElementById("socialHistory").value = form.socialHistory;
+          document.getElementById("notes").value = form.notes;
+          console.log(
+              "ARRY OF EXSTING DIAGNOSIS: " + JSON.stringify(existingDiagnosisData)
+            );
+          for (const [key, value] of existingDiagnosisData.entries()) {
+              console.log("WOAH", value);
+              if (value["tag"].toString().trim()===("Unconfirmed").toString().trim()){
+                  console.log("THIS IS RIGHT");
+                  document.getElementById("diagnosis-checkbox").checked=true;
+                  // getAllDiagnosisForTags([{tag:"Unconfirmed"}]);
+                  // getAllDiagnosisForTags(existingDiagnosisData);
+                  old_state = {tag: "Unconfirmed"};
+                  toggleDiagnosisCheckBox();
+
+              }
+          }
+          getAllDiagnosisForTags(existingDiagnosisData);
+      },
+      error: function(response) {
+          console.log(
+              "Request Status: " +
+              response.status +
+              " Status Text: " +
+              response.statusText +
+              " " +
+              " Response Text: " +
+              response.responseText
+          );
       }
-      console.log("EXCAPSED");
-      var form = response.caseModel;
-      document.getElementById("name").value = form.name;
-      document.getElementById("demographics").value = form.demographics;
-      document.getElementById("ward").value = form.ward;document.getElementById("presentingComplaint").value =
-          form.presentingComplaint;
-      document.getElementById("presentingComplaintHistory").value =
-          form.presentingComplaintHistory;
-      document.getElementById("medicalHistory").value = form.medicalHistory;
-      document.getElementById("drugHistory").value = form.drugHistory;
-      document.getElementById("allergies").value = form.allergies;
-      document.getElementById("familyHistory").value = form.familyHistory;
-      document.getElementById("socialHistory").value = form.socialHistory;
-      document.getElementById("notes").value = form.notes;
-      console.log(
-          "ARRY OF EXSTING DIAGNOSIS: " + JSON.stringify(existingDiagnosisData)
-      );
-      getAllDiagnosisForTags(existingDiagnosisData);
-    },
-    error: function(response) {
-      console.log(
-          "Request Status: " +
-          response.status +
-          " Status Text: " +
-          response.statusText +
-          " " +
-          " Response Text: " +
-          response.responseText
-      );
-    }
   });
 
 }
@@ -208,6 +229,12 @@ function submitCase(formData, url){
     }
   });
 }
+function checkIfDiagnosisIsPassedAsUnconfirmed(){
+    var chipsDiv = $(".chips-autocomplete");
+    var chips_data = chipsDiv.material_chip('data');
+    console.log("THINGS" + chips_data);
+    console.log("Procedurel");
+}
 function getAllDiagnosisForTags(existingDiagnosisData) {
   var data = {};
   $.ajax({
@@ -218,7 +245,7 @@ function getAllDiagnosisForTags(existingDiagnosisData) {
     success: function(response) {
       var diagnosisArray = response;
       for (var i = 0; i < diagnosisArray.length; i++) {
-        console.log(diagnosisArray[i].name);
+        // console.log(diagnosisArray[i].name);
         data[diagnosisArray[i].name] = null;
       }
       var chipsDiv = $(".chips-autocomplete");
