@@ -13,12 +13,11 @@ public class Helpers {
     @Autowired
     public UserService userService;
 
-    public Long getUserId() {
+    public User getUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)principal).getUsername();
         User returnedUser = userService.findByUsername(username);
         System.out.println(returnedUser);
-        Long userId = returnedUser.getId();
-        return userId;
+        return returnedUser;
     }
 }
