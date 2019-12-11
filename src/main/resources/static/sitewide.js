@@ -8,7 +8,12 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $(".datepicker").datepicker();
+  col = document.getElementsByClassName("datepicker-date-display");
+  console.log(col[0])
+  col[0].style.backgroundColor = "#6666ff";
 });
+
+
 
 notificationList = document.getElementById("notifications");
 console.log(notificationList);

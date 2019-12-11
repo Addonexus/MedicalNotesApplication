@@ -386,7 +386,7 @@ function deleteDiagnosis(num, modal) {
             console.log("ERROR");
           }
         });
-        swal("Poof! Your imaginary file has been deleted!", {
+        swal("Diagnosis deleted", {
           icon: "success",
         });
       }
@@ -430,7 +430,7 @@ function deleteCategory(num) {
             console.log("ERROR");
           }
         });
-        swal("Poof! Your imaginary file has been deleted!", {
+        swal("Category deleted", {
           icon: "success",
         });
       }
