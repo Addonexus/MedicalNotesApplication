@@ -1,14 +1,19 @@
-$(document).ready(function() {
+$(document).ready(function () {
   $(".sidenav").sidenav();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
   $(".modal").modal();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
   $(".datepicker").datepicker();
+  col = document.getElementsByClassName("datepicker-date-display");
+  console.log(col[0])
+  col[0].style.backgroundColor = "#6666ff";
 });
+
+
 
 notificationList = document.getElementById("notifications");
 console.log(notificationList);
@@ -19,7 +24,7 @@ function refreshNotifications() {
     notificationList.removeChild(notificationList.firstChild);
   }
 
-  $.get("/api/getAllNotifications", function(data) {
+  $.get("/api/getAllNotifications", function (data) {
     // if (windowUrl.pathname.includes("diagnosis")) {
     //   console.log("diagnosis num: " + lastInt);
     //   for (var i = 0; i < data.length; i++) {
@@ -102,7 +107,7 @@ function refreshNotifications() {
 }
 
 console.log(document.getElementsByClassName("calendar-form"));
-$("#calendar-form").submit(function(e) {
+$("#calendar-form").submit(function (e) {
   e.preventDefault();
   var url = "/api/getCasesByDate/";
 
@@ -119,7 +124,7 @@ $("#calendar-form").submit(function(e) {
     type: "POST",
     url: url,
     data: JSON.stringify(formData),
-    success: function(response) {
+    success: function (response) {
       while (listOfCasesForDay.firstChild) {
         listOfCasesForDay.removeChild(listOfCasesForDay.firstChild);
       }
@@ -136,8 +141,14 @@ $("#calendar-form").submit(function(e) {
         listOfCasesForDay.style.marginBottom = "25px";
       }
     },
-    error: function(json) {
+    error: function (json) {
       alert("Please enter a valid date!");
     }
   });
+});
+
+var form = document.getElementById("logout-form");
+
+document.getElementById("logout").addEventListener("click", function () {
+  form.submit();
 });

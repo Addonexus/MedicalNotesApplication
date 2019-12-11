@@ -1,100 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-    <title>Category</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div id="modal-container">hi</div>
-    <div class="desktop-grid blue lighten-5">
-      <!--  Nav Bar Fragment     -->
-      <div th:replace="fragments/nav :: navbar"></div>
-      <div class="section-main blue lighten-5">
-        <!--   New Side Bar Fragment     -->
-        <div
-          class="section-side-cases blue darken-1 z-depth-1 hide-on-small-only"
-        >
-          <div th:replace="fragments/sidebar.html :: sidebar-button"></div>
-          <ul th:replace="fragments/sidebar.html :: sidebar-items"></ul>
-        </div>
 
-        <div class="section-right container">
-          <br />
-          <br />
-          <center>
-            <a
-              th:href="@{/category/{id}(id=${category.id})}"
-              id="categoryName"
-              th:text="${category.name}"
-              class="breadcrumb"
-            ></a>
-          </center>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <title>Category</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-          <!--   Form to create new Diagnosis     -->
-          <form id="createDiagnosis" class="create-item-form">
-            <input
-              placeholder="New Diagnosis"
-              id="diagnosisName"
-              type="text"
-              class="create-item-input"
-              minlength="5"
-            />
-            <button class="go-away" id="submit" type="submit">
-              New Diagnosis
-            </button>
-          </form>
-          <!--   Div for JS to populate diagnoses using AJAX     -->
-          <div class="content-grid" id="content-grid"></div>
-        </div>
+</head>
+
+<body>
+  <div id="modal-container">hi</div>
+  <div class="desktop-grid blue lighten-5">
+    <!--  Nav Bar Fragment     -->
+    <div th:replace="fragments/nav :: navbar"></div>
+    <div class="section-main blue lighten-5">
+      <!--   New Side Bar Fragment     -->
+      <div class="section-side-cases blue darken-1 z-depth-1 hide-on-small-only">
+        <div th:replace="fragments/sidebar.html :: sidebar-button"></div>
+        <ul th:replace="fragments/sidebar.html :: sidebar-items"></ul>
+      </div>
+
+      <div class="section-right container">
+        <br />
+        <br />
+        <center>
+          <a th:href="@{/category/{id}(id=${category.id})}" id="categoryName" th:text="${category.name}"
+            class="breadcrumb"></a>
+        </center>
+
+        <!--   Form to create new Diagnosis     -->
+        <form id="createDiagnosis" class="create-item-form">
+          <input placeholder="New Diagnosis" id="diagnosisName" type="text" class="create-item-input" minlength="5" />
+          <button class="go-away" id="submit" type="submit">
+            New Diagnosis
+          </button>
+        </form>
+        <!--   Div for JS to populate diagnoses using AJAX     -->
+        <div class="content-grid" id="content-grid"></div>
       </div>
     </div>
+  </div>
 
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"
-    ></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-      AOS.init({
-        // Global settings:
-        disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
-        startEvent: "DOMContentLoaded", // name of the event dispatched on the document, that AOS should initialize on
-        initClassName: "aos-init", // class applied after initialization
-        animatedClassName: "aos-animate", // class applied on animation
-        useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
-        disableMutationObserver: false, // disables automatic mutations' detections (advanced)
-        debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
-        throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: "DOMContentLoaded", // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: "aos-init", // class applied after initialization
+      animatedClassName: "aos-animate", // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
 
-        // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
-        offset: 120, // offset (in px) from the original trigger point
-        delay: 0, // values from 0 to 3000, with step 50ms
-        duration: 400, // values from 0 to 3000, with step 50ms
-        easing: "ease", // default easing for AOS animations
-        once: true, // whether animation should happen only once - while scrolling down
-        mirror: false, // whether elements should animate out while scrolling past them
-        anchorPlacement: "top-bottom" // defines which position of the element regarding to window should trigger the animation
-      });
-    </script>
-    <script type="text/javascript" th:src="@{/home.js}"></script>
-    <script type="text/javascript" th:src="@{/sitewide.js}"></script>
-  </body>
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: 120, // offset (in px) from the original trigger point
+      delay: 0, // values from 0 to 3000, with step 50ms
+      duration: 400, // values from 0 to 3000, with step 50ms
+      easing: "ease", // default easing for AOS animations
+      once: true, // whether animation should happen only once - while scrolling down
+      mirror: false, // whether elements should animate out while scrolling past them
+      anchorPlacement: "top-bottom" // defines which position of the element regarding to window should trigger the animation
+    });
+  </script>
+  <script type="text/javascript" th:src="@{/home.js}"></script>
+  <script type="text/javascript" th:src="@{/sitewide.js}"></script>
+</body>
+
 </html>

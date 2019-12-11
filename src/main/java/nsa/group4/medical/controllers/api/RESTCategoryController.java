@@ -1,10 +1,15 @@
 package nsa.group4.medical.controllers.api;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.domains.*;
+import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.service.implementations.CategoryServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +28,11 @@ public class RESTCategoryController {
         this.caseServiceInterface =caseServiceInterface;
         this.categoryService=categoryService;
     }
+
+    @Autowired
+    public UserService userService;
+
+    public Helpers helpers;
 
     @DeleteMapping("/deleteCategory/{index}")
     public @ResponseBody ResponseEntity<?> deleteCategoryById(
@@ -75,7 +85,7 @@ public class RESTCategoryController {
     public @ResponseBody ResponseEntity<?> saveCategory(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         String categoryName = formData.get("name");
-        categoryService.saveCategory(new Categories(categoryName));
+        categoryService.saveCategory(new Categories(categoryName, getUser()));
         AjaxResponseBody responseBody = new AjaxResponseBody();
         responseBody.setStatus("SUCCESS");
         return ResponseEntity.ok().body(responseBody);
@@ -83,9 +93,12 @@ public class RESTCategoryController {
 
     @GetMapping("/getAllCategories")
     public @ResponseBody List<Categories> getCategories(){
-        log.debug("REST API RETURN: ");
-        List<Categories> returnedList = categoryService.findAll();
-        return returnedList;
+        return categoryService.findByUser(getUser());
+    }
+
+    private User getUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findByUsername(((UserDetails)principal).getUsername());
     }
 }
 

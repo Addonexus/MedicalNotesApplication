@@ -1,6 +1,7 @@
 package nsa.group4.medical.service.implementations;
 
 import nsa.group4.medical.domains.Categories;
+import nsa.group4.medical.domains.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -17,4 +18,5 @@ public interface CategoryRepositoryInterface {
     void deleteById(Long id);
     List<Categories> findAll();
     Categories save(Categories categories);
+    List<Categories> findByUser(User user);
 }

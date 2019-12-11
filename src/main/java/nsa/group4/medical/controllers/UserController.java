@@ -63,7 +63,6 @@ public class UserController {
     @GetMapping("/accountDetails")
     public String getAccountDetails(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         String username = "";
         Long id = null;
         if (principal instanceof UserDetails){
@@ -102,6 +101,7 @@ public class UserController {
                 userForm.getUsername(),
                 userForm.getPassword(),
                 userForm.getPassword(),
+                null,
                 temp
         );
 
@@ -133,7 +133,7 @@ public class UserController {
 
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
-        return "welcome";
+        return "index";
     }
 
 }

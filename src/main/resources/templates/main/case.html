@@ -1,161 +1,150 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8" />
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
-    />
-    <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>Case</title>
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+
 <body>
-<div th:replace="fragments/nav :: navbar"></div>
-<main class = "desktop-grid">
+    <div th:replace="fragments/nav :: navbar"></div>
+    <main class="desktop-grid">
 
 
-    <h2 class="container" id="title">Create</h2>
-<br>
-<div class="flexy">
+        <h2 class="container" id="title">Create</h2>
+        <br>
+        <div class="flexy">
 
-    <form  class="container" id ="submitCases" method="post" th:object="${caseKey}">
-        <fieldset id="allFields">
-        <div>
-            <label th:for="name">Name</label>
+            <form class="container" id="submitCases" method="post" th:object="${caseKey}">
+                <fieldset id="allFields">
+                    <div>
+                        <label th:for="name">Name</label>
 
-            <input id = "name" aria-describedBy="Enter your name"
-                   type="text"/>
-            <span class="name error"></span>
-        </div>
+                        <input id="name" aria-describedBy="Enter your name" type="text" />
+                        <span class="name error"></span>
+                    </div>
 
-        <div>
-            <label th:for="demographics">Demographics</label>
-            <input id = "demographics" aria-describedBy="Enter the demographics"
-                   type="text"/>
-            <span class="demographics error"></span>
-        </div>
+                    <div>
+                        <label th:for="demographics">Demographics</label>
+                        <input id="demographics" aria-describedBy="Enter the demographics" type="text" />
+                        <span class="demographics error"></span>
+                    </div>
 
-            <div>
-                <label th:for="ward">Ward</label>
-                <input id = "ward" aria-describedBy="Enter the ward the patient is in"
-                       type="text"/>
-                <span class="ward error"></span>
-            </div>
+                    <div>
+                        <label th:for="ward">Ward</label>
+                        <input id="ward" aria-describedBy="Enter the ward the patient is in" type="text" />
+                        <span class="ward error"></span>
+                    </div>
 
 
-        <div id = "diagnosisContent">
-            <label th:for="diagnosesList">Diagnoses</label>
-            <div id="diagnosesList" class="chips chips-autocomplete chips-placeholder chips-initial" >
-                <i class="material-icons">close</i>
-            </div>
-            <span class="diagnosesList error"></span>
-        </div>
+                    <div id = "diagnosisContent">
+                        <label th:for="diagnosesList">Diagnoses</label>
+                        <div id="diagnosesList" class="chips chips-autocomplete chips-placeholder chips-initial">
+                            <i class="material-icons">close</i>
+                        </div>
+                        <span class="diagnosesList error"></span>
+                    </div>
             <input type="checkbox" name="diagnosisState" id="diagnosis-checkbox" onclick="toggleDiagnosisCheckBox()"/>
             <label for="diagnosis-checkbox">The diagnosis is currently unconfirmed</label>
 
-        <div>
-            <label th:for="presentingComplaint">Presenting Complaint</label>
-            <input id = "presentingComplaint" aria-describedBy="Enter the presenting complaint"
-                   type="text"/>
-            <span class="presentingComplaint error"></span>
-        </div>
-        <div>
-            <label th:for="presentingComplaintHistory">Presenting Complaint History</label>
-            <input id = "presentingComplaintHistory" aria-describedBy="Enter the presenting complaint history"
-                   type="text"/>
-            <span class="presentingComplaintHistory error"></span>
-        </div>
-        <div>
-            <label th:for="medicalHistory">Medical History</label>
-            <input id = "medicalHistory" aria-describedBy="Enter the medical history"
-                   type="text"/>
-            <span class="medicalHistory error"></span>
-        </div>
-        <div>
-            <label th:for="drugHistory">Drug History</label>
-            <input id = "drugHistory" aria-describedBy="Enter the drug history"
-                   type="text"/>
-            <span class="drugHistory error"></span>
-        </div>
-        <div>
-            <label th:for="allergies">Allergies</label>
-            <input id = "allergies" aria-describedBy="Enter the allergies"
-                   type="text"/>
-            <span class="allergies error"></span>
-        </div>
-        <div>
-            <label th:for="familyHistory">Family History</label>
-            <input id = "familyHistory" aria-describedBy="Enter the family history"
-                   type="text"/>
-            <span class="familyHistory error"></span>
-        </div>
-        <div>
-            <label th:for="socialHistory">Social History</label>
-            <input id = "socialHistory" aria-describedBy="Enter the social history"
-                   type="text"/>
-            <span class="socialHistory error"></span>
-        </div>
-        <div>
-            <label th:for="notes">Notes</label>
-            <input id = "notes" aria-describedBy="Enter the notes"
-                   type="text"/>
-            <span class="notes error"></span>
-        </div>
-            <div>
-                <input type="checkbox" name="personal" value="details" id="start-checkbox"/>
-                <label for="start-checkbox">I agree I haven't entered
-                    anyone's personal details</label>
-            </div>
+                    <div>
+                        <label th:for="presentingComplaint">Presenting Complaint</label>
+                        <input id="presentingComplaint" aria-describedBy="Enter the presenting complaint" type="text" />
+                        <span class="presentingComplaint error"></span>
+                    </div>
+                    <div>
+                        <label th:for="presentingComplaintHistory">Presenting Complaint History</label>
+                        <input id="presentingComplaintHistory" aria-describedBy="Enter the presenting complaint history"
+                            type="text" />
+                        <span class="presentingComplaintHistory error"></span>
+                    </div>
+                    <div>
+                        <label th:for="medicalHistory">Medical History</label>
+                        <input id="medicalHistory" aria-describedBy="Enter the medical history" type="text" />
+                        <span class="medicalHistory error"></span>
+                    </div>
+                    <div>
+                        <label th:for="drugHistory">Drug History</label>
+                        <input id="drugHistory" aria-describedBy="Enter the drug history" type="text" />
+                        <span class="drugHistory error"></span>
+                    </div>
+                    <div>
+                        <label th:for="allergies">Allergies</label>
+                        <input id="allergies" aria-describedBy="Enter the allergies" type="text" />
+                        <span class="allergies error"></span>
+                    </div>
+                    <div>
+                        <label th:for="familyHistory">Family History</label>
+                        <input id="familyHistory" aria-describedBy="Enter the family history" type="text" />
+                        <span class="familyHistory error"></span>
+                    </div>
+                    <div>
+                        <label th:for="socialHistory">Social History</label>
+                        <input id="socialHistory" aria-describedBy="Enter the social history" type="text" />
+                        <span class="socialHistory error"></span>
+                    </div>
+                    <div>
+                        <label th:for="notes">Notes</label>
+                        <input id="notes" aria-describedBy="Enter the notes" type="text" />
+                        <span class="notes error"></span>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="personal" value="details" id="start-checkbox" />
+                        <label for="start-checkbox">I agree I haven't entered
+                            anyone's personal details</label>
+                    </div>
 
 
-<!--        <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">-->
+                    <!--        <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">-->
 
-        <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value = "${hiddenForm}">
-        <input th:if="${diagnosisName !=null}" type="hidden" id="passedDiagnosis" th:value = "${diagnosisName}">
+                    <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value="${hiddenForm}">
+                <input th:if="${diagnosisName !=null}" type="hidden" id="passedDiagnosis" th:value = "${diagnosisName}">
 
         </fieldset>
-        <div class="btn-container">
-                <button class="ele-btn" id="submit-button" type="submit">Create Case</button>
-                <button class="ele-btn" th:if="${hiddenForm !=null}" id="editCase" type="button" onclick="unhideForm()">Edit Case</button>
-                <button class="ele-btn" th:if="${hiddenForm !=null}" id="deleteCase" type="button" onclick="deleteForm()">Delete Case</button>
+                <div class="btn-container">
+                    <button class="ele-btn" id="submit-button" type="submit">Create Case</button>
+                    <button class="ele-btn" th:if="${hiddenForm !=null}" id="editCase" type="button"
+                        onclick="unhideForm()">Edit Case</button>
+                    <button class="ele-btn" th:if="${hiddenForm !=null}" id="deleteCase" type="button"
+                        onclick="deleteForm()">Delete Case</button>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
 
-</main>
+    </main>
 
-<script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-<script type="text/javascript" th:src="@{/casePost.js}"></script>
+    <script src="https://code.jquery.com/jquery-2.1.2.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript" th:src="@{/casePost.js}"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#submit-button').click(function() {
-            checked = $("input[type=checkbox]:checked").length;
+    <script type="text/javascript">
 
-            if(!checked) {
-                alert("You have to check the box");
-                return false;
-            }
+        $(document).ready(function () {
+            $('#submit-button').click(function () {
 
+                checked = $("input[type=checkbox]:checked").length;
+
+                if (!checked) {
+                    swal({
+                        icon: "error",
+                        text: "You must agree to not store personal details."
+                    });
+                    return false;
+                }
+
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>

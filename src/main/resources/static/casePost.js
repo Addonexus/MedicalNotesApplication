@@ -147,7 +147,7 @@ function mapExistingCaseDetailsToFields(){
           var form = response.caseModel;
           document.getElementById("name").value = form.name;
           document.getElementById("demographics").value = form.demographics;
-          document.getElementById("ward").value = form.ward;document.getElementById("presentingComplaint").value =
+          document.getElementById("ward").value = form.ward; document.getElementById("presentingComplaint").value =
               form.presentingComplaint;
           document.getElementById("presentingComplaintHistory").value =
               form.presentingComplaintHistory;
@@ -197,7 +197,7 @@ function submitCase(formData, url){
     url: url,
     data: JSON.stringify(formData),
 
-    success: function(data) {
+    success: function (data) {
       console.log(
           "Request Status: " +
           data.status +
@@ -210,7 +210,7 @@ function submitCase(formData, url){
       $form.find(".error").empty();
       window.location.href = data.redirectUrl;
     },
-    error: function(e) {
+    error: function (e) {
       $form.find(".error").empty();
       console.log(
           "Request Status: " +

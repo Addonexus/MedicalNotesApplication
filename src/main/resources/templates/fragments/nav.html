@@ -1,23 +1,13 @@
 <div th:fragment="navbar">
   <nav>
     <div class="nav-wrapper blue darken-2 z-depth-2">
-      <a
-        href="#"
-        data-target="slide-out"
-        class="brand-logo hide-on-med-and-up sidenav-trigger"
-        style="margin: 0px"
-        >Case a Day</a
-      >
+      <a href="#" data-target="slide-out" class="brand-logo hide-on-med-and-up sidenav-trigger" style="margin: 0px">Case
+        a Day</a>
       <a href="/home" class="brand-logo left hide-on-small-only">Case a Day</a>
       <ul class="hide-on-med-and-up">
         <li class="left">
-          <a
-            style="margin: 0px;"
-            href="#"
-            class="sidenav-trigger"
-            data-target="slide-out"
-            ><i class="material-icons">menu</i></a
-          >
+          <a style="margin: 0px;" href="#" class="sidenav-trigger" data-target="slide-out"><i
+              class="material-icons">menu</i></a>
         </li>
       </ul>
       <ul class="right hide-on-small-only">
@@ -27,32 +17,24 @@
           </a>
         </li>
         <li>
-            <a onClick="refreshNotifications()" class="modal-trigger" href="#modal2">
-              <i id="notification-bell" class="material-icons white-text">notifications</i>
-            </a>
-          </li>
+          <a onClick="refreshNotifications()" class="modal-trigger" href="#modal2">
+            <i id="notification-bell" class="material-icons white-text">notifications</i>
+          </a>
+        </li>
         <li>
-          <form
-            action="/search"
-            th:action="@{/search}"
-            th:object="${search}"
-            method="get"
-            style="width: 100px"
-          >
+          <form action="/search" th:action="@{/search}" th:object="${search}" method="get" style="width: 100px">
             <div class="input-field">
-              <input
-                class="white"
-                style="border-radius: 20px"
-                id="search"
-                type="text"
-                required
-                name="search"
-                value=""
-              />
-              <label class="label-icon" for="search"
-                ><i class="material-icons black-text"></i
-              ></label>
+              <input class="white" style="border-radius: 5px; height: 35px" id="search" type="text" required
+                name="search" value="" />
+              <label class="label-icon" for="search"><i class="material-icons black-text"></i></label>
             </div>
+          </form>
+        </li>
+        <li>
+          <form id="logout-form" th:action="@{/logout}">
+            <a>
+              <i id="logout" class="material-icons white-text">exit_to_app</i>
+            </a>
           </form>
         </li>
       </ul>
@@ -65,7 +47,7 @@
       <form id="calendar-form">
         <input type="text" class="datepicker" id="date">
         <button class="btn white black-text" id="submit" type="submit" style="margin-top: 10px; margin-bottom: 10px">
-          Search 
+          Search
         </button>
       </form>
       <br>
@@ -82,31 +64,17 @@
     </div>
   </div>
   <div id="modal3" class="modal">
-      <div class="modal-content" style="height:1000px">
-        <h3>Search</h3>
-        <br>
-        <form
-            action="/search"
-            th:action="@{/search}"
-            th:object="${search}"
-            method="get"
-          >
-            <div class="input-field">
-              <input
-                class="white"
-                style="border-radius: 20px"
-                id="search"
-                type="text"
-                required
-                name="search"
-                value=""
-              />
-              <label class="label-icon" for="search"
-                ><i class="material-icons black-text"></i
-              ></label>
-            </div>
-          </form>
-        </ul>
-      </div>
+    <div class="modal-content" style="height:1000px">
+      <h3>Search</h3>
+      <br>
+      <form action="/search" th:action="@{/search}" th:object="${search}" method="get">
+        <div class="input-field">
+          <input class="white" style="border-radius: 5px; height: 35px" id="search" type="text" required name="search"
+            value="" />
+          <label class="label-icon" for="search"><i class="material-icons black-text"></i></label>
+        </div>
+      </form>
+      </ul>
     </div>
+  </div>
 </div>

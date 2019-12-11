@@ -1,6 +1,10 @@
-insert into categories (id, name) values (1, 'heart');
-insert into categories (id, name) values (2, 'skin');
-insert into categories (id, name) values (3, 'brain');
+insert into categories (id, user_id, name) values (1, 1, 'heart');
+insert into categories (id, user_id, name) values (2, 1, 'skin');
+insert into categories (id, user_id, name) values (3, 1, 'brain');
+
+insert into categories (id, user_id, name) values (4, 2, 'leg');
+insert into categories (id, user_id, name) values (5, 2, 'arm');
+insert into categories (id, user_id, name) values (6, 2, 'face');
 
 insert into diagnoses (id, name, category_id) values (1,'heart ache', 1);
 insert into diagnoses (id, name, category_id) values (2,'circulation problems', 1);
@@ -78,6 +82,8 @@ insert into diagnosis_information (id,diagnosis_id, field, value) values (3,1, '
 INSERT INTO user(id,username,password)
 VALUES (1,'admin','$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G');
 
+INSERT INTO user(id,username,password)
+VALUES (2,'test','$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G');
 
 INSERT INTO role(id,role) VALUES(1,'ADMIN');
 
