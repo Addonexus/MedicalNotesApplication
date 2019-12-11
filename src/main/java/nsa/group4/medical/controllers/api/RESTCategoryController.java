@@ -85,7 +85,7 @@ public class RESTCategoryController {
     public @ResponseBody ResponseEntity<?> saveCategory(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         String categoryName = formData.get("name");
-        categoryService.saveCategory(new Categories(categoryName));
+        categoryService.saveCategory(new Categories(categoryName, getUser()));
         AjaxResponseBody responseBody = new AjaxResponseBody();
         responseBody.setStatus("SUCCESS");
         return ResponseEntity.ok().body(responseBody);
@@ -93,18 +93,12 @@ public class RESTCategoryController {
 
     @GetMapping("/getAllCategories")
     public @ResponseBody List<Categories> getCategories(){
+        return categoryService.findByUser(getUser());
+    }
 
-        log.debug("REST API RETURN: ");
+    private User getUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails)principal).getUsername();
-        User returnedUser = userService.findByUsername(username);
-        System.out.println(returnedUser);
-        Long userId = returnedUser.getId();
-        System.out.println("User id: " + userId);
-
-        List<Categories> categories = categoryService.findByUserId(userId);
-        System.out.println("    categories: " + categories);
-        return categoryService.findByUserId(userId);
+        return userService.findByUsername(((UserDetails)principal).getUsername());
     }
 }
 

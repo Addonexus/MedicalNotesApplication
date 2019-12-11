@@ -38,4 +38,9 @@ public class Categories {
     public Categories(String name) {
         this.name = name;
     }
+
+    public Categories(String name, User user) {
+        this.name = name;
+        this.user = user;
+    }
 }

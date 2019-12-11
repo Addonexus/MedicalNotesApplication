@@ -1,6 +1,7 @@
 package nsa.group4.medical.service;
 
 import nsa.group4.medical.domains.Categories;
+import nsa.group4.medical.domains.User;
 import nsa.group4.medical.service.implementations.CategoryRepositoryInterface;
 import nsa.group4.medical.service.implementations.CategoryServiceInterface;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class CategoryService implements CategoryServiceInterface {
     }
 
     @Override
-    public List<Categories> findByUserId(Long userId) {
-       return categoryRepository.findByUserId(userId);
+    public List<Categories> findByUser(User user) {
+       return categoryRepository.findByUser(user);
     }
 }
