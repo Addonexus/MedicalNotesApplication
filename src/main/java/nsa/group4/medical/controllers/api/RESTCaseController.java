@@ -120,7 +120,7 @@ public class RESTCaseController {
         } else {
             caseServiceInterface.createCase(formData);
             result.setStatus("SUCCESS");
-            result.setRedirectUrl("home");
+            result.setRedirectUrl("/home");
             log.debug("RETURNED SUCEUSS: " + result);
             return ResponseEntity.ok().body(result);
         }
