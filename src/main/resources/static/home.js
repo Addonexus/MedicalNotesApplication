@@ -190,6 +190,8 @@ function refreshListOfDiagnoses() {
         );
         deleteButton.appendChild(document.createTextNode("delete"));
         deleteButton.style.marginLeft = "20px";
+        deleteButton.style.backgroundColor = "#ff5555";
+        deleteButton.style.fontWeight = "600";
 
         modalFooter = document.createElement("div");
         modalFooter.setAttribute("class", "modal-footer");
@@ -350,26 +352,32 @@ function updateDiagnosis(num, modal) {
 function deleteDiagnosis(num, modal) {
   console.log(num);
   console.log("my modal: " + modal);
-  var instance = M.Modal.getInstance(modal);
-  // instance.close();
-  var formData = {
-    id: num
-  };
 
-  $.ajax({
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    type: "DELETE",
-    url: "/api/deleteDiagnosis/" + num,
-    success: function (json) {
-      getRecentCases();
-      refreshNotifications();
-      refreshListOfDiagnoses();
-    },
-    error: function (json) {
-      console.log("ERROR");
-    }
-  });
+  var answer = window.confirm("Are you sure you want to delete the diagnosis? This will delete all of the cases iniside?")
+  if (answer) {
+    var instance = M.Modal.getInstance(modal);
+    // instance.close();
+    var formData = {
+      id: num
+    };
+
+    $.ajax({
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      type: "DELETE",
+      url: "/api/deleteDiagnosis/" + num,
+      success: function (json) {
+        getRecentCases();
+        refreshNotifications();
+        refreshListOfDiagnoses();
+      },
+      error: function (json) {
+        console.log("ERROR");
+      }
+    });
+  }
+
+
 }
 
 function reload() {
@@ -377,30 +385,34 @@ function reload() {
 }
 
 function deleteCategory(num) {
-  console.log(num);
-  var formData = {
-    id: num
-  };
 
-  $.ajax({
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    type: "DELETE",
-    url: "/api/deleteCategory/" + num,
-    //        data: JSON.stringify(formData),
-    success: function (json) {
-      // alert("Worked!");
-      refreshListOfCategories();
-      //                var listOfCases = document.getElementById("recentCases");
-      //
-      //                listOfCases.empty();
-      getRecentCases();
-    },
-    error: function (json) {
-      // alert("error!");
-      console.log("ERROR");
-    }
-  });
+  var answer = window.confirm("Are you sure you want to delete this category? All of the diagnoses and cases attributed will be lost")
+  if (answer) {
+    console.log(num);
+    var formData = {
+      id: num
+    };
+
+    $.ajax({
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      type: "DELETE",
+      url: "/api/deleteCategory/" + num,
+      //        data: JSON.stringify(formData),
+      success: function (json) {
+        // alert("Worked!");
+        refreshListOfCategories();
+        //                var listOfCases = document.getElementById("recentCases");
+        //
+        //                listOfCases.empty();
+        getRecentCases();
+      },
+      error: function (json) {
+        // alert("error!");
+        console.log("ERROR");
+      }
+    });
+  }
 }
 function refreshListOfCategories() {
   console.log("HIHHS");
@@ -559,6 +571,21 @@ function getRecentCases() {
     success: function (response) {
       var ids = response.categoryIds;
       var cases = response.casesList;
+      recentCases = document.getElementById("recentCases");
+      noCasesH5 = document.getElementById("no-cases-h5");
+      recentCases.style.height = "1000px";
+
+
+      if (cases.length == 0) {
+        noCasesH5.style.visibility = "visible";
+        recentCases.style.visibility = "hidden";
+
+      } else {
+        recentCases.style.visibility = "visible";
+        noCasesH5.style.visibility = "hidden";
+
+
+      }
 
       //      listOfCases.empty();
       for (i = 0; i < cases.length; i++) {

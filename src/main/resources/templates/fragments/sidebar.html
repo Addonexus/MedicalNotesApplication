@@ -4,11 +4,16 @@
       New case
     </div>
   </a>
-  <h4 class="white-text" style="margin: 0px; margin-bottom: 5px; display: flex; justify-content: center;">Recent cases</h4>
+  <h4 class="white-text" style="margin: 0px; margin-bottom: 5px; display: flex; justify-content: center;">Recent cases
+  </h4>
+  <h5 id="no-cases-h5" class="white-text"
+    style="visibility: hidden; margin: 0px; margin-bottom: 5px; display: flex; justify-content: center;">No cases exist
+    yet</h5>
+
 </div>
 
 <!--<div th:fragment="sidebar-no-button" style="padding: 15px; color: white;">-->
 <!--  <b>To create a new case, please enter a category or diagnosis</b>-->
 <!--</div>-->
-<ul id="recentCases" class="collection with-header" th:fragment="sidebar-items">
+<ul id="recentCases" style="visibility: hidden" class="collection with-header" th:fragment="sidebar-items">
 </ul>

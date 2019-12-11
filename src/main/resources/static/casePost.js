@@ -1,13 +1,13 @@
 var splitUrl = window.location.pathname.split("/");
 var caseID = splitUrl[splitUrl.length - 1];
-$(document).ready(function() {
+$(document).ready(function () {
   function getAllDiagnosisForTags() {
     $.ajax({
       type: "GET",
       url: "http://localhost:8080/api/getAllDiagnosis",
       crossDomain: true,
 
-      success: function(response) {
+      success: function (response) {
         var diagnosisArray = response;
         for (var i = 0; i < diagnosisArray.length; i++) {
           console.log(diagnosisArray[i].name);
@@ -42,12 +42,12 @@ $(document).ready(function() {
       contentType: "application/json; charset=utf-8",
       dataType: "json",
 
-      success: function(response) {
+      success: function (response) {
         console.log(
           "Response" +
-            response.caseModel.toString() +
-            "STATus: " +
-            response.statusText
+          response.caseModel.toString() +
+          "STATus: " +
+          response.statusText
         );
 
         console.log("RESPONSE: " + response.diagnoses);
@@ -60,7 +60,7 @@ $(document).ready(function() {
         var form = response.caseModel;
         document.getElementById("name").value = form.name;
         document.getElementById("demographics").value = form.demographics;
-        document.getElementById("ward").value = form.ward;document.getElementById("presentingComplaint").value =
+        document.getElementById("ward").value = form.ward; document.getElementById("presentingComplaint").value =
           form.presentingComplaint;
         document.getElementById("presentingComplaintHistory").value =
           form.presentingComplaintHistory;
@@ -75,15 +75,15 @@ $(document).ready(function() {
         );
         getAllDiagnosisForTags();
       },
-      error: function(response) {
+      error: function (response) {
         console.log(
           "Request Status: " +
-            response.status +
-            " Status Text: " +
-            response.statusText +
-            " " +
-            " Response Text: " +
-            response.responseText
+          response.status +
+          " Status Text: " +
+          response.statusText +
+          " " +
+          " Response Text: " +
+          response.responseText
         );
       }
     });
@@ -91,7 +91,7 @@ $(document).ready(function() {
 
   getAllDiagnosisForTags();
 
-  $("#submitCases").submit(function(e) {
+  $("#submitCases").submit(function (e) {
     console.log("hi");
     e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -109,8 +109,8 @@ $(document).ready(function() {
       "id": id,
       "name": document.getElementById("name").value,
       "demographics": document.getElementById("demographics").value,
-      "ward" : document.getElementById("ward").value,
-                "diagnosesList": $("#diagnosesList").material_chip("data"),
+      "ward": document.getElementById("ward").value,
+      "diagnosesList": $("#diagnosesList").material_chip("data"),
       "presentingComplaint": document.getElementById("presentingComplaint").value,
       "presentingComplaintHistory": document.getElementById(
         "presentingComplaintHistory"
@@ -132,29 +132,29 @@ $(document).ready(function() {
       url: url,
       data: JSON.stringify(formData),
 
-      success: function(data) {
+      success: function (data) {
         console.log(
           "Request Status: " +
-            data.status +
-            " Status Text: " +
-            data.statusText +
-            " " +
-            " Response URL: " +
-            data.redirectUrl
+          data.status +
+          " Status Text: " +
+          data.statusText +
+          " " +
+          " Response URL: " +
+          data.redirectUrl
         );
         $form.find(".error").empty();
         window.location.href = data.redirectUrl;
       },
-      error: function(e) {
+      error: function (e) {
         $form.find(".error").empty();
         console.log(
           "Request Status: " +
-            e.status +
-            " Status Text: " +
-            e.statusText +
-            " " +
-            " Response Text: " +
-            e.responseText
+          e.status +
+          " Status Text: " +
+          e.statusText +
+          " " +
+          " Response Text: " +
+          e.responseText
         );
         var obj = JSON.parse(e.responseText);
         for (i = 0; i < obj.result.length; i++) {
@@ -167,31 +167,34 @@ $(document).ready(function() {
   });
 });
 function deleteForm() {
-  var id = caseID;
+  var answer = window.confirm("Are you sure you want to delete this case?")
+  if (answer) {
+    var id = caseID;
 
-  $.ajax({
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    type: "DELETE",
-    url: "/api/deleteCase/" + id,
-    data: JSON.stringify({ id: id }),
-    success: function(data) {
-      console.log(
-        "Request Status: " +
+    $.ajax({
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      type: "DELETE",
+      url: "/api/deleteCase/" + id,
+      data: JSON.stringify({ id: id }),
+      success: function (data) {
+        console.log(
+          "Request Status: " +
           data.status +
           " Status Text: " +
           data.statusText +
           " " +
           " Response URL: " +
           data.redirectUrl
-      );
-      window.location.href = data.redirectUrl;
-      alert("Deleted Case");
-    },
-    error: function(e) {
-      alert("Something Went Wrong");
-    }
-  });
+        );
+        window.location.href = data.redirectUrl;
+        alert("Case has been deleted");
+      },
+      error: function (e) {
+        alert("Something Went Wrong");
+      }
+    });
+  }
 }
 
 function unhideForm() {
