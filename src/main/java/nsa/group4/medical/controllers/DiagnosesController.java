@@ -3,6 +3,7 @@ package nsa.group4.medical.controllers;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
+import nsa.group4.medical.data.FreehandNotesRepoJDBC;
 import nsa.group4.medical.data.NotificationRepoJPA;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.implementations.*;
@@ -26,6 +27,7 @@ public class DiagnosesController {
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CategoryServiceInterface categoryService;
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
+    private FreehandNotesRepoJDBC freehandNotesRepoJDBC;
 
     static final Logger LOG = LoggerFactory.getLogger(DiagnosesController.class);
 
@@ -35,13 +37,15 @@ public class DiagnosesController {
                                NotificationServiceInterface notificationService,
                                DiagnosisRepositoryInterface diagnosisRepository,
                                CategoryServiceInterface categoryService,
-                               DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC) {
+                               DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC,
+                               FreehandNotesRepoJDBC freehandNotesRepoJDBC) {
         this.diagnosisRepository = diagnosisRepository;
         this.categoryService = categoryService;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
         this.caseService = caseService;
         this.diagnosisService = diagnosisService;
         this.notificationService = notificationService;
+        this.freehandNotesRepoJDBC = freehandNotesRepoJDBC;
     }
 
     @GetMapping(path ="/diagnosis/{diagnosisIndex}")

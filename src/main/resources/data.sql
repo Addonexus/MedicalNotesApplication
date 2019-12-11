@@ -74,6 +74,8 @@ insert into diagnosis_information (id,diagnosis_id, field, value) values (1,1, '
 insert into diagnosis_information (id,diagnosis_id, field, value) values (2,1, 'sample_field_2', 'sample_data_2');
 insert into diagnosis_information (id,diagnosis_id, field, value) values (3,1, 'sample_field_3', 'sample_data_3');
 
+insert into freehand_notes (id,diagnosis_id, field) values (3,1, 'BLAAAAAAAAAAA');
+
 
 INSERT INTO user(id,username,password)
 VALUES (1,'admin','$2a$10$B188I9BfwGLsWGU9eF4wPOV6O6z.MgEbNxcErNEKb8xwM.4ChBT7G');

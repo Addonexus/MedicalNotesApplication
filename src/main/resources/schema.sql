@@ -200,5 +200,13 @@ CREATE TABLE IF NOT EXISTS `ward_cases_link` (
   `case_id` INT NOT NULL,
   PRIMARY KEY (`ward_id`, `case_id`))
 ENGINE = InnoDB;
-
+-- -----------------------------------------------------
+-- Table `freehandnotes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `freehand_notes` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `diagnosis_id` INT UNSIGNED NOT NULL,
+  `field` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
