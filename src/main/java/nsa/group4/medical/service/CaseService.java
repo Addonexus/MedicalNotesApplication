@@ -98,7 +98,9 @@ public class CaseService implements CaseServiceInterface {
         if(!notExistingDiagnosis.isEmpty()){
 
             if(!categoryExists ){
-                category = categoryRepository.save(new Categories(null,"Miscellaneous", helpers.getUserId(), new ArrayList<>()));
+                category = categoryRepository.save(new Categories(
+                        "Miscellaneous",
+                        getUserId()));
             }
             else{
                 category =  categoryRepository.findByName("Miscellaneous").get();
@@ -147,6 +149,11 @@ public class CaseService implements CaseServiceInterface {
             return new ArrayList<>();
         }
 
+    }
+
+    private User getUserId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findByUsername(((UserDetails)principal).getUsername());
     }
 
     @Override
@@ -198,7 +205,7 @@ public class CaseService implements CaseServiceInterface {
         if(!notExistingDiagnosis.isEmpty()) {
 
             if (!categoryExists) {
-                category = categoryRepository.save(new Categories(null,"Miscellaneous", helpers.getUserId(), new ArrayList<>()));
+                category = categoryRepository.save(new Categories(null,"Miscellaneous", getUserId(), new ArrayList<>()));
             } else {
                 category = categoryRepository.findByName("Miscellaneous").get();
             }
