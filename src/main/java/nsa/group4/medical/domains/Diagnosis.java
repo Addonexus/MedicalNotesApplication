@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name= "diagnoses")
-@ToString(exclude = {"cases", "diagnosisInfoList","notificationList"})
+@ToString(exclude = {"cases", "diagnosisInfoList","notificationList", "user"})
 public class Diagnosis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,11 @@ public class Diagnosis {
             inverseJoinColumns = {@JoinColumn(name = "case_id")})
     @JsonManagedReference
     private List<CaseModel> cases;
+
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name="user_id")
+    private User user;
 
     @ManyToOne
     @JsonManagedReference

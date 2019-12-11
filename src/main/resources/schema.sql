@@ -20,6 +20,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `diagnoses` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT NULL,
   `name` VARCHAR(100) NOT NULL,
   `category_id` INT NULL,
   PRIMARY KEY (`id`))
@@ -50,6 +51,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cases` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT NULL,
   `name` VARCHAR(100) NOT NULL,
   `demographics` VARCHAR(100) NOT NULL,
   `ward` VARCHAR(100) NULL,
@@ -188,6 +190,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ward` (
  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+ `user_id` INT NULL,
  `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
