@@ -183,7 +183,7 @@ function refreshListOfDiagnoses() {
         saveButton.appendChild(document.createTextNode("save"));
 
         deleteButton = document.createElement("button");
-        deleteButton.setAttribute("class", "btn-small white black-text");
+        deleteButton.setAttribute("class", "btn-small white-text");
         deleteButton.setAttribute(
           "onClick",
           "deleteDiagnosis(" + data[i].id + ", diaModal" + i + ")"
@@ -192,6 +192,8 @@ function refreshListOfDiagnoses() {
         deleteButton.style.marginLeft = "20px";
         deleteButton.style.backgroundColor = "#ff5555";
         deleteButton.style.fontWeight = "600";
+        deleteButton.style.color = "white";
+
 
         modalFooter = document.createElement("div");
         modalFooter.setAttribute("class", "modal-footer");
@@ -285,6 +287,13 @@ function updateCategory(num, modal) {
   });
 }
 function deleteCategory(num, modal) {
+
+  swal({
+    title: "Good eejob!",
+    text: "You clicked the button!",
+    icon: "success",
+  });
+
   console.log(num);
   console.log("my modal: " + modal);
   var instance = M.Modal.getInstance(modal);
@@ -350,70 +359,84 @@ function updateDiagnosis(num, modal) {
 }
 
 function deleteDiagnosis(num, modal) {
+  swal("Hello world!");
   console.log(num);
   console.log("my modal: " + modal);
 
-  var answer = window.confirm("Are you sure you want to delete the diagnosis? This will delete all of the cases iniside?")
-  if (answer) {
-    var instance = M.Modal.getInstance(modal);
-    // instance.close();
-    var formData = {
-      id: num
-    };
-
-    $.ajax({
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      type: "DELETE",
-      url: "/api/deleteDiagnosis/" + num,
-      success: function (json) {
-        getRecentCases();
-        refreshNotifications();
-        refreshListOfDiagnoses();
-      },
-      error: function (json) {
-        console.log("ERROR");
+  swal({
+    title: "Are you sure?",
+    text: "You will lose all of the cases attributed to this diagnosis",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          type: "DELETE",
+          url: "/api/deleteDiagnosis/" + num,
+          success: function (json) {
+            getRecentCases();
+            refreshNotifications();
+            refreshListOfDiagnoses();
+          },
+          error: function (json) {
+            console.log("ERROR");
+          }
+        });
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
       }
     });
-  }
-
-
 }
 
 function reload() {
   document.location.reload();
 }
-
 function deleteCategory(num) {
+  swal({
+    title: "Are you sure?",
+    text: "You will lose all of the cases / diagnoses attributed to this category",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+    .then((willDelete) => {
+      if (willDelete) {
+        console.log(num);
+        var formData = {
+          id: num
+        };
 
-  var answer = window.confirm("Are you sure you want to delete this category? All of the diagnoses and cases attributed will be lost")
-  if (answer) {
-    console.log(num);
-    var formData = {
-      id: num
-    };
-
-    $.ajax({
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      type: "DELETE",
-      url: "/api/deleteCategory/" + num,
-      //        data: JSON.stringify(formData),
-      success: function (json) {
-        // alert("Worked!");
-        refreshListOfCategories();
-        //                var listOfCases = document.getElementById("recentCases");
-        //
-        //                listOfCases.empty();
-        getRecentCases();
-      },
-      error: function (json) {
-        // alert("error!");
-        console.log("ERROR");
+        $.ajax({
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          type: "DELETE",
+          url: "/api/deleteCategory/" + num,
+          //        data: JSON.stringify(formData),
+          success: function (json) {
+            // alert("Worked!");
+            refreshListOfCategories();
+            //                var listOfCases = document.getElementById("recentCases");
+            //
+            //                listOfCases.empty();
+            getRecentCases();
+          },
+          error: function (json) {
+            // alert("error!");
+            console.log("ERROR");
+          }
+        });
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
       }
     });
-  }
 }
+
 function refreshListOfCategories() {
   console.log("HIHHS");
   var grid = document.getElementById("content-grid");
@@ -505,7 +528,7 @@ function refreshListOfCategories() {
 
       // Delete Button
       deleteButton = document.createElement("button");
-      deleteButton.setAttribute("class", "btn-small black-text");
+      deleteButton.setAttribute("class", "btn-small white-text");
       deleteButton.setAttribute(
         "onClick",
         "deleteCategory(" + data[i].id + ", categoryModal" + i + ")"
@@ -682,5 +705,6 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
 
 function markNotificationRead() { }
