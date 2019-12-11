@@ -51,15 +51,23 @@
         </div>
         <div class="white bb-content">
           <div class="row container">
-            <div class="input-field col s12 m6">
-              <input placeholder="Enter your email" id="email" type="text" class="validate" />
-              <label for="email">Email</label>
-            </div>
-            <div class="input-field col s12 m6">
-              <input placeholder="Enter your password" id="last_name" type="password" class="validate" />
-              <label for="last_name">Password</label>
-            </div>
-            <a th:href="@{/home/}" class="waves-effect waves-light btn-large blue accent-3">Login</a>
+            <form method="POST" th:action="@{/login}">
+              <h2>Log in</h2>
+
+              <div>
+                <span>Enter Email</span>
+                <input name="username" type="text" placeholder="Username" autofocus="true" />
+                <span>Enter Password</span>
+                <input name="password" type="password" placeholder="Password" />
+                <div th:if="${error}">
+                  <span>Incorrect username / password</span>
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <br><br>
+                <button type="submit" class="waves-effect waves-light btn-large blue accent-3">Log In</button>
+                <h4><a href="@{/registration}">Create an account</a></h4>
+              </div>
+            </form>
           </div>
         </div>
       </div>
