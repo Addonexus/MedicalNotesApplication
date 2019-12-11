@@ -57,13 +57,15 @@
             </div>
 
 
-        <div>
+        <div id = "diagnosisContent">
             <label th:for="diagnosesList">Diagnoses</label>
             <div id="diagnosesList" class="chips chips-autocomplete chips-placeholder chips-initial" >
                 <i class="material-icons">close</i>
             </div>
             <span class="diagnosesList error"></span>
         </div>
+            <input type="checkbox" name="diagnosisState" id="diagnosis-checkbox" onclick="toggleDiagnosisCheckBox()"/>
+            <label for="diagnosis-checkbox">The diagnosis is currently unconfirmed</label>
 
         <div>
             <label th:for="presentingComplaint">Presenting Complaint</label>
