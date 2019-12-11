@@ -22,43 +22,66 @@ $(document).ready(function() {
     getAllDiagnosisForTags(existingDiagnosisData);
   }
 
-  $("#submitCases").submit(function(e) {
-    console.log("hi");
-    e.preventDefault(); // avoid to execute the actual submit of the form.
 
 
-    var id;
-    var url;
-    if (hiddenParam) {
-      id = caseID;
-      url = "/api/editCase";
-    } else {
-      url = "/api/saveCase";
-    }
+  // checkDiagnosisCheckBoxPressed();
+  checkSubmitButtonPressed(hiddenParam);
 
-    var formData = {
-      "id": id,
-      "name": document.getElementById("name").value,
-      "demographics": document.getElementById("demographics").value,
-      "ward" : document.getElementById("ward").value,
-      "diagnosesList": $("#diagnosesList").material_chip("data"),
-      "presentingComplaint": document.getElementById("presentingComplaint").value,
-      "presentingComplaintHistory": document.getElementById(
-          "presentingComplaintHistory"
-      ).value,
-      "medicalHistory": document.getElementById("medicalHistory").value,
-      "drugHistory": document.getElementById("drugHistory").value,
-      "allergies": document.getElementById("allergies").value,
-      "familyHistory": document.getElementById("familyHistory").value,
-      "socialHistory": document.getElementById("socialHistory").value,
-      "notes": document.getElementById("notes").value
-    };
 
-    console.log("NICE: " + JSON.stringify(formData));
 
-    submitCase(formData, url);
-  });
 });
+function toggleDiagnosisCheckBox() {
+    var diagnosisCheckBox = document.getElementById("diagnosis-checkbox");
+    var diagnosisInputBox = document.getElementById("diagnosesList");
+    if (diagnosisCheckBox.checked){
+        console.log("------CHECKBOX IS CHECKED");
+        diagnosisInputBox.hidden = true;
+
+
+    }
+    else{
+        console.log("------CHECKBOX IS NOT CHECKED");
+        diagnosisInputBox.hidden = false;
+    }
+}
+function checkSubmitButtonPressed(hiddenParam){
+    $("#submitCases").submit(function(e) {
+        console.log("hi");
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+
+        var id;
+        var url;
+        if (hiddenParam) {
+            id = caseID;
+            url = "/api/editCase";
+        } else {
+            url = "/api/saveCase";
+        }
+
+        var formData = {
+            "id": id,
+            "name": document.getElementById("name").value,
+            "demographics": document.getElementById("demographics").value,
+            "ward" : document.getElementById("ward").value,
+            "diagnosesList": $("#diagnosesList").material_chip("data"),
+            "presentingComplaint": document.getElementById("presentingComplaint").value,
+            "presentingComplaintHistory": document.getElementById(
+                "presentingComplaintHistory"
+            ).value,
+            "medicalHistory": document.getElementById("medicalHistory").value,
+            "drugHistory": document.getElementById("drugHistory").value,
+            "allergies": document.getElementById("allergies").value,
+            "familyHistory": document.getElementById("familyHistory").value,
+            "socialHistory": document.getElementById("socialHistory").value,
+            "notes": document.getElementById("notes").value
+        };
+
+        console.log("NICE: " + JSON.stringify(formData));
+
+        submitCase(formData, url);
+    });
+}
 function deleteForm() {
   var id = caseID;
 
