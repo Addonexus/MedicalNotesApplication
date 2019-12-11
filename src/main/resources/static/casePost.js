@@ -1,31 +1,13 @@
 var splitUrl = window.location.pathname.split("/");
 var caseID = splitUrl[splitUrl.length - 1];
+var hiddenParam = document.getElementById("hiddenFormBoolean");
+var old_state = [];
+
 $(document).ready(function() {
 
-  var hiddenParam = document.getElementById("hiddenFormBoolean");
-
-  var existingDiagnosisData = [];
-
-  if (hiddenParam) {
-    console.log("HIDDENPARAM");
-    document.getElementById("allFields").disabled = true;
-    document.getElementById("submit-button").innerText = "Save Case";
-    document.getElementById("title").innerText = "Edit Case";
-    console.log("HDIING SUBMIT BUTTON");
-    document.getElementById("submit-button").hidden = true;
-
-    console.log("PASSED ID: " + caseID);
-    mapExistingCaseDetailsToFields(existingDiagnosisData);
-  }
-  else{
-
-    getAllDiagnosisForTags(existingDiagnosisData);
-  }
-
-
-
+  hiddenParamDiagnosisSetup();
   // checkDiagnosisCheckBoxPressed();
-  checkSubmitButtonPressed(hiddenParam);
+  checkSubmitButtonPressed();
 
 
 
@@ -36,15 +18,21 @@ function toggleDiagnosisCheckBox() {
     if (diagnosisCheckBox.checked){
         console.log("------CHECKBOX IS CHECKED");
         diagnosisInputBox.hidden = true;
+        var chipsDiv = $(".chips-autocomplete");
+        chipsDiv.material_chip('data');
+        console.log("CHIPS DEV" + chipsDiv);
+        old_state = chipsDiv.material_chip('data');
+        getAllDiagnosisForTags([{tag:"Unconfirmed"}]);
 
 
     }
     else{
         console.log("------CHECKBOX IS NOT CHECKED");
         diagnosisInputBox.hidden = false;
+        getAllDiagnosisForTags(old_state);
     }
 }
-function checkSubmitButtonPressed(hiddenParam){
+function checkSubmitButtonPressed(){
     $("#submitCases").submit(function(e) {
         console.log("hi");
         e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -122,7 +110,8 @@ function unhideForm() {
     console.log("Param doesn't exist, so don't hide any fields");
   }
 }
-function mapExistingCaseDetailsToFields(existingDiagnosisData){
+function mapExistingCaseDetailsToFields(){
+    var existingDiagnosisData = [];
   $.ajax({
     type: "GET",
     url: "/api/getCaseById/" + caseID,
@@ -240,6 +229,25 @@ function getAllDiagnosisForTags(existingDiagnosisData) {
       $(".chip").addClass("blue lighten-3");
     }
   });
+}
+function hiddenParamDiagnosisSetup(){
+    var existingDiagnosisData = [];
+
+    if (hiddenParam) {
+        console.log("HIDDENPARAM");
+        document.getElementById("allFields").disabled = true;
+        document.getElementById("submit-button").innerText = "Save Case";
+        document.getElementById("title").innerText = "Edit Case";
+        console.log("HDIING SUBMIT BUTTON");
+        document.getElementById("submit-button").hidden = true;
+
+        console.log("PASSED ID: " + caseID);
+        mapExistingCaseDetailsToFields([]);
+    }
+    else{
+
+        getAllDiagnosisForTags(existingDiagnosisData);
+    }
 }
 
 console.log($(".chip"));
