@@ -38,12 +38,14 @@ public class CaseService implements CaseServiceInterface {
                        DiagnosisRepositoryInterface diagnosisRepository,
                        CategoryRepositoryInterface categoryRepository,
                        NotificationServiceInterface notificationService,
-                       WardRepositoryInterface wardRepository){
+                       WardRepositoryInterface wardRepository,
+                       Helpers helpers){
         this.caseRepository = caseRepository;
         this.diagnosisRepository = diagnosisRepository;
         this.categoryRepository = categoryRepository;
         this.notificationService = notificationService;
         this.wardRepository = wardRepository;
+        this.helpers =helpers;
     }
 
     @Override
@@ -78,6 +80,7 @@ public class CaseService implements CaseServiceInterface {
 
         log.debug("CREATING A NEW CASE");
         CaseModel caseModel = new CaseModel(
+                null,
                 form.getName(),
                 form.getDemographics(),
                 new ArrayList<>(),
@@ -90,7 +93,9 @@ public class CaseService implements CaseServiceInterface {
                 form.getFamilyHistory(),
                 form.getSocialHistory(),
                 form.getNotes(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                helpers.getUserId()
+
         );
         List<Diagnosis> newDiagnoses = new ArrayList<>();
 
@@ -121,7 +126,7 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public List<CaseModel> findAll() {
-        return caseRepository.findAll();
+        return caseRepository.findByUser(helpers.getUserId());
     }
 
     @Override
@@ -158,12 +163,13 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public List<CaseModel> findAllByOrderByCreationDate() {
-        return caseRepository.findAllByOrderByCreationDateDesc();
+
+        return caseRepository.findAllByUserOrderByCreationDateDesc(helpers.getUserId());
     }
 
     @Override
     public List<CaseModel> findAllByOrderByCreationDateAsc() {
-        return caseRepository.findAllByOrderByCreationDateDesc();
+        return caseRepository.findAllByOrderByCreationDateAsc();
     }
 
     @Override
@@ -235,7 +241,7 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public void checkEmptyDiagnosis(){
-        List<CaseModel> listCases = caseRepository.findAll();
+        List<CaseModel> listCases = caseRepository.findByUser(helpers.getUserId());
         for (CaseModel caseModel:
                 listCases) {
             if(caseModel.getDiagnosesList().isEmpty()){
