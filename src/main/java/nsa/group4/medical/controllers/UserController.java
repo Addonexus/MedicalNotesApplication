@@ -100,6 +100,9 @@ public class UserController {
 
         if(userExists(userForm.getUsername())) {
             //add error message
+
+            System.out.println("user already exists");
+
         }
         else {
             User tempUser = new User(
@@ -119,11 +122,14 @@ public class UserController {
             userService.save(tempUser);
 
             securityService.autoLogin(tempUser.getUsername(), tempUser.getPasswordConfirm());
-
+            return "redirect:/home";
         }
 
-        return "redirect:/home";
+
+        return "/registration";
+
     }
+
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
@@ -150,5 +156,4 @@ public class UserController {
         }
         return false;
     }
-
 }
