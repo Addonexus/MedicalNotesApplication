@@ -40,16 +40,18 @@ public class RESTFreehandNotesController {
     }
 
     @RequestMapping(value = "/createFreehandNotes", method = POST, produces = "application/json")
-    public @ResponseBody ResponseEntity<?> saveFreehandNotes(@RequestBody Map<String, String> formData) {
-//        System.out.println(formData);
-//        System.out.println(formData.get("diagnosisId"));
-//        System.out.println(formData.get("key"));
-//        System.out.println(formData.get("value"));
+    public @ResponseBody ResponseEntity<?> save(@RequestBody Map<String,String> formData) {
+        System.out.println(formData);
+        System.out.println(formData.get("diagnosisId"));
+        System.out.println(formData.get("field"));
+
 
         Long diagnosisID = Long.parseLong(formData.get("diagnosisId"));
 
         freehandNotesRepoJDBC.save(
-                new FreehandNotesAdded(null,diagnosisID,formData.get("field"))
+                new FreehandNotesAdded(null,
+                        diagnosisID,
+                        formData.get("field"))
 
         );
 

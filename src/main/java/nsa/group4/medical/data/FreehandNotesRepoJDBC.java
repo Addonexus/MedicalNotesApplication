@@ -38,6 +38,8 @@ public class FreehandNotesRepoJDBC implements FreehandNotesRepositoryInterface {
         jdbc = newJdbc;
     }
 
+    static final Logger LOG = LoggerFactory.getLogger(FreehandNotesRepoJDBC.class);
+
     @Override
     public void save(FreehandNotesAdded freehandNotesAdded){
         saveFreehandNotesDetails(freehandNotesAdded.getId(),
@@ -82,8 +84,4 @@ private Long saveFreehandNotesDetails(
                 new FreehandNotesRowmapper());
     }
 
-    public List<DiagnosisInformation> getAllDiagnosisInformation(){
-        return jdbcTemplate.query("SELECT * FROM diagnosis_information"
-                , new DiagnosisInformationRowmapper());
-    }
 }

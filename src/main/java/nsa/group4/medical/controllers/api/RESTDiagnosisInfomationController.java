@@ -41,6 +41,7 @@ public class RESTDiagnosisInfomationController {
     @RequestMapping(value = "/createDiagnosisInformation", method = POST, produces = "application/json")
     public @ResponseBody ResponseEntity<?> saveDiagnosisInformation(@RequestBody Map<String, String> formData) {
         System.out.println(formData);
+        System.out.println("Showing what is being saved in form");
         System.out.println(formData.get("diagnosisId"));
         System.out.println(formData.get("key"));
         System.out.println(formData.get("value"));
