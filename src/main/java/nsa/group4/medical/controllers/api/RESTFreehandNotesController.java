@@ -57,7 +57,7 @@ public class RESTFreehandNotesController {
                         formData.get("field"))
 
         );
-        
+
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         return ResponseEntity.ok().body(responseBody);
