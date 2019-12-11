@@ -13,7 +13,7 @@ public class FreehandNotesRowmapper implements RowMapper<FreehandNotes> {
         FreehandNotes freehandNotes = new FreehandNotes();
         freehandNotes.setId(resultSet.getLong("id"));
         freehandNotes.setField(resultSet.getString("field"));
-        
+
         return freehandNotes;
     }
 
