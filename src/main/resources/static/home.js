@@ -226,7 +226,14 @@ function doThis(data) {
         inputOption = document.createElement('option');
         inputOption.setAttribute("value", categories[j].name);
         inputOption.appendChild(document.createTextNode(categories[j].name));
+
+        if (data[i].categories.name == categories[j].name) {
+          inputOption.setAttribute("selected", "selected");
+        }
         inputSelectRef.appendChild(inputOption)
+
+
+
       }
     }
     console.log("fuck this");
@@ -486,13 +493,17 @@ function refreshListOfCategories() {
 
       // Delete Button
       deleteButton = document.createElement("button");
-      deleteButton.setAttribute("class", "btn-small white black-text");
+      deleteButton.setAttribute("class", "btn-small black-text");
       deleteButton.setAttribute(
         "onClick",
         "deleteCategory(" + data[i].id + ", categoryModal" + i + ")"
       );
       deleteButton.appendChild(document.createTextNode("delete"));
       deleteButton.style.marginLeft = "20px";
+      deleteButton.style.backgroundColor = "#ff5555";
+      deleteButton.style.fontWeight = "600";
+
+
 
       modalFooter = document.createElement("div");
       modalFooter.setAttribute("class", "modal-footer");
