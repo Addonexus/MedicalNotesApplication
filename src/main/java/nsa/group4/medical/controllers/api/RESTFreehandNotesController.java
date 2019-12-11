@@ -9,6 +9,7 @@ import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.events.DiagnosisInformationAdded;
 import nsa.group4.medical.service.events.FreehandNotesAdded;
 import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
+import nsa.group4.medical.service.implementations.NotificationServiceInterface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -23,12 +24,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class RESTFreehandNotesController {
     private DiagnosisServiceInterface diagnosisServiceInterface;
     private FreehandNotesRepoJDBC freehandNotesRepoJDBC;
+    private NotificationServiceInterface notificationService;
 
     public RESTFreehandNotesController(
             DiagnosisServiceInterface diagnosisServiceInterface,
-            FreehandNotesRepoJDBC freehandNotesRepoJDBC) {
+            FreehandNotesRepoJDBC freehandNotesRepoJDBC, NotificationServiceInterface notificationService) {
         this.diagnosisServiceInterface = diagnosisServiceInterface;
         this.freehandNotesRepoJDBC = freehandNotesRepoJDBC;
+        this.notificationService = notificationService;
     }
 
 
@@ -54,6 +57,7 @@ public class RESTFreehandNotesController {
                         formData.get("field"))
 
         );
+        
 
         AjaxResponseBody responseBody = new AjaxResponseBody();
         return ResponseEntity.ok().body(responseBody);
