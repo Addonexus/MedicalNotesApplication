@@ -1,150 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8">
-    <title>Log in with your account</title>
 
+<head>
+  <meta charset="UTF-8" />
+  <title>Home Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet" />
+  <!-- import aos (animate on scroll)-->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+  <script type="text/javascript" th:src="@{/index.js}"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script>
+    $(window).scroll(function () {
+      element = document.getElementById("arrow");
+      if (element != null) {
+        $(".btm-icon").css("opacity", 1 - $(window).scrollTop() / 1000);
+        style = window.getComputedStyle(element);
+        opacity = style.getPropertyValue("opacity");
+        console.log(opacity);
+        if (opacity < 0.1) {
+          document.getElementById("icon-container").remove();
+        }
+      }
+    });
+  </script>
+  <!--Import custom css-->
+  <link type="text/css" rel="stylesheet" href="/css/styleIndex.css" media="screen,projection" />
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body>
-
-<div class="container">
-    <form method="POST" th:action="@{/login}">
-        <h2>Log in</h2>
-
-        <div>
-            <span>Enter Email</span>
-            <input name="username" type="text" placeholder="Username"
-                   autofocus="true"/>
-            <span>Enter Password</span>
-            <input name="password" type="password" placeholder="Password"/>
-            <div th:if="${error}">
-                <span>Error big boi</span>
-            </div>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <button type="submit">Log In</button>
-            <h4><a href="@{registration}">Create an account</a></h4>
+  <header class="hero-header blue lighten-5">
+    <div data-aos="zoom-in-right" class="flexy aos-init aos-animate">
+      <div class="center big-box z-depth-4 container">
+        <div class="blue accent-4 white-text bb-title">
+          Login to your account. Not registered yet? Click
+          <a class="blue-text link text-lighten-5" href="" th:href="@{/registration}">here</a>
         </div>
-    </form>
-</div>
-
-</body>
-</html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Home Page</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Pacifico&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Oswald&display=swap"
-      rel="stylesheet"
-    />
-    <!-- import aos (animate on scroll)-->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!--Import materialize.css-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-    <script type="text/javascript" th:src="@{/index.js}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script>
-      $(window).scroll(function() {
-        element = document.getElementById("arrow");
-        if (element != null) {
-          $(".btm-icon").css("opacity", 1 - $(window).scrollTop() / 1000);
-          style = window.getComputedStyle(element);
-          opacity = style.getPropertyValue("opacity");
-          console.log(opacity);
-          if (opacity < 0.1) {
-            document.getElementById("icon-container").remove();
-          }
-        }
-      });
-    </script>
-    <!--Import custom css-->
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="/css/styleIndex.css"
-      media="screen,projection"
-    />
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <header class="hero-header blue lighten-5">
-      <div data-aos="zoom-in-right" class="flexy aos-init aos-animate">
-        <div class="center big-box z-depth-4 container">
-          <div class="blue accent-4 white-text bb-title">
-            Login to your account. Not registered yet? Click
-            <a
-              class="blue-text link text-lighten-5"
-              href=""
-              th:href="@{/register}"
-              >here</a
-            >
-          </div>
-          <div class="white bb-content">
-            <div class="row container">
-              <div class="input-field col s12 m6">
-                <input
-                  placeholder="Enter your email"
-                  id="email"
-                  type="text"
-                  class="validate"
-                />
-                <label for="email">Email</label>
+        <div class="white bb-content">
+          <div class="row container">
+            <form method="POST" th:action="@{/login}">
+              <h2>Log in</h2>
+              <div>
+                <span class="left">Enter Username</span>
+                <input name="username" type="text" placeholder="Username" autofocus="true" />
+                <span class="left">Enter Password</span>
+                <input name="password" type="password" placeholder="Password" />
+                <div th:if="${error}">
+                  <span>Incorrect username / password</span>
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <br><br>
+                <button type="submit" class="waves-effect waves-light btn-large blue accent-3">Log In</button>
               </div>
-              <div class="input-field col s12 m6">
-                <input
-                  placeholder="Enter your password"
-                  id="last_name"
-                  type="password"
-                  class="validate"
-                />
-                <label for="last_name">Password</label>
-              </div>
-              <a th:href="@{/home/}" class="waves-effect waves-light btn-large blue accent-3"
-                >Login</a
-              >
-            </div>
+              <br>
+            </form>
           </div>
         </div>
       </div>
-    </header>
-    <div class="footer black white-text">
-      <span class="left-align"> Case a day - </span>
-      <span class="right-align"> Group 4 </span>
-      <br />
-      Jake Morris, Luke Arnold, Anson Gurung, Amina Begum Nessa
     </div>
-    <script>
-      AOS.init();
-    </script>
-  </body>
+  </header>
+  <div class="footer black white-text">
+    <span class="left-align"> Case a day - </span>
+    <span class="right-align"> Group 4 </span>
+    <br />
+    Jake Morris, Luke Arnold, Anson Gurung, Amina Begum Nessa
+  </div>
+  <script>
+    AOS.init();
+  </script>
+</body>
+
 </html>

@@ -1,13 +1,14 @@
-* {
-  padding: 0px;
-  margin: 0px;
-}
-
 body {
   font-family: "Oswald", serif;
   background-color: #ffffff;
   /* color: #FFF6A4; */
   color: darkslategray;
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .flow-text {

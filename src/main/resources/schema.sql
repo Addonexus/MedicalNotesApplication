@@ -11,6 +11,7 @@ SET IGNORECASE=TRUE;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT NULL,
   `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -19,6 +20,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `diagnoses` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT NULL,
   `name` VARCHAR(100) NOT NULL,
   `category_id` INT NULL,
   PRIMARY KEY (`id`))
@@ -36,6 +38,7 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `notifications` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id` INT NULL,
     `content` VARCHAR(100) NULL,
     `creation_date` DATETIME NULL,
     `diagnosis_id` INT NOT NULL,
@@ -49,6 +52,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cases` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT NULL,
   `name` VARCHAR(100) NOT NULL,
   `demographics` VARCHAR(100) NOT NULL,
   `ward` VARCHAR(100) NULL,
@@ -91,7 +95,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE if not exists `role`
 (
-    `id`     int(11)     NOT NULL AUTO_INCREMENT,
+    `id`     int     NOT NULL AUTO_INCREMENT,
 --     `userid` int(11)     NOT NULL,
     `role`   varchar(45) NOT NULL,
     PRIMARY KEY (`id`)
@@ -99,7 +103,7 @@ CREATE TABLE if not exists `role`
     ENGINE = InnoDB;
 CREATE TABLE if not exists `user`
 (
-    `id`       int(11)      NOT NULL AUTO_INCREMENT,
+    `id`       int     NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(45)  NOT NULL,
     `password` VARCHAR(100) NOT NULL,
     PRIMARY KEY (`id`)
@@ -187,6 +191,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ward` (
  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+ `user_id` INT NULL,
  `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;

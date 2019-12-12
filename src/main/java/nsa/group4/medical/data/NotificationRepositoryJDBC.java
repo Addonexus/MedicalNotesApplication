@@ -4,6 +4,7 @@ package nsa.group4.medical.data;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.domains.Notifications;
+import nsa.group4.medical.domains.User;
 import nsa.group4.medical.domains.rowmappers.NotificationRowmapper;
 import nsa.group4.medical.service.implementations.NotificationRepositoryInterface;
 import nsa.group4.medical.service.events.NotificationAdded;
@@ -48,6 +49,11 @@ public class NotificationRepositoryJDBC implements NotificationRepositoryInterfa
     @Override
     public List<Notifications> findAll() {
         return getAllNotifications();
+    }
+
+    @Override
+    public List<Notifications> findByUser(User user) {
+        return null;
     }
 
     private Long saveNotificationDetails(Long id, String content){

@@ -163,6 +163,7 @@ function refreshListOfDiagnoses() {
         var a = document.createElement("a");
         var b = document.createElement("button");
         a.setAttribute("href", "/diagnosis/" + data[i].id);
+        a.style.boxShadow = "0px 5px lightblue"
         a.style.width = "85%";
         b.appendChild(document.createTextNode(data[i].name));
         b.setAttribute("class", "btn content-item bigger");
@@ -179,6 +180,7 @@ function refreshListOfDiagnoses() {
         var settingsIcon = document.createElement("i");
 
         settings.style.width = "15%";
+        settings.style.boxShadow = "0px 5px lightblue"
         settingsIcon.appendChild(document.createTextNode("edit"));
         settingsIcon.setAttribute("class", "material-icons large");
 
@@ -231,13 +233,17 @@ function refreshListOfDiagnoses() {
         saveButton.appendChild(document.createTextNode("save"));
 
         deleteButton = document.createElement("button");
-        deleteButton.setAttribute("class", "btn-small white black-text");
+        deleteButton.setAttribute("class", "btn-small white-text");
         deleteButton.setAttribute(
           "onClick",
           "deleteDiagnosis(" + data[i].id + ", diaModal" + i + ")"
         );
         deleteButton.appendChild(document.createTextNode("delete"));
         deleteButton.style.marginLeft = "20px";
+        deleteButton.style.backgroundColor = "#ff5555";
+        deleteButton.style.fontWeight = "600";
+        deleteButton.style.color = "white";
+
 
         modalFooter = document.createElement("div");
         modalFooter.setAttribute("class", "modal-footer");
@@ -264,7 +270,7 @@ function refreshListOfDiagnoses() {
 
 function doThis(data) {
   console.log("HAHHASHU")
-  $.get("/api/getAllCategories").then(function(categories) {
+  $.get("/api/getAllCategories").then(function (categories) {
     console.log("work or i haven noidae")
     console.log(data);
     for (var i = 0; i < data.length; i++) {
@@ -274,7 +280,14 @@ function doThis(data) {
         inputOption = document.createElement('option');
         inputOption.setAttribute("value", categories[j].name);
         inputOption.appendChild(document.createTextNode(categories[j].name));
+
+        if (data[i].categories.name == categories[j].name) {
+          inputOption.setAttribute("selected", "selected");
+        }
         inputSelectRef.appendChild(inputOption)
+
+
+
       }
     }
     console.log("fuck this");
@@ -285,12 +298,12 @@ function doThis(data) {
 function updateCategory(num, modal) {
   var categoryModalTitle = document.getElementById("modalCategoryTitle" + num);
   //checks to see if the user entered anything in the diagnosis title field
-  if (categoryModalTitle.value == ""){
-  //  sets the new name as whatever the current name of the diagnosis is
+  if (categoryModalTitle.value == "") {
+    //  sets the new name as whatever the current name of the diagnosis is
     newName = categoryModalTitle.placeholder;
   }
-  else{
-  // otherwise sets the new diagnosis name as title entered by the user
+  else {
+    // otherwise sets the new diagnosis name as title entered by the user
     newName = categoryModalTitle.value;
   }
   console.log("himmsdmsd")
@@ -310,52 +323,38 @@ function updateCategory(num, modal) {
       refreshNotifications();
       console.log("ERROR");
       refreshListOfCategories();
+      swal({
+        title: "Success",
+        text: "Category Moved/Edited",
+        icon: "success",
+      });
     },
     error: function (response) {
-//        if(response.status == "NAME EXISTS"){
+      //        if(response.status == "NAME EXISTS"){
 
-        var obj = JSON.parse(response.responseText);
-        if(obj.status = "NAME EXISTS"){
-            alert("Category Name already exists, please try a different name");
-        }
-        console.log("ERROR");
-    }
-//      refreshListOfCategories();
-  });
-}
-function deleteCategory(num, modal) {
-  console.log(num);
-  console.log("my modal: " + modal);
-  var instance = M.Modal.getInstance(modal);
-  // instance.close();
-  var formData = {
-    id: num
-  };
-
-  $.ajax({
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    type: "DELETE",
-    url: "/api/deleteCategory/" + num,
-    success: function (json) {
-      getRecentCases();
-      refreshNotifications();
-      refreshListOfCategories();
-    },
-    error: function (json) {
+      var obj = JSON.parse(response.responseText);
+      if (obj.status = "NAME EXISTS") {
+        swal({
+          title: "Error",
+          text: "Category Name already exists, please try a different name",
+          icon: "error",
+        });
+      }
       console.log("ERROR");
     }
+    //      refreshListOfCategories();
   });
 }
+
 function updateDiagnosis(num, modal) {
   var diagnosisModalTitle = document.getElementById("modalDiagnosisTitle" + num);
   //checks to see if the user entered anything in the diagnosis title field
-  if (diagnosisModalTitle.value == ""){
-  //  sets the new name as whatever the current name of the diagnosis is
+  if (diagnosisModalTitle.value == "") {
+    //  sets the new name as whatever the current name of the diagnosis is
     newName = diagnosisModalTitle.placeholder;
   }
-  else{
-  // otherwise sets the new diagnosis name as title entered by the user
+  else {
+    // otherwise sets the new diagnosis name as title entered by the user
     newName = diagnosisModalTitle.value;
   }
   console.log("himmsdmsd")
@@ -377,88 +376,124 @@ function updateDiagnosis(num, modal) {
       refreshNotifications();
       console.log("ERROR");
       refreshListOfDiagnoses();
+      swal({
+        title: "Success",
+        text: "Diagnosis Moved/Edited",
+        icon: "success",
+      });
     },
     error: function (response) {
-        var obj = JSON.parse(response.responseText);
-        if(obj.status = "NAME EXISTS"){
-            alert("Diagnosis Name already exists, please try a different name")
-        }
-        console.log("ERROR");
+      var obj = JSON.parse(response.responseText);
+      if (obj.status = "NAME EXISTS") {
+        swal({
+          title: "Error",
+          text: "Diagnosis Name already exists, please try a different name",
+          icon: "error",
+        });
+        //        alert("Diagnosis Name already exists, please try a different name")
+      }
+      console.log("ERROR");
     }
   });
 }
 
 function deleteDiagnosis(num, modal) {
+  swal("Hello world!");
   console.log(num);
   console.log("my modal: " + modal);
-  var instance = M.Modal.getInstance(modal);
-  // instance.close();
-  var formData = {
-    id: num
-  };
 
-  $.ajax({
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    type: "DELETE",
-    url: "/api/deleteDiagnosis/" + num,
-    success: function (json) {
-      getRecentCases();
-      refreshNotifications();
-      refreshListOfDiagnoses();
-    },
-    error: function (json) {
-      console.log("ERROR");
-    }
-  });
+  swal({
+    title: "Are you sure?",
+    text: "You will lose all of the cases attributed to this diagnosis",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          type: "DELETE",
+          url: "/api/deleteDiagnosis/" + num,
+          success: function (json) {
+            getRecentCases();
+            refreshNotifications();
+            refreshListOfDiagnoses();
+          },
+          error: function (json) {
+            console.log("ERROR");
+          }
+        });
+        swal("Diagnosis deleted", {
+          icon: "success",
+        });
+      }
+    });
 }
 
 function reload() {
   document.location.reload();
 }
-
 function deleteCategory(num) {
-  console.log(num);
-  var formData = {
-    id: num
-  };
+  swal({
+    title: "Are you sure?",
+    text: "You will lose all of the cases / diagnoses attributed to this category",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+    .then((willDelete) => {
+      if (willDelete) {
+        console.log(num);
+        var formData = {
+          id: num
+        };
 
-  $.ajax({
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    type: "DELETE",
-    url: "/api/deleteCategory/" + num,
-    //        data: JSON.stringify(formData),
-    success: function (json) {
-      // alert("Worked!");
-      refreshListOfCategories();
-      //                var listOfCases = document.getElementById("recentCases");
-      //
-      //                listOfCases.empty();
-      getRecentCases();
-    },
-    error: function (json) {
-      // alert("error!");
-      console.log("ERROR");
-    }
-  });
+        $.ajax({
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          type: "DELETE",
+          url: "/api/deleteCategory/" + num,
+          //        data: JSON.stringify(formData),
+          success: function (json) {
+            // alert("Worked!");
+            refreshListOfCategories();
+            //                var listOfCases = document.getElementById("recentCases");
+            //
+            //                listOfCases.empty();
+            getRecentCases();
+          },
+          error: function (json) {
+            // alert("error!");
+            console.log("ERROR");
+          }
+        });
+        swal("Category deleted", {
+          icon: "success",
+        });
+      }
+    });
 }
+
 function refreshListOfCategories() {
-    console.log("HIHHS");
+  console.log("HIHHS");
   var grid = document.getElementById("content-grid");
 
   while (grid.firstChild) {
     grid.removeChild(grid.firstChild);
   }
-    console.log("HI THERE");
-    console.log(window.location);
-    container = document.getElementById("modal-container");
-    console.log("container");
-    console.log(container);
-    container.innerHTML = "";
+  console.log("HI THERE");
+  console.log(window.location);
+  container = document.getElementById("modal-container");
+  console.log("container");
+  console.log(container);
+  container.innerHTML = "";
 
-  $.get("/api/getAllCategories/" + lastInt, function (data) {
+  $.get("/api/getAllCategories/", function (data) {
     $(".result").html(data);
+
+    console.log("home data");
     console.log(data);
     var grid = document.getElementById("content-grid");
     for (i = 0; i < data.length; i++) {
@@ -467,6 +502,7 @@ function refreshListOfCategories() {
       var b = document.createElement("button");
       a.setAttribute("href", "/category/" + data[i].id);
       a.style.width = "85%";
+      a.style.boxShadow = "0px 5px lightblue"
       b.appendChild(document.createTextNode(data[i].name));
       b.setAttribute("class", "btn content-item bigger");
       b.style.fontWeight = "600";
@@ -479,16 +515,18 @@ function refreshListOfCategories() {
       var settingsIcon = document.createElement("i");
 
       settings.style.width = "15%";
+      settings.style.boxShadow = "0px 5px lightblue"
+
       settingsIcon.appendChild(document.createTextNode("edit"));
       settingsIcon.setAttribute("class", "material-icons large");
 
       settingsButton.appendChild(settingsIcon);
       settingsButton.setAttribute("class", "btn content-item bigger modal-trigger");
       settingsButton.setAttribute("href", "#categoryModal" + i);
-//      settingsButton.setAttribute(
-//        "onClick",
-//        "deleteCategory(" + data[i].id + ")"
-//      );
+      //      settingsButton.setAttribute(
+      //        "onClick",
+      //        "deleteCategory(" + data[i].id + ")"
+      //      );
 
       // settingsButton.style.backgroundColor="#eeeeff";
       settingsButton.style.backgroundColor = "#eeeeff";
@@ -513,7 +551,7 @@ function refreshListOfCategories() {
       categoryTitle.id = "modalCategoryTitle" + data[i].id;
       categoryTitle.placeholder = data[i].name;
 
-       // Modal content
+      // Modal content
       modalContent = document.createElement("div");
       modalContent.setAttribute("class", "modal-content");
       modalContent.style.padding = "30px";
@@ -532,13 +570,17 @@ function refreshListOfCategories() {
 
       // Delete Button
       deleteButton = document.createElement("button");
-      deleteButton.setAttribute("class", "btn-small white black-text");
+      deleteButton.setAttribute("class", "btn-small white-text");
       deleteButton.setAttribute(
         "onClick",
         "deleteCategory(" + data[i].id + ", categoryModal" + i + ")"
       );
       deleteButton.appendChild(document.createTextNode("delete"));
       deleteButton.style.marginLeft = "20px";
+      deleteButton.style.backgroundColor = "#ff5555";
+      deleteButton.style.fontWeight = "600";
+
+
 
       modalFooter = document.createElement("div");
       modalFooter.setAttribute("class", "modal-footer");
@@ -611,6 +653,21 @@ function getRecentCases() {
     success: function (response) {
       var ids = response.categoryIds;
       var cases = response.casesList;
+      recentCases = document.getElementById("recentCases");
+      noCasesH5 = document.getElementById("no-cases-h5");
+      recentCases.style.height = "1000px";
+
+
+      if (cases.length == 0) {
+        noCasesH5.style.visibility = "visible";
+        recentCases.style.visibility = "hidden";
+
+      } else {
+        recentCases.style.visibility = "visible";
+        noCasesH5.style.visibility = "hidden";
+
+
+      }
 
       //      listOfCases.empty();
       for (i = 0; i < cases.length; i++) {
@@ -657,9 +714,18 @@ function createCategory() {
       data: JSON.stringify(formData),
       success: function (json) {
         refreshListOfCategories();
+        swal({
+          title: "Success",
+          text: "Category Created",
+          icon: "success",
+        });
       },
       error: function (json) {
-        alert("error!");
+        swal({
+          title: "Error",
+          text: "Category Name already exists, please try a different name",
+          icon: "error",
+        });
       }
     });
   });
@@ -685,9 +751,18 @@ function lookForCategoryFormPost() {
       data: JSON.stringify(formData),
       success: function (json) {
         refreshListOfDiagnoses();
+        swal({
+          title: "Success",
+          text: "Diagnosis Created",
+          icon: "success",
+        });
       },
       error: function (json) {
-        alert("error!");
+        swal({
+          title: "Error",
+          text: "Diagnosis Name already exists, please try a different name",
+          icon: "error",
+        });
       }
     });
   });
@@ -707,5 +782,6 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
 
 function markNotificationRead() { }

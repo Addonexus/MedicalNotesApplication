@@ -55,7 +55,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/static/**").permitAll() //Adding this line solved it
-
+                .antMatchers("/css/**").permitAll()
                 .antMatchers("/resources/**", "/registration","/").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/api/**").permitAll()

@@ -64,7 +64,6 @@ public class UserController {
     @GetMapping("/accountDetails")
     public String getAccountDetails(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         String username = "";
         Long id = null;
         if (principal instanceof UserDetails){
@@ -98,18 +97,22 @@ public class UserController {
                 "admin"
         ));
 
-        if(userExists(userForm.getUsername())) {
+        if (userExists(userForm.getUsername())) {
             //add error message
 
             System.out.println("user already exists");
+        } else {
 
-        }
-        else {
             User tempUser = new User(
                     null,
                     userForm.getUsername(),
                     userForm.getPassword(),
                     userForm.getPassword(),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
                     temp
             );
 
@@ -146,7 +149,7 @@ public class UserController {
 
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
-        return "welcome";
+        return "index";
     }
 
     private boolean userExists(String username){
