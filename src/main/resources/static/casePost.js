@@ -147,7 +147,8 @@ function mapExistingCaseDetailsToFields(){
           var form = response.caseModel;
           document.getElementById("name").value = form.name;
           document.getElementById("demographics").value = form.demographics;
-          document.getElementById("ward").value = form.ward;document.getElementById("presentingComplaint").value =
+          document.getElementById("ward").value = form.ward;
+          document.getElementById("presentingComplaint").value =
               form.presentingComplaint;
           document.getElementById("presentingComplaintHistory").value =
               form.presentingComplaintHistory;

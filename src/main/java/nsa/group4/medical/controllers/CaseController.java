@@ -88,9 +88,9 @@ public class CaseController {
         Ward finalWard = null;
         if (ward.isPresent()){
             finalWard = ward.get();
-
-            model.addAttribute("wardKey", finalWard);
         }
+
+        model.addAttribute("wardKey", finalWard);
 
         List<Ward> wardList = wardService.getAllWard();
 
@@ -106,6 +106,36 @@ public class CaseController {
         log.debug("----GET Mapping: /case/{index}----");
         Optional<CaseModel> returnedCase = caseService.findByCaseId(index);
         log.debug("RETURNED CASE: "+ returnedCase);
+
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "";
+        Long id = null;
+        Long wardId = null;
+        if (principal instanceof UserDetails){
+            username = ((UserDetails)principal).getUsername();
+            UserDetails obj = (UserDetails)principal;
+            User returnedUser = userService.findByUsername(username);
+            User user = userService.findByUsername(username);
+            id = user.getId();
+            wardId = user.getWardId();
+        } else {
+            username = principal.toString();
+        }
+        Optional<Ward> ward = Optional.empty();
+        if (wardId != null) {
+            ward = wardService.findById(wardId);
+        }
+        Ward finalWard = null;
+        if (ward.isPresent()){
+            finalWard = ward.get();
+        }
+
+        model.addAttribute("wardKey", finalWard);
+        List<Ward> wardList = wardService.getAllWard();
+        model.addAttribute("wardList", wardList);
+
+
         if(returnedCase.isPresent()){
             model.addAttribute("case", returnedCase.get());
             model.addAttribute("caseKey", new CaseForm());
