@@ -72,6 +72,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                 }, new DiagnosisInformationRowmapper());
     }
 
+    //Method used to query the database a retrieve all diagnosis information regardless of diagnosis.
     public List<DiagnosisInformation> getAllDiagnosisInformation(){
         return jdbcTemplate.query("SELECT * FROM diagnosis_information"
                 , new DiagnosisInformationRowmapper());
