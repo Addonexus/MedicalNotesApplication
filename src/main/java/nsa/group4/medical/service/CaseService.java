@@ -12,6 +12,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,10 @@ public class CaseService implements CaseServiceInterface {
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CategoryRepositoryInterface categoryRepository;
     private NotificationServiceInterface notificationService;
+
+    @Autowired
+    EntityManager entityManager;
+
     private WardRepositoryInterface wardRepository;
 
     public Helpers helpers;
@@ -239,15 +246,20 @@ public class CaseService implements CaseServiceInterface {
         caseRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void checkEmptyDiagnosis(){
         List<CaseModel> listCases = caseRepository.findByUser(helpers.getUserId());
+        System.out.println("LIST OF CASES" + listCases);
         for (CaseModel caseModel:
                 listCases) {
             if(caseModel.getDiagnosesList().isEmpty()){
-                caseRepository.deleteById(caseModel.getId());
+//                Query q = entityManager.createQuery("DELETE FROM CaseModel c WHERE c.user = " + helpers.getUserId().getId() + "");
+                Query q = entityManager.createQuery("DELETE FROM CaseModel c WHERE c.id = " + caseModel.getId());
+                q.executeUpdate();
             }
-
         }
+//        Query q = entityManager.createQuery("DELETE FROM CaseModel c WHERE  c.user = " + helpers.getUserId().getId() + "");
+
     }
 }
