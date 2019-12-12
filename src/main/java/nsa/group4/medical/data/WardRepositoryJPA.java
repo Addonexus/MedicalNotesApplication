@@ -15,4 +15,5 @@ import java.util.Optional;
 public interface WardRepositoryJPA extends WardRepositoryInterface, JpaRepository<Ward, Long> {
     Optional<Ward> findByName(String name);
     List<Ward> findByNameIn(Collection<String> names);
+    Optional<Ward> findById(Long id);
 }

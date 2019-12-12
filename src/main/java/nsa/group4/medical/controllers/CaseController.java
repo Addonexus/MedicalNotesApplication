@@ -7,6 +7,7 @@ import nsa.group4.medical.data.FreehandNotesRepoJDBC;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.UserService;
+import nsa.group4.medical.service.WardService;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 import nsa.group4.medical.web.DiagnosisInformationForm;
@@ -38,6 +39,9 @@ public class CaseController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    WardService wardService;
 
     @Autowired
     CategoriesRepositoryJPA categoriesRepositoryJPA;
@@ -74,6 +78,16 @@ public class CaseController {
         } else {
             username = principal.toString();
         }
+
+        Optional<Ward> ward = wardService.findById(wardId);
+
+        Ward finalWard = null;
+        if (ward.isPresent()){
+            finalWard = ward.get();
+
+            model.addAttribute("wardKey", finalWard);
+        }
+        
 
 
         return "main/case";
