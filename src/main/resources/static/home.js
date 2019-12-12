@@ -562,7 +562,7 @@ function getFreehandNotes() {
   $.get("/api/returnedFreehandNotes/" + lastInt, function (data) {
     $(".result").html(data);
     console.log(data);
-    var freehandNotesTable = document.getElementById("diaInfoTable");
+    var freehandNotesTable = document.getElementById("freehandNotesTable");
     for (i = 0; i < data.length; i++) {
       var row = freehandNotesTable.insertRow(
           freehandNotesTable.rows.length - 1
