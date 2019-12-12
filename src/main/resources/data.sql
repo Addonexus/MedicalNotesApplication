@@ -5,24 +5,9 @@ insert into categories (id, user_id, name) values (3, 1, 'brain');
 insert into categories (id, user_id, name) values (4, 2, 'leg');
 insert into categories (id, user_id, name) values (5, 2, 'arm');
 insert into categories (id, user_id, name) values (6, 2, 'face');
+
 insert into ward (id, name) values (1, 'Ligma Ward');
 insert into ward (id, name) values (2, 'Sugma Ward');
-
-insert into diagnoses (id, name, category_id) values (1,'heart ache', 1);
-insert into diagnoses (id, name, category_id) values (2,'circulation problems', 1);
-insert into diagnoses (id, name, category_id) values (3,'beats too fast', 1);
-insert into diagnoses (id, name, category_id) values (4,'beats too slow', 1);
-insert into diagnoses (id, name, category_id) values (5,'beats just right', 1);
-insert into diagnoses (id, name, category_id) values (6,'doesnt beat', 1);
-insert into diagnoses (id, name, category_id) values (7,'heart attack', 1);
-insert into diagnoses (id, name, category_id) values (8,'skin cancer', 2);
-insert into diagnoses (id, name, category_id) values (9,'skin burnt', 2);
-insert into diagnoses (id, name, category_id) values (10,'skin freeze', 2);
-insert into diagnoses (id, name, category_id) values (11,'skin fell off', 2);
-insert into diagnoses (id, name, category_id) values (12,'brain fell out', 3);
-insert into diagnoses (id, name, category_id) values (13,'brain missing', 3);
-insert into diagnoses (id, name, category_id) values (14,'dog ate brain', 3);
-insert into diagnoses (id, name, category_id) values (15,'insane brain pain', 3);
 
 insert into diagnoses (id, name, category_id, user_id) values (1,'heart ache', 1, 1);
 insert into diagnoses (id, name, category_id, user_id) values (2,'circulation problems', 1, 1);
