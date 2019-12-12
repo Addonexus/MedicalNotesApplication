@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-    <form id="accountForm">
+    <form id="accountForm" th:action="@{/updatePage">
         <select th:if="${wardKey}" aria-describedby="Select your ward">
             <option th:each="ward : ${wardKey}" th:text="${ward.name}"></option>
         </select>
