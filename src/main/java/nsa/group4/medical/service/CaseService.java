@@ -57,7 +57,7 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public Optional<CaseModel> findByCaseName(String caseName) {
-        return caseRepository.findByName(caseName);
+        return caseRepository.findByNameAndUser(caseName, helpers.getUserId());
     }
 
     @Override
@@ -80,7 +80,7 @@ public class CaseService implements CaseServiceInterface {
                 .stream().noneMatch(diagnosis -> diagnosis.getName().equals(x)))
                 .collect(Collectors.toList());
         //Logic for a new category when a diagnosis doesn't already exist (puts into a "Miscellaneous" category by default)
-        boolean categoryExists = categoryRepository.existsByName("Miscellaneous");
+        boolean categoryExists = categoryRepository.existsByNameAndUser("Miscellaneous", helpers.getUserId());
         Categories category;
 
         //List of new Diagnosis in the object that will allow them to be stored like the existing Diagnosis List
@@ -118,7 +118,7 @@ public class CaseService implements CaseServiceInterface {
                 category =  categoryRepository.findByName("Miscellaneous").get();
             }
 
-            newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
+            newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(helpers.getUserId(),x, category)).collect(Collectors.toList());
 
             caseModel.getDiagnosesList().addAll(newDiagnoses);
         }
@@ -171,7 +171,7 @@ public class CaseService implements CaseServiceInterface {
     @Override
     public List<CaseModel> findAllByOrderByCreationDate() {
 
-        return caseRepository.findAllByUserOrderByCreationDateDesc(helpers.getUserId());
+        return caseRepository.findByUserOrderByCreationDateDesc(helpers.getUserId());
     }
 
     @Override
@@ -197,7 +197,7 @@ public class CaseService implements CaseServiceInterface {
                         .stream().noneMatch(diagnosis -> diagnosis.getName().equals(x)))
                 .collect(Collectors.toList());
         //Logic for a new category when a diagnosis doesn't already exist (puts into a "Miscellaneous" category by default)
-        boolean categoryExists = categoryRepository.existsByName("Miscellaneous");
+        boolean categoryExists = categoryRepository.existsByNameAndUser("Miscellaneous",helpers.getUserId());
         Categories category;
 
 
@@ -223,7 +223,7 @@ public class CaseService implements CaseServiceInterface {
                 category = categoryRepository.findByName("Miscellaneous").get();
             }
             //List of new Diagnosis in the object that will allow them to be stored like the existing Diagnosis List
-            List<Diagnosis> newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
+            List<Diagnosis> newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(helpers.getUserId(),x, category)).collect(Collectors.toList());
             caseModel.setDiagnosesList(newDiagnoses);
             caseModel.getDiagnosesList().addAll(existingDiagnosis);
         }
@@ -238,7 +238,7 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2) {
-        return caseRepository.findByCreationDateBetween(creationDate, creationDate2);
+        return caseRepository.findByUserAndCreationDateBetween(helpers.getUserId(),creationDate, creationDate2);
     }
 
     @Override

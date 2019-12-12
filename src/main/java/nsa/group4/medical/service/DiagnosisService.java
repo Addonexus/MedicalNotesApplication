@@ -1,12 +1,14 @@
 package nsa.group4.medical.service;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.service.implementations.CaseRepositoryInterface;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.service.implementations.DiagnosisRepositoryInterface;
 import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -16,7 +18,8 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class DiagnosisService implements DiagnosisServiceInterface {
-
+    @Autowired
+    private Helpers helper;
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CaseRepositoryInterface caseRepository;
     private CaseServiceInterface caseServiceInterface;
@@ -31,7 +34,7 @@ public class DiagnosisService implements DiagnosisServiceInterface {
 
     @Override
     public Optional<Diagnosis> getCaseByDiagnosisName(String name) {
-        return diagnosisRepository.findByName(name);
+        return diagnosisRepository.findByNameAndUser(name, helper.getUserId());
     }
 
     @Override
@@ -61,17 +64,17 @@ public class DiagnosisService implements DiagnosisServiceInterface {
 
     @Override
     public List<Diagnosis> getAllDiagnosis() {
-        return diagnosisRepository.findAll();
+        return diagnosisRepository.findByUser(helper.getUserId());
     }
 
     @Override
     public Optional<Diagnosis> findByName(String name) {
-        return diagnosisRepository.findByName(name);
+        return diagnosisRepository.findByNameAndUser(name, helper.getUserId());
     }
 
     @Override
     public List<Diagnosis> findAll() {
-        return diagnosisRepository.findAll();
+        return diagnosisRepository.findByUser(helper.getUserId());
     }
 
     @Override
