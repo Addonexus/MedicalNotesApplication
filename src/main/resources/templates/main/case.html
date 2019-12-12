@@ -45,15 +45,16 @@
                     </div>
 
 
-                    <div id = "diagnosisContent">
+                    <div id="diagnosisContent">
                         <label th:for="diagnosesList">Diagnoses</label>
                         <div id="diagnosesList" class="chips chips-autocomplete chips-placeholder chips-initial">
                             <i class="material-icons">close</i>
                         </div>
                         <span class="diagnosesList error"></span>
                     </div>
-            <input type="checkbox" name="diagnosisState" id="diagnosis-checkbox" onclick="toggleDiagnosisCheckBox()"/>
-            <label for="diagnosis-checkbox">The diagnosis is currently unconfirmed</label>
+                    <input type="checkbox" name="diagnosisState" id="diagnosis-checkbox"
+                        onclick="toggleDiagnosisCheckBox()" />
+                    <label for="diagnosis-checkbox">The diagnosis is currently unconfirmed</label>
 
                     <div>
                         <label th:for="presentingComplaint">Presenting Complaint</label>
@@ -106,9 +107,10 @@
                     <!--        <input type="hidden" id="categoryId" name="categoryId" th:value = "${categoryIndex}">-->
 
                     <input th:if="${hiddenForm !=null}" type="hidden" id="hiddenFormBoolean" th:value="${hiddenForm}">
-                <input th:if="${diagnosisName !=null}" type="hidden" id="passedDiagnosis" th:value = "${diagnosisName}">
+                    <input th:if="${diagnosisName !=null}" type="hidden" id="passedDiagnosis"
+                        th:value="${diagnosisName}">
 
-        </fieldset>
+                </fieldset>
                 <div class="btn-container">
                     <button class="ele-btn" id="submit-button" type="submit">Create Case</button>
                     <button class="ele-btn" th:if="${hiddenForm !=null}" id="editCase" type="button"
@@ -132,9 +134,10 @@
         $(document).ready(function () {
             $('#submit-button').click(function () {
 
-                checked = $("input[type=checkbox]:checked").length;
+                isChecked = document.getElementById("start-checkbox").checked
+                console.log("checked? " + isChecked);
 
-                if (!checked) {
+                if (!isChecked) {
                     swal({
                         icon: "error",
                         text: "You must agree to not store personal details."
