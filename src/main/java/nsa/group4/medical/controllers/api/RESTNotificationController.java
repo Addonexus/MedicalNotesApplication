@@ -14,6 +14,7 @@ public class RESTNotificationController {
 
     private NotificationServiceInterface notificationService;
 
+    //Constructor call to retrieve required service.
     public RESTNotificationController(NotificationServiceInterface notificationService){
         this.notificationService = notificationService;
     }

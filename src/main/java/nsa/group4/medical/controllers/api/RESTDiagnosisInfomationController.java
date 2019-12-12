@@ -23,6 +23,8 @@ public class RESTDiagnosisInfomationController {
     private DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
     private NotificationServiceInterface notificationService;
 
+
+    //Constructor call to retrieve required services/repositories.
     public RESTDiagnosisInfomationController(DiagnosisServiceInterface diagnosisService,
                                              DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC,
                                              NotificationServiceInterface notificationService){
