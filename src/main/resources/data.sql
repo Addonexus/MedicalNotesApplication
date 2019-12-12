@@ -5,7 +5,6 @@ insert into categories (id, user_id, name) values (3, 1, 'brain');
 insert into categories (id, user_id, name) values (4, 2, 'leg');
 insert into categories (id, user_id, name) values (5, 2, 'arm');
 insert into categories (id, user_id, name) values (6, 2, 'face');
-insert into categories (id, user_id, name) values (7, 2, 'skin');
 
 insert into diagnoses (id, name, category_id, user_id) values (1,'heart ache', 1, 1);
 insert into diagnoses (id, name, category_id, user_id) values (2,'circulation problems', 1, 1);

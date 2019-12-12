@@ -82,17 +82,35 @@ public class RESTDiagnosisController {
     public @ResponseBody ResponseEntity<?> saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         System.out.println(formData.get("categoryName"));
-        Diagnosis createdDiagnosis = diagnosisService.createDiagnosis(new Diagnosis(
-                                        formData.get("name"),
-                                        categoryService.findByName(formData.get("categoryName")).get()
-                                        ));
 
-        notificationService.saveNotification(new Notifications(createdDiagnosis));
+        Boolean existsAlready = false;
 
-        AjaxResponseBody responseBody = new AjaxResponseBody();
-        responseBody.setDiagnoses(diagnosisService.findAll());
-        responseBody.setStatus("SUCCESS");
-        return ResponseEntity.ok().body(responseBody);
+        for (Diagnosis diagnosis : diagnosisService.findAll()) {
+            if (diagnosis.getName().equals(formData.get("name"))) {
+                existsAlready = true;
+            }
+        }
+
+        if (existsAlready) {
+
+            AjaxResponseBody responseBody = new AjaxResponseBody();
+            responseBody.setDiagnoses(diagnosisService.findAll());
+            responseBody.setStatus("SUCCESS");
+            return ResponseEntity.badRequest().body(responseBody);
+        } else {
+
+            Diagnosis createdDiagnosis = diagnosisService.createDiagnosis(new Diagnosis(
+                    formData.get("name"),
+                    categoryService.findByName(formData.get("categoryName")).get()
+            ));
+
+            notificationService.saveNotification(new Notifications(createdDiagnosis));
+
+            AjaxResponseBody responseBody = new AjaxResponseBody();
+            responseBody.setDiagnoses(diagnosisService.findAll());
+            responseBody.setStatus("SUCCESS");
+            return ResponseEntity.ok().body(responseBody);
+        }
     }
 
     @PostMapping(value = "/updateDiagnosis/{index}", produces = "application/json")
