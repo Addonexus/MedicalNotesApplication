@@ -42,7 +42,7 @@ public class WardController {
 
         List<CaseModel> returnedCases =
                 caseService.findCasesByWardId(wardId);
-        + returnedCases);
+
 
 
         model.addAttribute("returnedCases ", returnedCases);

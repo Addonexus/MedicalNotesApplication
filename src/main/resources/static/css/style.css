@@ -7,11 +7,17 @@
 
 * {
   font-family: 'Montserrat', sans-serif;
+  scroll-behavior: smooth;
 }
 
 .no-floor .input {
   border-bottom: none !important; 
 }
+
+.error{
+    color:red;
+}
+
 
 .desktop-grid {
   display: grid;
