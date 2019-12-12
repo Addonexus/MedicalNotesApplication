@@ -33,6 +33,8 @@ if (windowUrl.pathname.includes("diagnosis")) {
   markNotificationRead();
   getDiagnosisInformation();
   postDiagnosisInfo();
+  getFreehandNotes();
+  postFreehandNote();
 }
 
 if (windowUrl.pathname.includes("case")) {
