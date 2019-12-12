@@ -15,7 +15,7 @@ public interface CategoryRepositoryInterface {
 
 
     List<Categories> findByNameContaining(String contains);
-    boolean existsByName(String name);
+    boolean existsByNameAndUser(String name, User user);
     @Transactional
     void deleteById(Long id);
     List<Categories> findAll();

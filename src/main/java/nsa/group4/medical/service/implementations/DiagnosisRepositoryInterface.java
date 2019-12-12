@@ -1,5 +1,6 @@
 package nsa.group4.medical.service.implementations;
 
+import jdk.jshell.Diag;
 import nsa.group4.medical.domains.CaseModel;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
@@ -20,6 +21,7 @@ public interface DiagnosisRepositoryInterface {
 //    List<Diagnosis> findByCategoryId(Long index);
     List<Diagnosis> findByCategories(Categories categories);
     Diagnosis save(Diagnosis diagnosis);
+    List<Diagnosis> findByUser(User user);
     List<Diagnosis> findAll();
     @Transactional
     void deleteById(Long id);
