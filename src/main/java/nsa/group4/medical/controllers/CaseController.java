@@ -92,6 +92,10 @@ public class CaseController {
             model.addAttribute("wardKey", finalWard);
         }
 
+        List<Ward> wardList = wardService.getAllWard();
+
+        model.addAttribute("wardList", wardList);
+
 
 
         return "main/case";
