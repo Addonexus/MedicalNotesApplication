@@ -32,6 +32,13 @@ function refreshNotifications() {
     //     }
     //   }
     // }
+    notificationsEmpty = document.getElementById('notifications-empty');
+    if (data.length == 0) {
+      notificationsEmpty.style.visibility = "visible";
+    } else {
+      notificationsEmpty.style.visibility = "hidden";
+    }
+
 
     var needToRead = [];
     var needToDo = [];
@@ -131,7 +138,13 @@ $("#calendar-form").submit(function (e) {
       console.log(response.casesList);
       if (response.casesList.length == 0) {
         console.log("NO CASES!");
+        swal({
+          title: "Empty",
+          text: "No Cases Found for this Date",
+          icon: "warning",
+        });
       }
+
       for (let i = 0; i < response.casesList.length; i++) {
         console.log(response.casesList[i].name);
         var li = document.createElement("a");

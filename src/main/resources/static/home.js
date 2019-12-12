@@ -116,22 +116,15 @@ function postFreehandNote() {
       data: JSON.stringify(formData),
       success: function (json) {
         $("#freehandNotesTable tr").each(function () {
-          // console.log(this.id);
           if (this.id) {
             this.remove();
           }
           document.getElementsByClassName("content")[0].style.maxHeight =
-              "none";
-          // $(this)
-          //   .find("td")
-          //   .each(function() {
-          //     // console.log("hiya");
-          //   });
+            "none";
         });
         getFreehandNotes();
       },
       error: function (json) {
-        // alert("error!");
         console.log("error-h.html");
       }
     });
@@ -600,7 +593,7 @@ function getFreehandNotes() {
     var freehandNotesTable = document.getElementById("freehandNotesTable");
     for (i = 0; i < data.length; i++) {
       var row = freehandNotesTable.insertRow(
-          freehandNotesTable.rows.length - 1
+        freehandNotesTable.rows.length - 1
       );
       row.id = "hi";
       var field = row.insertCell(-1);
