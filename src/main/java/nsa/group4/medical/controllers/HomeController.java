@@ -66,8 +66,8 @@ public class HomeController {
 
         List<Categories> categories = categoryService.findAll();
         List<CaseModel> cases = caseService.findAll();
-        System.out.println("CATEGORIES TSET: "+categories.toString());
-        System.out.println("CASES TSET: "+cases.toString());
+        System.out.println("CATEGORIES TEST: "+categories.toString());
+        System.out.println("CASES TEST: "+cases.toString());
 //        model.addAttribute("cases", cases);
         model.addAttribute("categoryKey", new Categories());
         model.addAttribute("categories", categories);

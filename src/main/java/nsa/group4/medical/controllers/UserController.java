@@ -67,16 +67,11 @@ public class UserController {
         String username = "";
         Long id = null;
         if (principal instanceof UserDetails){
-            log.debug("HEEHEE");
             username = ((UserDetails)principal).getUsername();
             UserDetails obj = (UserDetails)principal;
-            log.debug("THIS IS NIVE: " + obj.toString());
-            log.debug("THIS S: " + username);
             User returnedUser = userService.findByUsername(username);
-            log.debug("WHADADP: "+returnedUser.getId());
             //id = ((UserDetails)principal).getId();
         } else {
-            log.debug("OOOOOO");
             username = principal.toString();
         }
 
@@ -88,7 +83,6 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult) {
-        log.debug("WE ARE HERE");
         Set<Role> temp = new HashSet<Role>();
 //TODO: check if the role already exists then add it to the user
 //        otherwise create a new user role
@@ -137,7 +131,6 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
 
-        log.debug("WE ARE HERE");
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 

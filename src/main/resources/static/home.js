@@ -144,7 +144,6 @@ function refreshListOfDiagnoses() {
   while (grid.firstChild) {
     grid.removeChild(grid.firstChild);
   }
-  console.log("HI THERE");
   console.log(window.location);
 
   container = document.getElementById("modal-container");
@@ -269,9 +268,7 @@ function refreshListOfDiagnoses() {
 }
 
 function doThis(data) {
-  console.log("HAHHASHU")
   $.get("/api/getAllCategories").then(function (categories) {
-    console.log("work or i haven noidae")
     console.log(data);
     for (var i = 0; i < data.length; i++) {
       inputSelectRef = document.getElementById("modalDiagnosisCategoryTitle" + data[i].id);
@@ -290,7 +287,6 @@ function doThis(data) {
 
       }
     }
-    console.log("fuck this");
     console.log(categories);
   });
 }
@@ -306,7 +302,6 @@ function updateCategory(num, modal) {
     // otherwise sets the new diagnosis name as title entered by the user
     newName = categoryModalTitle.value;
   }
-  console.log("himmsdmsd")
   // instance.close();
   var formData = {
     "newName": newName
@@ -357,7 +352,6 @@ function updateDiagnosis(num, modal) {
     // otherwise sets the new diagnosis name as title entered by the user
     newName = diagnosisModalTitle.value;
   }
-  console.log("himmsdmsd")
   newCategory = document.getElementById("modalDiagnosisCategoryTitle" + num).value;
   // instance.close();
   var formData = {
@@ -477,13 +471,11 @@ function deleteCategory(num) {
 }
 
 function refreshListOfCategories() {
-  console.log("HIHHS");
   var grid = document.getElementById("content-grid");
 
   while (grid.firstChild) {
     grid.removeChild(grid.firstChild);
   }
-  console.log("HI THERE");
   console.log(window.location);
   container = document.getElementById("modal-container");
   console.log("container");
@@ -538,7 +530,6 @@ function refreshListOfCategories() {
       settings.appendChild(settingsButton);
 
       if (data[i].name == "Miscellaneous") {
-        console.log("UMMM WHY");
         grid.insertBefore(settings, grid.firstChild);
         grid.insertBefore(a, grid.firstChild);
       } else {
@@ -700,7 +691,6 @@ function createCategory() {
     var $form = $(this);
     var url = "/api/createCategory/";
 
-    console.log("did it!");
 
     var formData = {
       name: document.getElementById("categoryName").value

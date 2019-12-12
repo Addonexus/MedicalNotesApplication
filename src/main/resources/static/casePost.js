@@ -25,7 +25,6 @@ function toggleDiagnosisCheckBox() {
     console.log("CHIPS DEV" + chipsDiv);
     console.log("DATA INSIDE THE CHIPS :", chipsDiv.material_chip('data'));
     old_state = chipsDiv.material_chip('data');
-    console.log("SP<ETJOMG", old_state);
     getAllDiagnosisForTags([{ tag: "Unconfirmed" }]);
     diagnosisInputBox.hidden = true;
 
