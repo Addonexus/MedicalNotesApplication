@@ -51,7 +51,7 @@
             <div th:if="${wardKey != null}">
                 <label th:for="ward">Ward</label>
                 <input id = "ward" aria-describedBy="Enter the ward the patient is in"
-                       type="text" value="${wardKey.name}"/>
+                       type="text" th:value="${wardKey.name}"/>
                 <span class="ward error"></span>
             </div>
             <div th:if="${wardKey == null}">

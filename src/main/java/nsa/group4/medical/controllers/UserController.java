@@ -129,7 +129,7 @@ public class UserController {
                     userForm.getPassword(),
                     userForm.getPassword(),
                     temp,
-                    null
+                    new Long(1)
             );
 
             userValidator.validate(tempUser, bindingResult);
