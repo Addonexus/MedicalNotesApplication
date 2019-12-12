@@ -104,6 +104,7 @@ public class RESTDiagnosisController {
         } else {
 
             Diagnosis createdDiagnosis = diagnosisService.createDiagnosis(new Diagnosis(
+                    helpers.getUserId(),
                     formData.get("name"),
                     categoryService.findByName(formData.get("categoryName")).get()
             ));

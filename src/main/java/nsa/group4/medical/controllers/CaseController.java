@@ -1,10 +1,12 @@
 package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.DiagnosisService;
+import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 import nsa.group4.medical.web.DiagnosisInformationForm;
@@ -22,6 +24,8 @@ import java.util.Optional;
 //TODO: add javadocs
 //@SessionAttributes("category")
 public class CaseController {
+    @Autowired
+    private Helpers helpers;
 
     @Autowired
     DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
@@ -55,10 +59,13 @@ public class CaseController {
         Optional<CaseModel> returnedCase = caseService.findByCaseId(index);
         log.debug("RETURNED CASE: "+ returnedCase);
         if(returnedCase.isPresent()){
-            model.addAttribute("case", returnedCase.get());
-            model.addAttribute("caseKey", new CaseForm());
-            model.addAttribute("hiddenForm", "1");
-            return "main/case";
+            if(helpers.getUserId().getId().longValue() == returnedCase.get().getId().longValue()) {
+                model.addAttribute("case", returnedCase.get());
+                model.addAttribute("caseKey", new CaseForm());
+                model.addAttribute("hiddenForm", "1");
+                return "main/case";
+            }
+            else return "403";
         }
         return "404";
     }
