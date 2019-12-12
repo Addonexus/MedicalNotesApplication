@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface CaseRepositoryInterface {
 
     List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2);
+    List<CaseModel> findByUserAndCreationDateBetween(User user, LocalDateTime creationDate, LocalDateTime creationDate2);
 
     Optional<CaseModel> findByNameAndUser(String caseName, User user);
     Optional<CaseModel> findByName(String CaseName);
@@ -29,7 +30,7 @@ public interface CaseRepositoryInterface {
     List<CaseModel> findAllByOrderByCreationDate();
 
     List<CaseModel> findAllByOrderByCreationDateAsc();
-
+List<CaseModel> findByUserOrderByCreationDateDesc(User user);
     List<CaseModel> findAllByUserOrderByCreationDateDesc(User user);
 
     List<CaseModel> findAllByOrderByCreationDateDesc();

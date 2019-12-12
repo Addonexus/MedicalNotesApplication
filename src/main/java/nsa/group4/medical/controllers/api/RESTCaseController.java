@@ -139,7 +139,7 @@ public class RESTCaseController {
         return ResponseEntity.ok().body(responseBody);
     }
 
-    @PostMapping("getCasesByDate")
+    @PostMapping("/getCasesByDate")
     public @ResponseBody ResponseEntity<?> getCasesByDate(@RequestBody Map<String, String> formData) throws ParseException {
         String date = formData.get("name").replaceAll("[$,]", "");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");

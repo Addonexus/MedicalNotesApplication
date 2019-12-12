@@ -59,7 +59,8 @@ public class Diagnosis {
         this.name = name;
     }
 
-    public Diagnosis(String name, Categories category){
+    public Diagnosis(User user,String name, Categories category){
+        this.user = user;
         this.name = name;
         this.categories = category;
     }

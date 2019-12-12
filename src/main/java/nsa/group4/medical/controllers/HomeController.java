@@ -64,7 +64,7 @@ public class HomeController {
 
         System.out.println(categoryService.findAll());
 
-        List<Categories> categories = categoryService.findByUser(returnedUser);
+        List<Categories> categories = categoryService.findAll();
         List<CaseModel> cases = caseService.findAll();
         System.out.println("CATEGORIES TSET: "+categories.toString());
         System.out.println("CASES TSET: "+cases.toString());

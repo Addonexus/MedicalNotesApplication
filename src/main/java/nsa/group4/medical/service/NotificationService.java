@@ -17,8 +17,6 @@ public class NotificationService implements NotificationServiceInterface {
     private NotificationRepositoryInterface notificationRepository;
     @Autowired
     private Helpers helpers;
-
-
     public NotificationService(NotificationRepositoryInterface notificationRepository){
         this.notificationRepository = notificationRepository;
     }

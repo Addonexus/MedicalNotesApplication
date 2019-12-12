@@ -2,10 +2,12 @@ package nsa.group4.medical.service;
 
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.domains.Ward;
 import nsa.group4.medical.service.implementations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -16,6 +18,8 @@ import java.util.Optional;
 @Slf4j
 public class WardService implements WardServiceInterface {
 
+    @Autowired
+    private Helpers helpers;
     private  WardRepositoryInterface wardRepositoryInterface;
     private CaseRepositoryInterface caseRepositoryInterface;
     private CaseServiceInterface caseServiceInterface;
@@ -30,12 +34,12 @@ public class WardService implements WardServiceInterface {
 
     @Override
     public Optional<Ward> getCaseByWardName(String name){
-        return wardRepositoryInterface.findByName(name);
+        return wardRepositoryInterface.findByNameAndUser(name,helpers.getUserId());
     }
 
     @Override
     public List<Ward> findByNameIn(Collection<String> names){
-        return wardRepositoryInterface.findByNameIn(names);
+        return wardRepositoryInterface.findByUserAndNameIn(helpers.getUserId(), names);
     }
 
     @Override
@@ -45,17 +49,17 @@ public class WardService implements WardServiceInterface {
 
     @Override
     public List<Ward> getAllWard(){
-        return wardRepositoryInterface.findAll();
+        return wardRepositoryInterface.findByUser(helpers.getUserId());
     }
 
     @Override
     public Optional<Ward> findByName(String name){
-        return wardRepositoryInterface.findByName(name);
+        return wardRepositoryInterface.findByNameAndUser(name, helpers.getUserId());
     }
 
     @Override
     public List<Ward> findAll() {
-        return wardRepositoryInterface.findAll();
+        return wardRepositoryInterface.findByUser(helpers.getUserId());
     }
 
     @Override

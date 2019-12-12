@@ -1,9 +1,11 @@
 package nsa.group4.medical.service;
 
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.User;
 import nsa.group4.medical.service.implementations.CategoryRepositoryInterface;
 import nsa.group4.medical.service.implementations.CategoryServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.Optional;
 
 @Service
 public class CategoryService implements CategoryServiceInterface {
+    @Autowired
+    private Helpers helpers;
     private CategoryRepositoryInterface categoryRepository;
 
     public CategoryService(CategoryRepositoryInterface categoryRepository){
@@ -19,7 +23,7 @@ public class CategoryService implements CategoryServiceInterface {
 
     @Override
     public Optional<Categories> findByName(String name) {
-        return categoryRepository.findByName(name);
+        return categoryRepository.findByNameAndUser(name, helpers.getUserId() );
     }
 
     @Override
@@ -39,7 +43,7 @@ public class CategoryService implements CategoryServiceInterface {
 
     @Override
     public List<Categories> findAll() {
-        return categoryRepository.findAll();
+        return categoryRepository.findByUser(helpers.getUserId());
     }
 
     @Override
