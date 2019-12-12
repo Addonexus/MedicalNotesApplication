@@ -478,9 +478,16 @@ function refreshListOfCategories() {
   $.get("/api/getAllCategories/", function (data) {
     $(".result").html(data);
 
+    var grid = document.getElementById("content-grid");
+
+    if (data.length == 0) {
+      h4 = document.createElement("h4");
+      h4.appendChild(document.createTextNode("No categories exist yet"))
+      grid.appendChild(h4);
+    }
+
     console.log("home data");
     console.log(data);
-    var grid = document.getElementById("content-grid");
     for (i = 0; i < data.length; i++) {
       console.log("categories:" + data[i]);
       var a = document.createElement("a");

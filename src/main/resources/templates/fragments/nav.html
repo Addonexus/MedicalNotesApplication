@@ -41,7 +41,7 @@
     </div>
     <div th:replace="fragments/mobileLinks :: mobile-links"></div>
   </nav>
-  <div id="modal1" class="modal noscroll" style="overflow: hidden;">
+  <div id="modal1" class="modal">
     <div class="modal-content" style="height:1000px">
       <h3>Choose a date</h3>
       <form id="calendar-form">
@@ -56,10 +56,10 @@
     </div>
   </div>
   <div id="modal2" class="modal">
-    <div class="modal-content" style="height:1000px;">
+    <div class="modal-content" style="height:1000px">
       <h3>Notifications</h3>
       <br>
-      <ul class="collection" id="notifications" style="visibility:hidden; overflow: hidden;">
+      <ul class="collection" id="notifications" style="visibility:hidden">
       </ul>
       <h5 id="notifications-empty" style="visibility: hidden;">No notifications</h5>
     </div>
