@@ -59,7 +59,7 @@ public class CaseController {
         Optional<CaseModel> returnedCase = caseService.findByCaseId(index);
         log.debug("RETURNED CASE: "+ returnedCase);
         if(returnedCase.isPresent()){
-            if(helpers.getUserId().getId().longValue() == returnedCase.get().getId().longValue()) {
+            if(returnedCase.get().getUser().getId().equals(helpers.getUserId().getId())) {
                 model.addAttribute("case", returnedCase.get());
                 model.addAttribute("caseKey", new CaseForm());
                 model.addAttribute("hiddenForm", "1");
