@@ -1,6 +1,8 @@
 package nsa.group4.medical.data;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.domains.DiagnosisInformation;
+import nsa.group4.medical.domains.rowmappers.DiagnosisInformationRowmapper;
 import nsa.group4.medical.service.events.WardAdded;
 import nsa.group4.medical.service.implementations.WardJDBCRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 @Slf4j
 @Repository
@@ -49,5 +52,10 @@ public class WardRepositoryJDBC implements WardJDBCRepositoryInterface {
                 },
                 holder);
         return holder.getKey().longValue();
+    }
+
+    public List<DiagnosisInformation> getAllWards(){
+        return jdbcTemplate.query("SELECT * FROM ward"
+                , new WardRowmapper());
     }
 }
