@@ -20,10 +20,10 @@ import java.util.ArrayList;
 public class CaseForm {
     private Long id;
     @NotNull
-    @Size(min=2, max=30, message = "Invalid Name")
+    @Size(min=2, max=30, message = "Invalid Title")
     private String name;
     @NotNull
-    @Size(min=3, message = "Invalid Demographics Name(s) provided")
+    @Size(min=3, message = "Invalid Demographics")
     private String demographics;
 
     private String ward;
@@ -48,6 +48,6 @@ public class CaseForm {
 //    @Size(min=2, message = "Invalid Diagnosis Name(s) provided")
 //    private String diagnosesList;
 
-    @NotEmpty
+    @NotEmpty(message = "Diagnosis cannot be empty")
     private ArrayList<ReturnedData> diagnosesList;
 }

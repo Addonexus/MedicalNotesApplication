@@ -36,7 +36,6 @@ public class RESTDiagnosisInfomationController {
 
     @GetMapping("/returnedDiagnosisInfo/{index}")
     public @ResponseBody List<DiagnosisInformation> getDiagnosisInformation(@PathVariable Long index) {
-        System.out.println("hmdds");
         return diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(index);
     }
 

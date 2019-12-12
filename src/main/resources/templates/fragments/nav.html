@@ -24,16 +24,16 @@
         <li>
           <form action="/search" th:action="@{/search}" th:object="${search}" method="get" style="width: 100px">
             <div class="input-field">
-              <input class="white" style="border-radius: 5px; height: 35px; box-shadow: 0px 5px lightblue;" id="search" type="text" required
-                name="search" value="" />
+              <input class="white" style="border-radius: 5px; height: 35px; box-shadow: 0px 5px lightblue;" id="search"
+                type="text" required name="search" value="" />
               <label class="label-icon" for="search"><i class="material-icons black-text"></i></label>
             </div>
           </form>
         </li>
         <li>
           <form id="logout-form" th:action="@{/logout}">
-            <a>
-              <i id="logout" class="material-icons white-text">exit_to_app</i>
+            <a id="logout">
+              <i class="material-icons white-text">exit_to_app</i>
             </a>
           </form>
         </li>
@@ -61,6 +61,7 @@
       <br>
       <ul class="collection" id="notifications" style="visibility:hidden">
       </ul>
+      <h5 id="notifications-empty" style="visibility: hidden;">No notifications</h5>
     </div>
   </div>
   <div id="modal3" class="modal">

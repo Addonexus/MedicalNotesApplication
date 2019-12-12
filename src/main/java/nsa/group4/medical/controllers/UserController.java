@@ -106,7 +106,6 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult) {
-        log.debug("WE ARE HERE");
         Set<Role> temp = new HashSet<Role>();
 //TODO: check if the role already exists then add it to the user
 //        otherwise create a new user role
@@ -156,7 +155,6 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
 
-        log.debug("WE ARE HERE");
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 

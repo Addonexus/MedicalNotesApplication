@@ -50,8 +50,7 @@ public class WardController {
 
         List<CaseModel> returnedCases =
                 caseService.findCasesByWardId(wardId);
-        log.debug("CASES RETURNED HOPEFULLY: "
-        + returnedCases);
+
 
 
         model.addAttribute("returnedCases ", returnedCases);

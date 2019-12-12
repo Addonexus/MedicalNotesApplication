@@ -7,11 +7,17 @@
 
 * {
   font-family: 'Montserrat', sans-serif;
+  scroll-behavior: smooth;
 }
 
 .no-floor .input {
   border-bottom: none !important; 
 }
+
+.error{
+    color:red;
+}
+
 
 .desktop-grid {
   display: grid;
@@ -118,6 +124,11 @@
   font-size: 30px;
 }
 
+.modal {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
 .go-away {
   position: absolute;
   left: -9999px;
@@ -126,6 +137,10 @@
   height: 50px;
 }.input {
   height: 50px;
+}
+
+label {
+  font-size: 1.1rem;
 }
 
 .collection {

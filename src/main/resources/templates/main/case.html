@@ -26,16 +26,16 @@
             <form class="container" id="submitCases" method="post" th:object="${caseKey}">
                 <fieldset id="allFields">
                     <div>
-                        <label th:for="name">Name</label>
+                        <span id= "nameError" class="name error right"></span>
+                        <label th:for="name">Title</label>
 
-                        <input id="name" aria-describedBy="Enter your name" type="text" />
-                        <span class="name error"></span>
+                        <input id="name" aria-describedBy="Enter your Case Title" type="text" />
                     </div>
 
                     <div>
+                        <span id= "demographicsError" class="demographics error right"></span>
                         <label th:for="demographics">Demographics</label>
                         <input id="demographics" aria-describedBy="Enter the demographics" type="text" />
-                        <span class="demographics error"></span>
                     </div>
 
             <div th:if="${wardKey == null}">
@@ -57,57 +57,57 @@
 
 
                     <div id="diagnosisContent">
+                        <span id= "diagnosisError" class="diagnosesList error right"></span>
                         <label th:for="diagnosesList">Diagnoses</label>
                         <div id="diagnosesList"
                             class="chips chips-autocomplete chips-placeholder chips-initial no-floor">
                             <i class="material-icons">close</i>
                         </div>
-                        <span class="diagnosesList error"></span>
                     </div>
                     <input type="checkbox" name="diagnosisState" id="diagnosis-checkbox"
-                        onclick="toggleDiagnosisCheckBox()" />
+                           onclick="toggleDiagnosisCheckBox()" />
                     <label for="diagnosis-checkbox">The diagnosis is currently unconfirmed</label>
-
+                    <br><br>
                     <div>
                         <label th:for="presentingComplaint">Presenting Complaint</label>
                         <input id="presentingComplaint" aria-describedBy="Enter the presenting complaint" type="text" />
-                        <span class="presentingComplaint error"></span>
+                        <span id= "presentingComplaintError" class="presentingComplaint error right"></span>
                     </div>
                     <div>
                         <label th:for="presentingComplaintHistory">Presenting Complaint History</label>
                         <input id="presentingComplaintHistory" aria-describedBy="Enter the presenting complaint history"
                             type="text" />
-                        <span class="presentingComplaintHistory error"></span>
+                        <span id= "presentingComplaintHistoryError" class="presentingComplaintHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="medicalHistory">Medical History</label>
                         <input id="medicalHistory" aria-describedBy="Enter the medical history" type="text" />
-                        <span class="medicalHistory error"></span>
+                        <span id = "medicalHistoryError" class="medicalHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="drugHistory">Drug History</label>
                         <input id="drugHistory" aria-describedBy="Enter the drug history" type="text" />
-                        <span class="drugHistory error"></span>
+                        <span id = "drugHistoryError" class="drugHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="allergies">Allergies</label>
                         <input id="allergies" aria-describedBy="Enter the allergies" type="text" />
-                        <span class="allergies error"></span>
+                        <span id = "allergiesError" class="allergies error right"></span>
                     </div>
                     <div>
                         <label th:for="familyHistory">Family History</label>
                         <input id="familyHistory" aria-describedBy="Enter the family history" type="text" />
-                        <span class="familyHistory error"></span>
+                        <span id = "familyHistoryError" class="familyHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="socialHistory">Social History</label>
                         <input id="socialHistory" aria-describedBy="Enter the social history" type="text" />
-                        <span class="socialHistory error"></span>
+                        <span id = "socialHistoryError" class="socialHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="notes">Notes</label>
                         <input id="notes" aria-describedBy="Enter the notes" type="text" />
-                        <span class="notes error"></span>
+                        <span id = "notesError" class="notes error right"></span>
                     </div>
                     <div>
                         <input type="checkbox" name="personal" value="details" id="start-checkbox" />
@@ -144,22 +144,7 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            $('#submit-button').click(function () {
 
-                isChecked = document.getElementById("start-checkbox").checked
-                console.log("checked? " + isChecked);
-
-                if (!isChecked) {
-                    swal({
-                        icon: "error",
-                        text: "You must agree to not store personal details."
-                    });
-                    return false;
-                }
-
-            });
-        });
     </script>
 </body>
 

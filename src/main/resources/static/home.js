@@ -76,6 +76,11 @@ function postDiagnosisInfo() {
           }
           document.getElementsByClassName("content")[0].style.maxHeight =
             "none";
+
+          inputs = document.getElementsByTagName('input');
+          for (index = 0; index < inputs.length; ++index) {
+            inputs[index].value = "";
+          }
           // $(this)
           //   .find("td")
           //   .each(function() {
@@ -116,22 +121,20 @@ function postFreehandNote() {
       data: JSON.stringify(formData),
       success: function (json) {
         $("#freehandNotesTable tr").each(function () {
-          // console.log(this.id);
           if (this.id) {
             this.remove();
           }
           document.getElementsByClassName("content")[0].style.maxHeight =
-              "none";
-          // $(this)
-          //   .find("td")
-          //   .each(function() {
-          //     // console.log("hiya");
-          //   });
+            "none";
+
+          inputs = document.getElementsByTagName('textarea');
+          for (index = 0; index < inputs.length; ++index) {
+            inputs[index].value = "";
+          }
         });
         getFreehandNotes();
       },
       error: function (json) {
-        // alert("error!");
         console.log("error-h.html");
       }
     });
@@ -144,7 +147,6 @@ function refreshListOfDiagnoses() {
   while (grid.firstChild) {
     grid.removeChild(grid.firstChild);
   }
-  console.log("HI THERE");
   console.log(window.location);
 
   container = document.getElementById("modal-container");
@@ -269,9 +271,7 @@ function refreshListOfDiagnoses() {
 }
 
 function doThis(data) {
-  console.log("HAHHASHU")
   $.get("/api/getAllCategories").then(function (categories) {
-    console.log("work or i haven noidae")
     console.log(data);
     for (var i = 0; i < data.length; i++) {
       inputSelectRef = document.getElementById("modalDiagnosisCategoryTitle" + data[i].id);
@@ -290,7 +290,6 @@ function doThis(data) {
 
       }
     }
-    console.log("fuck this");
     console.log(categories);
   });
 }
@@ -306,7 +305,6 @@ function updateCategory(num, modal) {
     // otherwise sets the new diagnosis name as title entered by the user
     newName = categoryModalTitle.value;
   }
-  console.log("himmsdmsd")
   // instance.close();
   var formData = {
     "newName": newName
@@ -357,7 +355,6 @@ function updateDiagnosis(num, modal) {
     // otherwise sets the new diagnosis name as title entered by the user
     newName = diagnosisModalTitle.value;
   }
-  console.log("himmsdmsd")
   newCategory = document.getElementById("modalDiagnosisCategoryTitle" + num).value;
   // instance.close();
   var formData = {
@@ -477,13 +474,11 @@ function deleteCategory(num) {
 }
 
 function refreshListOfCategories() {
-  console.log("HIHHS");
   var grid = document.getElementById("content-grid");
 
   while (grid.firstChild) {
     grid.removeChild(grid.firstChild);
   }
-  console.log("HI THERE");
   console.log(window.location);
   container = document.getElementById("modal-container");
   console.log("container");
@@ -493,9 +488,16 @@ function refreshListOfCategories() {
   $.get("/api/getAllCategories/", function (data) {
     $(".result").html(data);
 
+    var grid = document.getElementById("content-grid");
+
+    if (data.length == 0) {
+      h4 = document.createElement("h4");
+      h4.appendChild(document.createTextNode("No categories exist yet"))
+      grid.appendChild(h4);
+    }
+
     console.log("home data");
     console.log(data);
-    var grid = document.getElementById("content-grid");
     for (i = 0; i < data.length; i++) {
       console.log("categories:" + data[i]);
       var a = document.createElement("a");
@@ -538,7 +540,6 @@ function refreshListOfCategories() {
       settings.appendChild(settingsButton);
 
       if (data[i].name == "Miscellaneous") {
-        console.log("UMMM WHY");
         grid.insertBefore(settings, grid.firstChild);
         grid.insertBefore(a, grid.firstChild);
       } else {
@@ -609,7 +610,7 @@ function getFreehandNotes() {
     var freehandNotesTable = document.getElementById("freehandNotesTable");
     for (i = 0; i < data.length; i++) {
       var row = freehandNotesTable.insertRow(
-          freehandNotesTable.rows.length - 1
+        freehandNotesTable.rows.length - 1
       );
       row.id = "hi";
       var field = row.insertCell(-1);
@@ -700,7 +701,6 @@ function createCategory() {
     var $form = $(this);
     var url = "/api/createCategory/";
 
-    console.log("did it!");
 
     var formData = {
       name: document.getElementById("categoryName").value
