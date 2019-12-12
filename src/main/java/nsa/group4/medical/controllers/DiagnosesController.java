@@ -1,6 +1,7 @@
 package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.NotificationRepoJPA;
@@ -14,12 +15,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
 public class DiagnosesController {
 
 //  TODO:Remove any direct repository calls and move them to the service layer
+    @Autowired
+    private Helpers helpers;
     private CaseServiceInterface caseService;
     private DiagnosisServiceInterface diagnosisService;
     private NotificationServiceInterface notificationService;
@@ -47,25 +51,32 @@ public class DiagnosesController {
     @GetMapping(path ="/diagnosis/{diagnosisIndex}")
     public String getCases(@PathVariable(name="diagnosisIndex") Long diagnosisId,
                            Model model){
+        Optional<Diagnosis> diagnosis = diagnosisService.findById(diagnosisId);
 
-        List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
-        List<CaseModel> recentCases = caseService.findAll();
-        log.debug("CASES: " + returnedCases);
-        log.debug("CASES 2: " + recentCases);
+        if(diagnosis.isPresent()) {
+            if (diagnosis.get().getUser().getId().equals(helpers.getUserId().getId())) {
+                List<CaseModel> returnedCases = caseService.findCasesByDiagnosisId(diagnosisId);
+                List<CaseModel> recentCases = caseService.findAll();
+                log.debug("CASES: " + returnedCases);
+                log.debug("CASES 2: " + recentCases);
 
-        //TODO: move notification business logic into the notification service class
-        Notifications n = notificationService.findByDiagnosisLink(diagnosisService.findById(diagnosisId).get());
-        if(n!=null){
-            System.out.println("notification: " + n);
-            n.setRead(true);
-            notificationService.saveNotification(n);
-        }
+                //TODO: move notification business logic into the notification service class
+                Notifications n = notificationService.findByDiagnosisLink(diagnosisService.findById(diagnosisId).get());
+                if (n != null) {
+                    System.out.println("notification: " + n);
+                    n.setRead(true);
+                    notificationService.saveNotification(n);
+                }
 
 //        List<DiagnosisInformation> diagnosisInformations = diagnosisInformationRepositoryJDBC.getDiagnosisInformationByDiagnosisId(diagnosisId);
-        model.addAttribute("returnedCases", returnedCases);
-        model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
-        model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
-        return "main/diagnosis";
+                model.addAttribute("returnedCases", returnedCases);
+                model.addAttribute("category", diagnosisService.findById(diagnosisId).get().getCategories());
+                model.addAttribute("diagnosisName", diagnosisService.findById(diagnosisId).get().getName());
+                return "main/diagnosis";
+            }
+            return "403";
+        }
+        return "404";
     }
 //  TODO: move this to separate controller
 //    @GetMapping("/login")
