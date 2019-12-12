@@ -2,6 +2,9 @@ insert into categories (id, name) values (1, 'heart');
 insert into categories (id, name) values (2, 'skin');
 insert into categories (id, name) values (3, 'brain');
 
+insert into ward (id, name) values (1, 'Ligma Ward');
+insert into ward (id, name) values (2, 'Sugma Ward');
+
 insert into diagnoses (id, name, category_id) values (1,'heart ache', 1);
 insert into diagnoses (id, name, category_id) values (2,'circulation problems', 1);
 insert into diagnoses (id, name, category_id) values (3,'beats too fast', 1);
