@@ -63,6 +63,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
         return holder.getKey().longValue();
     }
 
+    //Method used to query the database to get all diagnosis information linked to a certain diagnosis and its ID.
     public List<DiagnosisInformation> getDiagnosisInformationByDiagnosisId(Long index){
         return jdbcTemplate.query("SELECT * FROM diagnosis_information WHERE diagnosis_id = ?",
                 preparedStatement ->
