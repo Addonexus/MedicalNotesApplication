@@ -13,6 +13,11 @@
   border-bottom: none !important; 
 }
 
+.error{
+    color:red;
+}
+
+
 .desktop-grid {
   display: grid;
   width: 100vw;

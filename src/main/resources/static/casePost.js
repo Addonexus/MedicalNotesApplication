@@ -73,13 +73,8 @@ function checkSubmitButtonPressed() {
       "notes": document.getElementById("notes").value
     };
 
-    swal({
-      icon: "success",
-      text: "Case created"
-    }).then((x) => {
-      submitCase(formData, url);
-    })
 
+      submitCase(formData, url);
 
   });
 }
@@ -211,9 +206,14 @@ function submitCase(formData, url) {
         " Response URL: " +
         data.redirectUrl
       );
+        swal({
+              icon: "success",
+              text: "Case created"
+            }).then((x) => {
+              $form.find(".error").empty();
+                window.location.href = data.redirectUrl;
+            })
 
-      $form.find(".error").empty();
-      window.location.href = data.redirectUrl;
     },
     error: function (e) {
       $form.find(".error").empty();
@@ -227,6 +227,12 @@ function submitCase(formData, url) {
         e.responseText
       );
       let obj = JSON.parse(e.responseText);
+      swal({
+              title: "Error",
+              text: "Fix Input Errors Before Creating Case",
+              icon: "error",
+            });
+
       for (i = 0; i < obj.result.length; i++) {
         let item = obj.result[i];
         let field = document.getElementsByClassName(item.fieldName)[0];

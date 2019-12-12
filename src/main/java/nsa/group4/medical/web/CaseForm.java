@@ -48,6 +48,6 @@ public class CaseForm {
 //    @Size(min=2, message = "Invalid Diagnosis Name(s) provided")
 //    private String diagnosesList;
 
-    @NotEmpty
+    @NotEmpty(message = "Diagnosis cannot be empty")
     private ArrayList<ReturnedData> diagnosesList;
 }

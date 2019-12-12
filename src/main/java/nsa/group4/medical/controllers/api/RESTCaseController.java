@@ -111,7 +111,7 @@ public class RESTCaseController {
             List<DiagnosisFieldsError> errorMessages = new ArrayList<>();
 
             for (FieldError objectError : allErrors) {
-                errorMessages.add(new DiagnosisFieldsError(objectError.getField(), objectError.getField() + "  " + objectError.getDefaultMessage()));
+                errorMessages.add(new DiagnosisFieldsError(objectError.getField(), objectError.getDefaultMessage()));
             }
             result.setResult(errorMessages);
             log.debug("RETURNED ERRORS: " + result);
