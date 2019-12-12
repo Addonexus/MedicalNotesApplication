@@ -73,8 +73,14 @@ function checkSubmitButtonPressed() {
       "notes": document.getElementById("notes").value
     };
 
+    swal({
+      icon: "success",
+      text: "Case created"
+    }).then((x) => {
+      submitCase(formData, url);
+    })
 
-    submitCase(formData, url);
+
   });
 }
 function deleteForm() {
@@ -205,6 +211,7 @@ function submitCase(formData, url) {
         " Response URL: " +
         data.redirectUrl
       );
+
       $form.find(".error").empty();
       window.location.href = data.redirectUrl;
     },
