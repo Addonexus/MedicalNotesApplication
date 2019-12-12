@@ -1,5 +1,6 @@
 package nsa.group4.medical.service.implementations;
 
+import jdk.tools.jlink.plugin.Plugin;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.User;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryRepositoryInterface {
+    Optional<Categories> findByNameAndUser(String name, User user);
     Optional<Categories> findByName(String name);
     Optional<Categories> findById(Long index);
 

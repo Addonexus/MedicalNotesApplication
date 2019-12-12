@@ -43,6 +43,10 @@ public class User {
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     @JsonBackReference
+    private List<Notifications> notificationsList;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Ward> wardList;
     //private Role role;
 
