@@ -9,6 +9,10 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+.no-floor .input {
+  border-bottom: none !important; 
+}
+
 .desktop-grid {
   display: grid;
   width: 100vw;
@@ -117,14 +121,10 @@
 .go-away {
   position: absolute;
   left: -9999px;
-}
-
-input[type="text"]:not(.browser-default) {
+}.input[type="text"]:not(.browser-default) {
   color: black;
   height: 50px;
-}
-
-input {
+}.input {
   height: 50px;
 }
 
@@ -133,7 +133,7 @@ input {
   margin-left: 20%;
 }
 
-.create-item-input {
+.create-ite.input {
   width: 20px;
   left: 20%;
   position: relative;
@@ -247,7 +247,7 @@ fieldset:disabled {
   color: black;
   font-weight: 1000;
 }
-/*input.checkbox {*/
+.input.checkbox {*/
 /*  display: inline-block;*/
 /*}*/
 

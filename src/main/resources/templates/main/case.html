@@ -18,8 +18,8 @@
     <div th:replace="fragments/nav :: navbar"></div>
     <main class="desktop-grid">
 
-
-        <h2 class="container" id="title">Create</h2>
+        <br>
+        <h2 class="center container" id="title"><b>Create</b></h2>
         <br>
         <div class="flexy">
 
@@ -47,7 +47,8 @@
 
                     <div id="diagnosisContent">
                         <label th:for="diagnosesList">Diagnoses</label>
-                        <div id="diagnosesList" class="chips chips-autocomplete chips-placeholder chips-initial">
+                        <div id="diagnosesList"
+                            class="chips chips-autocomplete chips-placeholder chips-initial no-floor">
                             <i class="material-icons">close</i>
                         </div>
                         <span class="diagnosesList error"></span>
