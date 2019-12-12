@@ -5,6 +5,7 @@ import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.FreehandNotesRepoJDBC;
+import nsa.group4.medical.data.WardRepositoryJDBC;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.DiagnosisService;
 import nsa.group4.medical.service.UserService;
@@ -34,6 +35,8 @@ public class CaseController {
     @Autowired
     DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
 
+    WardRepositoryJDBC wardRepositoryJDBC;
+
     @Autowired
     FreehandNotesRepoJDBC freehandNotesRepoJDBC;
 
@@ -51,12 +54,14 @@ public class CaseController {
 
     private CaseServiceInterface caseService;
     public CaseController(CaseServiceInterface caseService, DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC, DiagnosisService diagnosisService, CategoriesRepositoryJPA categoriesRepositoryJPA,
-                          FreehandNotesRepoJDBC freehandNotesRepoJDBC){
+                          FreehandNotesRepoJDBC freehandNotesRepoJDBC,
+                          WardRepositoryJDBC wardRepositoryJDBC){
         this.caseService = caseService;
         this.diagnosisInformationRepositoryJDBC = diagnosisInformationRepositoryJDBC;
         this.diagnosisService = diagnosisService;
         this.categoriesRepositoryJPA = categoriesRepositoryJPA;
         this.freehandNotesRepoJDBC = freehandNotesRepoJDBC;
+        this.wardRepositoryJDBC = wardRepositoryJDBC;
     }
 
     @RequestMapping(path="/createNewCase", method = RequestMethod.GET)
@@ -95,7 +100,7 @@ public class CaseController {
 
         model.addAttribute("wardKey", finalWard);
 
-        List<Ward> wardList = wardService.getAllWard();
+        List<Ward> wardList = wardRepositoryJDBC.getAllWards();
 
         model.addAttribute("wardList", wardList);
 
@@ -135,7 +140,7 @@ public class CaseController {
         }
 
         model.addAttribute("wardKey", finalWard);
-        List<Ward> wardList = wardService.getAllWard();
+        List<Ward> wardList = wardRepositoryJDBC.getAllWards();
         model.addAttribute("wardList", wardList);
 
 
