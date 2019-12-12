@@ -1,10 +1,12 @@
 package nsa.group4.medical.service;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.domains.Diagnosis;
 import nsa.group4.medical.domains.Notifications;
 import nsa.group4.medical.service.implementations.NotificationRepositoryInterface;
 import nsa.group4.medical.service.implementations.NotificationServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,9 @@ import java.util.List;
 @Slf4j
 public class NotificationService implements NotificationServiceInterface {
     private NotificationRepositoryInterface notificationRepository;
+    @Autowired
+    private Helpers helpers;
+
 
     public NotificationService(NotificationRepositoryInterface notificationRepository){
         this.notificationRepository = notificationRepository;
@@ -30,6 +35,6 @@ public class NotificationService implements NotificationServiceInterface {
 
     @Override
     public List<Notifications> getAllNotifications() {
-        return notificationRepository.findAll();
+        return notificationRepository.findByUser(helpers.getUserId());
     }
 }

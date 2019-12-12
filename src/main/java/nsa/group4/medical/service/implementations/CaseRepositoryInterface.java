@@ -13,6 +13,7 @@ public interface CaseRepositoryInterface {
 
     List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2);
 
+    Optional<CaseModel> findByNameAndUser(String caseName, User user);
     Optional<CaseModel> findByName(String CaseName);
 
     Optional<CaseModel> findById(Long id);

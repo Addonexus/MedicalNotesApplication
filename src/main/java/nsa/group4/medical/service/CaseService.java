@@ -36,7 +36,7 @@ public class CaseService implements CaseServiceInterface {
 
     private WardRepositoryInterface wardRepository;
 
-    public Helpers helpers;
+    private Helpers helpers;
 
     @Autowired
     private UserService userService;
@@ -126,7 +126,7 @@ public class CaseService implements CaseServiceInterface {
         caseRepository.save(caseModel);
         for (Diagnosis diagnosis : newDiagnoses) {
             notificationService.saveNotification(
-                    new Notifications(diagnosis)
+                    new Notifications(helpers.getUserId(),diagnosis)
             );
         }
     }
@@ -163,7 +163,7 @@ public class CaseService implements CaseServiceInterface {
 
     }
 
-    private User getUserId() {
+    public User getUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userService.findByUsername(((UserDetails)principal).getUsername());
     }

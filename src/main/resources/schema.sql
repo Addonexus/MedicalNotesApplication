@@ -38,6 +38,7 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `notifications` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id` INT NULL,
     `content` VARCHAR(100) NULL,
     `creation_date` DATETIME NULL,
     `diagnosis_id` INT NOT NULL,

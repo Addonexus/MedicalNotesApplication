@@ -22,9 +22,9 @@ insert into diagnoses (id, name, category_id, user_id) values (13,'brain missing
 insert into diagnoses (id, name, category_id, user_id) values (14,'dog ate brain', 3, 1);
 insert into diagnoses (id, name, category_id, user_id) values (15,'insane brain pain', 3, 1);
 
-insert into notifications(id,content, diagnosis_id, is_done, is_read, creation_date) values (1,'HEEHEE', 1, FALSE, FALSE, '2019-11-11 13:23:44');
-insert into notifications(id,content, diagnosis_id, is_done, is_read, creation_date) values (2,'SMOOTH CRIMINAL', 2, FALSE, TRUE, '2019-11-11 13:23:44');
-insert into notifications(id,content, diagnosis_id, is_done, is_read, creation_date) values (3,'OH',3, TRUE, TRUE, '2019-11-11 13:23:44');
+insert into notifications(id,user_id,content, diagnosis_id, is_done, is_read, creation_date) values (1,1,'HEEHEE', 1, FALSE, FALSE, '2019-11-11 13:23:44');
+insert into notifications(id,user_id,content, diagnosis_id, is_done, is_read, creation_date) values (2,1,'SMOOTH CRIMINAL', 2, FALSE, TRUE, '2019-11-11 13:23:44');
+insert into notifications(id,user_id,content, diagnosis_id, is_done, is_read, creation_date) values (3,1,'OH',3, TRUE, TRUE, '2019-11-11 13:23:44');
 
 insert into cases (id, name, demographics, notes, date_created, user_id) values (2,'things from kid', '6 y/o kid', 'the kid was nice', CURRENT_TIMESTAMP, 1);
 

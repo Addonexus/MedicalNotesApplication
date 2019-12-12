@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Data
+@ToString(exclude="user")
 public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +23,11 @@ public class Notifications {
     @JsonManagedReference
     @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosisLink;
+
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name="user_id")
+    private User user;
 
     private boolean isDone;
 
@@ -34,7 +41,8 @@ public class Notifications {
 
     private String content;
 
-    public Notifications(Diagnosis diagnosisLink) {
+    public Notifications(User user,Diagnosis diagnosisLink) {
+        this.user = user;
         this.diagnosisLink = diagnosisLink;
         this.isDone = false;
         this.isRead = false;
