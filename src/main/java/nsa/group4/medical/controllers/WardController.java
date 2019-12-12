@@ -5,10 +5,13 @@ import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.NotificationRepoJPA;
 import nsa.group4.medical.domains.*;
+import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.service.implementations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,9 @@ import java.util.List;
 @Slf4j
 @Controller
 public class WardController {
+
+    @Autowired
+    private UserService userService;
 
     private  CaseServiceInterface caseService;
     private WardServiceInterface wardService;
@@ -37,9 +43,26 @@ public class WardController {
     }
 
     @PostMapping(path="/updateWard")
-    public String updateWard(Long wardId, Model model){
+    public String updateWard(Model model){
 
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "";
+        Long id = null;
+        Long wardId = null;
+        if (principal instanceof UserDetails){
+            username = ((UserDetails)principal).getUsername();
+            UserDetails obj = (UserDetails)principal;
+            User returnedUser = userService.findByUsername(username);
+            User user = userService.findByUsername(username);
+            id = user.getId();
+            wardId = user.getWardId();
+        } else {
+            log.debug("OOOOOO");
+            username = principal.toString();
+        }
 
+        model.addAttribute("usernameKey", username);
+        model.addAttribute("idKey", id);
 
         return "home";
     }
