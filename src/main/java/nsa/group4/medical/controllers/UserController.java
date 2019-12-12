@@ -80,7 +80,8 @@ public class UserController {
             log.debug("THIS S: " + username);
             User returnedUser = userService.findByUsername(username);
             log.debug("WHADADP: "+returnedUser.getId());
-            //id = ((UserDetails)principal).getId();
+            User user = userService.findByUsername(username);
+            id = user.getId();
         } else {
             log.debug("OOOOOO");
             username = principal.toString();
