@@ -573,6 +573,7 @@ function getFreehandNotes() {
       field.innerHTML = data[i].field;
     }
   });
+}
 
 function getDiagnosisInformation() {
   $.get("/api/returnedDiagnosisInfo/" + lastInt, function (data) {
