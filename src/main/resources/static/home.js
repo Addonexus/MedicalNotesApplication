@@ -97,12 +97,11 @@ function postFreehandNote() {
     console.log("--- posting freehand notes --- ");
 
     var $form = $(this);
-    var url = "/api/createDiagnosisInformation";
+    var url = "/api/createFreehandNotes";
 
     var formData = {
       diagnosisId: lastInt,
-      key: document.getElementById("DiagnosisInfoKey").value,
-      value: document.getElementById("DiagnosisInfoValue").value
+      field: document.getElementById("FreehandNotesField").value
     };
 
     console.log(formData);
