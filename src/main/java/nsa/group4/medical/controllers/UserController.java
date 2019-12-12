@@ -5,6 +5,7 @@ import nsa.group4.medical.data.UserRepository;
 import nsa.group4.medical.data.WardRepositoryJDBC;
 import nsa.group4.medical.domains.Role;
 import nsa.group4.medical.domains.User;
+import nsa.group4.medical.domains.Ward;
 import nsa.group4.medical.service.SecurityService;
 import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.validator.UserValidator;
@@ -25,10 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -97,7 +95,9 @@ public class UserController {
     @GetMapping("/account")
     public String account(Model model){
 
+        List<Ward> wardList = wardRepositoryJDBC.getAllWards();
 
+        model.addAttribute("wardKey", wardList);
 
         return "accountPage";
     }

@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name= "ward")
-@ToString(exclude = {"cases"})
+//@ToString(exclude = {"cases"})
 public class Ward {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
