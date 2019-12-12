@@ -1,6 +1,7 @@
 package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.FreehandNotesRepoJDBC;
@@ -27,6 +28,8 @@ import java.util.Optional;
 //TODO: add javadocs
 //@SessionAttributes("category")
 public class CaseController {
+    @Autowired
+    private Helpers helpers;
 
     @Autowired
     DiagnosisInformationRepositoryJDBC diagnosisInformationRepositoryJDBC;
@@ -137,10 +140,13 @@ public class CaseController {
 
 
         if(returnedCase.isPresent()){
-            model.addAttribute("case", returnedCase.get());
-            model.addAttribute("caseKey", new CaseForm());
-            model.addAttribute("hiddenForm", "1");
-            return "main/case";
+            if(returnedCase.get().getUser().getId().equals(helpers.getUserId().getId())) {
+                model.addAttribute("case", returnedCase.get());
+                model.addAttribute("caseKey", new CaseForm());
+                model.addAttribute("hiddenForm", "1");
+                return "main/case";
+            }
+            else return "403";
         }
         return "404";
     }

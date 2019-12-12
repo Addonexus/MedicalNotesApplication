@@ -2,9 +2,11 @@ package nsa.group4.medical.domains;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import nsa.group4.medical.controllers.api.ReturnedData;
 
 import javax.persistence.*;
@@ -19,6 +21,7 @@ import java.util.stream.Stream;
 @Data
 @Entity
 @Table(name = "cases")
+@ToString(exclude = {"user"})
 public class CaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,6 +76,11 @@ public class CaseModel {
     @Column(name = "date_created")
     private LocalDateTime creationDate;
 
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name="user_id")
+    private User user;
+
     public CaseModel(String name, String demographics, Diagnosis... diagnoses){
         this.name = name;
         this.demographics = demographics;
@@ -80,7 +88,8 @@ public class CaseModel {
         this.diagnosesList.forEach(diagnosis -> diagnosis.getCases().add(this));
     }
 
-    public CaseModel(String name,
+    public CaseModel(User user,
+                     String name,
                      String demographics,
                      List<Diagnosis> diagnosesList,
                      String ward,
@@ -93,6 +102,7 @@ public class CaseModel {
                      String socialHistory,
                      String notes,
                      LocalDateTime creationDate) {
+        this.user = user;
         this.name = name;
         this.demographics = demographics;
         this.diagnosesList = diagnosesList;

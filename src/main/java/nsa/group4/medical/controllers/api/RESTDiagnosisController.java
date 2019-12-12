@@ -1,6 +1,7 @@
 package nsa.group4.medical.controllers.api;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.DiagnosisRepositoryJPA;
 import nsa.group4.medical.domains.*;
@@ -10,6 +11,7 @@ import nsa.group4.medical.service.implementations.CategoryServiceInterface;
 import nsa.group4.medical.service.implementations.DiagnosisServiceInterface;
 import nsa.group4.medical.service.implementations.NotificationServiceInterface;
 import nsa.group4.medical.web.CaseForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -35,6 +37,8 @@ public class RESTDiagnosisController {
     private DiagnosisServiceInterface diagnosisService;
 //    private NotificationRepositoryJDBC notificationRepositoryJDBC;
     private NotificationServiceInterface notificationService;
+    @Autowired
+    private Helpers helpers;
 
     public RESTDiagnosisController(CaseServiceInterface caseServiceInterface,
                                    CategoryServiceInterface categoryService,
@@ -82,17 +86,36 @@ public class RESTDiagnosisController {
     public @ResponseBody ResponseEntity<?> saveDiagnosis(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         System.out.println(formData.get("categoryName"));
-        Diagnosis createdDiagnosis = diagnosisService.createDiagnosis(new Diagnosis(
-                                        formData.get("name"),
-                                        categoryService.findByName(formData.get("categoryName")).get()
-                                        ));
 
-        notificationService.saveNotification(new Notifications(createdDiagnosis));
+        Boolean existsAlready = false;
 
-        AjaxResponseBody responseBody = new AjaxResponseBody();
-        responseBody.setDiagnoses(diagnosisService.findAll());
-        responseBody.setStatus("SUCCESS");
-        return ResponseEntity.ok().body(responseBody);
+        for (Diagnosis diagnosis : diagnosisService.findAll()) {
+            if (diagnosis.getName().equals(formData.get("name"))) {
+                existsAlready = true;
+            }
+        }
+
+        if (existsAlready) {
+
+            AjaxResponseBody responseBody = new AjaxResponseBody();
+            responseBody.setDiagnoses(diagnosisService.findAll());
+            responseBody.setStatus("SUCCESS");
+            return ResponseEntity.badRequest().body(responseBody);
+        } else {
+
+            Diagnosis createdDiagnosis = diagnosisService.createDiagnosis(new Diagnosis(
+                    helpers.getUserId(),
+                    formData.get("name"),
+                    categoryService.findByName(formData.get("categoryName")).get()
+            ));
+
+            notificationService.saveNotification(new Notifications(helpers.getUserId(),createdDiagnosis));
+
+            AjaxResponseBody responseBody = new AjaxResponseBody();
+            responseBody.setDiagnoses(diagnosisService.findAll());
+            responseBody.setStatus("SUCCESS");
+            return ResponseEntity.ok().body(responseBody);
+        }
     }
 
     @PostMapping(value = "/updateDiagnosis/{index}", produces = "application/json")

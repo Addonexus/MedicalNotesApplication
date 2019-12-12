@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name= "diagnoses")
-@ToString(exclude = {"cases", "diagnosisInfoList","notificationList"})
+@ToString(exclude = {"cases", "diagnosisInfoList","notificationList", "user"})
 public class Diagnosis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,11 @@ public class Diagnosis {
 
     @ManyToOne
     @JsonManagedReference
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name="category_id")
     private Categories categories;
 
@@ -54,7 +59,8 @@ public class Diagnosis {
         this.name = name;
     }
 
-    public Diagnosis(String name, Categories category){
+    public Diagnosis(User user,String name, Categories category){
+        this.user = user;
         this.name = name;
         this.categories = category;
     }

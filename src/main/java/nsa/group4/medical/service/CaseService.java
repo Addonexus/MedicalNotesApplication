@@ -1,14 +1,20 @@
 package nsa.group4.medical.service;
 
 import lombok.extern.slf4j.Slf4j;
+import nsa.group4.medical.Helper.Helpers;
 import nsa.group4.medical.data.CategoriesRepositoryJPA;
 import nsa.group4.medical.data.NotificationRepoJPA;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.implementations.*;
 import nsa.group4.medical.web.CaseForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,23 +30,34 @@ public class CaseService implements CaseServiceInterface {
     private DiagnosisRepositoryInterface diagnosisRepository;
     private CategoryRepositoryInterface categoryRepository;
     private NotificationServiceInterface notificationService;
+
+    @Autowired
+    EntityManager entityManager;
+
     private WardRepositoryInterface wardRepository;
+
+    private Helpers helpers;
+
+    @Autowired
+    private UserService userService;
 
     public CaseService(CaseRepositoryInterface caseRepository,
                        DiagnosisRepositoryInterface diagnosisRepository,
                        CategoryRepositoryInterface categoryRepository,
                        NotificationServiceInterface notificationService,
-                       WardRepositoryInterface wardRepository){
+                       WardRepositoryInterface wardRepository,
+                       Helpers helpers){
         this.caseRepository = caseRepository;
         this.diagnosisRepository = diagnosisRepository;
         this.categoryRepository = categoryRepository;
         this.notificationService = notificationService;
         this.wardRepository = wardRepository;
+        this.helpers =helpers;
     }
 
     @Override
     public Optional<CaseModel> findByCaseName(String caseName) {
-        return caseRepository.findByName(caseName);
+        return caseRepository.findByNameAndUser(caseName, helpers.getUserId());
     }
 
     @Override
@@ -63,13 +80,14 @@ public class CaseService implements CaseServiceInterface {
                 .stream().noneMatch(diagnosis -> diagnosis.getName().equals(x)))
                 .collect(Collectors.toList());
         //Logic for a new category when a diagnosis doesn't already exist (puts into a "Miscellaneous" category by default)
-        boolean categoryExists = categoryRepository.existsByName("Miscellaneous");
+        boolean categoryExists = categoryRepository.existsByNameAndUser("Miscellaneous", helpers.getUserId());
         Categories category;
 
         //List of new Diagnosis in the object that will allow them to be stored like the existing Diagnosis List
 
         log.debug("CREATING A NEW CASE");
         CaseModel caseModel = new CaseModel(
+                null,
                 form.getName(),
                 form.getDemographics(),
                 new ArrayList<>(),
@@ -82,7 +100,9 @@ public class CaseService implements CaseServiceInterface {
                 form.getFamilyHistory(),
                 form.getSocialHistory(),
                 form.getNotes(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                helpers.getUserId()
+
         );
         List<Diagnosis> newDiagnoses = new ArrayList<>();
 
@@ -90,13 +110,15 @@ public class CaseService implements CaseServiceInterface {
         if(!notExistingDiagnosis.isEmpty()){
 
             if(!categoryExists ){
-                category = categoryRepository.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
+                category = categoryRepository.save(new Categories(
+                        "Miscellaneous",
+                        getUserId()));
             }
             else{
                 category =  categoryRepository.findByName("Miscellaneous").get();
             }
 
-            newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
+            newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(helpers.getUserId(),x, category)).collect(Collectors.toList());
 
             caseModel.getDiagnosesList().addAll(newDiagnoses);
         }
@@ -104,14 +126,14 @@ public class CaseService implements CaseServiceInterface {
         caseRepository.save(caseModel);
         for (Diagnosis diagnosis : newDiagnoses) {
             notificationService.saveNotification(
-                    new Notifications(diagnosis)
+                    new Notifications(helpers.getUserId(),diagnosis)
             );
         }
     }
 
     @Override
     public List<CaseModel> findAll() {
-        return caseRepository.findAll();
+        return caseRepository.findByUser(helpers.getUserId());
     }
 
     @Override
@@ -141,18 +163,27 @@ public class CaseService implements CaseServiceInterface {
 
     }
 
+    public User getUserId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findByUsername(((UserDetails)principal).getUsername());
+    }
+
     @Override
     public List<CaseModel> findAllByOrderByCreationDate() {
-        return caseRepository.findAllByOrderByCreationDateDesc();
+
+        return caseRepository.findByUserOrderByCreationDateDesc(helpers.getUserId());
     }
 
     @Override
     public List<CaseModel> findAllByOrderByCreationDateAsc() {
-        return caseRepository.findAllByOrderByCreationDateDesc();
+        return caseRepository.findAllByOrderByCreationDateAsc();
     }
 
     @Override
     public void updateCase(CaseForm form) {
+
+
+
         //makes a list of all the diagnosis items that were entered by user in the input field
         List<String> diagnosesList = form.getDiagnosesList()
                 .stream().map(x -> Objects.toString(x.getTag(), null))
@@ -166,7 +197,7 @@ public class CaseService implements CaseServiceInterface {
                         .stream().noneMatch(diagnosis -> diagnosis.getName().equals(x)))
                 .collect(Collectors.toList());
         //Logic for a new category when a diagnosis doesn't already exist (puts into a "Miscellaneous" category by default)
-        boolean categoryExists = categoryRepository.existsByName("Miscellaneous");
+        boolean categoryExists = categoryRepository.existsByNameAndUser("Miscellaneous",helpers.getUserId());
         Categories category;
 
 
@@ -187,12 +218,12 @@ public class CaseService implements CaseServiceInterface {
         if(!notExistingDiagnosis.isEmpty()) {
 
             if (!categoryExists) {
-                category = categoryRepository.save(new Categories(null, "Miscellaneous", new ArrayList<>()));
+                category = categoryRepository.save(new Categories(null,"Miscellaneous", getUserId(), new ArrayList<>()));
             } else {
                 category = categoryRepository.findByName("Miscellaneous").get();
             }
             //List of new Diagnosis in the object that will allow them to be stored like the existing Diagnosis List
-            List<Diagnosis> newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(x, category)).collect(Collectors.toList());
+            List<Diagnosis> newDiagnoses = notExistingDiagnosis.stream().map(x -> new Diagnosis(helpers.getUserId(),x, category)).collect(Collectors.toList());
             caseModel.setDiagnosesList(newDiagnoses);
             caseModel.getDiagnosesList().addAll(existingDiagnosis);
         }
@@ -207,7 +238,7 @@ public class CaseService implements CaseServiceInterface {
 
     @Override
     public List<CaseModel> findByCreationDateBetween(LocalDateTime creationDate, LocalDateTime creationDate2) {
-        return caseRepository.findByCreationDateBetween(creationDate, creationDate2);
+        return caseRepository.findByUserAndCreationDateBetween(helpers.getUserId(),creationDate, creationDate2);
     }
 
     @Override
@@ -215,15 +246,20 @@ public class CaseService implements CaseServiceInterface {
         caseRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void checkEmptyDiagnosis(){
-        List<CaseModel> listCases = caseRepository.findAll();
+        List<CaseModel> listCases = caseRepository.findByUser(helpers.getUserId());
+        System.out.println("LIST OF CASES" + listCases);
         for (CaseModel caseModel:
                 listCases) {
             if(caseModel.getDiagnosesList().isEmpty()){
-                caseRepository.deleteById(caseModel.getId());
+//                Query q = entityManager.createQuery("DELETE FROM CaseModel c WHERE c.user = " + helpers.getUserId().getId() + "");
+                Query q = entityManager.createQuery("DELETE FROM CaseModel c WHERE c.id = " + caseModel.getId());
+                q.executeUpdate();
             }
-
         }
+//        Query q = entityManager.createQuery("DELETE FROM CaseModel c WHERE  c.user = " + helpers.getUserId().getId() + "");
+
     }
 }

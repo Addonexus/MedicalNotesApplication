@@ -1,6 +1,7 @@
 package nsa.group4.medical.domains;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name= "categories")
-@ToString(exclude = "diagnosisList")
+@ToString(exclude = {"diagnosisList", "user"})
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +26,10 @@ public class Categories {
     @Column(name="name")
     private String name;
 
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name="user_id")
+    private User user;
 
     @OneToMany(mappedBy="categories", cascade = CascadeType.ALL)
     @JsonBackReference
@@ -32,5 +37,10 @@ public class Categories {
 
     public Categories(String name) {
         this.name = name;
+    }
+
+    public Categories(String name, User user) {
+        this.name = name;
+        this.user = user;
     }
 }
