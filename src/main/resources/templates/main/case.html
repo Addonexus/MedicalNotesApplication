@@ -133,22 +133,7 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            $('#submit-button').click(function () {
 
-                isChecked = document.getElementById("start-checkbox").checked
-                console.log("checked? " + isChecked);
-
-                if (!isChecked) {
-                    swal({
-                        icon: "error",
-                        text: "You must agree to not store personal details."
-                    });
-                    return false;
-                }
-
-            });
-        });
     </script>
 </body>
 

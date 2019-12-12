@@ -186,7 +186,24 @@ function mapExistingCaseDetailsToFields() {
   });
 
 }
+function clearErrors(){
+  var errors = document.getElementsByClassName("error");
+  for(var i=0; i < errors.length; i++){
+    errors[i].innerHTML="";
+  }
+}
 function submitCase(formData, url) {
+  clearErrors();
+  isChecked = document.getElementById("start-checkbox").checked
+                  console.log("checked? " + isChecked);
+
+                  if (!isChecked) {
+                      swal({
+                          icon: "error",
+                          text: "You must agree to not store personal details."
+                      });
+                      return false;
+                  }
   let $form = $(this);
   $.ajax({
     contentType: "application/json; charset=utf-8",
@@ -231,12 +248,16 @@ function submitCase(formData, url) {
               text: "Fix Input Errors Before Creating Case",
               icon: "error",
             });
-
+        var topItem;
       for (i = 0; i < obj.result.length; i++) {
         let item = obj.result[i];
+        console.log("ITEM", item);
         let field = document.getElementsByClassName(item.fieldName)[0];
         field.innerHTML = item.errorMessage;
       }
+
+       document.getElementById("title").scrollIntoView();
+
     }
   });
 }
