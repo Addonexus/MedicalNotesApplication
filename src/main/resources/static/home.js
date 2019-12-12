@@ -276,17 +276,17 @@ function updateCategory(num, modal) {
       console.log("ERROR");
       refreshListOfCategories();
       swal({
-          title: "Success",
-          text: "Category Moved/Edited",
-          icon: "success",
-        });
+        title: "Success",
+        text: "Category Moved/Edited",
+        icon: "success",
+      });
     },
     error: function (response) {
       //        if(response.status == "NAME EXISTS"){
 
       var obj = JSON.parse(response.responseText);
       if (obj.status = "NAME EXISTS") {
-      swal({
+        swal({
           title: "Error",
           text: "Category Name already exists, please try a different name",
           icon: "error",
@@ -337,12 +337,12 @@ function updateDiagnosis(num, modal) {
     error: function (response) {
       var obj = JSON.parse(response.responseText);
       if (obj.status = "NAME EXISTS") {
-      swal({
-                title: "Error",
-                text: "Diagnosis Name already exists, please try a different name",
-                icon: "error",
-              });
-//        alert("Diagnosis Name already exists, please try a different name")
+        swal({
+          title: "Error",
+          text: "Diagnosis Name already exists, please try a different name",
+          icon: "error",
+        });
+        //        alert("Diagnosis Name already exists, please try a different name")
       }
       console.log("ERROR");
     }

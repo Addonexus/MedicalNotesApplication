@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Home Page</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -54,9 +54,9 @@
             <form method="POST" th:action="@{/login}">
               <h2>Log in</h2>
               <div>
-                <span>Enter Email</span>
+                <span class="left">Enter Username</span>
                 <input name="username" type="text" placeholder="Username" autofocus="true" />
-                <span>Enter Password</span>
+                <span class="left">Enter Password</span>
                 <input name="password" type="password" placeholder="Password" />
                 <div th:if="${error}">
                   <span>Incorrect username / password</span>

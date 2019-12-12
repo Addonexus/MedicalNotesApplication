@@ -129,6 +129,9 @@ $("#calendar-form").submit(function (e) {
         listOfCasesForDay.removeChild(listOfCasesForDay.firstChild);
       }
       console.log(response.casesList);
+      if (response.casesList.length == 0) {
+        console.log("NO CASES!");
+      }
       for (let i = 0; i < response.casesList.length; i++) {
         console.log(response.casesList[i].name);
         var li = document.createElement("a");
@@ -143,10 +146,10 @@ $("#calendar-form").submit(function (e) {
     },
     error: function (json) {
       swal({
-              title: "Error",
-              text: "Please Enter a Valid Date",
-              icon: "error",
-            });
+        title: "Error",
+        text: "Please Enter a Valid Date",
+        icon: "error",
+      });
     }
   });
 });
