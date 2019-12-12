@@ -35,6 +35,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
         jdbc = aJdbc;
     }
 
+    //Method called from elsewhere in code to save a diagnosisInformationEvent.
     @Override
     public void saveDiagnosisInformation(DiagnosisInformationAdded diagnosisInformationEvent) {
         saveDiagnosisInformationDetails(diagnosisInformationEvent.getId(), diagnosisInformationEvent.getDiagnosisId(), diagnosisInformationEvent.getField(), diagnosisInformationEvent.getValue());
