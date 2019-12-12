@@ -90,6 +90,53 @@ function postDiagnosisInfo() {
   });
 }
 
+function postFreehandNote() {
+  console.log("--- post freehand notes function --- ");
+  $("#createFreehandNotes").submit(function (e) {
+    e.preventDefault();
+    console.log("--- posting freehand notes --- ");
+
+    var $form = $(this);
+    var url = "/api/createDiagnosisInformation";
+
+    var formData = {
+      diagnosisId: lastInt,
+      key: document.getElementById("DiagnosisInfoKey").value,
+      value: document.getElementById("DiagnosisInfoValue").value
+    };
+
+    console.log(formData);
+
+    $.ajax({
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      type: "POST",
+      url: url,
+      data: JSON.stringify(formData),
+      success: function (json) {
+        $("#diaInfoTable tr").each(function () {
+          // console.log(this.id);
+          if (this.id) {
+            this.remove();
+          }
+          document.getElementsByClassName("content")[0].style.maxHeight =
+              "none";
+          // $(this)
+          //   .find("td")
+          //   .each(function() {
+          //     // console.log("hiya");
+          //   });
+        });
+        getDiagnosisInformation();
+      },
+      error: function (json) {
+        // alert("error!");
+        console.log("error-h.html");
+      }
+    });
+  });
+}
+
 function refreshListOfDiagnoses() {
   var grid = document.getElementById("content-grid");
 
