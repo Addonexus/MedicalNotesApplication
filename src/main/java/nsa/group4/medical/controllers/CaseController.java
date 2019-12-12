@@ -79,7 +79,11 @@ public class CaseController {
             username = principal.toString();
         }
 
-        Optional<Ward> ward = wardService.findById(wardId);
+        Optional<Ward> ward = null;
+
+        if (wardId != null) {
+            ward = wardService.findById(wardId);
+        }
 
         Ward finalWard = null;
         if (ward.isPresent()){
