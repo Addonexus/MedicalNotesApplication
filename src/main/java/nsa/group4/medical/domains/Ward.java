@@ -26,8 +26,9 @@ public class Ward {
     @Column(name="name")
     private String name;
 
-    public Ward(String name){
+    public Ward(User user, String name){
         this.name = name;
+        this.user = user;
     }
 
 

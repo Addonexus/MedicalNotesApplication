@@ -88,7 +88,8 @@ public class CaseModel {
         this.diagnosesList.forEach(diagnosis -> diagnosis.getCases().add(this));
     }
 
-    public CaseModel(String name,
+    public CaseModel(User user,
+                     String name,
                      String demographics,
                      List<Diagnosis> diagnosesList,
                      String ward,
@@ -101,6 +102,7 @@ public class CaseModel {
                      String socialHistory,
                      String notes,
                      LocalDateTime creationDate) {
+        this.user = user;
         this.name = name;
         this.demographics = demographics;
         this.diagnosesList = diagnosesList;
