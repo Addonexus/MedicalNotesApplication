@@ -87,7 +87,7 @@ public class CaseController {
 
             model.addAttribute("wardKey", finalWard);
         }
-        
+
 
 
         return "main/case";

@@ -48,8 +48,13 @@
                    type="text"/>
             <span class="demographics error"></span>
         </div>
-
-            <div>
+            <div th:if="${wardKey}">
+                <label th:for="ward">Ward</label>
+                <input id = "ward" aria-describedBy="Enter the ward the patient is in"
+                       type="text" value="${wardKey.name}"/>
+                <span class="ward error"></span>
+            </div>
+            <div th:if="${!wardKey}">
                 <label th:for="ward">Ward</label>
                 <input id = "ward" aria-describedBy="Enter the ward the patient is in"
                        type="text"/>
