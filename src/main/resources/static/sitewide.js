@@ -142,7 +142,11 @@ $("#calendar-form").submit(function (e) {
       }
     },
     error: function (json) {
-      alert("Please enter a valid date!");
+      swal({
+              title: "Error",
+              text: "Please Enter a Valid Date",
+              icon: "error",
+            });
     }
   });
 });

@@ -275,50 +275,29 @@ function updateCategory(num, modal) {
       refreshNotifications();
       console.log("ERROR");
       refreshListOfCategories();
+      swal({
+          title: "Success",
+          text: "Category Moved/Edited",
+          icon: "success",
+        });
     },
     error: function (response) {
       //        if(response.status == "NAME EXISTS"){
 
       var obj = JSON.parse(response.responseText);
       if (obj.status = "NAME EXISTS") {
-        alert("Category Name already exists, please try a different name");
+      swal({
+          title: "Error",
+          text: "Category Name already exists, please try a different name",
+          icon: "error",
+        });
       }
       console.log("ERROR");
     }
     //      refreshListOfCategories();
   });
 }
-function deleteCategory(num, modal) {
 
-  swal({
-    title: "Good eejob!",
-    text: "You clicked the button!",
-    icon: "success",
-  });
-
-  console.log(num);
-  console.log("my modal: " + modal);
-  var instance = M.Modal.getInstance(modal);
-  // instance.close();
-  var formData = {
-    id: num
-  };
-
-  $.ajax({
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    type: "DELETE",
-    url: "/api/deleteCategory/" + num,
-    success: function (json) {
-      getRecentCases();
-      refreshNotifications();
-      refreshListOfCategories();
-    },
-    error: function (json) {
-      console.log("ERROR");
-    }
-  });
-}
 function updateDiagnosis(num, modal) {
   var diagnosisModalTitle = document.getElementById("modalDiagnosisTitle" + num);
   //checks to see if the user entered anything in the diagnosis title field
@@ -349,11 +328,21 @@ function updateDiagnosis(num, modal) {
       refreshNotifications();
       console.log("ERROR");
       refreshListOfDiagnoses();
+      swal({
+        title: "Success",
+        text: "Diagnosis Moved/Edited",
+        icon: "success",
+      });
     },
     error: function (response) {
       var obj = JSON.parse(response.responseText);
       if (obj.status = "NAME EXISTS") {
-        alert("Diagnosis Name already exists, please try a different name")
+      swal({
+                title: "Error",
+                text: "Diagnosis Name already exists, please try a different name",
+                icon: "error",
+              });
+//        alert("Diagnosis Name already exists, please try a different name")
       }
       console.log("ERROR");
     }
@@ -660,9 +649,18 @@ function createCategory() {
       data: JSON.stringify(formData),
       success: function (json) {
         refreshListOfCategories();
+        swal({
+          title: "Success",
+          text: "Category Created",
+          icon: "success",
+        });
       },
       error: function (json) {
-        alert("error!");
+        swal({
+          title: "Error",
+          text: "Category Name already exists, please try a different name",
+          icon: "error",
+        });
       }
     });
   });
@@ -688,9 +686,18 @@ function lookForCategoryFormPost() {
       data: JSON.stringify(formData),
       success: function (json) {
         refreshListOfDiagnoses();
+        swal({
+          title: "Success",
+          text: "Diagnosis Created",
+          icon: "success",
+        });
       },
       error: function (json) {
-        alert("error!");
+        swal({
+          title: "Error",
+          text: "Diagnosis Name already exists, please try a different name",
+          icon: "error",
+        });
       }
     });
   });
