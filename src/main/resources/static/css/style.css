@@ -118,6 +118,10 @@
   font-size: 30px;
 }
 
+.modal {
+  overflow: hidden;
+}
+
 .go-away {
   position: absolute;
   left: -9999px;
