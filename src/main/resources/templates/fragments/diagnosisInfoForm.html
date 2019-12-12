@@ -1,9 +1,4 @@
-
-<button
-        th:fragment="diagnosisFormToggle"
-        type="button"
-        class="btn blue white-text collapsible"
->
+<button th:fragment="diagnosisFormToggle" type="button" class="btn blue white-text collapsible">
     Toggle notes
 </button>
 <div class="content z-depth-1" th:fragment="diagnosisForm">
@@ -16,19 +11,11 @@
             <tr>
                 <th>
                     <label class="black-text" th:for="key">Key</label>
-                    <input
-                            minlength="5"
-                            aria-describedby="Enter the key"
-                            id="DiagnosisInfoKey"
-                            type="text"/>
+                    <input minlength="5" aria-describedby="Enter the key" id="DiagnosisInfoKey" type="text" />
                 </th>
                 <th>
                     <label class="black-text" th:for="value">Value</label>
-                    <input
-                            minlength="5"
-                            aria-describedby="Enter the value"
-                            id="DiagnosisInfoValue"
-                            type="text"/>
+                    <input minlength="5" aria-describedby="Enter the value" id="DiagnosisInfoValue" type="text" />
                 </th>
             </tr>
         </table>
@@ -39,4 +26,23 @@
 
     </form>
 
+    <form id="createFreehandNotes">
+        <table id="freehandNotesTable">
+            <tr>
+                <th>Field</th>
+            </tr>
+            <tr>
+                <th>
+                    <label class="black-text" th:for="field">Enter Notes</label>
+                    <textarea class="materialize-textarea" minlength="5" aria-describedby="Enter notes"
+                        id="FreehandNotesField" type="text"></textarea>
+                </th>
+            </tr>
+        </table>
+
+        <button class="btn blue white-text" id="submit" type="submit">
+            Submit
+        </button>
+
+    </form>
 </div>
