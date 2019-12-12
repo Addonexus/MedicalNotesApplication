@@ -41,6 +41,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
         saveDiagnosisInformationDetails(diagnosisInformationEvent.getId(), diagnosisInformationEvent.getDiagnosisId(), diagnosisInformationEvent.getField(), diagnosisInformationEvent.getValue());
     }
 
+    //Private method called from within this class to handle the insertion of data into the database.
     private Long saveDiagnosisInformationDetails(Long id, Long diagnosisId, String field, String value) {
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
 
