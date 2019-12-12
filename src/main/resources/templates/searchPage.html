@@ -18,11 +18,11 @@
   <center>
     <h4>Search results for: <span th:text="${query}">blank</span></h4>
   </center>
-  <div class="row flexy">
+  <div class="row container">
     <div class="col s12 m4" th:if="${not #lists.isEmpty(categories)}">
       <ul class="collection with-header z-depth-1">
         <li class="collection-header">
-          <h2>Categories</h2>
+          <h4>Categories</h4>
         </li>
         <a th:href="@{/category/{categoryId} (categoryId=${category.id})}" th:each="category : ${categories}"
           class="collection-item" th:text="${category.name}"></a>
@@ -31,7 +31,7 @@
     <div class="col s12 m4" th:if="${not #lists.isEmpty(diagnoses)}">
       <ul class="collection with-header z-depth-1">
         <li class="collection-header">
-          <h2>Diagnoses</h2>
+          <h4>Diagnoses</h4>
         </li>
         <a th:href="@{/diagnosis/{diagnosisId} (diagnosisId=${diagnosis.id})}" th:each="diagnosis : ${diagnoses}"
           class="collection-item" th:text="${diagnosis.name}"></a>
@@ -40,7 +40,7 @@
     <div class="col s12 m4" th:if="${not #lists.isEmpty(cases)}">
       <ul class="collection with-header z-depth-1">
         <li class="collection-header">
-          <h2>Cases</h2>
+          <h4>Cases</h4>
         </li>
         <a th:href="@{/case/{caseId} (caseId=${case.id})}" th:each="case : ${cases}" class="collection-item"
           th:text="${case.name}"></a>

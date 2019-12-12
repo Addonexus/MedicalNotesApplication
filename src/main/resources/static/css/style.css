@@ -251,6 +251,6 @@ fieldset:disabled {
 /*  display: inline-block;*/
 /*}*/
 
-.row .col.m4 {
-  width: 100%;
+.row .col.s12 {
+  margin-top: 50px;
 }
