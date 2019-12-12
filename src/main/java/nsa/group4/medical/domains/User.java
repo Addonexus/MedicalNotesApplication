@@ -32,5 +32,8 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Role> roles;
 
+    @Nullable
+    @Column(name="ward_id")
+    private Long wardId;
 }
 

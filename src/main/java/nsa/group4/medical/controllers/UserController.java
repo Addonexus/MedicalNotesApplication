@@ -125,7 +125,8 @@ public class UserController {
                     userForm.getUsername(),
                     userForm.getPassword(),
                     userForm.getPassword(),
-                    temp
+                    temp,
+                    null
             );
 
             userValidator.validate(tempUser, bindingResult);
