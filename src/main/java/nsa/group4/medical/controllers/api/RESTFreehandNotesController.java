@@ -38,7 +38,7 @@ public class RESTFreehandNotesController {
     @GetMapping("/returnedFreehandNotes/{index}")
     public @ResponseBody List<FreehandNotes> getFreehandNotes
             (@PathVariable Long index){
-        return freehandNotesRepoJDBC.getFreehandNotesnByDiagnosisId(index);
+        return freehandNotesRepoJDBC.getFreehandNotesByDiagnosisId(index);
 
     }
 

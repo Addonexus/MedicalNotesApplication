@@ -42,13 +42,11 @@ public class FreehandNotesRepoJDBC implements FreehandNotesRepositoryInterface {
 
     @Override
     public void save(FreehandNotesAdded freehandNotesAdded){
-        saveFreehandNotesDetails(freehandNotesAdded.getId(),
-                freehandNotesAdded.getDiagnosisId(),
+        saveFreehandNotesDetails(freehandNotesAdded.getDiagnosisId(),
                 freehandNotesAdded.getField());
     }
 
-private Long saveFreehandNotesDetails(
-        Long id, Long diagnosisId,
+private Long saveFreehandNotesDetails(Long diagnosisId,
         String field){
         GeneratedKeyHolder generatedKeyHolder =
                 new GeneratedKeyHolder();
@@ -71,7 +69,7 @@ private Long saveFreehandNotesDetails(
                 }, generatedKeyHolder);
         return generatedKeyHolder.getKey().longValue();
 }
-    public List<FreehandNotes> getFreehandNotesnByDiagnosisId(Long index){
+    public List<FreehandNotes> getFreehandNotesByDiagnosisId(Long index){
         return jdbcTemplate.query("SELECT * FROM freehand_notes WHERE diagnosis_id = ?",
                 preparedStatement ->
                 {
