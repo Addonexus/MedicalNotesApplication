@@ -48,18 +48,23 @@
                    type="text"/>
             <span class="demographics error"></span>
         </div>
+
+
             <div th:if="${wardKey != null}">
                 <label th:for="ward">Ward</label>
-                <select id = "ward" aria-describedBy="Enter the ward the patient is in"
-                       type="text" th:value="${wardKey.name}">
-                    <option
+                <select class="browser-default" id = "ward" aria-describedBy="Enter the ward the patient is in"
+                        th:value="${wardKey.name}">
+                    <option th:each="loopWard : ${wardList}" th:text="${loopWard.name}"></option>
                 </select>
                 <span class="ward error"></span>
             </div>
+
             <div th:if="${wardKey == null}">
                 <label th:for="ward">Ward</label>
-                <input id = "ward" aria-describedBy="Enter the ward the patient is in"
-                       type="text"/>
+                <select class="browser-default" id = "ward" aria-describedBy="Enter the ward the patient is in">
+                    <option value="" disabled selected>Choose your option</option>
+                    <option th:each="loopWard : ${wardList}" th:text="${loopWard.name}"></option>
+                </select>
                 <span class="ward error"></span>
             </div>
 
