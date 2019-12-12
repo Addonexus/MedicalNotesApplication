@@ -2,6 +2,7 @@ package nsa.group4.medical.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.data.UserRepository;
+import nsa.group4.medical.data.WardRepositoryJDBC;
 import nsa.group4.medical.domains.Role;
 import nsa.group4.medical.domains.User;
 import nsa.group4.medical.service.SecurityService;
@@ -33,6 +34,8 @@ import java.util.Set;
 @Controller
 public class UserController {
 
+    private WardRepositoryJDBC wardRepositoryJDBC;
+
     @Autowired
     private HttpServletRequest httpServletRequest;
 
@@ -44,6 +47,10 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+
+    public UserController(WardRepositoryJDBC wardRepositoryJDBC) {
+        this.wardRepositoryJDBC = wardRepositoryJDBC;
+    }
 
 
     @GetMapping("/registration")
@@ -85,6 +92,14 @@ public class UserController {
         model.addAttribute("idKey", id);
 
         return "accountDetails";
+    }
+
+    @GetMapping("/account")
+    public String account(Model model){
+
+
+
+        return "accountPage";
     }
 
     @PostMapping("/registration")
