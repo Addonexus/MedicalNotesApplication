@@ -31,7 +31,7 @@ public class Ward {
     }
 
 
-    /*@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH,
             CascadeType.PERSIST})
@@ -47,7 +47,7 @@ public class Ward {
             return new ArrayList<>();
         }
         return cases;
-    }*/
+    }
 
 
 }
