@@ -113,7 +113,7 @@ function postFreehandNote() {
       url: url,
       data: JSON.stringify(formData),
       success: function (json) {
-        $("#diaInfoTable tr").each(function () {
+        $("#freehandNotesTable tr").each(function () {
           // console.log(this.id);
           if (this.id) {
             this.remove();
@@ -126,7 +126,7 @@ function postFreehandNote() {
           //     // console.log("hiya");
           //   });
         });
-        getDiagnosisInformation();
+        getFreehandNotes();
       },
       error: function (json) {
         // alert("error!");
@@ -557,6 +557,24 @@ function refreshListOfCategories() {
     $('.modal').modal();
   });
 }
+
+function getFreehandNotes() {
+  $.get("/api/returnedDiagnosisInfo/" + lastInt, function (data) {
+    $(".result").html(data);
+    console.log(data);
+    var diagnosisInfoTable = document.getElementById("diaInfoTable");
+    for (i = 0; i < data.length; i++) {
+      var row = diagnosisInfoTable.insertRow(
+          diagnosisInfoTable.rows.length - 1
+      );
+      row.id = "hi";
+      var key = row.insertCell(-1);
+      var value = row.insertCell(-1);
+
+      key.innerHTML = data[i].field;
+      value.innerHTML = data[i].value;
+    }
+  });
 
 function getDiagnosisInformation() {
   $.get("/api/returnedDiagnosisInfo/" + lastInt, function (data) {
