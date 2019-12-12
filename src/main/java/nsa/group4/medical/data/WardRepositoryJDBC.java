@@ -3,6 +3,7 @@ package nsa.group4.medical.data;
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.domains.DiagnosisInformation;
 import nsa.group4.medical.domains.rowmappers.DiagnosisInformationRowmapper;
+import nsa.group4.medical.domains.rowmappers.WardRowmapper;
 import nsa.group4.medical.service.events.WardAdded;
 import nsa.group4.medical.service.implementations.WardJDBCRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
