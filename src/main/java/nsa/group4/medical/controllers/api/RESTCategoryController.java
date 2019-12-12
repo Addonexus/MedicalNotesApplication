@@ -85,10 +85,16 @@ public class RESTCategoryController {
     public @ResponseBody ResponseEntity<?> saveCategory(@RequestBody Map<String, String> formData, Errors bindingResult) {
         System.out.println(formData.get("name"));
         String categoryName = formData.get("name");
-        categoryService.saveCategory(new Categories(categoryName, getUser()));
         AjaxResponseBody responseBody = new AjaxResponseBody();
+        if(!categoryService.findByName(categoryName).isPresent()){
+            categoryService.saveCategory(new Categories(categoryName, getUser()));
         responseBody.setStatus("SUCCESS");
-        return ResponseEntity.ok().body(responseBody);
+        return ResponseEntity.ok().body(responseBody);}
+        else{
+
+            responseBody.setStatus("ERROR");
+            return ResponseEntity.badRequest().body(responseBody);
+        }
     }
 
     @GetMapping("/getAllCategories")
