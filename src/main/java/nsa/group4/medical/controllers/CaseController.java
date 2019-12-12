@@ -6,10 +6,13 @@ import nsa.group4.medical.data.DiagnosisInformationRepositoryJDBC;
 import nsa.group4.medical.data.FreehandNotesRepoJDBC;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.DiagnosisService;
+import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.service.implementations.CaseServiceInterface;
 import nsa.group4.medical.web.CaseForm;
 import nsa.group4.medical.web.DiagnosisInformationForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,9 @@ public class CaseController {
     DiagnosisService diagnosisService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     CategoriesRepositoryJPA categoriesRepositoryJPA;
 
     private CaseServiceInterface caseService;
@@ -52,6 +58,24 @@ public class CaseController {
         CaseForm caseForm = new CaseForm();
         log.debug("CASE FORM: "+ caseForm);
         model.addAttribute("caseKey", caseForm);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String username = "";
+        Long id = null;
+        Long wardId = null;
+        if (principal instanceof UserDetails){
+            username = ((UserDetails)principal).getUsername();
+            UserDetails obj = (UserDetails)principal;
+            User returnedUser = userService.findByUsername(username);
+            User user = userService.findByUsername(username);
+            id = user.getId();
+            wardId = user.getWardId();
+        } else {
+            username = principal.toString();
+        }
+
+
         return "main/case";
     }
 

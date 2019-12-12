@@ -72,6 +72,7 @@ public class UserController {
 
         String username = "";
         Long id = null;
+        Long wardId = null;
         if (principal instanceof UserDetails){
             log.debug("HEEHEE");
             username = ((UserDetails)principal).getUsername();
@@ -82,6 +83,7 @@ public class UserController {
             log.debug("WHADADP: "+returnedUser.getId());
             User user = userService.findByUsername(username);
             id = user.getId();
+            wardId = user.getWardId();
         } else {
             log.debug("OOOOOO");
             username = principal.toString();
