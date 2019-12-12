@@ -10,6 +10,8 @@
         <select th:if="${wardKey}" aria-describedby="Select your ward">
             <option th:each="ward : ${wardKey}" th:text="${ward.name}"></option>
         </select>
+
+        <button type="submit">Save</button>
     </form>
 </div>
 </body>

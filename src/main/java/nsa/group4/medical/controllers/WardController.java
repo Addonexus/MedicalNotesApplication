@@ -36,6 +36,14 @@ public class WardController {
         this.wardRepository = wardRepository;
     }
 
+    @PostMapping(path="/updateWard")
+    public String updateWard(Long wardId, Model model){
+
+
+
+        return "home";
+    }
+
     @GetMapping(path ="/ward/{wardIndex}")
     public String getCases(@PathVariable(name="wardIndex")
                            Long wardId, Model model) {
