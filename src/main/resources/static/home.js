@@ -76,6 +76,11 @@ function postDiagnosisInfo() {
           }
           document.getElementsByClassName("content")[0].style.maxHeight =
             "none";
+
+          inputs = document.getElementsByTagName('input');
+          for (index = 0; index < inputs.length; ++index) {
+            inputs[index].value = "";
+          }
           // $(this)
           //   .find("td")
           //   .each(function() {
@@ -121,6 +126,11 @@ function postFreehandNote() {
           }
           document.getElementsByClassName("content")[0].style.maxHeight =
             "none";
+
+          inputs = document.getElementsByTagName('textarea');
+          for (index = 0; index < inputs.length; ++index) {
+            inputs[index].value = "";
+          }
         });
         getFreehandNotes();
       },
