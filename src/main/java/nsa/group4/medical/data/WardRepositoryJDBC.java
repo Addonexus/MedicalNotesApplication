@@ -2,6 +2,7 @@ package nsa.group4.medical.data;
 
 import lombok.extern.slf4j.Slf4j;
 import nsa.group4.medical.domains.DiagnosisInformation;
+import nsa.group4.medical.domains.Ward;
 import nsa.group4.medical.domains.rowmappers.DiagnosisInformationRowmapper;
 import nsa.group4.medical.domains.rowmappers.WardRowmapper;
 import nsa.group4.medical.service.events.WardAdded;
@@ -55,7 +56,7 @@ public class WardRepositoryJDBC implements WardJDBCRepositoryInterface {
         return holder.getKey().longValue();
     }
 
-    public List<DiagnosisInformation> getAllWards(){
+    public List<Ward> getAllWards(){
         return jdbcTemplate.query("SELECT * FROM ward"
                 , new WardRowmapper());
     }
