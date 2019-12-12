@@ -26,7 +26,6 @@ public class Helpers {
     public User getUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)principal).getUsername();
-        log.debug("WHAT IS GOING ON" + username);
         User returnedUser = userService.findByUsername(username);
         System.out.println(returnedUser);
         return returnedUser;

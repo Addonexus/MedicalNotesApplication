@@ -28,7 +28,6 @@ public class CrunchifySpringAjaxJQuery {
         Random rand = new Random();
         float r = rand.nextFloat() * 100;
         String result = "<br>Next Random # is <b>" + r + "</b>. Generated on <b>" + new Date().toString() + "</b>";
-        System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller.." + new Date().toString());
         return result;
     }
 }
