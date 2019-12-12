@@ -559,20 +559,18 @@ function refreshListOfCategories() {
 }
 
 function getFreehandNotes() {
-  $.get("/api/returnedDiagnosisInfo/" + lastInt, function (data) {
+  $.get("/api/returnedFreehandNotes/" + lastInt, function (data) {
     $(".result").html(data);
     console.log(data);
-    var diagnosisInfoTable = document.getElementById("diaInfoTable");
+    var freehandNotesTable = document.getElementById("diaInfoTable");
     for (i = 0; i < data.length; i++) {
-      var row = diagnosisInfoTable.insertRow(
-          diagnosisInfoTable.rows.length - 1
+      var row = freehandNotesTable.insertRow(
+          freehandNotesTable.rows.length - 1
       );
       row.id = "hi";
-      var key = row.insertCell(-1);
-      var value = row.insertCell(-1);
+      var field = row.insertCell(-1);
 
-      key.innerHTML = data[i].field;
-      value.innerHTML = data[i].value;
+      field.innerHTML = data[i].field;
     }
   });
 
