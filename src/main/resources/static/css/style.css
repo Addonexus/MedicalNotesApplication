@@ -126,6 +126,7 @@
 
 .modal {
   overflow: hidden;
+  border-radius: 8px;
 }
 
 .go-away {
