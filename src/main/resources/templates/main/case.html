@@ -26,77 +26,77 @@
             <form class="container" id="submitCases" method="post" th:object="${caseKey}">
                 <fieldset id="allFields">
                     <div>
-                        <label th:for="name">Name</label>
+                        <span id= "nameError" class="name error right"></span>
+                        <label th:for="name">Title</label>
 
-                        <input id="name" aria-describedBy="Enter your name" type="text" />
-                        <span id= "nameError" class="name error"></span>
+                        <input id="name" aria-describedBy="Enter your Case Title" type="text" />
                     </div>
 
                     <div>
+                        <span id= "demographicsError" class="demographics error right"></span>
                         <label th:for="demographics">Demographics</label>
                         <input id="demographics" aria-describedBy="Enter the demographics" type="text" />
-                        <span id= "demographicsError" class="demographics error"></span>
                     </div>
 
                     <div>
+                        <span id= "wardError" class="ward error right"></span>
                         <label th:for="ward">Ward</label>
                         <input id="ward" aria-describedBy="Enter the ward the patient is in" type="text" />
-                        <span id= "wardError" class="ward error"></span>
                     </div>
 
 
                     <div id="diagnosisContent">
+                        <span id= "diagnosisError" class="diagnosesList error right"></span>
                         <label th:for="diagnosesList">Diagnoses</label>
                         <div id="diagnosesList"
                             class="chips chips-autocomplete chips-placeholder chips-initial no-floor">
                             <i class="material-icons">close</i>
                         </div>
-                        <input type="checkbox" name="diagnosisState" id="diagnosis-checkbox"
-                               onclick="toggleDiagnosisCheckBox()" />
-                        <label for="diagnosis-checkbox">The diagnosis is currently unconfirmed</label>
                     </div>
-                    <span id= "diagnosisError" class="diagnosesList error"></span>
+                    <input type="checkbox" name="diagnosisState" id="diagnosis-checkbox"
+                           onclick="toggleDiagnosisCheckBox()" />
+                    <label for="diagnosis-checkbox">The diagnosis is currently unconfirmed</label>
                     <br><br>
                     <div>
                         <label th:for="presentingComplaint">Presenting Complaint</label>
                         <input id="presentingComplaint" aria-describedBy="Enter the presenting complaint" type="text" />
-                        <span id= "presentingComplaintError" class="presentingComplaint error"></span>
+                        <span id= "presentingComplaintError" class="presentingComplaint error right"></span>
                     </div>
                     <div>
                         <label th:for="presentingComplaintHistory">Presenting Complaint History</label>
                         <input id="presentingComplaintHistory" aria-describedBy="Enter the presenting complaint history"
                             type="text" />
-                        <span id= "presentingComplaintHistoryError" class="presentingComplaintHistory error"></span>
+                        <span id= "presentingComplaintHistoryError" class="presentingComplaintHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="medicalHistory">Medical History</label>
                         <input id="medicalHistory" aria-describedBy="Enter the medical history" type="text" />
-                        <span id = "medicalHistoryError" class="medicalHistory error"></span>
+                        <span id = "medicalHistoryError" class="medicalHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="drugHistory">Drug History</label>
                         <input id="drugHistory" aria-describedBy="Enter the drug history" type="text" />
-                        <span id = "drugHistoryError" class="drugHistory error"></span>
+                        <span id = "drugHistoryError" class="drugHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="allergies">Allergies</label>
                         <input id="allergies" aria-describedBy="Enter the allergies" type="text" />
-                        <span id = "allergiesError" class="allergies error"></span>
+                        <span id = "allergiesError" class="allergies error right"></span>
                     </div>
                     <div>
                         <label th:for="familyHistory">Family History</label>
                         <input id="familyHistory" aria-describedBy="Enter the family history" type="text" />
-                        <span id = "familyHistoryError" class="familyHistory error"></span>
+                        <span id = "familyHistoryError" class="familyHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="socialHistory">Social History</label>
                         <input id="socialHistory" aria-describedBy="Enter the social history" type="text" />
-                        <span id = "socialHistoryError" class="socialHistory error"></span>
+                        <span id = "socialHistoryError" class="socialHistory error right"></span>
                     </div>
                     <div>
                         <label th:for="notes">Notes</label>
                         <input id="notes" aria-describedBy="Enter the notes" type="text" />
-                        <span id = "notesError" class="notes error"></span>
+                        <span id = "notesError" class="notes error right"></span>
                     </div>
                     <div>
                         <input type="checkbox" name="personal" value="details" id="start-checkbox" />
