@@ -1,6 +1,5 @@
 package nsa.group4.medical.service.implementations;
 
-import jdk.tools.jlink.plugin.Plugin;
 import nsa.group4.medical.domains.Categories;
 import nsa.group4.medical.domains.User;
 

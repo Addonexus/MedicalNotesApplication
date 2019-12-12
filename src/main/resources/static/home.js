@@ -115,6 +115,7 @@ function refreshListOfDiagnoses() {
         var a = document.createElement("a");
         var b = document.createElement("button");
         a.setAttribute("href", "/diagnosis/" + data[i].id);
+        a.style.boxShadow = "0px 5px lightblue"
         a.style.width = "85%";
         b.appendChild(document.createTextNode(data[i].name));
         b.setAttribute("class", "btn content-item bigger");
@@ -131,6 +132,7 @@ function refreshListOfDiagnoses() {
         var settingsIcon = document.createElement("i");
 
         settings.style.width = "15%";
+        settings.style.boxShadow = "0px 5px lightblue"
         settingsIcon.appendChild(document.createTextNode("edit"));
         settingsIcon.setAttribute("class", "material-icons large");
 
@@ -463,6 +465,7 @@ function refreshListOfCategories() {
       var b = document.createElement("button");
       a.setAttribute("href", "/category/" + data[i].id);
       a.style.width = "85%";
+      a.style.boxShadow = "0px 5px lightblue"
       b.appendChild(document.createTextNode(data[i].name));
       b.setAttribute("class", "btn content-item bigger");
       b.style.fontWeight = "600";
@@ -475,6 +478,8 @@ function refreshListOfCategories() {
       var settingsIcon = document.createElement("i");
 
       settings.style.width = "15%";
+      settings.style.boxShadow = "0px 5px lightblue"
+
       settingsIcon.appendChild(document.createTextNode("edit"));
       settingsIcon.setAttribute("class", "material-icons large");
 
