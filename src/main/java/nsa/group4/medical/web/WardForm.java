@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WardForm {
 
-    private Long wardId;
+    private String wardName;
 }

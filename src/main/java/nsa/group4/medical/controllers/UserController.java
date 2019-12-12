@@ -10,6 +10,7 @@ import nsa.group4.medical.service.SecurityService;
 import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.validator.UserValidator;
 import nsa.group4.medical.web.UserForm;
+import nsa.group4.medical.web.WardForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,7 @@ public class UserController {
         List<Ward> wardList = wardRepositoryJDBC.getAllWards();
 
         model.addAttribute("wardKey", wardList);
+        model.addAttribute("wardForm", new WardForm());
 
         return "accountPage";
     }

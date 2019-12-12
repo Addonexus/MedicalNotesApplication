@@ -6,9 +6,9 @@
 </head>
 <body>
 <div>
-    <form id="accountForm" th:action="@{/updatePage">
-        <select th:if="${wardKey}" aria-describedby="Select your ward">
-            <option th:each="ward : ${wardKey}" th:text="${ward.name}"></option>
+    <form id="accountForm" th:method="post" th:action="@{/updateWard}" th:object="${wardForm}">
+        <select th:if="${wardKey}" aria-describedby="Select your ward" th:field="*{wardName}">
+            <option th:each="ward : ${wardKey}" th:value="${ward.name}" th:text="${ward.name}"></option>
         </select>
 
         <button type="submit">Save</button>

@@ -7,6 +7,8 @@ import nsa.group4.medical.data.NotificationRepoJPA;
 import nsa.group4.medical.domains.*;
 import nsa.group4.medical.service.UserService;
 import nsa.group4.medical.service.implementations.*;
+import nsa.group4.medical.web.UserForm;
+import nsa.group4.medical.web.WardForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -43,8 +46,12 @@ public class WardController {
     }
 
     @PostMapping(path="/updateWard")
-    public String updateWard(Model model){
+    public String updateWard(@ModelAttribute("wardForm") @Valid WardForm wardForm,
+                             Model model){
 
+        log.debug(wardForm.getWardName());
+        Ward tempWard = wardService.findByName(wardForm.getWardName()).get();
+        User user = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = "";
         Long id = null;
@@ -53,7 +60,7 @@ public class WardController {
             username = ((UserDetails)principal).getUsername();
             UserDetails obj = (UserDetails)principal;
             User returnedUser = userService.findByUsername(username);
-            User user = userService.findByUsername(username);
+            user = userService.findByUsername(username);
             id = user.getId();
             wardId = user.getWardId();
         } else {
@@ -61,8 +68,10 @@ public class WardController {
             username = principal.toString();
         }
 
-        model.addAttribute("usernameKey", username);
-        model.addAttribute("idKey", id);
+        userService.setWardIdForUser(tempWard.getId(), user.getId());
+
+//        model.addAttribute("usernameKey", username);
+//        model.addAttribute("idKey", id);
 
         return "home";
     }

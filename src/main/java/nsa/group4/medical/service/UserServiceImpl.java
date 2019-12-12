@@ -37,4 +37,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Override
+    public void setWardIdForUser(Long wardId, Long id) {userRepository.setWardIdForUser(wardId, id);}
+
 }
