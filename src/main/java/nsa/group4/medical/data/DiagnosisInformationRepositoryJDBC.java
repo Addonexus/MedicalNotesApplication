@@ -50,7 +50,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
                     @Override
                     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                         PreparedStatement ps =
-                                connection.prepareStatement("INSERT INTO diagnosis_information(diagnosis_id, field, value)" +
+                                connection.prepareStatement("INSERT INTO diagnosis_informations(diagnosis_id, field, value)" +
                                                 "VALUES(?, ?, ?)"
                                         , new String[] {"diagnosis_id"});
                         ps.setLong(1, diagnosisId);
@@ -65,7 +65,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
 
     //Method used to query the database to get all diagnosis information linked to a certain diagnosis and its ID.
     public List<DiagnosisInformation> getDiagnosisInformationByDiagnosisId(Long index){
-        return jdbcTemplate.query("SELECT * FROM diagnosis_information WHERE diagnosis_id = ?",
+        return jdbcTemplate.query("SELECT * FROM diagnosis_informations WHERE diagnosis_id = ?",
                 preparedStatement ->
                 {
                     preparedStatement.setLong(1, index);
@@ -74,7 +74,7 @@ public class DiagnosisInformationRepositoryJDBC implements DiagnosisInformationR
 
     //Method used to query the database a retrieve all diagnosis information regardless of diagnosis.
     public List<DiagnosisInformation> getAllDiagnosisInformation(){
-        return jdbcTemplate.query("SELECT * FROM diagnosis_information"
+        return jdbcTemplate.query("SELECT * FROM diagnosis_informations"
                 , new DiagnosisInformationRowmapper());
     }
 }

@@ -1,6 +1,7 @@
 package nsa.group4.medical.domains;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +52,11 @@ public class User {
     //private Role role;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles_link",
+            joinColumns = {@JoinColumn(name="user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    @JsonManagedReference
     private Set<Role> roles;
 
 }

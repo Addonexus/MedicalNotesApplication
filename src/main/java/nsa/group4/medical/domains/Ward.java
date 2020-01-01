@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name= "ward")
+@Table(name= "wards")
 @ToString(exclude = {"cases", "user"})
 public class Ward {
     @Id

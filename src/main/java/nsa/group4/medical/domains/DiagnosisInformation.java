@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="diagnosis_informations")
 public class DiagnosisInformation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
