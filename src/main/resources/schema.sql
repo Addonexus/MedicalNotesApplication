@@ -207,9 +207,9 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `medicaldb`.`users_roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `medicaldb`.`users_roles` ;
+DROP TABLE IF EXISTS `medicaldb`.`users_roles_link` ;
 
-CREATE TABLE IF NOT EXISTS `medicaldb`.`users_roles` (
+CREATE TABLE IF NOT EXISTS `medicaldb`.`users_roles_link` (
   `user_id` INT UNSIGNED NOT NULL,
   `role_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`user_id`, `role_id`),
